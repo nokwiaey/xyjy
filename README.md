@@ -1,2 +1,2 @@
-https://nokwiaey.github.io/xyjy/
-https://xyjy-rbw5h01el.maozi.io/
+- https://nokwiaey.github.io/xyjy/
+- https://xyjy-rbw5h01el.maozi.io/
