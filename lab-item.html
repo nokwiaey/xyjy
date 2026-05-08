@@ -1,0 +1,2618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>星元检验项目查询</title>
+  <!-- Open Graph Meta 标签 - 用于微信分享卡片 -->
+  <meta property="og:title" content="星元检验项目查询" />
+  <meta property="og:description" content="星元医院检验科收费及报告项目查询" />
+  <meta property="og:image" content="" id="ogImage" />
+  <style>
+* {
+  box-sizing: border-box;
+}
+
+/* 加载动画 */
+.loading-overlay {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e6f0ff;
+  border-top-color: #1677ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #666;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC";
+  background: #f5f5f5;
+  color: #333;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  height: 56px;
+  font-size: 18px;
+  font-weight: 600;
+  background: #1677ff;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.header-title {
+  white-space: nowrap;
+  margin-right: 12px;
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.header-title:hover {
+  opacity: 0.9;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+  max-width: 200px;
+  border-radius: 999px;
+  border: none;
+  padding: 6px 12px;
+  font-size: 14px;
+  outline: none;
+}
+
+.advanced-search-toggle {
+  margin-left: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.advanced-search-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.advanced-search-toggle.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 高级搜索面板 */
+.advanced-search-panel {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: none;
+  z-index: 100;
+}
+
+.advanced-search-panel.show {
+  display: block;
+}
+
+.search-section {
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+}
+
+.radio-label input[type="radio"] {
+  cursor: pointer;
+}
+
+.panel-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+.panel-btn {
+  padding: 6px 16px;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: #555;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.panel-btn-primary {
+  background: #1677ff;
+  color: #fff;
+  border-color: #1677ff;
+}
+
+/* 搜索分组样式 */
+.search-group {
+  margin-bottom: 12px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+}
+
+.search-group-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #f5f5f5;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.search-group-header:hover {
+  background: #e8e8e8;
+}
+
+.search-group-arrow {
+  font-size: 12px;
+  color: #666;
+  transition: transform 0.2s;
+}
+
+.search-group-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.search-group-content {
+  padding: 12px 16px;
+  background: #fff;
+}
+
+.search-group-content.collapsed {
+  display: none;
+}
+
+.search-group-content {
+  overflow: visible;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 50px);
+}
+
+/* 侧边栏包装器 - 桌面端也使用 */
+.sidebar-wrapper {
+  position: relative;
+  width: 120px;
+  flex-shrink: 0;
+}
+
+/* 左侧申请单 */
+.sidebar {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.apply-form {
+  padding: 14px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.apply-form.active {
+  background: #e6f0ff;
+  color: #1677ff;
+  font-weight: 600;
+}
+
+/* 右侧项目 */
+.content {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  position: relative;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.card-meta,
+.card-meta-remark {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #666;
+}
+
+.card-meta {
+  display: flex;
+  gap: 16px;
+}
+
+.card-meta-code {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.card-meta-sample {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 60px;
+}
+
+.emergency-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 77, 79, 0.1);
+  color: #ff4d4f;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 77, 79, 0.2);
+}
+
+/* 抽屉 */
+.mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,.4);
+  display: none;
+  z-index: 200;
+}
+
+.drawer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: -100%;
+  background: #fff;
+  border-radius: 16px 16px 0 0;
+  padding: 16px;
+  transition: .3s;
+  z-index: 201;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-overflow-scrolling: touch;
+}
+
+.drawer-header {
+  flex-shrink: 0;
+}
+
+.drawer-content {
+  flex: 1;
+  overflow-y: auto;
+  margin: 0 -16px;
+  padding: 0 16px;
+}
+
+.drawer-footer {
+  flex-shrink: 0;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.drawer.show {
+  bottom: 0;
+}
+
+.drawer h3 {
+  margin: 0 0 10px;
+  position: relative;
+  padding-right: 50px;
+}
+
+.drawer-emergency-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(255, 77, 79, 0.1);
+  color: #ff4d4f;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 77, 79, 0.2);
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.price-row-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.price-row-name {
+  font-size: 14px;
+  color: #333;
+}
+
+.price-row-code {
+  font-size: 11px;
+  color: #999;
+  margin-top: 2px;
+}
+
+.price-row-price {
+  flex-shrink: 0;
+  margin-left: 12px;
+  text-align: right;
+  white-space: nowrap;
+  align-self: flex-start;
+}
+
+.price-sum {
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.drawer-basic {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sample-type-hint {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  color: #1677ff;
+  position: relative;
+}
+
+.sample-type-hint:hover {
+  color: #4096ff;
+}
+
+/* 提示弹层 */
+.hint-tooltip {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  max-width: 280px;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.hint-tooltip.show {
+  opacity: 1;
+}
+
+.drawer-actions {
+  margin-top: 12px;
+  text-align: right;
+}
+
+.drawer-actions button {
+  padding: 6px 12px;
+  margin-left: 8px;
+  border-radius: 16px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  background: #1677ff;
+  color: #fff;
+}
+
+/* 分页样式 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 8px 0;
+}
+
+.pagination button {
+  padding: 4px 12px;
+  border: 1px solid #1677ff;
+  background: #fff;
+  color: #1677ff;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  min-width: 60px;
+}
+
+.pagination button:disabled {
+  border-color: #ccc;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.pagination button:not(:disabled):hover {
+  background: #1677ff;
+  color: #fff;
+}
+
+.pagination .page-info {
+  font-size: 13px;
+  color: #666;
+}
+
+/* 申请单项目数小标 */
+.apply-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.apply-form-count {
+  background: #e0e0e0;
+  color: #999;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.apply-form.active .apply-form-count {
+  background: #1677ff;
+  color: #fff;
+}
+
+/* 筛选下拉列表样式 */
+.filter-dropdown-container {
+  margin-top: 12px;
+  position: relative;
+}
+
+.filter-dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  color: #333;
+}
+
+.filter-dropdown-header:hover {
+  border-color: #1677ff;
+}
+
+.filter-dropdown-header.active {
+  border-color: #1677ff;
+}
+
+.filter-arrow {
+  font-size: 10px;
+  color: #999;
+  transition: transform 0.2s;
+}
+
+.filter-dropdown-header.active .filter-arrow {
+  transform: rotate(180deg);
+}
+
+.filter-dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  z-index: 200;
+  display: none;
+}
+
+.filter-dropdown-list.show {
+  display: block;
+}
+
+.filter-option {
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-option:hover {
+  background: #f5f5f5;
+}
+
+.filter-option.selected {
+  background: #e6f0ff;
+  color: #1677ff;
+}
+
+.filter-option input[type="checkbox"] {
+  cursor: pointer;
+}
+
+/* 侧边栏横向滚动布局 - 所有设备 */
+.sidebar-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.sidebar {
+  display: flex;
+  width: 100%;
+  height: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: relative;
+  /* 隐藏滚动条但保持滚动功能 */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  flex-direction: row;
+}
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+.apply-form {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* 滚动指示器容器 */
+.scroll-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 32px;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+}
+
+.scroll-indicator.visible {
+  opacity: 1;
+}
+
+/* 左侧指示器 */
+.scroll-indicator-left {
+  left: 0;
+  background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 40%, transparent 100%);
+  padding-left: 8px;
+  justify-content: flex-start;
+}
+
+/* 右侧指示器 */
+.scroll-indicator-right {
+  right: 0;
+  background: linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 40%, transparent 100%);
+  padding-right: 8px;
+  justify-content: flex-end;
+}
+
+/* 箭头图标 */
+.scroll-indicator::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-style: solid;
+  border-color: #999;
+  border-width: 2px 2px 0 0;
+  animation: scrollArrowPulse 2s ease-in-out infinite;
+}
+
+.scroll-indicator-left::before {
+  transform: rotate(-135deg);
+  margin-left: 4px;
+}
+
+.scroll-indicator-right::before {
+  transform: rotate(45deg);
+  margin-right: 4px;
+}
+
+@keyframes scrollArrowPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: rotate(-135deg) translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(-135deg) translateX(-3px);
+  }
+}
+
+@keyframes scrollArrowPulseRight {
+  0%, 100% {
+    opacity: 0.4;
+    transform: rotate(45deg) translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(45deg) translateX(3px);
+  }
+}
+
+.scroll-indicator-right::before {
+  animation: scrollArrowPulseRight 2s ease-in-out infinite;
+}
+
+/* LIS 分析项目样式 */
+.lis-section {
+  margin: 12px 0;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.lis-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #f5f5f5;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.lis-header:hover {
+  background: #e8e8e8;
+}
+
+.lis-arrow {
+  font-size: 12px;
+  color: #666;
+  transition: transform 0.2s;
+}
+
+.lis-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.lis-content {
+  padding: 10px 12px;
+  background: #fafafa;
+}
+
+.lis-content:not(.expanded) {
+  display: none;
+}
+
+.lis-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 13px;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.lis-item:last-child {
+  border-bottom: none;
+}
+
+.lis-item-id {
+  color: #666;
+  font-size: 12px;
+  font-family: monospace;
+  white-space: nowrap;
+}
+
+.lis-item-code {
+  color: #999;
+  font-size: 12px;
+  min-width: 50px;
+  font-family: monospace;
+}
+
+.lis-item-name {
+  color: #333;
+  flex: 1;
+}
+
+.lis-item-recognition {
+  color: #52c41a;
+  font-size: 12px;
+  min-width: 60px;
+  text-align: right;
+}
+
+.lis-group {
+  margin-bottom: 12px;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.lis-group:last-child {
+  margin-bottom: 0;
+}
+
+.lis-group-header {
+  background: #f5f5f5;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.lis-group-items {
+  padding: 8px 12px;
+  background: #fafafa;
+}
+
+.lis-group-items .lis-item:last-child {
+  border-bottom: none;
+}
+
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title" id="headerTitle" title="点击查看数据更新时间">检验项目查询</div>
+  <input
+    id="searchInput"
+    class="search-input"
+    type="search"
+    placeholder="请输入搜索内容"
+    autocomplete="off"
+  />
+  <button class="advanced-search-toggle" id="advancedSearchToggle">高级搜索 ▼</button>
+</div>
+
+<!-- 高级搜索面板 -->
+<div class="advanced-search-panel" id="advancedSearchPanel">
+  <!-- HIS 项目信息组 -->
+  <div class="search-group">
+    <div class="search-group-header" id="hisGroupHeader">
+      <span class="search-group-arrow">▼</span>
+      <span class="search-group-title">HIS 项目信息</span>
+    </div>
+    <div class="search-group-content" id="hisGroupContent">
+      <div class="search-section">
+        <div class="section-title">搜索维度：</div>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" name="searchType" value="itemName" checked> 项目名称
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="searchType" value="itemCode"> 项目编码
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="searchType" value="detailName"> 收费名称
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="searchType" value="detailCode"> 收费编码
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="searchType" value="sample"> 标本类型
+          </label>
+        </div>
+        <!-- 标本类型筛选下拉 -->
+        <div class="filter-dropdown-container" id="sampleFilterContainer" style="display: none;">
+          <div class="filter-dropdown-header" id="sampleFilterHeader">
+            <span>选择标本类型</span>
+            <span class="filter-arrow">▼</span>
+          </div>
+          <div class="filter-dropdown-list" id="sampleFilterList"></div>
+        </div>
+      </div>
+
+      <div class="search-section">
+        <div class="section-title">急诊项目：</div>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" name="emergencyType" value="all" checked> 全部
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="emergencyType" value="emergency"> 仅急诊
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="emergencyType" value="normal"> 仅普通
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIS 分析项目组 -->
+  <div class="search-group">
+    <div class="search-group-header" id="lisGroupHeader">
+      <span class="search-group-arrow">▶</span>
+      <span class="search-group-title">LIS 分析项目</span>
+    </div>
+    <div class="search-group-content collapsed" id="lisGroupContent">
+      <div class="search-section">
+        <div class="section-title">搜索维度：</div>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" name="searchType" value="lisTestItemName"> 分析项目名称
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="searchType" value="lisTestItemId"> 分析项目编码
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="searchType" value="lisTestItemCode"> 分析项目代号
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="searchType" value="lisGroup"> 检验分组
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="searchType" value="lisRecognition"> 互认标识
+          </label>
+        </div>
+        <!-- 检验分组筛选下拉 -->
+        <div class="filter-dropdown-container" id="lisGroupFilterContainer" style="display: none;">
+          <div class="filter-dropdown-header" id="lisGroupFilterHeader">
+            <span>选择检验分组</span>
+            <span class="filter-arrow">▼</span>
+          </div>
+          <div class="filter-dropdown-list" id="lisGroupFilterList"></div>
+        </div>
+
+        <!-- 互认标识筛选下拉 -->
+        <div class="filter-dropdown-container" id="lisRecognitionFilterContainer" style="display: none;">
+          <div class="filter-dropdown-header" id="lisRecognitionFilterHeader">
+            <span>选择互认标识</span>
+            <span class="filter-arrow">▼</span>
+          </div>
+          <div class="filter-dropdown-list" id="lisRecognitionFilterList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-actions">
+    <button class="panel-btn" id="resetSearch">重置</button>
+    <button class="panel-btn panel-btn-primary" id="closePanel">关闭</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="sidebar-wrapper">
+    <div class="sidebar" id="applyForms"></div>
+    <!-- 滚动指示器（仅移动端显示） -->
+    <div class="scroll-indicator scroll-indicator-left" id="scrollHintLeft"></div>
+    <div class="scroll-indicator scroll-indicator-right" id="scrollHintRight"></div>
+  </div>
+  <div class="content" id="items"></div>
+</div>
+
+<div class="mask" id="mask"></div>
+<div class="drawer" id="drawer"></div>
+
+<!-- 加载动画 -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">正在加载数据...</div>
+</div>
+
+<script>
+// ============================================
+// 微信分享配置 - 可自定义分享卡片内容
+// ============================================
+const WECHAT_SHARE_CONFIG = {
+  title: '星元检验项目查询',              // 分享标题
+  desc: '星元医院检验项目收费查询',       // 分享描述
+  // 分享图片URL（必须是绝对路径，建议使用 https）
+  // 如果留空，会自动生成当前页面的二维码作为分享图
+  imgUrl: '',
+  // 是否使用当前页面二维码作为分享图
+  useCurrentPageQrCode: true
+};
+// ============================================
+
+// ============================================
+// 配置：多数据源配置（并行加载，优先使用先返回的）
+// ============================================
+// 支持多个数据源URL，会同时请求，使用最先成功返回的数据
+const DATA_URLS = [
+  'https://gist.githubusercontent.com/nokwiaey/34b7f04ace79606c9f749c9f9c7ad515/raw/item.json',
+  'https://gh-proxy.org/https://gist.githubusercontent.com/nokwiaey/34b7f04ace79606c9f749c9f9c7ad515/raw/item.json'
+];
+// ============================================
+
+let DATA = {};
+let currentForm = '';
+let searchKeyword = '';
+let searchType = 'itemName'; // 默认按项目名称搜索
+let emergencyFilter = 'all'; // 急诊筛选：'all', 'emergency', 'normal'
+let advancedSearchOpen = false;
+let dataLoaded = false; // 标记数据是否已加载
+
+// LIS 筛选状态
+let selectedLisGroups = []; // 选中的检验分组
+let selectedLisRecognitions = []; // 选中的互认标识
+let lisGroupFilterOpen = false;
+let lisRecognitionFilterOpen = false;
+
+// 隐藏加载动画
+function hideLoading() {
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  if (loadingOverlay) {
+    loadingOverlay.classList.add('hidden');
+  }
+}
+
+// 显示加载错误
+function showLoadError(err) {
+  hideLoading();
+  document.getElementById('items').innerHTML = `
+    <div style="text-align:center;padding:40px;color:#999;">
+      <p>数据加载失败</p>
+      <p style="font-size:13px;">${err.message}</p>
+    </div>
+  `;
+}
+
+// 初始化数据
+function initData(data) {
+  if (dataLoaded) return; // 如果数据已加载，忽略后续返回
+  dataLoaded = true;
+
+  DATA = data;
+
+  // 保存 exportTime 到 DATA，用于点击标题显示
+  if (data.exportTime) {
+    DATA.exportTime = data.exportTime;
+  }
+
+  bindSearch();
+  renderForms();
+  if (data.applyForms && data.applyForms.length > 0) {
+    selectForm(data.applyForms[0].applyFormCode);
+  }
+  hideLoading();
+}
+
+// 并行加载多个数据源，使用最先成功返回的
+function loadDataFromMultipleSources() {
+  if (DATA_URLS.length === 0) {
+    showLoadError(new Error('未配置数据源'));
+    return;
+  }
+
+  // 如果只有一个数据源，使用简单 fetch
+  if (DATA_URLS.length === 1) {
+    fetch(DATA_URLS[0])
+      .then(res => {
+        if (!res.ok) throw new Error('数据加载失败');
+        return res.json();
+      })
+      .then(initData)
+      .catch(showLoadError);
+    return;
+  }
+
+  // 多个数据源：并行请求，竞速模式
+  let completedCount = 0;
+  const errors = [];
+
+  DATA_URLS.forEach((url, index) => {
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error(`数据源 ${index + 1} 返回错误: ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        if (!dataLoaded) {
+          console.log(`使用数据源 ${index + 1}: ${url}`);
+          initData(data);
+        }
+      })
+      .catch(err => {
+        errors.push({ url, error: err.message });
+        completedCount++;
+        // 所有请求都失败时显示错误
+        if (completedCount === DATA_URLS.length && !dataLoaded) {
+          showLoadError(new Error('所有数据源加载失败'));
+          console.error('所有数据源加载失败:', errors);
+        }
+      });
+  });
+}
+
+// 开始加载数据
+loadDataFromMultipleSources();
+
+function bindSearch() {
+  const input = document.getElementById('searchInput');
+  const headerTitle = document.getElementById('headerTitle');
+
+  // 绑定搜索输入
+  if (input) {
+    input.addEventListener('input', e => {
+      searchKeyword = e.target.value || '';
+      renderForms();
+      renderItems();
+    });
+  }
+
+  // 绑定标题点击显示更新时间
+  if (headerTitle) {
+    headerTitle.addEventListener('click', () => {
+      if (DATA.exportTime) {
+        const date = new Date(DATA.exportTime);
+        const formattedTime = date.toLocaleString('zh-CN', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+        alert(`更新时间：${formattedTime}`);
+      } else {
+        alert('暂无更新时间信息');
+      }
+    });
+  }
+
+  // 绑定高级搜索面板
+  bindAdvancedSearch();
+}
+
+// 绑定搜索分组折叠/展开
+function bindSearchGroupToggle(headerId, contentId) {
+  const header = document.getElementById(headerId);
+  const content = document.getElementById(contentId);
+  if (!header || !content) return;
+
+  header.addEventListener('click', () => {
+    const isCollapsed = content.classList.toggle('collapsed');
+    const arrow = header.querySelector('.search-group-arrow');
+    if (arrow) {
+      arrow.textContent = isCollapsed ? '▶' : '▼';
+    }
+  });
+}
+
+function bindAdvancedSearch() {
+  const toggleBtn = document.getElementById('advancedSearchToggle');
+  const panel = document.getElementById('advancedSearchPanel');
+  const closeBtn = document.getElementById('closePanel');
+  const resetBtn = document.getElementById('resetSearch');
+  const input = document.getElementById('searchInput');
+
+  // 展开/收起面板
+  if (toggleBtn && panel) {
+    toggleBtn.addEventListener('click', () => {
+      advancedSearchOpen = !advancedSearchOpen;
+      panel.classList.toggle('show', advancedSearchOpen);
+      toggleBtn.textContent = advancedSearchOpen ? '高级搜索 ▲' : '高级搜索 ▼';
+      toggleBtn.classList.toggle('active', advancedSearchOpen);
+      // 控制滚动指示器显示
+      toggleScrollIndicators(!advancedSearchOpen);
+    });
+  }
+
+  // 绑定分组折叠/展开
+  bindSearchGroupToggle('hisGroupHeader', 'hisGroupContent');
+  bindSearchGroupToggle('lisGroupHeader', 'lisGroupContent');
+
+  // 关闭面板
+  if (closeBtn && panel && toggleBtn) {
+    closeBtn.addEventListener('click', () => {
+      advancedSearchOpen = false;
+      panel.classList.remove('show');
+      toggleBtn.textContent = '高级搜索 ▼';
+      toggleBtn.classList.remove('active');
+      // 恢复滚动指示器显示
+      toggleScrollIndicators(true);
+    });
+  }
+
+  // 重置搜索条件
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      // 重置搜索维度
+      const itemNameRadio = document.querySelector('input[name="searchType"][value="itemName"]');
+      if (itemNameRadio) itemNameRadio.checked = true;
+      searchType = 'itemName';
+
+      // 重置急诊筛选
+      const allRadio = document.querySelector('input[name="emergencyType"][value="all"]');
+      if (allRadio) allRadio.checked = true;
+      emergencyFilter = 'all';
+
+      // 重置标本类型筛选
+      selectedSamples = [];
+      const sampleContainer = document.getElementById('sampleFilterContainer');
+      if (sampleContainer) sampleContainer.style.display = 'none';
+      closeSampleFilter();
+      updateSampleFilterHeader();
+      // 清空标本类型下拉列表，下次打开时重新初始化
+      const sampleList = document.getElementById('sampleFilterList');
+      if (sampleList) sampleList.innerHTML = '';
+
+      // 重置检验分组筛选
+      selectedLisGroups = [];
+      const lisGroupContainer = document.getElementById('lisGroupFilterContainer');
+      if (lisGroupContainer) lisGroupContainer.style.display = 'none';
+      closeLisGroupFilter();
+      updateLisGroupFilterHeader();
+      const lisGroupList = document.getElementById('lisGroupFilterList');
+      if (lisGroupList) lisGroupList.innerHTML = '';
+
+      // 重置互认标识筛选
+      selectedLisRecognitions = [];
+      const lisRecognitionContainer = document.getElementById('lisRecognitionFilterContainer');
+      if (lisRecognitionContainer) lisRecognitionContainer.style.display = 'none';
+      closeLisRecognitionFilter();
+      updateLisRecognitionFilterHeader();
+      const lisRecognitionList = document.getElementById('lisRecognitionFilterList');
+      if (lisRecognitionList) lisRecognitionList.innerHTML = '';
+
+      // 清空搜索框
+      if (input) input.value = '';
+      searchKeyword = '';
+
+      // 更新 placeholder
+      updateSearchPlaceholder();
+
+      // 重新渲染
+      renderForms();
+      renderItems();
+    });
+  }
+
+  // 绑定搜索维度切换
+  document.querySelectorAll('input[name="searchType"]').forEach(radio => {
+    radio.addEventListener('change', e => {
+      searchType = e.target.value;
+      updateSearchPlaceholder();
+      renderForms();
+      renderItems();
+    });
+  });
+
+  // 绑定急诊筛选切换
+  document.querySelectorAll('input[name="emergencyType"]').forEach(radio => {
+    radio.addEventListener('change', e => {
+      emergencyFilter = e.target.value;
+      renderForms();
+      renderItems();
+    });
+  });
+
+  // 绑定标本类型筛选下拉
+  bindSampleFilter();
+
+  // 绑定LIS检验分组筛选下拉
+  bindLisGroupFilter();
+
+  // 绑定LIS互认标识筛选下拉
+  bindLisRecognitionFilter();
+}
+
+// 标本类型筛选下拉功能
+let selectedSamples = []; // 选中的标本类型
+let sampleFilterOpen = false;
+
+function bindSampleFilter() {
+  const sampleRadio = document.querySelector('input[name="searchType"][value="sample"]');
+  const container = document.getElementById('sampleFilterContainer');
+  const header = document.getElementById('sampleFilterHeader');
+  const list = document.getElementById('sampleFilterList');
+
+  if (!sampleRadio || !container || !header || !list) return;
+
+  // 搜索维度切换时显示/隐藏标本类型筛选
+  document.querySelectorAll('input[name="searchType"]').forEach(radio => {
+    radio.addEventListener('change', e => {
+      if (e.target.value === 'sample') {
+        container.style.display = 'block';
+        initSampleFilterList();
+      } else {
+        container.style.display = 'none';
+        closeSampleFilter();
+      }
+    });
+  });
+
+  // 点击头部展开/收起下拉
+  header.addEventListener('click', () => {
+    sampleFilterOpen = !sampleFilterOpen;
+    header.classList.toggle('active', sampleFilterOpen);
+    list.classList.toggle('show', sampleFilterOpen);
+    if (sampleFilterOpen) {
+      initSampleFilterList();
+    }
+  });
+
+  // 点击外部关闭下拉
+  document.addEventListener('click', e => {
+    if (!container.contains(e.target)) {
+      closeSampleFilter();
+    }
+  });
+}
+
+function initSampleFilterList() {
+  const list = document.getElementById('sampleFilterList');
+  if (!list || list.children.length > 0) return; // 已初始化
+
+  // 提取所有唯一的标本类型
+  const sampleTypes = new Set();
+  DATA.items.forEach(item => {
+    if (item.sample) {
+      // 标本类型可能是逗号分隔的多个值
+      item.sample.split(/[,，]/).forEach(s => {
+        const trimmed = s.trim();
+        if (trimmed) sampleTypes.add(trimmed);
+      });
+    }
+  });
+
+  // 排序并创建选项
+  const sortedTypes = Array.from(sampleTypes).sort();
+  
+  // 添加"全选"选项
+  const selectAllDiv = document.createElement('div');
+  selectAllDiv.className = 'filter-option';
+  selectAllDiv.innerHTML = `
+    <input type="checkbox" id="sample-select-all">
+    <label for="sample-select-all" style="cursor: pointer; flex: 1;">全选</label>
+  `;
+  selectAllDiv.addEventListener('click', e => {
+    if (e.target.type !== 'checkbox') {
+      const checkbox = selectAllDiv.querySelector('input');
+      checkbox.checked = !checkbox.checked;
+    }
+    toggleAllSamples(sortedTypes);
+  });
+  list.appendChild(selectAllDiv);
+
+  // 添加各个标本类型选项
+  sortedTypes.forEach(type => {
+    const div = document.createElement('div');
+    div.className = 'filter-option';
+    div.dataset.value = type;
+    div.innerHTML = `
+      <input type="checkbox" value="${type}" ${selectedSamples.includes(type) ? 'checked' : ''}>
+      <span>${type}</span>
+    `;
+    div.addEventListener('click', e => {
+      if (e.target.type !== 'checkbox') {
+        const checkbox = div.querySelector('input');
+        checkbox.checked = !checkbox.checked;
+      }
+      toggleSample(type);
+    });
+    list.appendChild(div);
+  });
+}
+
+function toggleSample(sample) {
+  const index = selectedSamples.indexOf(sample);
+  if (index > -1) {
+    selectedSamples.splice(index, 1);
+  } else {
+    selectedSamples.push(sample);
+  }
+  updateSampleFilterHeader();
+  renderForms();
+  renderItems();
+}
+
+function toggleAllSamples(allTypes) {
+  const selectAllCheckbox = document.querySelector('#sample-select-all');
+  if (selectAllCheckbox.checked) {
+    selectedSamples = [...allTypes];
+  } else {
+    selectedSamples = [];
+  }
+  // 更新所有复选框状态
+  document.querySelectorAll('#sampleFilterList .filter-option input[type="checkbox"]').forEach(cb => {
+    if (cb.id !== 'sample-select-all') {
+      cb.checked = selectAllCheckbox.checked;
+    }
+  });
+  updateSampleFilterHeader();
+  renderForms();
+  renderItems();
+}
+
+function updateSampleFilterHeader() {
+  const header = document.getElementById('sampleFilterHeader');
+  if (!header) return;
+  
+  const span = header.querySelector('span');
+  if (selectedSamples.length === 0) {
+    span.textContent = '选择标本类型';
+  } else if (selectedSamples.length === 1) {
+    span.textContent = selectedSamples[0];
+  } else {
+    span.textContent = `已选择 ${selectedSamples.length} 项`;
+  }
+}
+
+function closeSampleFilter() {
+  sampleFilterOpen = false;
+  const header = document.getElementById('sampleFilterHeader');
+  const list = document.getElementById('sampleFilterList');
+  if (header) header.classList.remove('active');
+  if (list) list.classList.remove('show');
+}
+
+// ==================== LIS 检验分组筛选 ====================
+function bindLisGroupFilter() {
+  const lisGroupRadio = document.querySelector('input[name="searchType"][value="lisGroup"]');
+  const container = document.getElementById('lisGroupFilterContainer');
+  const header = document.getElementById('lisGroupFilterHeader');
+  const list = document.getElementById('lisGroupFilterList');
+
+  if (!lisGroupRadio || !container || !header || !list) return;
+
+  // 搜索维度切换时显示/隐藏检验分组筛选
+  document.querySelectorAll('input[name="searchType"]').forEach(radio => {
+    radio.addEventListener('change', e => {
+      if (e.target.value === 'lisGroup') {
+        container.style.display = 'block';
+        initLisGroupFilterList();
+      } else {
+        container.style.display = 'none';
+        closeLisGroupFilter();
+      }
+    });
+  });
+
+  // 点击头部展开/收起下拉
+  header.addEventListener('click', () => {
+    lisGroupFilterOpen = !lisGroupFilterOpen;
+    header.classList.toggle('active', lisGroupFilterOpen);
+    list.classList.toggle('show', lisGroupFilterOpen);
+    if (lisGroupFilterOpen) {
+      initLisGroupFilterList();
+    }
+  });
+
+  // 点击外部关闭下拉
+  document.addEventListener('click', e => {
+    if (!container.contains(e.target)) {
+      closeLisGroupFilter();
+    }
+  });
+}
+
+function initLisGroupFilterList() {
+  const list = document.getElementById('lisGroupFilterList');
+  if (!list || list.children.length > 0 || !DATA.lis) return;
+
+  // 提取所有检验分组
+  const groups = DATA.lis.inspectionGroups || [];
+  const sortedGroups = [...groups].sort((a, b) => (a.groupSort || '') > (b.groupSort || '') ? 1 : -1);
+
+  // 添加"全选"选项
+  const selectAllDiv = document.createElement('div');
+  selectAllDiv.className = 'filter-option';
+  selectAllDiv.innerHTML = `
+    <input type="checkbox" id="lis-group-select-all">
+    <label for="lis-group-select-all" style="cursor: pointer; flex: 1;">全选</label>
+  `;
+  selectAllDiv.addEventListener('click', e => {
+    if (e.target.type !== 'checkbox') {
+      const checkbox = selectAllDiv.querySelector('input');
+      checkbox.checked = !checkbox.checked;
+    }
+    toggleAllLisGroups(sortedGroups);
+  });
+  list.appendChild(selectAllDiv);
+
+  // 添加各个分组选项
+  sortedGroups.forEach(group => {
+    const div = document.createElement('div');
+    div.className = 'filter-option';
+    div.dataset.value = group.groupId;
+    div.innerHTML = `
+      <input type="checkbox" value="${group.groupId}" ${selectedLisGroups.includes(group.groupId) ? 'checked' : ''}>
+      <span>${group.groupName}</span>
+    `;
+    div.addEventListener('click', e => {
+      if (e.target.type !== 'checkbox') {
+        const checkbox = div.querySelector('input');
+        checkbox.checked = !checkbox.checked;
+      }
+      toggleLisGroup(group.groupId);
+    });
+    list.appendChild(div);
+  });
+}
+
+function toggleLisGroup(groupId) {
+  const index = selectedLisGroups.indexOf(groupId);
+  if (index > -1) {
+    selectedLisGroups.splice(index, 1);
+  } else {
+    selectedLisGroups.push(groupId);
+  }
+  updateLisGroupFilterHeader();
+  renderForms();
+  renderItems();
+}
+
+function toggleAllLisGroups(allGroups) {
+  const selectAllCheckbox = document.querySelector('#lis-group-select-all');
+  if (selectAllCheckbox.checked) {
+    selectedLisGroups = allGroups.map(g => g.groupId);
+  } else {
+    selectedLisGroups = [];
+  }
+  document.querySelectorAll('#lisGroupFilterList .filter-option input[type="checkbox"]').forEach(cb => {
+    if (cb.id !== 'lis-group-select-all') {
+      cb.checked = selectAllCheckbox.checked;
+    }
+  });
+  updateLisGroupFilterHeader();
+  renderForms();
+  renderItems();
+}
+
+function updateLisGroupFilterHeader() {
+  const header = document.getElementById('lisGroupFilterHeader');
+  if (!header) return;
+
+  const span = header.querySelector('span');
+  if (selectedLisGroups.length === 0) {
+    span.textContent = '选择检验分组';
+  } else if (selectedLisGroups.length === 1) {
+    const group = DATA.lis?.inspectionGroups?.find(g => g.groupId === selectedLisGroups[0]);
+    span.textContent = group?.groupName || selectedLisGroups[0];
+  } else {
+    span.textContent = `已选择 ${selectedLisGroups.length} 项`;
+  }
+}
+
+function closeLisGroupFilter() {
+  lisGroupFilterOpen = false;
+  const header = document.getElementById('lisGroupFilterHeader');
+  const list = document.getElementById('lisGroupFilterList');
+  if (header) header.classList.remove('active');
+  if (list) list.classList.remove('show');
+}
+
+// ==================== LIS 互认标识筛选 ====================
+function bindLisRecognitionFilter() {
+  const lisRecognitionRadio = document.querySelector('input[name="searchType"][value="lisRecognition"]');
+  const container = document.getElementById('lisRecognitionFilterContainer');
+  const header = document.getElementById('lisRecognitionFilterHeader');
+  const list = document.getElementById('lisRecognitionFilterList');
+
+  if (!lisRecognitionRadio || !container || !header || !list) return;
+
+  // 搜索维度切换时显示/隐藏互认标识筛选
+  document.querySelectorAll('input[name="searchType"]').forEach(radio => {
+    radio.addEventListener('change', e => {
+      if (e.target.value === 'lisRecognition') {
+        container.style.display = 'block';
+        initLisRecognitionFilterList();
+      } else {
+        container.style.display = 'none';
+        closeLisRecognitionFilter();
+      }
+    });
+  });
+
+  // 点击头部展开/收起下拉
+  header.addEventListener('click', () => {
+    lisRecognitionFilterOpen = !lisRecognitionFilterOpen;
+    header.classList.toggle('active', lisRecognitionFilterOpen);
+    list.classList.toggle('show', lisRecognitionFilterOpen);
+    if (lisRecognitionFilterOpen) {
+      initLisRecognitionFilterList();
+    }
+  });
+
+  // 点击外部关闭下拉
+  document.addEventListener('click', e => {
+    if (!container.contains(e.target)) {
+      closeLisRecognitionFilter();
+    }
+  });
+}
+
+function initLisRecognitionFilterList() {
+  const list = document.getElementById('lisRecognitionFilterList');
+  if (!list || list.children.length > 0 || !DATA.lis) return;
+
+  // 提取所有唯一的互认标识（处理 G005:陕HR 格式，提取冒号后的部分）
+  const recognitions = new Set();
+  DATA.lis.testItems?.forEach(item => {
+    if (item.itemDes) {
+      // 如果包含冒号，提取冒号后的部分
+      const recognition = item.itemDes.includes(':') ? item.itemDes.split(':').pop() : item.itemDes;
+      if (recognition) recognitions.add(recognition);
+    }
+  });
+
+  const sortedRecognitions = Array.from(recognitions).sort();
+
+  // 添加"全选"选项
+  const selectAllDiv = document.createElement('div');
+  selectAllDiv.className = 'filter-option';
+  selectAllDiv.innerHTML = `
+    <input type="checkbox" id="lis-recognition-select-all">
+    <label for="lis-recognition-select-all" style="cursor: pointer; flex: 1;">全选</label>
+  `;
+  selectAllDiv.addEventListener('click', e => {
+    if (e.target.type !== 'checkbox') {
+      const checkbox = selectAllDiv.querySelector('input');
+      checkbox.checked = !checkbox.checked;
+    }
+    toggleAllLisRecognitions(sortedRecognitions);
+  });
+  list.appendChild(selectAllDiv);
+
+  // 添加各个互认标识选项
+  sortedRecognitions.forEach(recognition => {
+    const div = document.createElement('div');
+    div.className = 'filter-option';
+    div.dataset.value = recognition;
+    div.innerHTML = `
+      <input type="checkbox" value="${recognition}" ${selectedLisRecognitions.includes(recognition) ? 'checked' : ''}>
+      <span>${recognition}</span>
+    `;
+    div.addEventListener('click', e => {
+      if (e.target.type !== 'checkbox') {
+        const checkbox = div.querySelector('input');
+        checkbox.checked = !checkbox.checked;
+      }
+      toggleLisRecognition(recognition);
+    });
+    list.appendChild(div);
+  });
+}
+
+function toggleLisRecognition(recognition) {
+  const index = selectedLisRecognitions.indexOf(recognition);
+  if (index > -1) {
+    selectedLisRecognitions.splice(index, 1);
+  } else {
+    selectedLisRecognitions.push(recognition);
+  }
+  updateLisRecognitionFilterHeader();
+  renderForms();
+  renderItems();
+}
+
+function toggleAllLisRecognitions(allRecognitions) {
+  const selectAllCheckbox = document.querySelector('#lis-recognition-select-all');
+  if (selectAllCheckbox.checked) {
+    selectedLisRecognitions = [...allRecognitions];
+  } else {
+    selectedLisRecognitions = [];
+  }
+  document.querySelectorAll('#lisRecognitionFilterList .filter-option input[type="checkbox"]').forEach(cb => {
+    if (cb.id !== 'lis-recognition-select-all') {
+      cb.checked = selectAllCheckbox.checked;
+    }
+  });
+  updateLisRecognitionFilterHeader();
+  renderForms();
+  renderItems();
+}
+
+function updateLisRecognitionFilterHeader() {
+  const header = document.getElementById('lisRecognitionFilterHeader');
+  if (!header) return;
+
+  const span = header.querySelector('span');
+  if (selectedLisRecognitions.length === 0) {
+    span.textContent = '选择互认标识';
+  } else if (selectedLisRecognitions.length === 1) {
+    span.textContent = selectedLisRecognitions[0];
+  } else {
+    span.textContent = `已选择 ${selectedLisRecognitions.length} 项`;
+  }
+}
+
+function closeLisRecognitionFilter() {
+  lisRecognitionFilterOpen = false;
+  const header = document.getElementById('lisRecognitionFilterHeader');
+  const list = document.getElementById('lisRecognitionFilterList');
+  if (header) header.classList.remove('active');
+  if (list) list.classList.remove('show');
+}
+
+function updateSearchPlaceholder() {
+  const input = document.getElementById('searchInput');
+  const placeholders = {
+    itemName: '请输入项目名称',
+    itemCode: '请输入项目编码',
+    detailName: '请输入收费名称',
+    detailCode: '请输入收费编码',
+    sample: '请输入标本类型',
+    lisTestItemName: '请输入分析项目名称',
+    lisTestItemId: '请输入分析项目编码',
+    lisTestItemCode: '请输入分析项目代号',
+    lisGroup: '请选择检验分组',
+    lisRecognition: '请选择互认标识'
+  };
+  if (input) {
+    input.placeholder = placeholders[searchType] || '请输入搜索内容';
+  }
+}
+
+function matchEmergencyFilter(item) {
+  // 将 isEmergency 转换为布尔值（处理可能的字符串或数字类型）
+  const isEmergency = item.isEmergency === true || item.isEmergency === 'true' || item.isEmergency === 1;
+  
+  switch (emergencyFilter) {
+    case 'emergency':
+      return isEmergency === true;
+    case 'normal':
+      return isEmergency === false;
+    case 'all':
+    default:
+      return true;
+  }
+}
+
+function renderForms() {
+  const box = document.getElementById('applyForms');
+  box.innerHTML = '';
+
+  DATA.applyForms.forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'apply-form';
+    div.id = 'form-' + f.applyFormCode;
+    div.onclick = () => selectForm(f.applyFormCode);
+
+    // 计算该申请单匹配搜索条件和急诊筛选的项目数
+    const count = DATA.items
+      .filter(i => i.applyFormCode === f.applyFormCode)
+      .filter(matchKeyword)
+      .filter(matchEmergencyFilter)
+      .length;
+
+    div.innerHTML = `
+      <span>${f.applyFormName}</span>
+      ${count > 0 ? `<span class="apply-form-count">${count}</span>` : ''}
+    `;
+    box.appendChild(div);
+  });
+
+  // 重新检查滚动提示
+  setTimeout(updateScrollIndicators, 100);
+}
+
+function selectForm(code) {
+  currentForm = code;
+  document.querySelectorAll('.apply-form').forEach(el => el.classList.remove('active'));
+  const current = document.getElementById('form-' + code);
+  if (current) {
+    current.classList.add('active');
+  }
+  renderItems();
+}
+
+function matchKeyword(item) {
+  // 标本类型筛选（使用下拉选择的值）
+  if (searchType === 'sample' && selectedSamples.length > 0) {
+    const itemSamples = String(item.sample || '').split(/[,，]/).map(s => s.trim());
+    return selectedSamples.some(selected => itemSamples.includes(selected));
+  }
+
+  // 检验分组筛选（使用下拉选择的值）
+  if (searchType === 'lisGroup' && selectedLisGroups.length > 0) {
+    if (!DATA.lis) return false;
+    const lisChargeItem = DATA.lis.chargeItems.find(c => c.hisId === item.itemCode);
+    if (!lisChargeItem) return false;
+    const links = DATA.lis.chargeItemLists.filter(l => l.chargeItemId === lisChargeItem.chargeItemId);
+    return links.some(l => selectedLisGroups.includes(l.groupId));
+  }
+
+  // 互认标识筛选（使用下拉选择的值）
+  if (searchType === 'lisRecognition' && selectedLisRecognitions.length > 0) {
+    if (!DATA.lis) return false;
+    const lisChargeItem = DATA.lis.chargeItems.find(c => c.hisId === item.itemCode);
+    if (!lisChargeItem) return false;
+    const links = DATA.lis.chargeItemLists.filter(l => l.chargeItemId === lisChargeItem.chargeItemId);
+    return links.some(l => {
+      const testItem = DATA.lis.testItems.find(t => t.testItemId === l.testItemId);
+      if (!testItem || !testItem.itemDes) return false;
+      // 提取互认标识（处理 G005:陕HR 格式）
+      const recognition = testItem.itemDes.includes(':')
+        ? testItem.itemDes.split(':').pop()
+        : testItem.itemDes;
+      return selectedLisRecognitions.includes(recognition);
+    });
+  }
+
+  // 其他搜索类型的文本匹配
+  if (!searchKeyword) {
+    return true;
+  }
+  const kw = searchKeyword.trim().toLowerCase();
+  if (!kw) {
+    return true;
+  }
+
+  switch (searchType) {
+    case 'itemName':
+      return String(item.itemName || '').toLowerCase().includes(kw);
+
+    case 'itemCode':
+      return String(item.itemCode || '').toLowerCase().includes(kw);
+
+    case 'sample':
+      return String(item.sample || '').toLowerCase().includes(kw);
+
+    case 'detailName':
+      // 搜索收费明细名称
+      const price = DATA.priceMap[item.itemCode];
+      if (price && price.details) {
+        return price.details.some(d =>
+          String(d.detailName || '').toLowerCase().includes(kw)
+        );
+      }
+      return false;
+
+    case 'detailCode':
+      // 搜索收费明细编码
+      const price2 = DATA.priceMap[item.itemCode];
+      if (price2 && price2.details) {
+        return price2.details.some(d =>
+          String(d.detailCode || '').toLowerCase().includes(kw)
+        );
+      }
+      return false;
+
+    case 'lisTestItemName':
+      // 搜索LIS分析项目名称
+      if (!DATA.lis) return false;
+      const lisChargeItem1 = DATA.lis.chargeItems.find(c => c.hisId === item.itemCode);
+      if (!lisChargeItem1) return false;
+      const testItemIds1 = DATA.lis.chargeItemLists
+        .filter(l => l.chargeItemId === lisChargeItem1.chargeItemId)
+        .map(l => l.testItemId);
+      return DATA.lis.testItems
+        .filter(t => testItemIds1.includes(t.testItemId))
+        .some(t => String(t.chineseName || '').toLowerCase().includes(kw));
+
+    case 'lisTestItemId':
+      // 搜索LIS分析项目编码
+      if (!DATA.lis) return false;
+      const lisChargeItem2 = DATA.lis.chargeItems.find(c => c.hisId === item.itemCode);
+      if (!lisChargeItem2) return false;
+      const testItemIds2 = DATA.lis.chargeItemLists
+        .filter(l => l.chargeItemId === lisChargeItem2.chargeItemId)
+        .map(l => l.testItemId);
+      return testItemIds2.some(id => String(id || '').toLowerCase().includes(kw));
+
+    case 'lisTestItemCode':
+      // 搜索LIS分析项目代号
+      if (!DATA.lis) return false;
+      const lisChargeItem3 = DATA.lis.chargeItems.find(c => c.hisId === item.itemCode);
+      if (!lisChargeItem3) return false;
+      const testItemIds3 = DATA.lis.chargeItemLists
+        .filter(l => l.chargeItemId === lisChargeItem3.chargeItemId)
+        .map(l => l.testItemId);
+      return DATA.lis.testItems
+        .filter(t => testItemIds3.includes(t.testItemId))
+        .some(t => String(t.testItemCode || '').toLowerCase().includes(kw));
+
+    default:
+      return true;
+  }
+}
+
+function renderItems() {
+  const box = document.getElementById('items');
+  if (!box) {
+    return;
+  }
+  box.innerHTML = '';
+  DATA.items
+    .filter(i => i.applyFormCode === currentForm)
+    .filter(matchKeyword)
+    .filter(matchEmergencyFilter)
+    .forEach(i => {
+      const div = document.createElement('div');
+      div.className = 'card';
+      div.onclick = () => showPrice(i.itemCode);
+
+      div.innerHTML = `
+        <div class="card-title">${i.itemName}</div>
+        <div class="card-meta">
+          <span class="card-meta-code">编码：${i.itemCode}</span>
+          <span class="card-meta-sample">样本：${i.sample}</span>
+        </div>
+        ${i.remark ? `<div class="card-meta-remark">备注：${i.remark}</div>` : ''}
+        ${i.isEmergency ? '<span class="emergency-badge">急诊</span>' : ''}
+      `;
+      box.appendChild(div);
+    });
+}
+
+function findApplyFormName(code) {
+  const form = DATA.applyForms.find(f => f.applyFormCode === code);
+  return form ? form.applyFormName : '';
+}
+
+function formatPrice(value) {
+  if (value === null || value === undefined || value === '') {
+    return '';
+  }
+  const num = typeof value === 'number' ? value : Number(value);
+  if (Number.isNaN(num)) {
+    return String(value);
+  }
+  return num.toFixed(2);
+}
+
+// 获取 LIS 分析项目按分组组织（通过 HIS itemCode 关联）
+function getLisTestItemsByGroup(itemCode) {
+  // 如果没有 LIS 数据，返回空数组
+  if (!DATA.lis) return [];
+
+  // 1. 通过 hisId 找到 LIS 诊疗项目
+  const lisChargeItem = DATA.lis.chargeItems.find(c => c.hisId === itemCode);
+  if (!lisChargeItem) return [];
+
+  // 2. 找到关联的分析项目列表（包含 groupId）
+  const testItemLinks = DATA.lis.chargeItemLists.filter(
+    l => l.chargeItemId === lisChargeItem.chargeItemId
+  );
+  if (testItemLinks.length === 0) return [];
+
+  // 3. 按 groupId 分组组织数据
+  const groupsMap = new Map();
+  
+  testItemLinks.forEach(link => {
+    const testItem = DATA.lis.testItems.find(t => t.testItemId === link.testItemId);
+    if (!testItem) return;
+    
+    // 获取检验分组信息
+    let group = groupsMap.get(link.groupId);
+    if (!group) {
+      const groupInfo = DATA.lis.inspectionGroups.find(g => g.groupId === link.groupId);
+      group = {
+        groupId: link.groupId,
+        groupName: groupInfo?.groupName || link.groupId,
+        groupSort: groupInfo?.groupSort || '',
+        testItems: []
+      };
+      groupsMap.set(link.groupId, group);
+    }
+    
+    // 添加分析项目
+    group.testItems.push({
+      ...testItem,
+      itemSort: link.itemSort
+    });
+  });
+
+  // 4. 将 Map 转为数组并按 groupSort 排序
+  const groups = Array.from(groupsMap.values());
+  groups.sort((a, b) => {
+    return (a.groupSort || '') > (b.groupSort || '') ? 1 : -1;
+  });
+
+  // 5. 每个分组内的分析项目按 itemSort 排序
+  groups.forEach(group => {
+    group.testItems.sort((a, b) => {
+      return (a.itemSort || '') > (b.itemSort || '') ? 1 : -1;
+    });
+  });
+
+  return groups;
+}
+
+// 获取互认标识（根据 groupId 判断）
+function getRecognition(itemDes, groupId) {
+  if (!itemDes) return '';
+  // 如果包含冒号，格式为 "GROUP_ID:标识"
+  if (itemDes.includes(':')) {
+    const [prefix, recognition] = itemDes.split(':');
+    // 只有当 groupId 匹配时才返回标识
+    return prefix === groupId ? recognition : '';
+  }
+  // 不包含冒号，直接返回
+  return itemDes;
+}
+
+// 每页显示的收费项数量
+const PAGE_SIZE = 5;
+
+function showPrice(code) {
+  const drawer = document.getElementById('drawer');
+  const mask = document.getElementById('mask');
+  const price = DATA.priceMap[code];
+  const item = DATA.items.find(i => i.itemCode === code);
+
+  if (!drawer || !mask || !price || !item) {
+    return;
+  }
+
+  const applyFormName = findApplyFormName(item.applyFormCode);
+  
+  // 分页状态
+  let currentPage = 1;
+  const totalPages = Math.ceil(price.details.length / PAGE_SIZE);
+
+  // 渲染收费明细（根据当前页）
+  function renderPriceDetails() {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    const pageDetails = price.details.slice(start, end);
+    
+    let detailsHtml = '';
+    pageDetails.forEach(d => {
+      detailsHtml += `
+        <div class="price-row">
+          <div class="price-row-info">
+            <div class="price-row-name">${d.detailName}</div>
+            ${d.detailCode ? `<div class="price-row-code">${d.detailCode}</div>` : ''}
+          </div>
+          <div class="price-row-price">¥${formatPrice(d.price)} × ${d.count} = ¥${formatPrice(d.total)}</div>
+        </div>
+      `;
+    });
+    
+    // 更新明细区域
+    const detailsContainer = document.getElementById('price-details-container');
+    if (detailsContainer) {
+      detailsContainer.innerHTML = detailsHtml;
+    }
+    
+    // 更新分页信息
+    const pageInfo = document.getElementById('page-info');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    if (pageInfo) {
+      pageInfo.textContent = `${currentPage} / ${totalPages} 页 (${price.details.length}项)`;
+    }
+    if (prevBtn) {
+      prevBtn.disabled = currentPage <= 1;
+    }
+    if (nextBtn) {
+      nextBtn.disabled = currentPage >= totalPages;
+    }
+  }
+
+  // 固定头部：标题和基本信息
+  let html = `<div class="drawer-header">`;
+  html += `<h3>${item.itemName}${item.isEmergency ? '<span class="drawer-emergency-badge">急诊</span>' : ''}</h3>`;
+  html += `
+    <div class="drawer-basic">
+      <span>项目编码：${item.itemCode}</span>
+      <span><span class="sample-type-hint" data-hint="指采集时的样本类型，例如：[全血]指的是血液离体前的状态，并非检测时的抗凝全血">样本类型</span>：${item.sample}</span>
+      ${item.remark ? `<span>备注：${item.remark}</span>` : ''}
+    </div>
+  `;
+  html += `</div>`;
+
+  // 可滚动内容区域
+  html += `<div class="drawer-content">`;
+
+  // 收费明细容器
+  html += `<div id="price-details-container"></div>`;
+
+  // 分页控件（只有超过一页时才显示）
+  if (totalPages > 1) {
+    html += `
+      <div class="pagination">
+        <button id="prev-btn" ${currentPage <= 1 ? 'disabled' : ''}>上一页</button>
+        <span class="page-info" id="page-info">${currentPage} / ${totalPages} 页 (${price.details.length}项)</span>
+        <button id="next-btn" ${currentPage >= totalPages ? 'disabled' : ''}>下一页</button>
+      </div>
+    `;
+  }
+
+  // 合计金额和价格提示（移到LIS之前）
+  html += `<div class="price-sum">合计：¥${formatPrice(price.sum)}</div>`;
+  html += `<div style="margin-top:10px;font-size:12px;color:#999;">
+    价格以医院结算为准
+  </div>`;
+
+  // LIS 分析项目展示（按检验分组）
+  const lisGroups = getLisTestItemsByGroup(item.itemCode);
+  if (lisGroups.length > 0) {
+    html += `
+      <div class="lis-section">
+        <div class="lis-header" id="lis-toggle">
+          <span class="lis-arrow">▼</span>
+          <span class="lis-title">包含的分析项目</span>
+        </div>
+        <div class="lis-content" id="lis-content">
+    `;
+    lisGroups.forEach(group => {
+      html += `
+        <div class="lis-group">
+          <div class="lis-group-header">${group.groupName}</div>
+          <div class="lis-group-items">
+      `;
+      group.testItems.forEach(t => {
+        // 根据 groupId 获取互认标识
+        const recognition = getRecognition(t.itemDes, group.groupId);
+        html += `
+          <div class="lis-item">
+            <span class="lis-item-id">${t.testItemId}</span>
+            <span class="lis-item-code">${t.testItemCode || '-'}</span>
+            <span class="lis-item-name">${t.chineseName}</span>
+            <span class="lis-item-recognition">${recognition}</span>
+          </div>
+        `;
+      });
+      html += `</div></div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  html += `</div>`; // 结束 drawer-content
+
+  // 固定底部：打印按钮
+  html += `
+    <div class="drawer-footer">
+      <div class="drawer-actions">
+        <button id="print-btn">打印</button>
+      </div>
+    </div>
+  `;
+
+  drawer.innerHTML = html;
+  mask.style.display = 'block';
+  drawer.classList.add('show');
+  
+  // 初始渲染
+  renderPriceDetails();
+
+  // 隐藏滚动指示器
+  const leftHint = document.getElementById('scrollHintLeft');
+  const rightHint = document.getElementById('scrollHintRight');
+  if (leftHint) leftHint.style.display = 'none';
+  if (rightHint) rightHint.style.display = 'none';
+
+  mask.onclick = closeDrawer;
+
+  const printBtn = document.getElementById('print-btn');
+  if (printBtn) {
+    printBtn.onclick = () => printItemDetail(item, price, applyFormName);
+  }
+  
+  // 绑定分页按钮事件
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  
+  if (prevBtn) {
+    prevBtn.onclick = () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderPriceDetails();
+      }
+    };
+  }
+  
+  if (nextBtn) {
+    nextBtn.onclick = () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderPriceDetails();
+      }
+    };
+  }
+
+  // 绑定 LIS 分析项目折叠/展开
+  const lisToggle = document.getElementById('lis-toggle');
+  const lisContent = document.getElementById('lis-content');
+  if (lisToggle && lisContent) {
+    lisToggle.onclick = () => {
+      const isExpanded = lisContent.classList.toggle('expanded');
+      const arrow = lisToggle.querySelector('.lis-arrow');
+      if (arrow) {
+        arrow.textContent = isExpanded ? '▶' : '▼';
+      }
+    };
+  }
+}
+
+function buildDetailHtml(item, price, applyFormName) {
+  let rows = '';
+  price.details.forEach(d => {
+    rows += `
+      <tr>
+        <td>${d.detailCode || ''}</td>
+        <td>${d.detailName}</td>
+        <td style="text-align:right;">${formatPrice(d.price)}</td>
+        <td style="text-align:right;">${d.count}</td>
+        <td style="text-align:right;">${formatPrice(d.total)}</td>
+      </tr>
+    `;
+  });
+
+  // LIS 分析项目（按检验分组）
+  let lisHtml = '';
+  const lisGroups = getLisTestItemsByGroup(item.itemCode);
+  if (lisGroups.length > 0) {
+    lisHtml = `<h3 style="margin-top:20px;font-size:14px;">包含的分析项目</h3>`;
+    lisGroups.forEach(group => {
+      let lisRows = '';
+      group.testItems.forEach(t => {
+        // 根据 groupId 获取互认标识
+        const recognition = getRecognition(t.itemDes, group.groupId);
+        lisRows += `
+          <tr>
+            <td style="border:1px solid #ccc;padding:4px 6px;">${t.testItemId}</td>
+            <td style="border:1px solid #ccc;padding:4px 6px;">${t.testItemCode || ''}</td>
+            <td style="border:1px solid #ccc;padding:4px 6px;">${t.chineseName}</td>
+            <td style="border:1px solid #ccc;padding:4px 6px;">${recognition}</td>
+          </tr>
+        `;
+      });
+      lisHtml += `
+        <h4 style="margin-top:12px;font-size:13px;color:#666;background:#f5f5f5;padding:6px 8px;border-radius:4px;">${group.groupName}</h4>
+        <table style="width:100%;border-collapse:collapse;margin-top:4px;font-size:12px;">
+          <thead>
+            <tr>
+              <th style="border:1px solid #ccc;padding:4px 6px;">分析项目ID</th>
+              <th style="border:1px solid #ccc;padding:4px 6px;">分析项目代号</th>
+              <th style="border:1px solid #ccc;padding:4px 6px;">分析项目名称</th>
+              <th style="border:1px solid #ccc;padding:4px 6px;">互认标识</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${lisRows}
+          </tbody>
+        </table>
+      `;
+    });
+  }
+
+  return `
+    <h2>检验项目价格明细</h2>
+    <p>诊疗项目名称：${item.itemName}</p>
+    <p>诊疗项目编码：${item.itemCode}</p>
+    <p>所属申请单：${applyFormName}</p>
+    <p>样本类型：${item.sample}</p>
+    <p>是否急诊项目：${item.isEmergency ? '是' : '否'}</p>
+    ${item.remark ? `<p>备注：${item.remark}</p>` : ''}
+    <table style="width:100%;border-collapse:collapse;margin-top:12px;font-size:13px;">
+      <thead>
+        <tr>
+          <th style="border:1px solid #ccc;padding:4px 6px;">收费明细编码</th>
+          <th style="border:1px solid #ccc;padding:4px 6px;">收费明细名称</th>
+          <th style="border:1px solid #ccc;padding:4px 6px;text-align:right;">单价</th>
+          <th style="border:1px solid #ccc;padding:4px 6px;text-align:right;">数量</th>
+          <th style="border:1px solid #ccc;padding:4px 6px;text-align:right;">小计</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows}
+      </tbody>
+    </table>
+    <p style="margin-top:10px;text-align:right;font-weight:600;">
+      合计：¥${formatPrice(price.sum)}
+    </p>
+    ${lisHtml}
+    <p style="margin-top:6px;font-size:12px;color:#666;">
+      价格以医院结算为准
+    </p>
+  `;
+}
+
+function printItemDetail(item, price, applyFormName) {
+  const win = window.open('', '_blank');
+  if (!win) {
+    return;
+  }
+  const content = buildDetailHtml(item, price, applyFormName);
+  const html = `
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+    <head>
+      <meta charset="UTF-8" />
+      <title>${item.itemName} 价格明细</title>
+      <style>
+        body {
+          margin: 16px;
+          font-family: -apple-system, BlinkMacSystemFont, "PingFang SC";
+          font-size: 14px;
+          background: #fff;
+          color: #000;
+        }
+        h2 {
+          margin: 0 0 12px;
+          text-align: center;
+        }
+        table, th, td {
+          border: 1px solid #ccc;
+        }
+        @page {
+          size: A4;
+          margin: 16mm;
+        }
+      </style>
+    </head>
+    <body>
+      ${content}
+    </body>
+    </html>
+  `;
+  win.document.write(html);
+  win.document.close();
+  win.focus();
+  win.print();
+}
+
+function exportItemDetailHtml(item, price, applyFormName) {
+  const content = buildDetailHtml(item, price, applyFormName);
+  const html = `
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+    <head>
+      <meta charset="UTF-8" />
+      <title>${item.itemName} 价格明细</title>
+    </head>
+    <body>
+      ${content}
+    </body>
+    </html>
+  `;
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const safeName = String(item.itemName || '项目').replace(/[\\\\/:*?"<>|]/g, '');
+  a.href = url;
+  a.download = safeName + '-价格明细.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function closeDrawer() {
+  const mask = document.getElementById('mask');
+  const drawer = document.getElementById('drawer');
+  if (mask) {
+    mask.style.display = 'none';
+  }
+  if (drawer) {
+    drawer.classList.remove('show');
+  }
+
+  // 恢复滚动指示器显示
+  const leftHint = document.getElementById('scrollHintLeft');
+  const rightHint = document.getElementById('scrollHintRight');
+  if (leftHint) leftHint.style.display = '';
+  if (rightHint) rightHint.style.display = '';
+  // 重新检查滚动状态
+  updateScrollIndicators();
+}
+
+// ============================================
+// 微信分享初始化
+// ============================================
+function initWechatShare() {
+  const currentUrl = window.location.href;
+  
+  // 确定分享图片URL
+  let shareImageUrl = WECHAT_SHARE_CONFIG.imgUrl;
+  if (!shareImageUrl && WECHAT_SHARE_CONFIG.useCurrentPageQrCode) {
+    // 使用当前页面URL生成二维码
+    shareImageUrl = `https://api.2dcode.biz/v1/create-qr-code?data=${encodeURIComponent(currentUrl)}&size=500x500`;
+  }
+  
+  // 更新 Open Graph Meta 标签
+  const ogImage = document.getElementById('ogImage');
+  if (ogImage && shareImageUrl) {
+    ogImage.setAttribute('content', shareImageUrl);
+  }
+  
+  // 如果页面中已加载微信 JS-SDK，配置分享
+  if (typeof wx !== 'undefined' && wx.ready) {
+    wx.ready(function() {
+      // 分享给朋友
+      wx.updateAppMessageShareData({
+        title: WECHAT_SHARE_CONFIG.title,
+        desc: WECHAT_SHARE_CONFIG.desc,
+        link: currentUrl,
+        imgUrl: shareImageUrl,
+        success: function() {
+          console.log('微信分享配置成功');
+        }
+      });
+      
+      // 分享到朋友圈
+      wx.updateTimelineShareData({
+        title: WECHAT_SHARE_CONFIG.title,
+        link: currentUrl,
+        imgUrl: shareImageUrl,
+        success: function() {
+          console.log('微信朋友圈分享配置成功');
+        }
+      });
+    });
+  }
+}
+
+// 页面加载完成后初始化微信分享
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initWechatShare);
+} else {
+  initWechatShare();
+}
+// ============================================
+
+// ============================================
+// 移动端申请单滚动提示
+// ============================================
+let scrollIndicatorsEnabled = true;
+
+function toggleScrollIndicators(show) {
+  scrollIndicatorsEnabled = show;
+  const leftHint = document.getElementById('scrollHintLeft');
+  const rightHint = document.getElementById('scrollHintRight');
+
+  if (!show) {
+    // 隐藏所有指示器
+    if (leftHint) leftHint.classList.remove('visible');
+    if (rightHint) rightHint.classList.remove('visible');
+  } else {
+    // 重新检查并显示
+    updateScrollIndicators();
+  }
+}
+
+function updateScrollIndicators() {
+  const sidebar = document.getElementById('applyForms');
+  const leftHint = document.getElementById('scrollHintLeft');
+  const rightHint = document.getElementById('scrollHintRight');
+
+  if (!sidebar || !leftHint || !rightHint) return;
+
+  // 如果指示器被禁用，不显示
+  if (!scrollIndicatorsEnabled) return;
+
+  const scrollLeft = sidebar.scrollLeft;
+  const scrollWidth = sidebar.scrollWidth;
+  const clientWidth = sidebar.clientWidth;
+  const maxScroll = scrollWidth - clientWidth;
+
+  // 是否可以滚动
+  const isScrollable = scrollWidth > clientWidth;
+
+  // 左侧是否有内容（滚动位置大于阈值）
+  const hasLeftContent = scrollLeft > 10;
+
+  // 右侧是否有内容（滚动位置小于最大滚动距离）
+  const hasRightContent = scrollLeft < maxScroll - 10;
+
+  // 更新左侧指示器
+  if (isScrollable && hasLeftContent) {
+    leftHint.classList.add('visible');
+  } else {
+    leftHint.classList.remove('visible');
+  }
+
+  // 更新右侧指示器
+  if (isScrollable && hasRightContent) {
+    rightHint.classList.add('visible');
+  } else {
+    rightHint.classList.remove('visible');
+  }
+}
+
+function initScrollHint() {
+  const sidebar = document.getElementById('applyForms');
+  if (!sidebar) return;
+
+  // 监听滚动事件，实时更新指示器
+  sidebar.addEventListener('scroll', updateScrollIndicators);
+
+  // 监听窗口大小变化
+  window.addEventListener('resize', updateScrollIndicators);
+
+  // 初始检查（多次延迟确保内容已渲染）
+  setTimeout(updateScrollIndicators, 100);
+  setTimeout(updateScrollIndicators, 300);
+  setTimeout(updateScrollIndicators, 500);
+  setTimeout(updateScrollIndicators, 1000);
+}
+
+// 页面加载完成后初始化滚动提示
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initScrollHint);
+} else {
+  initScrollHint();
+}
+// ============================================
+
+// ============================================
+// 提示弹层功能
+// ============================================
+function initHintTooltip() {
+  // 创建 tooltip 元素
+  let tooltip = document.getElementById('hintTooltip');
+  if (!tooltip) {
+    tooltip = document.createElement('div');
+    tooltip.id = 'hintTooltip';
+    tooltip.className = 'hint-tooltip';
+    document.body.appendChild(tooltip);
+  }
+
+  // 使用事件委托处理 hint 元素
+  document.addEventListener('mouseover', function(e) {
+    const hintEl = e.target.closest('.sample-type-hint');
+    if (hintEl && hintEl.dataset.hint) {
+      tooltip.textContent = hintEl.dataset.hint;
+      tooltip.classList.add('show');
+      updateTooltipPosition(hintEl, tooltip);
+    }
+  });
+
+  document.addEventListener('mouseout', function(e) {
+    const hintEl = e.target.closest('.sample-type-hint');
+    if (hintEl) {
+      tooltip.classList.remove('show');
+    }
+  });
+
+  // 滚动时隐藏 tooltip
+  window.addEventListener('scroll', function() {
+    tooltip.classList.remove('show');
+  }, true);
+}
+
+function updateTooltipPosition(targetEl, tooltip) {
+  const rect = targetEl.getBoundingClientRect();
+  const tooltipRect = tooltip.getBoundingClientRect();
+
+  // 计算位置：在元素上方显示
+  let top = rect.top - tooltipRect.height - 8;
+  let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+  // 如果上方空间不足，显示在下方
+  if (top < 8) {
+    top = rect.bottom + 8;
+  }
+
+  // 确保不超出视口左右边界
+  if (left < 8) {
+    left = 8;
+  } else if (left + tooltipRect.width > window.innerWidth - 8) {
+    left = window.innerWidth - tooltipRect.width - 8;
+  }
+
+  tooltip.style.top = top + 'px';
+  tooltip.style.left = left + 'px';
+}
+
+// 页面加载完成后初始化提示弹层
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initHintTooltip);
+} else {
+  initHintTooltip();
+}
+// ============================================
+</script>
+
+<!-- 微信 JS-SDK -->
+<script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M3TMB3HHLZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M3TMB3HHLZ');
+</script>
+
+</body>
+</html>
