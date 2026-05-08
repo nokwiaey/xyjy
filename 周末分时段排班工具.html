@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>周末分时段排班工具</title>
+    <!-- Open Graph Meta 标签 - 用于微信分享卡片 -->
+    <meta property="og:title" content="周末分时段排班工具" />
+    <meta property="og:description" content="智能分配时间，灵活调整时段，轻松管理周末排班" />
+    <meta property="og:image" content="" id="ogImage" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2A9D8F;
+            --primary-dark: #21867A;
+            --accent: #E76F51;
+            --bg: #F8F9FA;
+            --card: #FFFFFF;
+            --text: #264653;
+            --text-light: #6C757D;
+            --border: #E9ECEF;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--card);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--card);
+            color: var(--text);
+            padding: 28px 24px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .header p {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .content {
+            padding: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* 隐藏时间输入框的浏览器原生图标 */
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            display: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="time"]::-webkit-clear-button {
+            display: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="time"]::-webkit-inner-spin-button {
+            display: none;
+            -webkit-appearance: none;
+        }
+
+        /* Firefox */
+        input[type="time"]::-moz-calendar-picker-indicator {
+            display: none;
+        }
+
+        /* 移动端浏览器额外处理 */
+        input[type="time"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        /* 确保输入框内容居中 - 使用 flex 布局 */
+        .input-with-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-with-buttons input[type="time"] {
+            flex: 1;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 移动端特殊处理：使用 text 类型模拟时间输入 */
+        @media (max-width: 768px) {
+            input[type="time"] {
+                font-feature-settings: "tnum";
+                font-variant-numeric: tabular-nums;
+            }
+        }
+
+        /* 隐藏数字输入框的原生加减按钮 */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--card);
+            box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.1);
+        }
+
+        .input-with-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-with-buttons input {
+            flex: 1;
+            text-align: center;
+        }
+
+        .input-btn {
+            width: 36px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card);
+            color: var(--text-light);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .input-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(42, 157, 143, 0.05);
+        }
+
+        .input-btn:active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: scale(0.96);
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mode-option {
+            flex: 1;
+            padding: 14px 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .mode-option.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .mode-option .icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .mode-option .text {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(42, 157, 143, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(42, 157, 143, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(42, 157, 143, 0.3);
+        }
+
+        .result-section {
+            display: none;
+        }
+
+        .result-section.show {
+            display: block;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .result-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .total-info {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .slot-list {
+            list-style: none;
+        }
+
+        .slot-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s ease;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+            position: relative;
+        }
+
+        .slot-item.dragging {
+            opacity: 0.95;
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(42, 157, 143, 0.25);
+            z-index: 100;
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .slot-item.dragging .slot-number {
+            background: white;
+            color: var(--primary);
+        }
+
+        .slot-item.dragging .slot-time {
+            color: white;
+        }
+
+        .slot-item.dragging .slot-duration {
+            border-color: white;
+            color: white;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .slot-item.drag-over {
+            border: 2px dashed var(--primary);
+            background: rgba(42, 157, 143, 0.05);
+            transform: scale(1.01);
+        }
+
+        .slot-item.drag-over::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -5px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .slot-handle {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 3px;
+            cursor: grab;
+            color: var(--text-light);
+            border-radius: 6px;
+            transition: all 0.15s ease;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .slot-handle:hover {
+            background: rgba(42, 157, 143, 0.1);
+            color: var(--primary);
+        }
+
+        .slot-handle:active {
+            cursor: grabbing;
+            background: rgba(42, 157, 143, 0.15);
+        }
+
+        .slot-handle span {
+            width: 16px;
+            height: 2px;
+            background: currentColor;
+            border-radius: 1px;
+        }
+
+        .slot-number {
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .slot-info {
+            flex: 1;
+        }
+
+        .slot-time {
+            font-size: 14px;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .slot-range {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .slot-duration {
+            padding: 6px 12px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            flex-shrink: 0;
+        }
+
+        .slot-duration:hover {
+            background: rgba(42, 157, 143, 0.1);
+            border-color: var(--primary);
+        }
+
+        .slot-duration:active {
+            transform: scale(0.96);
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 1000;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card);
+            width: 100%;
+            max-width: 480px;
+            border-radius: 16px 16px 0 0;
+            padding: 24px;
+            animation: slideUp 0.25s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--text);
+        }
+
+        .duration-adjust {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .duration-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .duration-btn {
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            background: var(--card);
+            color: var(--text-light);
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .duration-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .duration-btn:active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: scale(0.96);
+        }
+
+        .duration-btn:disabled {
+            border-color: var(--border);
+            color: var(--text-light);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .remaining-points {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            padding: 12px;
+            background: var(--bg);
+            border-radius: 10px;
+        }
+
+        .remaining-points .points {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .remaining-points.positive .points {
+            color: #27ae60;
+        }
+
+        .remaining-points.negative .points {
+            color: var(--accent);
+        }
+
+        .btn-cancel {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg);
+            color: var(--text-light);
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-cancel:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .stats-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .hint {
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 12px;
+            padding: 8px;
+            background: var(--bg);
+            border-radius: 8px;
+        }
+
+        .drag-hint {
+            font-size: 11px;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+
+        /* SortableJS 样式 */
+        .sortable-ghost {
+            opacity: 0.4;
+            background: var(--primary);
+            color: white;
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(42, 157, 143, 0.3);
+        }
+
+        .sortable-ghost .slot-number {
+            background: white;
+            color: var(--primary);
+        }
+
+        .sortable-ghost .slot-time {
+            color: white;
+        }
+
+        .sortable-ghost .slot-duration {
+            border-color: white;
+            color: white;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .sortable-drag {
+            opacity: 0.95;
+        }
+
+        .sortable-chosen {
+            opacity: 0.95;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗓️ 周末分时段排班</h1>
+            <p>智能分配时间，灵活调整时段</p>
+        </div>
+        
+        <div class="content">
+            <div class="input-group">
+                <label>开始时间</label>
+                <div class="input-with-buttons">
+                    <input type="time" id="startTime" value="11:30">
+                    <button class="input-btn" id="startTimeMinus">−</button>
+                    <button class="input-btn" id="startTimePlus">+</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>结束时间</label>
+                <div class="input-with-buttons">
+                    <input type="time" id="endTime" value="17:00">
+                    <button class="input-btn" id="endTimeMinus">−</button>
+                    <button class="input-btn" id="endTimePlus">+</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>分段数量</label>
+                <div class="input-with-buttons">
+                    <input type="number" id="segmentCount" min="2" max="20" value="4" placeholder="2-20段">
+                    <button class="input-btn" id="segmentMinus">−</button>
+                    <button class="input-btn" id="segmentPlus">+</button>
+                </div>
+            </div>
+            
+            <button class="btn-primary" id="generateBtn">生成排班</button>
+            
+            <div class="result-section" id="resultSection">
+                <div class="stats-card">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalDuration">0</div>
+                        <div class="stat-label">总时长(分钟)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="avgDuration">0</div>
+                        <div class="stat-label">平均每段(分钟)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="stdDev">0</div>
+                        <div class="stat-label">标准差</div>
+                    </div>
+                </div>
+                
+                <div class="result-header">
+                    <span class="result-title">排班时段</span>
+                    <span class="total-info" id="totalInfo"></span>
+                </div>
+                
+                <ul class="slot-list" id="slotList"></ul>
+                
+                <p class="drag-hint">💡 长按拖拽可调整时段顺序</p>
+                <p class="hint">点击时长数字可调整该段时长</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="durationModal">
+        <div class="modal-content">
+            <div class="modal-header">调整时长</div>
+            <div class="remaining-points" id="remainingPoints">
+                剩余可分配: <span class="points">0</span> 分钟
+            </div>
+            <div class="duration-adjust">
+                <button class="duration-btn" id="decreaseBtn">−</button>
+                <div class="duration-value" id="currentDuration">0</div>
+                <button class="duration-btn" id="increaseBtn">+</button>
+            </div>
+            <button class="btn-cancel" id="cancelBtn">完成</button>
+        </div>
+    </div>
+
+    <script>
+        // 全局状态
+        let slots = [];
+        let editingSlotIndex = -1;
+        let dragStartIndex = -1;
+        
+        // DOM 元素
+        const startTimeInput = document.getElementById('startTime');
+        const endTimeInput = document.getElementById('endTime');
+        const segmentCountInput = document.getElementById('segmentCount');
+        const generateBtn = document.getElementById('generateBtn');
+        const resultSection = document.getElementById('resultSection');
+        const slotList = document.getElementById('slotList');
+        const durationModal = document.getElementById('durationModal');
+        const durationOptions = document.getElementById('durationOptions');
+        const cancelBtn = document.getElementById('cancelBtn');
+        
+        // 初始化默认时间
+        // 开始时间固定为 11:30
+        // 结束时间：5月1日-9月30日为 17:30，10月1日-4月30日为 17:00
+        function initDefaultTimes() {
+            const now = new Date();
+            const month = now.getMonth() + 1; // 1-12
+            const day = now.getDate();
+            
+            // 判断当前日期是否在夏令时期间（5月1日 - 9月30日）
+            const isSummerTime = (month > 5 && month < 9) || 
+                                 (month === 5 && day >= 1) || 
+                                 (month === 9 && day <= 30);
+            
+            // 更新结束时间（HTML中已设置默认值，这里根据季节调整）
+            // if (isSummerTime) {
+            //     endTimeInput.value = '17:30';
+            // }
+            // 如果不是夏令时，保持HTML中的默认值 17:00
+            
+            // 设置结束时间
+            endTimeInput.value = isSummerTime ? '17:30' : '17:00';
+        }
+        
+        // 解析时间字符串为分钟数（从00:00开始的分钟数）
+        function parseTimeToMinutes(timeStr) {
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            return hours * 60 + minutes;
+        }
+        
+        // 将分钟数转换为时间字符串
+        function minutesToTimeStr(totalMinutes) {
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            return String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0');
+        }
+        
+        // 解析时间输入，返回基准时间戳（使用当前日期）
+        function parseTimeInput(timeStr) {
+            const now = new Date();
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            now.setHours(hours, minutes, 0, 0);
+            return now.getTime();
+        }
+        
+        // 格式化时间为 HH:MM
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            return String(date.getHours()).padStart(2, '0') + ':' + 
+                   String(date.getMinutes()).padStart(2, '0');
+        }
+        
+        // 生成排班
+        generateBtn.addEventListener('click', () => {
+            const startTimeStr = startTimeInput.value;
+            const endTimeStr = endTimeInput.value;
+            const segmentCount = parseInt(segmentCountInput.value);
+            
+            if (!startTimeStr || !endTimeStr) {
+                alert('请选择开始和结束时间');
+                return;
+            }
+            
+            const startMinutes = parseTimeToMinutes(startTimeStr);
+            const endMinutes = parseTimeToMinutes(endTimeStr);
+            
+            if (endMinutes <= startMinutes) {
+                alert('结束时间必须晚于开始时间');
+                return;
+            }
+            
+            if (segmentCount < 2 || segmentCount > 20) {
+                alert('分段数量必须在 2-20 之间');
+                return;
+            }
+            
+            const totalMinutes = endMinutes - startMinutes;
+            const startTimestamp = parseTimeInput(startTimeStr);
+            
+            slots = generateOptimizedSlots(startTimestamp, totalMinutes, segmentCount);
+            
+            // 重置基准总时长
+            baseTotalMinutes = totalMinutes;
+            
+            renderSlots();
+            updateStats();
+            resultSection.classList.add('show');
+        });
+        
+        // 自动优化模式生成时段（最小化标准差）
+        function generateOptimizedSlots(startTime, totalMinutes, count) {
+            const baseDuration = Math.floor(totalMinutes / count);
+            const remainder = totalMinutes % count;
+            
+            const result = [];
+            let currentTime = startTime;
+            
+            for (let i = 0; i < count; i++) {
+                // 将余数均匀分配给各段，使标准差最小
+                const duration = baseDuration + (i < remainder ? 1 : 0);
+                const slotEndTime = currentTime + duration * 60 * 1000;
+                
+                result.push({
+                    index: i + 1,
+                    startTime: currentTime,
+                    endTime: slotEndTime,
+                    duration: duration
+                });
+                
+                currentTime = slotEndTime;
+            }
+            
+            return result;
+        }
+        
+        // SortableJS 实例
+        let sortableInstance = null;
+        
+        // 渲染时段列表
+        function renderSlots() {
+            slotList.innerHTML = '';
+            
+            slots.forEach((slot, index) => {
+                const li = document.createElement('li');
+                li.className = 'slot-item';
+                li.dataset.index = index;
+                
+                li.innerHTML = `
+                    <div class="slot-handle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="slot-number">${slot.index}</div>
+                    <div class="slot-info">
+                        <div class="slot-time">${formatTime(slot.startTime)} - ${formatTime(slot.endTime)}</div>
+                    </div>
+                    <div class="slot-duration" data-index="${index}">${slot.duration}分钟</div>
+                `;
+                
+                // 时长调整点击事件
+                const durationBtn = li.querySelector('.slot-duration');
+                durationBtn.addEventListener('click', () => openDurationModal(index));
+                
+                slotList.appendChild(li);
+            });
+            
+            // 初始化 SortableJS
+            initSortable();
+        }
+        
+        // 初始化 SortableJS
+        function initSortable() {
+            // 销毁旧的实例
+            if (sortableInstance) {
+                sortableInstance.destroy();
+            }
+            
+            sortableInstance = new Sortable(slotList, {
+                handle: '.slot-handle',
+                animation: 300,
+                ghostClass: 'sortable-ghost',
+                dragClass: 'sortable-drag',
+                chosenClass: 'sortable-chosen',
+                delay: 0,
+                delayOnTouchOnly: true,
+                touchStartThreshold: 10,
+                forceFallback: true, // 使用自定义拖拽实现，避免移动端残影问题
+                fallbackClass: 'sortable-fallback',
+                onStart: function(evt) {
+                    // 拖拽开始时触发震动
+                    if (navigator.vibrate) {
+                        navigator.vibrate(50);
+                    }
+                },
+                onChange: function(evt) {
+                    // 拖拽位置变化时触发短震动
+                    if (navigator.vibrate) {
+                        navigator.vibrate(20);
+                    }
+                },
+                onEnd: function(evt) {
+                    // 拖拽结束时触发震动
+                    if (navigator.vibrate) {
+                        navigator.vibrate([30, 50, 30]);
+                    }
+                    // 更新 slots 数组顺序
+                    const itemEl = evt.item;
+                    const newIndex = evt.newIndex;
+                    const oldIndex = evt.oldIndex;
+                    
+                    if (newIndex !== oldIndex) {
+                        // 从旧位置移除并插入到新位置
+                        const movedItem = slots.splice(oldIndex, 1)[0];
+                        slots.splice(newIndex, 0, movedItem);
+                        
+                        // 重新计算时间
+                        recalculateTimes();
+                    }
+                }
+            });
+        }
+        
+        // 重新计算时间
+        function recalculateTimes() {
+            const startTimeStr = startTimeInput.value;
+            const startTime = parseTimeInput(startTimeStr);
+            let currentTime = startTime;
+            
+            slots.forEach((slot, index) => {
+                slot.index = index + 1;
+                slot.startTime = currentTime;
+                slot.endTime = currentTime + slot.duration * 60 * 1000;
+                currentTime = slot.endTime;
+            });
+            
+            renderSlots();
+            updateStats();
+        }
+        
+        // 更新统计信息
+        function updateStats() {
+            const totalMinutes = slots.reduce((sum, slot) => sum + slot.duration, 0);
+            const avgMinutes = totalMinutes / slots.length;
+            
+            // 计算标准差
+            const variance = slots.reduce((sum, slot) => {
+                return sum + Math.pow(slot.duration - avgMinutes, 2);
+            }, 0) / slots.length;
+            const stdDev = Math.sqrt(variance);
+            
+            // 显示总时长，如果有调整则显示 基准+调整 格式
+            const totalDurationEl = document.getElementById('totalDuration');
+            if (baseTotalMinutes > 0 && totalMinutes !== baseTotalMinutes) {
+                const diff = totalMinutes - baseTotalMinutes;
+                const sign = diff > 0 ? '+' : '';
+                totalDurationEl.innerHTML = `${baseTotalMinutes}<span style="color: ${diff > 0 ? '#28a745' : '#dc3545'};">${sign}${diff}</span>`;
+            } else {
+                totalDurationEl.textContent = totalMinutes;
+            }
+            
+            document.getElementById('avgDuration').textContent = avgMinutes.toFixed(1);
+            document.getElementById('stdDev').textContent = stdDev.toFixed(2);
+            
+            const startTime = formatTime(slots[0].startTime);
+            const endTime = formatTime(slots[slots.length - 1].endTime);
+            document.getElementById('totalInfo').textContent = `${startTime} 至 ${endTime}`;
+        }
+        
+        // 打开时长调整弹窗
+        let baseTotalMinutes = 0;  // 基准总时长（生成排班时的原始总时长）
+        let tempDuration = 0;
+        
+        function openDurationModal(index) {
+            editingSlotIndex = index;
+            tempDuration = slots[index].duration;
+            // 如果基准总时长为0（首次），则记录当前总时长作为基准
+            if (baseTotalMinutes === 0) {
+                baseTotalMinutes = slots.reduce((sum, slot) => sum + slot.duration, 0);
+            }
+            
+            updateDurationModalUI();
+            durationModal.classList.add('show');
+        }
+        
+        // 更新弹窗UI
+        function updateDurationModalUI() {
+            const currentTotal = slots.reduce((sum, slot, i) => {
+                return sum + (i === editingSlotIndex ? tempDuration : slot.duration);
+            }, 0);
+            const remaining = baseTotalMinutes - currentTotal;
+            
+            document.getElementById('currentDuration').textContent = tempDuration + '分钟';
+            
+            const remainingEl = document.getElementById('remainingPoints');
+            remainingEl.classList.remove('positive', 'negative');
+            
+            if (remaining > 0) {
+                remainingEl.classList.add('positive');
+                remainingEl.innerHTML = `剩余可分配: <span class="points">+${remaining}</span> 分钟`;
+            } else if (remaining < 0) {
+                remainingEl.classList.add('negative');
+                remainingEl.innerHTML = `已超出: <span class="points">${-remaining}</span> 分钟`;
+            } else {
+                remainingEl.innerHTML = `已分配完所有时间`;
+            }
+            
+            // 限制最小时长为5分钟
+            document.getElementById('decreaseBtn').disabled = tempDuration <= 5;
+        }
+        
+        // 增加时长
+        document.getElementById('increaseBtn').addEventListener('click', () => {
+            tempDuration += 1;
+            updateDurationModalUI();
+        });
+        
+        // 减少时长
+        document.getElementById('decreaseBtn').addEventListener('click', () => {
+            if (tempDuration > 5) {
+                tempDuration -= 1;
+                updateDurationModalUI();
+            }
+        });
+        
+        // 关闭弹窗并保存调整
+        function closeDurationModal() {
+            if (editingSlotIndex >= 0) {
+                // 保存调整后的时长
+                slots[editingSlotIndex].duration = tempDuration;
+                recalculateTimes();
+            }
+            durationModal.classList.remove('show');
+            editingSlotIndex = -1;
+            tempDuration = 0;
+        }
+        
+        cancelBtn.addEventListener('click', closeDurationModal);
+        
+        durationModal.addEventListener('click', (e) => {
+            if (e.target === durationModal) {
+                closeDurationModal();
+            }
+        });
+        
+        // 时间加减辅助函数
+        function adjustTime(timeStr, minutes) {
+            const [hours, mins] = timeStr.split(':').map(Number);
+            let totalMinutes = hours * 60 + mins + minutes;
+            // 限制在 00:00 - 23:59 范围内
+            totalMinutes = Math.max(0, Math.min(1439, totalMinutes));
+            const newHours = Math.floor(totalMinutes / 60);
+            const newMins = totalMinutes % 60;
+            return String(newHours).padStart(2, '0') + ':' + String(newMins).padStart(2, '0');
+        }
+
+        // 开始时间加减按钮
+        document.getElementById('startTimeMinus').addEventListener('click', () => {
+            startTimeInput.value = adjustTime(startTimeInput.value, -5);
+        });
+        document.getElementById('startTimePlus').addEventListener('click', () => {
+            startTimeInput.value = adjustTime(startTimeInput.value, 5);
+        });
+
+        // 结束时间加减按钮
+        document.getElementById('endTimeMinus').addEventListener('click', () => {
+            endTimeInput.value = adjustTime(endTimeInput.value, -5);
+        });
+        document.getElementById('endTimePlus').addEventListener('click', () => {
+            endTimeInput.value = adjustTime(endTimeInput.value, 5);
+        });
+
+        // 分段数量加减按钮
+        document.getElementById('segmentMinus').addEventListener('click', () => {
+            let value = parseInt(segmentCountInput.value) || 4;
+            if (value > 2) {
+                segmentCountInput.value = value - 1;
+            }
+        });
+        document.getElementById('segmentPlus').addEventListener('click', () => {
+            let value = parseInt(segmentCountInput.value) || 4;
+            if (value < 20) {
+                segmentCountInput.value = value + 1;
+            }
+        });
+
+        // 初始化
+        initDefaultTimes();
+
+        // ============================================
+        // 微信分享配置 - 可自定义分享卡片内容
+        // ============================================
+        const WECHAT_SHARE_CONFIG = {
+            title: '周末分时段排班工具',              // 分享标题
+            desc: '智能分配时间，灵活调整时段，轻松管理周末排班',  // 分享描述
+            // 分享图片URL（必须是绝对路径，建议使用 https）
+            // 如果留空，会自动生成当前页面的二维码作为分享图
+            imgUrl: '',
+            // 是否使用当前页面二维码作为分享图
+            useCurrentPageQrCode: true
+        };
+        // ============================================
+
+        // ============================================
+        // 微信分享初始化
+        // ============================================
+        function initWechatShare() {
+            const currentUrl = window.location.href;
+
+            // 确定分享图片URL
+            let shareImageUrl = WECHAT_SHARE_CONFIG.imgUrl;
+            if (!shareImageUrl && WECHAT_SHARE_CONFIG.useCurrentPageQrCode) {
+                // 使用当前页面URL生成二维码
+                shareImageUrl = `https://api.2dcode.biz/v1/create-qr-code?data=${encodeURIComponent(currentUrl)}&size=500x500`;
+            }
+
+            // 更新 Open Graph Meta 标签
+            const ogImage = document.getElementById('ogImage');
+            if (ogImage && shareImageUrl) {
+                ogImage.setAttribute('content', shareImageUrl);
+            }
+
+            // 如果页面中已加载微信 JS-SDK，配置分享
+            if (typeof wx !== 'undefined' && wx.ready) {
+                wx.ready(function() {
+                    // 分享给朋友
+                    wx.updateAppMessageShareData({
+                        title: WECHAT_SHARE_CONFIG.title,
+                        desc: WECHAT_SHARE_CONFIG.desc,
+                        link: currentUrl,
+                        imgUrl: shareImageUrl,
+                        success: function() {
+                            console.log('微信分享配置成功');
+                        }
+                    });
+
+                    // 分享到朋友圈
+                    wx.updateTimelineShareData({
+                        title: WECHAT_SHARE_CONFIG.title,
+                        link: currentUrl,
+                        imgUrl: shareImageUrl,
+                        success: function() {
+                            console.log('微信朋友圈分享配置成功');
+                        }
+                    });
+                });
+            }
+        }
+
+        // 页面加载完成后初始化微信分享
+        initWechatShare();
+        // ============================================
+    </script>
+    <!-- 微信 JS-SDK -->
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+</body>
+</html>
