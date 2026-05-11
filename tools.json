@@ -1,11 +1,11 @@
 {
   "siteUrls": [
     {
-      "name": "GitHub Pages",
+      "name": "GitHub Pages（主站）",
       "url": "https://nokwiaey.github.io/xyjy/"
     },
     {
-      "name": "帽子云",
+      "name": "帽子云（镜像站）",
       "url": "https://xyjy-rbw5h01el.maozi.io/"
     }
   ],
