@@ -5,6 +5,10 @@
       "url": "https://nokwiaey.github.io/xyjy/"
     },
     {
+      "name": "Cloudflare Pages（副站）",
+      "url": "https://xyjy.dfly.site/"
+    },
+    {
       "name": "帽子云（镜像站）",
       "url": "https://xyjy-rbw5h01el.maozi.io/"
     }
@@ -133,7 +137,7 @@
         "室间质评"
       ]
     },
-        {
+    {
       "title": "CNAS",
       "url": "https://www.cnas.org.cn/",
       "desc": "中国合格评定国家认可委员会",
