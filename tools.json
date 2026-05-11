@@ -2,7 +2,7 @@
   "tools": [
     {
       "title": "榆林市星元医院电话号码簿",
-      "url": "https://019dbd32-30e4-73d6-8d17-f7de063eecfb.codepen.dev/",
+      "url": "榆林市星元医院电话号码簿.html",
       "desc": "榆林市星元医院2026年内外线电话号码查询",
       "icon": "📞",
       "color": "blue",
@@ -13,7 +13,7 @@
     },
     {
       "title": "星元检验项目查询",
-      "url": "https://019d7a6b-3681-748d-a555-a3ded1cc25cb.codepen.dev/",
+      "url": "星元检验项目查询.html",
       "desc": "星元医院检验科收费及报告项目查询",
       "icon": "🔬",
       "color": "green",
@@ -25,7 +25,7 @@
     },
     {
       "title": "周末分时段排班工具",
-      "url": "https://019d8041-0e5c-754e-b855-bd66e1df2542.codepen.dev/",
+      "url": "周末分时段排班工具.html",
       "desc": "智能分配时间，灵活调整时段，轻松管理周末排班",
       "icon": "🧮",
       "color": "orange",
