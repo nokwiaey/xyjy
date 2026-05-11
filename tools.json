@@ -1,11 +1,11 @@
 {
   "siteUrls": [
     {
-      "name": "GitHub Pages（主站）",
+      "name": "GitHub（主站）",
       "url": "https://nokwiaey.github.io/xyjy/"
     },
     {
-      "name": "Cloudflare Pages（副站）",
+      "name": "Cloudflare（副站）",
       "url": "https://xyjy.dfly.site/"
     },
     {
