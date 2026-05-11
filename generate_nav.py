@@ -226,6 +226,18 @@ def generate_html(tools):
             justify-content: center;
             margin: 0 auto 24px;
             box-shadow: 0 10px 30px rgba(26, 95, 180, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }}
+
+        .logo:hover {{
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px rgba(26, 95, 180, 0.28);
+        }}
+
+        .logo:focus-visible {{
+            outline: 3px solid rgba(26, 95, 180, 0.35);
+            outline-offset: 4px;
         }}
 
         .logo svg {{
@@ -564,7 +576,7 @@ def generate_html(tools):
     <div class="container">
         <!-- 头部 -->
         <header class="header">
-            <div class="logo">
+            <div class="logo" id="siteSwitchLogo" role="button" tabindex="0" aria-label="切换访问网址" title="切换访问网址">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                 </svg>
@@ -679,6 +691,51 @@ def generate_html(tools):
                 }});
             }}
         }}
+
+        // ============================================
+        // 点击 Logo 切换访问网址
+        // ============================================
+        const SITE_URLS = {{
+            github: 'https://nokwiaey.github.io/xyjy/',
+            maozi: 'https://xyjy-rbw5h01el.maozi.io/'
+        }};
+
+        function getSwitchedSiteUrl() {{
+            const currentUrl = new URL(window.location.href);
+            const githubUrl = new URL(SITE_URLS.github);
+            const maoziUrl = new URL(SITE_URLS.maozi);
+            const isMaoziSite = currentUrl.hostname === maoziUrl.hostname;
+
+            const targetUrl = new URL(isMaoziSite ? SITE_URLS.github : SITE_URLS.maozi);
+            let currentPath = currentUrl.pathname;
+
+            if (isMaoziSite) {{
+                currentPath = currentPath.replace(/^\/+/, '');
+                targetUrl.pathname = `${{githubUrl.pathname.replace(/\/$/, '')}}/${{currentPath}}`.replace(/\/+$/, '/');
+            }} else {{
+                currentPath = currentPath.replace(/^\/xyjy\/?/, '');
+                targetUrl.pathname = `/${{currentPath}}`.replace(/\/+$/, '/');
+            }}
+
+            targetUrl.search = currentUrl.search;
+            targetUrl.hash = currentUrl.hash;
+            return targetUrl.href;
+        }}
+
+        const siteSwitchLogo = document.getElementById('siteSwitchLogo');
+        if (siteSwitchLogo) {{
+            siteSwitchLogo.addEventListener('click', function() {{
+                window.location.href = getSwitchedSiteUrl();
+            }});
+
+            siteSwitchLogo.addEventListener('keydown', function(event) {{
+                if (event.key === 'Enter' || event.key === ' ') {{
+                    event.preventDefault();
+                    window.location.href = getSwitchedSiteUrl();
+                }}
+            }});
+        }}
+        // ============================================
 
         // ============================================
         // 标签筛选功能
