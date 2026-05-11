@@ -11,6 +11,14 @@
     {
       "name": "帽子云（镜像站）",
       "url": "https://xyjy-rbw5h01el.maozi.io/"
+    },
+    {
+      "name": "Vercel（镜像站）",
+      "url": "https://xyjy-tools.vercel.app/"
+    },
+    {
+      "name": "Netlify（镜像站）",
+      "url": "https://xyjy.netlify.app/"
     }
   ],
   "tools": [
