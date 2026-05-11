@@ -1,0 +1,167 @@
+{
+  "tools": [
+    {
+      "title": "榆林市星元医院电话号码簿",
+      "url": "https://019dbd32-30e4-73d6-8d17-f7de063eecfb.codepen.dev/",
+      "desc": "榆林市星元医院2026年内外线电话号码查询",
+      "icon": "📞",
+      "color": "blue",
+      "tags": [
+        "⭐常用",
+        "查阅"
+      ]
+    },
+    {
+      "title": "星元检验项目查询",
+      "url": "https://019d7a6b-3681-748d-a555-a3ded1cc25cb.codepen.dev/",
+      "desc": "星元医院检验科收费及报告项目查询",
+      "icon": "🔬",
+      "color": "green",
+      "tags": [
+        "⭐常用",
+        "查阅",
+        "检验"
+      ]
+    },
+    {
+      "title": "周末分时段排班工具",
+      "url": "https://019d8041-0e5c-754e-b855-bd66e1df2542.codepen.dev/",
+      "desc": "智能分配时间，灵活调整时段，轻松管理周末排班",
+      "icon": "🧮",
+      "color": "orange",
+      "tags": [
+        "计算"
+      ]
+    },
+    {
+      "title": "文档中心（院内）",
+      "url": "http://172.30.3.58:9991/",
+      "desc": "适用于院内局域网快速访问",
+      "icon": "🗂️",
+      "color": "purple",
+      "tags": [
+        "⭐常用",
+        "查阅",
+        "文档"
+      ]
+    },
+    {
+      "title": "文档中心（院外）",
+      "url": "https://docs.dfly.site/login",
+      "desc": "适用于院外互联网访问",
+      "icon": "🗂️",
+      "color": "purple",
+      "tags": [
+        "查阅",
+        "文档"
+      ]
+    },
+    {
+      "title": "eGFR 计算工具",
+      "url": "https://nokwiaey.github.io/egfr-calculator/",
+      "desc": "eGFR 多版本计算工具",
+      "icon": "🔢",
+      "color": "red",
+      "tags": [
+        "计算",
+        "检验"
+      ]
+    },
+    {
+      "title": "西格玛性能验证图",
+      "url": "https://nokwiaey.github.io/sigma-qc-webapp/",
+      "desc": "基于六西格玛理论的临床检验质量评价与控制规则选择系统",
+      "icon": "🎯",
+      "color": "red",
+      "tags": [
+        "计算",
+        "检验",
+        "质控"
+      ]
+    },
+    {
+      "title": "医院官网",
+      "url": "https://www.ylxyyy.com/",
+      "desc": "星元医院官网",
+      "icon": "https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260427/0awB/32X32/image.png/webp",
+      "color": "red",
+      "tags": [
+        "医院"
+      ]
+    },
+    {
+      "title": "OA系统",
+      "url": "http://oa.ylxyyy.com:8002",
+      "desc": "星元医院OA办公系统",
+      "icon": "✉️",
+      "color": "red",
+      "tags": [
+        "⭐常用",
+        "医院"
+      ]
+    },
+    {
+      "title": "全国标准信息公共服务平台",
+      "url": "https://std.samr.gov.cn/",
+      "desc": "全国标准信息公共服务平台",
+      "icon": "https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260427/e0Hm/387X387/image.png/webp",
+      "color": "red",
+      "tags": [
+        "⭐常用",
+        "标准",
+        "查阅"
+      ]
+    },
+    {
+      "title": "NCCL",
+      "url": "https://www.nccl.org.cn/mainCn",
+      "desc": "国家卫生健康委临床检验中心",
+      "icon": "https://www.nccl.org.cn/static/img/favicon.ico",
+      "color": "red",
+      "tags": [
+        "⭐常用",
+        "室间质评"
+      ]
+    },
+        {
+      "title": "CNAS",
+      "url": "https://www.cnas.org.cn/",
+      "desc": "中国合格评定国家认可委员会",
+      "icon": "https://www.cnas.org.cn/favicon.ico",
+      "color": "red",
+      "tags": [
+        "认可"
+      ]
+    },
+    {
+      "title": "好医生",
+      "url": "https://www.cmechina.net/cme/subject.jsp",
+      "desc": "好医生继续教育平台",
+      "icon": "https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260427/6O1f/200X200/image.png/webp",
+      "color": "blue",
+      "tags": [
+        "继续教育"
+      ]
+    },
+    {
+      "title": "专业技术人员继续教育",
+      "url": "https://pxsxzj.xidian.edu.cn/portal/login",
+      "desc": "陕西省专业技术人员继续教育学习平台",
+      "icon": "🌐",
+      "color": "blue",
+      "tags": [
+        "继续教育"
+      ]
+    },
+    {
+      "title": "华医网",
+      "url": "https://www.91huayi.com/",
+      "desc": "华医网继续教育",
+      "icon": "https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260427/6tnU/32X32/image.png/webp",
+      "color": "blue",
+      "tags": [
+        "继续教育"
+      ]
+    }
+  ]
+}
