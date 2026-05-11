@@ -17,11 +17,12 @@ sys.stdout.reconfigure(encoding='utf-8')
 def parse_json(file_path):
     """
     解析 JSON 配置文件，提取工具信息
-    返回: [(标题, URL, 描述, 图标, 颜色, 标签列表), ...]
+    返回: (工具列表, 站点地址列表)
     """
     with open(file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
     
+    site_urls = data.get('siteUrls', [])
     tools = []
     for tool in data.get('tools', []):
         title = tool.get('title', '')
@@ -32,7 +33,7 @@ def parse_json(file_path):
         tags = tool.get('tags', [])
         tools.append((title, url, desc, icon, color, tags))
     
-    return tools
+    return tools, site_urls
 
 
 def get_icon_and_color(index, custom_icon=None, custom_color=None):
@@ -63,8 +64,9 @@ def get_icon_and_color(index, custom_icon=None, custom_color=None):
     return icon, color
 
 
-def generate_html(tools):
+def generate_html(tools, site_urls):
     """生成 HTML 内容"""
+    site_urls_json = json.dumps(site_urls, ensure_ascii=False)
     
     # 收集所有标签
     all_tags = set()
@@ -302,6 +304,90 @@ def generate_html(tools):
         [data-theme="light"] .theme-toggle .moon-icon,
         :root:not([data-theme]) .theme-toggle .moon-icon {{
             display: none;
+        }}
+
+        /* 站点切换菜单 */
+        .site-switcher {{
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }}
+
+        .site-menu-toggle {{
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            transition: all 0.3s ease;
+        }}
+
+        .site-menu-toggle:hover {{
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px var(--shadow-color);
+        }}
+
+        .site-menu-toggle svg {{
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-primary);
+            stroke-width: 2;
+            stroke-linecap: round;
+        }}
+
+        .site-menu {{
+            position: absolute;
+            top: 58px;
+            left: 0;
+            min-width: 180px;
+            padding: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 12px 30px var(--shadow-color);
+            display: none;
+        }}
+
+        .site-menu.open {{
+            display: block;
+        }}
+
+        .site-menu-item {{
+            width: 100%;
+            border: 0;
+            background: transparent;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            text-align: left;
+            white-space: nowrap;
+        }}
+
+        .site-menu-item:hover,
+        .site-menu-item.active {{
+            background: rgba(26, 95, 180, 0.1);
+            color: #1a5fb4;
+        }}
+
+        .site-menu-item.active::after {{
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #1a5fb4;
+            flex: 0 0 auto;
         }}
 
         /* 标签筛选器 */
@@ -555,7 +641,22 @@ def generate_html(tools):
                 height: 40px;
             }}
 
+            .site-switcher {{
+                top: 16px;
+                left: 16px;
+            }}
+
+            .site-menu-toggle {{
+                width: 40px;
+                height: 40px;
+            }}
+
             .theme-toggle svg {{
+                width: 20px;
+                height: 20px;
+            }}
+
+            .site-menu-toggle svg {{
                 width: 20px;
                 height: 20px;
             }}
@@ -563,6 +664,16 @@ def generate_html(tools):
     </style>
 </head>
 <body>
+    <!-- 站点切换菜单 -->
+    <div class="site-switcher" id="siteSwitcher">
+        <button class="site-menu-toggle" id="siteMenuToggle" aria-label="切换访问网址" aria-expanded="false" aria-controls="siteMenu" title="切换访问网址">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M4 7h16M4 12h16M4 17h16"/>
+            </svg>
+        </button>
+        <div class="site-menu" id="siteMenu" role="menu"></div>
+    </div>
+
     <!-- 主题切换按钮 -->
     <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
         <svg class="sun-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -695,43 +806,132 @@ def generate_html(tools):
         // ============================================
         // 点击 Logo 切换访问网址
         // ============================================
-        const SITE_URLS = {{
-            github: 'https://nokwiaey.github.io/xyjy/',
-            maozi: 'https://xyjy-rbw5h01el.maozi.io/'
-        }};
+        const SITE_URLS = {site_urls_json};
 
-        function getSwitchedSiteUrl() {{
+        function getSiteBaseUrl(site) {{
+            return new URL(site.url);
+        }}
+
+        function getCurrentSiteIndex() {{
             const currentUrl = new URL(window.location.href);
-            const githubUrl = new URL(SITE_URLS.github);
-            const maoziUrl = new URL(SITE_URLS.maozi);
-            const isMaoziSite = currentUrl.hostname === maoziUrl.hostname;
+            let currentIndex = SITE_URLS.findIndex(function(site) {{
+                const siteUrl = getSiteBaseUrl(site);
+                const basePath = siteUrl.pathname.endsWith('/') ? siteUrl.pathname : `${{siteUrl.pathname}}/`;
+                const basePathWithoutSlash = basePath.replace(/\/$/, '');
+                return currentUrl.hostname === siteUrl.hostname &&
+                    (currentUrl.pathname === basePathWithoutSlash || currentUrl.pathname.startsWith(basePath));
+            }});
 
-            const targetUrl = new URL(isMaoziSite ? SITE_URLS.github : SITE_URLS.maozi);
-            let currentPath = currentUrl.pathname;
-
-            if (isMaoziSite) {{
-                currentPath = currentPath.replace(/^\/+/, '');
-                targetUrl.pathname = `${{githubUrl.pathname.replace(/\/$/, '')}}/${{currentPath}}`.replace(/\/+$/, '/');
-            }} else {{
-                currentPath = currentPath.replace(/^\/xyjy\/?/, '');
-                targetUrl.pathname = `/${{currentPath}}`.replace(/\/+$/, '/');
+            if (currentIndex === -1) {{
+                currentIndex = SITE_URLS.findIndex(function(site) {{
+                    return currentUrl.hostname === getSiteBaseUrl(site).hostname;
+                }});
             }}
 
+            return currentIndex;
+        }}
+
+        function getCurrentRelativePath() {{
+            const currentUrl = new URL(window.location.href);
+            const currentIndex = getCurrentSiteIndex();
+
+            if (currentIndex >= 0) {{
+                const currentSiteUrl = getSiteBaseUrl(SITE_URLS[currentIndex]);
+                const basePath = currentSiteUrl.pathname.endsWith('/') ? currentSiteUrl.pathname : `${{currentSiteUrl.pathname}}/`;
+                const basePathWithoutSlash = basePath.replace(/\/$/, '');
+                if (currentUrl.pathname === basePathWithoutSlash) {{
+                    return '';
+                }}
+                if (currentUrl.pathname.startsWith(basePath)) {{
+                    return currentUrl.pathname.slice(basePath.length);
+                }}
+            }}
+
+            return currentUrl.pathname.replace(/^\/+/, '');
+        }}
+
+        function getSiteUrl(site) {{
+            const currentUrl = new URL(window.location.href);
+            const targetUrl = getSiteBaseUrl(site);
+            const basePath = targetUrl.pathname.endsWith('/') ? targetUrl.pathname : `${{targetUrl.pathname}}/`;
+            const relativePath = getCurrentRelativePath();
+
+            targetUrl.pathname = `${{basePath}}${{relativePath}}`.replace(/\/+$/, '/');
             targetUrl.search = currentUrl.search;
             targetUrl.hash = currentUrl.hash;
             return targetUrl.href;
         }}
 
+        function getNextSiteUrl() {{
+            if (!SITE_URLS.length) {{
+                return window.location.href;
+            }}
+
+            const currentIndex = getCurrentSiteIndex();
+            const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % SITE_URLS.length : 0;
+            return getSiteUrl(SITE_URLS[nextIndex]);
+        }}
+
+        function renderSiteMenu() {{
+            const siteMenu = document.getElementById('siteMenu');
+            if (!siteMenu || !SITE_URLS.length) {{
+                return;
+            }}
+
+            const currentIndex = getCurrentSiteIndex();
+            siteMenu.innerHTML = '';
+
+            SITE_URLS.forEach(function(site, index) {{
+                const item = document.createElement('button');
+                item.type = 'button';
+                item.className = `site-menu-item${{index === currentIndex ? ' active' : ''}}`;
+                item.textContent = site.name || site.url;
+                item.setAttribute('role', 'menuitem');
+                item.addEventListener('click', function() {{
+                    window.location.href = getSiteUrl(site);
+                }});
+                siteMenu.appendChild(item);
+            }});
+        }}
+
+        const siteSwitcher = document.getElementById('siteSwitcher');
+        const siteMenuToggle = document.getElementById('siteMenuToggle');
+        const siteMenu = document.getElementById('siteMenu');
+
+        if (siteMenuToggle && siteMenu) {{
+            renderSiteMenu();
+
+            siteMenuToggle.addEventListener('click', function(event) {{
+                event.stopPropagation();
+                const isOpen = siteMenu.classList.toggle('open');
+                siteMenuToggle.setAttribute('aria-expanded', String(isOpen));
+            }});
+
+            document.addEventListener('click', function(event) {{
+                if (siteSwitcher && !siteSwitcher.contains(event.target)) {{
+                    siteMenu.classList.remove('open');
+                    siteMenuToggle.setAttribute('aria-expanded', 'false');
+                }}
+            }});
+
+            document.addEventListener('keydown', function(event) {{
+                if (event.key === 'Escape') {{
+                    siteMenu.classList.remove('open');
+                    siteMenuToggle.setAttribute('aria-expanded', 'false');
+                }}
+            }});
+        }}
+
         const siteSwitchLogo = document.getElementById('siteSwitchLogo');
         if (siteSwitchLogo) {{
             siteSwitchLogo.addEventListener('click', function() {{
-                window.location.href = getSwitchedSiteUrl();
+                window.location.href = getNextSiteUrl();
             }});
 
             siteSwitchLogo.addEventListener('keydown', function(event) {{
                 if (event.key === 'Enter' || event.key === ' ') {{
                     event.preventDefault();
-                    window.location.href = getSwitchedSiteUrl();
+                    window.location.href = getNextSiteUrl();
                 }}
             }});
         }}
@@ -852,7 +1052,7 @@ def main():
     
     # 解析 JSON
     print(f"📖 正在读取 {json_path}...")
-    tools = parse_json(json_path)
+    tools, site_urls = parse_json(json_path)
     
     if not tools:
         print("⚠️ 警告: 未在 tools.json 中找到任何工具")
@@ -873,10 +1073,13 @@ def main():
     
     if all_tags:
         print(f"\n🏷️ 发现 {len(all_tags)} 个标签: {', '.join(sorted(all_tags))}")
+
+    if site_urls:
+        print(f"\n🌐 配置 {len(site_urls)} 个访问网址: {', '.join(site.get('name', site.get('url', '')) for site in site_urls)}")
     
     # 生成 HTML
     print("\n🔨 正在生成 HTML...")
-    html_content = generate_html(tools)
+    html_content = generate_html(tools, site_urls)
     
     # 写入文件
     with open(output_path, 'w', encoding='utf-8') as f:
