@@ -1,2 +1,3 @@
 - https://nokwiaey.github.io/xyjy/
+- https://xyjy.dfly.site/
 - https://xyjy-rbw5h01el.maozi.io/
