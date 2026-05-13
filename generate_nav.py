@@ -1226,7 +1226,7 @@ def generate_html(tools, site_urls):
         // ============================================
         // 页面加载动画
         // ============================================
-        window.addEventListener('load', function() {{
+        document.addEventListener('DOMContentLoaded', function() {{
             const loader = document.getElementById('pageLoader');
             if (loader) {{
                 loader.classList.add('hidden');
