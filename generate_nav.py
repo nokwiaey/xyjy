@@ -44,10 +44,10 @@ def get_icon_and_color(index, custom_icon=None, custom_color=None):
     # 默认图标列表
     default_icons = ['📊', '📋', '🔍', '🧮', '📅', '⚙️', '📈', '🔬', '📝', '🔧']
     # 默认颜色列表
-    default_colors = ['blue', 'green', 'orange', 'purple', 'red', 'cyan']
-    
+    default_colors = ['blue', 'green', 'orange', 'purple', 'red', 'cyan', 'white']
+
     # 可用的颜色名称（用于验证）
-    valid_colors = ['blue', 'green', 'orange', 'purple', 'red', 'cyan']
+    valid_colors = ['blue', 'green', 'orange', 'purple', 'red', 'cyan', 'white']
     
     # 确定图标
     if custom_icon:
@@ -519,6 +519,16 @@ def generate_html(tools, site_urls):
         .tool-icon.cyan {{
             background: rgba(0, 150, 150, 0.1);
             color: #009696;
+        }}
+
+        .tool-icon.white {{
+            background: rgba(0, 0, 0, 0.06);
+            color: #555;
+        }}
+
+        [data-theme="dark"] .tool-icon.white {{
+            background: rgba(255, 255, 255, 0.1);
+            color: #ccc;
         }}
 
         .tool-name {{

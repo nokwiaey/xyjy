@@ -146,6 +146,17 @@
       ]
     },
     {
+      "title": "SCCL",
+      "url": "https://zkp.sccl.org.cn/qc/Main.htm",
+      "desc": "上海市临床检验中心",
+      "icon": "https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260513/4kgB/343X343/0001.png/webp",
+      "color": "white",
+      "tags": [
+        "⭐常用",
+        "室间质评"
+      ]
+    },
+    {
       "title": "CNAS",
       "url": "https://www.cnas.org.cn/",
       "desc": "中国合格评定国家认可委员会",
