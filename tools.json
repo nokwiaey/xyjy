@@ -169,7 +169,7 @@
       "title": "中国卫生人才网",
       "url": "https://www.21wecan.com/",
       "desc": "国家卫生健康委人才交流服务中心",
-      "icon": "🌐",
+      "icon": "https://www.21wecan.com/favicon.ico",
       "color": "blue",
       "tags": [
         "继续教育",
