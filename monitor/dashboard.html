@@ -207,6 +207,8 @@ function renderAll(csvText) {
   // Summary
   const isOk = (v) => (v || '').toLowerCase() === 'true';
 
+  document.getElementById('subtitle').textContent = '最近检测: ' + latestTs;
+
   const okCount = latestRows.filter(r => isOk(r.OK)).length;
   const avgTime = Math.round(latestRows.reduce((s, r) => s + (parseInt(r.TimeMs) || 0), 0) / latestRows.length);
   document.getElementById('okCount').textContent = okCount + '/' + latestRows.length;
