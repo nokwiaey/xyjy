@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生化室排班工具</title>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        select, button {
+            padding: 10px 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        select:hover, select:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            font-weight: 600;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button.secondary {
+            background: #6c757d;
+        }
+
+        button.secondary:hover {
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+
+        button.success {
+            background: #28a745;
+        }
+
+        button.success:hover {
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 5px;
+            background: #e9ecef;
+            padding: 5px;
+            border-radius: 8px;
+        }
+
+        .view-toggle button {
+            background: transparent;
+            color: #495057;
+        }
+
+        .view-toggle button.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .schedule-table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 12px 8px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        tr:hover {
+            background: #e9ecef;
+        }
+
+        .date-cell {
+            font-weight: 600;
+            background: #f8f9fa;
+        }
+
+        .shift-type {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .shift-admin {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .shift-flex {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .shift-night-main {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .shift-night-sub {
+            background: #ffe0b2;
+            color: #e65100;
+        }
+
+        .shift-rest {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        select.night-select {
+            width: 100%;
+            min-width: 100px;
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .stats-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stats-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+
+        .stats-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .stats-table tr:hover {
+            background: #e9ecef;
+        }
+
+        .schedule-view {
+            display: block;
+        }
+
+        .schedule-view.hidden {
+            display: none;
+        }
+
+        .timeline-view {
+            display: none;
+        }
+
+        .timeline-view.active {
+            display: block;
+        }
+
+        .timeline-table th {
+            min-width: 80px;
+        }
+
+        .timeline-table .time-header {
+            background: #495057;
+        }
+
+        .on-duty {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .on-duty-night {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .control-group {
+                justify-content: space-between;
+            }
+
+            th, td {
+                padding: 8px 4px;
+                font-size: 12px;
+            }
+
+            select.night-select {
+                min-width: 80px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📅 生化室排班工具</h1>
+            <p>智能排班工具 - 支持夜班、节假日周末白班设置、自动均衡分配弹班</p>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>📅 年份：</label>
+                <select id="yearSelect"></select>
+            </div>
+            <div class="control-group">
+                <label>📆 月份：</label>
+                <select id="monthSelect"></select>
+            </div>
+            <div class="view-toggle">
+                <button class="active" onclick="switchView('schedule')">排班表</button>
+                <button onclick="switchView('timeline')">时间轴</button>
+            </div>
+            <div class="control-group">
+                <button class="success" onclick="exportToExcel()">📥 导出Excel</button>
+                <button class="secondary" onclick="resetCurrentMonth()">🔄 重置本月</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="errorMessage" class="error-message"></div>
+
+            <table class="stats-table" id="statsTable">
+                <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>弹班次数</th>
+                        <th>夜班次数</th>
+                        <th>休息天数</th>
+                        <th>行政班天数</th>
+                        <th>周六调休</th>
+                        <th>白班</th>
+                    </tr>
+                </thead>
+                <tbody id="statsBody"></tbody>
+            </table>
+
+            <div id="scheduleView" class="schedule-view">
+                <div class="schedule-table-container">
+                    <table id="scheduleTable">
+                        <thead>
+                            <tr>
+                                <th>节假日</th>
+                                <th>日期</th>
+                                <th>星期</th>
+                                <th>行政班</th>
+                                <th>弹班(2人)</th>
+                                <th>主夜班</th>
+                                <th>副夜班</th>
+                                <th>休息</th>
+                                <th>周六调休</th>
+                                <th>白班</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scheduleBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="timelineView" class="timeline-view">
+                <div class="schedule-table-container">
+                    <table class="timeline-table" id="timelineTable">
+                        <thead id="timelineHead"></thead>
+                        <tbody id="timelineBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>
+        // ==================== 数据模型 ====================
+
+        // 员工列表
+        const employees = [
+            { id: 1, name: '邢小利', isLeader: true },
+            { id: 2, name: '贺梅梅', isLeader: false },
+            { id: 3, name: '白婷', isLeader: false },
+            { id: 4, name: '谢娜娜', isLeader: false },
+            { id: 5, name: '刘茂惠', isLeader: false }
+        ];
+
+        // 班次类型
+        const ShiftType = {
+            ADMIN: 'admin',
+            FLEX: 'flex',
+            NIGHT_MAIN: 'night_main',
+            NIGHT_SUB: 'night_sub',
+            REST: 'rest'
+        };
+
+        // 班次时间配置
+        const shiftTimeConfig = {
+            summer: {
+                admin: { morning: '08:00-11:30', afternoon: '14:30-17:30' },
+                flex: '08:00-14:30',
+                nightMain: { morning: '08:00-11:30', night: '17:30-次日08:00' },
+                nightSub: { morning: '08:00-11:30', night: '17:30-23:00' }
+            },
+            winter: {
+                admin: { morning: '08:00-11:30', afternoon: '14:00-17:00' },
+                flex: '08:00-14:30',
+                nightMain: { morning: '08:00-11:30', night: '17:00-次日08:00' },
+                nightSub: { morning: '08:00-11:30', night: '17:00-23:00' }
+            }
+        };
+
+        // 当前排班数据
+        let currentSchedule = {};
+        let currentYear = new Date().getFullYear();
+        let currentMonth = new Date().getMonth() + 1;
+
+        // ==================== 初始化 ====================
+
+        function init() {
+            initYearMonthSelects();
+            loadSchedule();
+            renderSchedule();
+            updateStats();
+        }
+
+        function initYearMonthSelects() {
+            const yearSelect = document.getElementById('yearSelect');
+            const monthSelect = document.getElementById('monthSelect');
+
+            // 年份选择（前后5年）
+            for (let year = currentYear - 5; year <= currentYear + 5; year++) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year + '年';
+                if (year === currentYear) option.selected = true;
+                yearSelect.appendChild(option);
+            }
+
+            // 月份选择
+            for (let month = 1; month <= 12; month++) {
+                const option = document.createElement('option');
+                option.value = month;
+                option.textContent = month + '月';
+                if (month === currentMonth) option.selected = true;
+                monthSelect.appendChild(option);
+            }
+
+            yearSelect.addEventListener('change', (e) => {
+                currentYear = parseInt(e.target.value);
+                loadSchedule();
+                renderSchedule();
+                updateStats();
+            });
+
+            monthSelect.addEventListener('change', (e) => {
+                currentMonth = parseInt(e.target.value);
+                loadSchedule();
+                renderSchedule();
+                updateStats();
+            });
+        }
+
+        // ==================== 排班规则引擎 ====================
+
+        function isSummer(month) {
+            return month >= 5 && month < 10;
+        }
+
+        function getDaysInMonth(year, month) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        function getWeekday(year, month, day) {
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            return weekdays[new Date(year, month - 1, day).getDay()];
+        }
+
+        function loadSchedule() {
+            const key = `schedule_${currentYear}_${currentMonth}`;
+            const saved = localStorage.getItem(key);
+
+            if (saved) {
+                currentSchedule = JSON.parse(saved);
+                // 确保兼容性：为旧数据添加缺失的字段
+                const days = getDaysInMonth(currentYear, currentMonth);
+                for (let day = 1; day <= days; day++) {
+                    if (!currentSchedule[day]) {
+                        currentSchedule[day] = {};
+                    }
+                    if (currentSchedule[day].saturdayRest === undefined) {
+                        currentSchedule[day].saturdayRest = '';
+                    }
+                    // 兼容旧数据：将 sundayDayShift 转换为 dayShift
+                    if (currentSchedule[day].sundayDayShift && !currentSchedule[day].dayShift) {
+                        currentSchedule[day].dayShift = currentSchedule[day].sundayDayShift ? [currentSchedule[day].sundayDayShift] : [];
+                        delete currentSchedule[day].sundayDayShift;
+                    }
+                    // 兼容旧数据：将 weekendDayShift 转换为 dayShift
+                    if (currentSchedule[day].weekendDayShift && !currentSchedule[day].dayShift) {
+                        currentSchedule[day].dayShift = currentSchedule[day].weekendDayShift;
+                        delete currentSchedule[day].weekendDayShift;
+                    }
+                    if (currentSchedule[day].dayShift === undefined) {
+                        currentSchedule[day].dayShift = [];
+                    }
+                    if (currentSchedule[day].isHoliday === undefined) {
+                        currentSchedule[day].isHoliday = false;
+                    }
+                }
+            } else {
+                // 初始化新的排班表
+                currentSchedule = {};
+                const days = getDaysInMonth(currentYear, currentMonth);
+                for (let day = 1; day <= days; day++) {
+                    currentSchedule[day] = {
+                        nightMain: '',
+                        nightSub: '',
+                        saturdayRest: '',
+                        dayShift: [],
+                        isHoliday: false
+                    };
+                }
+                calculateSchedule();
+            }
+        }
+
+        function saveSchedule() {
+            const key = `schedule_${currentYear}_${currentMonth}`;
+            localStorage.setItem(key, JSON.stringify(currentSchedule));
+        }
+
+        function calculateSchedule() {
+            const days = getDaysInMonth(currentYear, currentMonth);
+
+            // 计算每天的状态
+            for (let day = 1; day <= days; day++) {
+                const dayData = currentSchedule[day];
+
+                // 确定夜班人员
+                const nightStaff = [];
+                if (dayData.nightMain) nightStaff.push(dayData.nightMain);
+                if (dayData.nightSub) nightStaff.push(dayData.nightSub);
+
+                // 确定休息人员（前一天主夜班的人）
+                const restStaff = [];
+                if (day > 1) {
+                    const prevDayData = currentSchedule[day - 1];
+                    if (prevDayData.nightMain) {
+                        restStaff.push(prevDayData.nightMain);
+                    }
+                }
+
+                // 确定周六调休人员
+                const saturdayRestStaff = [];
+                if (dayData.saturdayRest) {
+                    saturdayRestStaff.push(dayData.saturdayRest);
+                }
+
+                // 确定白班人员
+                const dayShiftStaff = dayData.dayShift || [];
+
+                // 计算可用人员（排除组长、夜班、休息、周六调休和白班人员）
+                const availableForFlex = employees.filter(emp =>
+                    !emp.isLeader &&
+                    !nightStaff.includes(emp.name) &&
+                    !restStaff.includes(emp.name) &&
+                    !saturdayRestStaff.includes(emp.name) &&
+                    !dayShiftStaff.includes(emp.name)
+                );
+
+                dayData.nightStaff = nightStaff;
+                dayData.restStaff = restStaff;
+                dayData.availableForFlex = availableForFlex.map(e => e.name);
+            }
+
+            // 均衡分配弹班
+            assignFlexShifts(days);
+
+            // 计算行政班和白班
+            for (let day = 1; day <= days; day++) {
+                const dayData = currentSchedule[day];
+                const weekday = getWeekday(currentYear, currentMonth, day);
+
+                // 弹班人员
+                const flexStaff = dayData.flexStaff || [];
+
+                // 周六调休人员
+                const saturdayRest = dayData.saturdayRest || '';
+
+                // 白班人员
+                const dayShift = dayData.dayShift || [];
+
+                // 节假日或周日：没有行政班
+                if (weekday === '日' || dayData.isHoliday) {
+                    dayData.adminStaff = [];
+                } else {
+                    // 行政班人员（排除夜班、弹班、休息、周六调休、白班）
+                    dayData.adminStaff = employees
+                        .filter(emp =>
+                            !dayData.nightStaff.includes(emp.name) &&
+                            !flexStaff.includes(emp.name) &&
+                            !dayData.restStaff.includes(emp.name) &&
+                            emp.name !== saturdayRest &&
+                            !dayShift.includes(emp.name)
+                        )
+                        .map(e => e.name);
+                }
+
+                // 休息人员已计算
+            }
+
+            saveSchedule();
+        }
+
+        function assignSaturdayRest(days) {
+            // 统计每人已有的周六调休次数
+            const saturdayRestCount = {};
+            employees.filter(emp => !emp.isLeader).forEach(emp => {
+                saturdayRestCount[emp.name] = 0;
+            });
+
+            // 统计已安排的周六调休
+            for (let day = 1; day <= days; day++) {
+                const dayData = currentSchedule[day];
+                if (dayData.saturdayRest) {
+                    saturdayRestCount[dayData.saturdayRest]++;
+                }
+            }
+
+            // 为每个未设置调休的周六自动安排
+            for (let day = 1; day <= days; day++) {
+                const weekday = getWeekday(currentYear, currentMonth, day);
+                const dayData = currentSchedule[day];
+
+                // 只处理周六且未设置调休的日期
+                if (weekday === '六' && !dayData.saturdayRest) {
+                    // 确定当天夜班人员
+                    const nightStaff = [];
+                    if (dayData.nightMain) nightStaff.push(dayData.nightMain);
+                    if (dayData.nightSub) nightStaff.push(dayData.nightSub);
+
+                    // 确定休息人员（前一天主夜班的人）
+                    const restStaff = [];
+                    if (day > 1) {
+                        const prevDayData = currentSchedule[day - 1];
+                        if (prevDayData.nightMain) {
+                            restStaff.push(prevDayData.nightMain);
+                        }
+                    }
+
+                    // 可选人员：非组长、不上夜班、不休息
+                    const available = employees
+                        .filter(emp =>
+                            !emp.isLeader &&
+                            !nightStaff.includes(emp.name) &&
+                            !restStaff.includes(emp.name)
+                        )
+                        .map(e => e.name);
+
+                    if (available.length > 0) {
+                        // 按调休次数排序，优先选择次数少的人
+                        available.sort((a, b) => saturdayRestCount[a] - saturdayRestCount[b]);
+
+                        // 选择调休次数最少的人
+                        const selected = available[0];
+                        dayData.saturdayRest = selected;
+                        saturdayRestCount[selected]++;
+                    }
+                }
+            }
+        }
+
+        function assignFlexShifts(days) {
+            // 初始化每人弹班次数统计
+            const flexCount = {};
+            employees.forEach(emp => {
+                flexCount[emp.name] = 0;
+            });
+
+            // 统计已分配的弹班
+            for (let day = 1; day <= days; day++) {
+                const dayData = currentSchedule[day];
+                if (dayData.flexStaff) {
+                    dayData.flexStaff.forEach(name => {
+                        flexCount[name]++;
+                    });
+                }
+            }
+
+            // 分配弹班（每天2人，周日和节假日不分配）
+            for (let day = 1; day <= days; day++) {
+                const dayData = currentSchedule[day];
+                const weekday = getWeekday(currentYear, currentMonth, day);
+
+                // 周日和节假日不分配弹班
+                if (weekday === '日' || dayData.isHoliday) {
+                    dayData.flexStaff = [];
+                    continue;
+                }
+
+                const available = dayData.availableForFlex;
+
+                if (available.length >= 2) {
+                    // 按弹班次数排序，优先分配次数少的人
+                    const sorted = available.sort((a, b) => flexCount[a] - flexCount[b]);
+
+                    // 选择前2人
+                    const selected = sorted.slice(0, 2);
+                    dayData.flexStaff = selected;
+
+                    // 更新计数
+                    selected.forEach(name => {
+                        flexCount[name]++;
+                    });
+                } else if (available.length === 1) {
+                    dayData.flexStaff = [available[0]];
+                    flexCount[available[0]]++;
+                } else {
+                    dayData.flexStaff = [];
+                }
+            }
+        }
+
+        // ==================== 渲染 ====================
+
+        function renderSchedule() {
+            const tbody = document.getElementById('scheduleBody');
+            tbody.innerHTML = '';
+
+            const days = getDaysInMonth(currentYear, currentMonth);
+
+            for (let day = 1; day <= days; day++) {
+                const dayData = currentSchedule[day];
+                const row = document.createElement('tr');
+                const weekday = getWeekday(currentYear, currentMonth, day);
+
+                // 节假日开关
+                const holidayCell = document.createElement('td');
+                const holidayCheckbox = document.createElement('input');
+                holidayCheckbox.type = 'checkbox';
+                holidayCheckbox.checked = dayData.isHoliday || false;
+                holidayCheckbox.style.cursor = 'pointer';
+                holidayCheckbox.addEventListener('change', (e) => {
+                    handleHolidayChange(day, e.target.checked);
+                });
+                holidayCell.appendChild(holidayCheckbox);
+                row.appendChild(holidayCell);
+
+                // 日期
+                const dateCell = document.createElement('td');
+                dateCell.className = 'date-cell';
+                dateCell.textContent = `${currentMonth}月${day}日`;
+                row.appendChild(dateCell);
+
+                // 星期
+                const weekdayCell = document.createElement('td');
+                weekdayCell.textContent = `周${weekday}`;
+                row.appendChild(weekdayCell);
+
+                // 行政班
+                const adminCell = document.createElement('td');
+                adminCell.innerHTML = dayData.adminStaff
+                    ? dayData.adminStaff.map(name =>
+                        `<span class="shift-type shift-admin">${name}</span>`
+                    ).join(' ')
+                    : '';
+                row.appendChild(adminCell);
+
+                // 弹班
+                const flexCell = document.createElement('td');
+                flexCell.innerHTML = dayData.flexStaff
+                    ? dayData.flexStaff.map(name =>
+                        `<span class="shift-type shift-flex">${name}</span>`
+                    ).join(' ')
+                    : '';
+                row.appendChild(flexCell);
+
+                // 主夜班
+                const nightMainCell = document.createElement('td');
+                nightMainCell.appendChild(createNightSelect(day, 'nightMain', dayData.nightMain));
+                row.appendChild(nightMainCell);
+
+                // 副夜班
+                const nightSubCell = document.createElement('td');
+                nightSubCell.appendChild(createNightSelect(day, 'nightSub', dayData.nightSub));
+                row.appendChild(nightSubCell);
+
+                // 休息
+                const restCell = document.createElement('td');
+                restCell.innerHTML = dayData.restStaff
+                    ? dayData.restStaff.map(name =>
+                        `<span class="shift-type shift-rest">${name}</span>`
+                    ).join(' ')
+                    : '';
+                row.appendChild(restCell);
+
+                // 周六调休
+                const saturdayRestCell = document.createElement('td');
+                if (weekday === '六') {
+                    saturdayRestCell.appendChild(createSaturdayRestSelect(day, dayData.saturdayRest));
+                } else {
+                    saturdayRestCell.innerHTML = '<span style="color: #ccc;">-</span>';
+                }
+                row.appendChild(saturdayRestCell);
+
+                // 白班（周六周日或节假日显示）
+                const dayShiftCell = document.createElement('td');
+                if (weekday === '六' || weekday === '日' || dayData.isHoliday) {
+                    dayShiftCell.appendChild(createDayShiftSelect(day, dayData.dayShift));
+                } else {
+                    dayShiftCell.innerHTML = '<span style="color: #ccc;">-</span>';
+                }
+                row.appendChild(dayShiftCell);
+
+                tbody.appendChild(row);
+            }
+        }
+
+        function createDayShiftSelect(day, currentValues) {
+            const container = document.createElement('div');
+            container.style.display = 'flex';
+            container.style.flexDirection = 'column';
+            container.style.gap = '5px';
+
+            // 显示已选择的人员
+            const selectedList = currentValues || [];
+
+            // 创建复选框列表
+            employees.forEach(emp => {
+                const label = document.createElement('label');
+                label.style.display = 'flex';
+                label.style.alignItems = 'center';
+                label.style.gap = '5px';
+                label.style.cursor = 'pointer';
+                label.style.fontSize = '12px';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = emp.name;
+                checkbox.checked = selectedList.includes(emp.name);
+                checkbox.style.cursor = 'pointer';
+
+                checkbox.addEventListener('change', (e) => {
+                    handleDayShiftChange(day, emp.name, e.target.checked);
+                });
+
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(emp.name));
+                container.appendChild(label);
+            });
+
+            return container;
+        }
+
+        function handleDayShiftChange(day, empName, isChecked) {
+            if (!currentSchedule[day].dayShift) {
+                currentSchedule[day].dayShift = [];
+            }
+
+            if (isChecked) {
+                // 添加人员
+                if (!currentSchedule[day].dayShift.includes(empName)) {
+                    currentSchedule[day].dayShift.push(empName);
+                }
+            } else {
+                // 移除人员
+                currentSchedule[day].dayShift = currentSchedule[day].dayShift.filter(name => name !== empName);
+            }
+
+            calculateSchedule();
+            renderSchedule();
+            updateStats();
+        }
+
+        function handleHolidayChange(day, isHoliday) {
+            currentSchedule[day].isHoliday = isHoliday;
+            calculateSchedule();
+            renderSchedule();
+            updateStats();
+        }
+
+        function createSaturdayRestSelect(day, currentValue) {
+            const select = document.createElement('select');
+            select.className = 'night-select';
+
+            const emptyOption = document.createElement('option');
+            emptyOption.value = '';
+            emptyOption.textContent = '--';
+            select.appendChild(emptyOption);
+
+            // 只显示非组长的员工（弹班人员）
+            employees.filter(emp => !emp.isLeader).forEach(emp => {
+                const option = document.createElement('option');
+                option.value = emp.name;
+                option.textContent = emp.name;
+                if (emp.name === currentValue) option.selected = true;
+                select.appendChild(option);
+            });
+
+            select.addEventListener('change', (e) => {
+                handleSaturdayRestChange(day, e.target.value);
+            });
+
+            return select;
+        }
+
+        function handleSaturdayRestChange(day, value) {
+            currentSchedule[day].saturdayRest = value;
+            calculateSchedule();
+            renderSchedule();
+            updateStats();
+        }
+
+        function createNightSelect(day, type, currentValue) {
+            const select = document.createElement('select');
+            select.className = 'night-select';
+
+            const emptyOption = document.createElement('option');
+            emptyOption.value = '';
+            emptyOption.textContent = '--';
+            select.appendChild(emptyOption);
+
+            employees.forEach(emp => {
+                const option = document.createElement('option');
+                option.value = emp.name;
+                option.textContent = emp.name;
+                if (emp.name === currentValue) option.selected = true;
+                select.appendChild(option);
+            });
+
+            select.addEventListener('change', (e) => {
+                handleNightChange(day, type, e.target.value);
+            });
+
+            return select;
+        }
+
+        function handleNightChange(day, type, value) {
+            // 检查冲突
+            const error = validateNightChange(day, type, value);
+            if (error) {
+                showError(error);
+                renderSchedule();
+                return;
+            }
+
+            hideError();
+            currentSchedule[day][type] = value;
+            calculateSchedule();
+            renderSchedule();
+            updateStats();
+            renderTimeline();
+        }
+
+        function validateNightChange(day, type, value) {
+            if (!value) return null;
+
+            const dayData = currentSchedule[day];
+
+            // 检查同一人不能同时主夜班+副夜班
+            const otherType = type === 'nightMain' ? 'nightSub' : 'nightMain';
+            if (dayData[otherType] === value) {
+                return `${value} 不能同时上主夜班和副夜班`;
+            }
+
+            // 检查主夜班人员次日不能再排夜班
+            if (type === 'nightMain') {
+                const nextDay = day + 1;
+                const days = getDaysInMonth(currentYear, currentMonth);
+                if (nextDay <= days) {
+                    const nextDayData = currentSchedule[nextDay];
+                    if (nextDayData.nightMain === value || nextDayData.nightSub === value) {
+                        return `${value} 主夜班后次日不能再排夜班`;
+                    }
+                }
+            }
+
+            // 检查今天是否是某人的主夜班后一天
+            if (day > 1) {
+                const prevDayData = currentSchedule[day - 1];
+                if (prevDayData.nightMain === value) {
+                    return `${value} 昨天主夜班，今天必须休息`;
+                }
+            }
+
+            return null;
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = '⚠️ ' + message;
+            errorDiv.classList.add('show');
+            setTimeout(hideError, 5000);
+        }
+
+        function hideError() {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.classList.remove('show');
+        }
+
+        // ==================== 统计 ====================
+
+        function updateStats() {
+            const stats = calculateStats();
+            const tbody = document.getElementById('statsBody');
+            tbody.innerHTML = '';
+
+            employees.forEach(emp => {
+                const stat = stats[emp.name];
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${emp.name}</strong>${emp.isLeader ? ' <span style="color: #667eea;">(组长)</span>' : ''}</td>
+                    <td>${stat.flex}</td>
+                    <td>${stat.night}</td>
+                    <td>${stat.rest}</td>
+                    <td>${stat.admin}</td>
+                    <td>${stat.saturdayRest}</td>
+                    <td>${stat.dayShift}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function calculateStats() {
+            const stats = {};
+            const days = getDaysInMonth(currentYear, currentMonth);
+
+            employees.forEach(emp => {
+                stats[emp.name] = { flex: 0, night: 0, rest: 0, admin: 0, saturdayRest: 0, dayShift: 0 };
+            });
+
+            for (let day = 1; day <= days; day++) {
+                const dayData = currentSchedule[day];
+
+                // 统计弹班
+                if (dayData.flexStaff) {
+                    dayData.flexStaff.forEach(name => {
+                        stats[name].flex++;
+                    });
+                }
+
+                // 统计夜班
+                if (dayData.nightMain) stats[dayData.nightMain].night++;
+                if (dayData.nightSub) stats[dayData.nightSub].night++;
+
+                // 统计休息
+                if (dayData.restStaff) {
+                    dayData.restStaff.forEach(name => {
+                        stats[name].rest++;
+                    });
+                }
+
+                // 统计行政班
+                if (dayData.adminStaff) {
+                    dayData.adminStaff.forEach(name => {
+                        stats[name].admin++;
+                    });
+                }
+
+                // 统计周六调休
+                if (dayData.saturdayRest) {
+                    stats[dayData.saturdayRest].saturdayRest++;
+                }
+
+                // 统计白班
+                if (dayData.dayShift) {
+                    dayData.dayShift.forEach(name => {
+                        stats[name].dayShift++;
+                    });
+                }
+            }
+
+            return stats;
+        }
+
+        // ==================== 时间轴视图 ====================
+
+        function switchView(view) {
+            document.querySelectorAll('.view-toggle button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            const scheduleView = document.getElementById('scheduleView');
+            const timelineView = document.getElementById('timelineView');
+
+            if (view === 'schedule') {
+                scheduleView.classList.remove('hidden');
+                timelineView.classList.remove('active');
+            } else {
+                scheduleView.classList.add('hidden');
+                timelineView.classList.add('active');
+                renderTimeline();
+            }
+        }
+
+        function renderTimeline() {
+            const isSummerTime = isSummer(currentMonth);
+            const days = getDaysInMonth(currentYear, currentMonth);
+
+            const thead = document.getElementById('timelineHead');
+            const tbody = document.getElementById('timelineBody');
+
+            // 定义时间段（作为列）
+            const timeSlots = getTimeSlots(isSummerTime);
+
+            // 构建表头 - 和排班表一致：第一列是日期，后面是各个时间段
+            let headerHTML = '<tr><th>日期</th><th>星期</th>';
+            timeSlots.forEach(slot => {
+                headerHTML += `<th>${slot.label}<br><small>${slot.time}</small></th>`;
+            });
+            headerHTML += '</tr>';
+            thead.innerHTML = headerHTML;
+
+            // 构建表体 - 每一行是一个日期
+            tbody.innerHTML = '';
+
+            for (let day = 1; day <= days; day++) {
+                const row = document.createElement('tr');
+                const weekday = getWeekday(currentYear, currentMonth, day);
+
+                // 日期列
+                const dateCell = document.createElement('td');
+                dateCell.className = 'date-cell';
+                dateCell.textContent = `${currentMonth}月${day}日`;
+                row.appendChild(dateCell);
+
+                // 星期列
+                const weekdayCell = document.createElement('td');
+                weekdayCell.textContent = `周${weekday}`;
+                row.appendChild(weekdayCell);
+
+                // 各个时间段的在岗人员
+                timeSlots.forEach(slot => {
+                    const cell = document.createElement('td');
+                    const onDutyList = getOnDutyStaff(day, slot.type, isSummerTime);
+
+                    if (onDutyList.length > 0) {
+                        cell.innerHTML = onDutyList.map(staff => {
+                            const isNight = staff.type === 'night';
+                            return `<span class="${isNight ? 'on-duty-night' : 'on-duty'}">${isNight ? '🌙' : '✔'}${staff.name}</span>`;
+                        }).join('<br>');
+                    } else {
+                        cell.innerHTML = '<span style="color: #ccc;">-</span>';
+                    }
+
+                    row.appendChild(cell);
+                });
+
+                tbody.appendChild(row);
+            }
+        }
+
+        function getTimeSlots(isSummer) {
+            if (isSummer) {
+                return [
+                    { label: '上午', time: '08:00-11:30', type: 'morning' },
+                    { label: '中午', time: '11:30-14:30', type: 'flex_afternoon' },
+                    { label: '下午', time: '14:30-17:30', type: 'admin_afternoon' },
+                    { label: '傍晚', time: '17:30-23:00', type: 'night' },
+                    { label: '夜晚', time: '23:00-次日08:00', type: 'deep_night' }
+                ];
+            } else {
+                return [
+                    { label: '上午', time: '08:00-11:30', type: 'morning' },
+                    { label: '中午', time: '11:30-14:00', type: 'flex_afternoon' },
+                    { label: '下午', time: '14:00-17:00', type: 'admin_afternoon' },
+                    { label: '傍晚', time: '17:00-23:00', type: 'night' },
+                    { label: '夜晚', time: '23:00-次日08:00', type: 'deep_night' }
+                ];
+            }
+        }
+
+        function getOnDutyStaff(day, timeSlotType, isSummer) {
+            const dayData = currentSchedule[day];
+            const onDuty = [];
+            const weekday = getWeekday(currentYear, currentMonth, day);
+
+            // 获取当天的各类人员
+            const adminStaff = dayData.adminStaff || [];
+            const flexStaff = dayData.flexStaff || [];
+            const nightMain = dayData.nightMain || '';
+            const nightSub = dayData.nightSub || '';
+            const restStaff = dayData.restStaff || [];
+            const dayShift = dayData.dayShift || [];
+
+            // 所有夜班人员
+            const nightStaff = [];
+            if (nightMain) nightStaff.push(nightMain);
+            if (nightSub) nightStaff.push(nightSub);
+
+            switch (timeSlotType) {
+                case 'morning':
+                    // 08:00-11:30：行政班 + 弹班 + 夜班（周日/节假日除外）+ 白班
+                    adminStaff.forEach(name => onDuty.push({ name, type: 'day' }));
+                    flexStaff.forEach(name => onDuty.push({ name, type: 'day' }));
+                    // 周日和节假日的夜班不需要上早上
+                    if (weekday !== '日' && !dayData.isHoliday) {
+                        nightStaff.forEach(name => onDuty.push({ name, type: 'night' }));
+                    }
+                    dayShift.forEach(name => onDuty.push({ name, type: 'day' }));
+                    break;
+
+                case 'flex_afternoon':
+                    // 午休/弹班下午段：弹班人员 + 白班在岗
+                    flexStaff.forEach(name => onDuty.push({ name, type: 'day' }));
+                    dayShift.forEach(name => onDuty.push({ name, type: 'day' }));
+                    break;
+
+                case 'admin_afternoon':
+                    // 行政班下午段：行政班人员 + 白班在岗
+                    adminStaff.forEach(name => onDuty.push({ name, type: 'day' }));
+                    dayShift.forEach(name => onDuty.push({ name, type: 'day' }));
+                    break;
+
+                case 'night':
+                    // 傍晚：只有夜班人员
+                    nightStaff.forEach(name => onDuty.push({ name, type: 'night' }));
+                    // 白班17:00/17:30下班，不在岗
+                    break;
+
+                case 'deep_night':
+                    // 夜晚：只有主夜班
+                    if (nightMain) {
+                        onDuty.push({ name: nightMain, type: 'night' });
+                    }
+                    // 白班不在岗
+                    break;
+            }
+
+            return onDuty;
+        }
+
+        // ==================== 导出Excel ====================
+
+        function formatNameForExcel(name) {
+            // 两个字姓名中间加空格，与三个字对齐
+            if (name.length === 2) {
+                return name[0] + '  ' + name[1];
+            }
+            return name;
+        }
+
+        function formatNameListForExcel(names) {
+            if (!names || names.length === 0) return '';
+            return names.map(formatNameForExcel).join('、');
+        }
+
+        function formatRestCellForExcel(dayData) {
+            // 合并休息人员和周六调休人员
+            const restNames = [];
+
+            // 添加夜班后的休息人员
+            if (dayData.restStaff) {
+                dayData.restStaff.forEach(name => {
+                    restNames.push(formatNameForExcel(name));
+                });
+            }
+
+            // 添加周六调休人员
+            if (dayData.saturdayRest) {
+                restNames.push(formatNameForExcel(dayData.saturdayRest));
+            }
+
+            return restNames.join('、');
+        }
+
+        function exportToExcel() {
+            const days = getDaysInMonth(currentYear, currentMonth);
+            const data = [];
+
+            // 表头
+            data.push(['日期', '星期', '行政班', '弹班', '主夜班', '副夜班', '休息']);
+
+            // 数据
+            for (let day = 1; day <= days; day++) {
+                const dayData = currentSchedule[day];
+                data.push([
+                    `${currentMonth}月${day}日`,
+                    `周${getWeekday(currentYear, currentMonth, day)}`,
+                    formatNameListForExcel(dayData.adminStaff),
+                    formatNameListForExcel(dayData.flexStaff),
+                    formatNameForExcel(dayData.nightMain || ''),
+                    formatNameForExcel(dayData.nightSub || ''),
+                    formatRestCellForExcel(dayData)
+                ]);
+            }
+
+            // 创建工作簿
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(data);
+
+            // 设置列宽
+            ws['!cols'] = [
+                { wch: 12 },
+                { wch: 8 },
+                { wch: 30 },
+                { wch: 20 },
+                { wch: 10 },
+                { wch: 10 },
+                { wch: 15 }
+            ];
+
+            XLSX.utils.book_append_sheet(wb, ws, `${currentYear}年${currentMonth}月排班表`);
+            XLSX.writeFile(wb, `生化室${currentYear}年${currentMonth}月排班表.xlsx`);
+        }
+
+        // ==================== 重置功能 ====================
+
+        function resetCurrentMonth() {
+            if (confirm(`确定要重置 ${currentYear}年${currentMonth}月 的排班数据吗？\n\n这将清除所有已设置的夜班安排，并重新生成默认排班。`)) {
+                const key = `schedule_${currentYear}_${currentMonth}`;
+                localStorage.removeItem(key);
+
+                // 重新加载并计算排班
+                loadSchedule();
+                renderSchedule();
+                updateStats();
+                renderTimeline();
+
+                // 显示成功提示
+                showError('✅ 排班数据已重置');
+                setTimeout(hideError, 3000);
+            }
+        }
+
+        // ==================== 启动 ====================
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
