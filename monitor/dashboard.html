@@ -205,8 +205,10 @@ function renderAll(csvText) {
   const latestRows = grouped[latestTs];
 
   // Summary
-  const okCount = latestRows.filter(r => r.OK === 'true').length;
-  const avgTime = Math.round(latestRows.reduce((s, r) => s + parseInt(r.TimeMs), 0) / latestRows.length);
+  const isOk = (v) => (v || '').toLowerCase() === 'true';
+
+  const okCount = latestRows.filter(r => isOk(r.OK)).length;
+  const avgTime = Math.round(latestRows.reduce((s, r) => s + (parseInt(r.TimeMs) || 0), 0) / latestRows.length);
   document.getElementById('okCount').textContent = okCount + '/' + latestRows.length;
   document.getElementById('okCount').style.color = okCount === latestRows.length ? 'var(--ok)' : (okCount === 0 ? 'var(--fail)' : 'var(--warn)');
   document.getElementById('avgTime').textContent = avgTime;
@@ -215,10 +217,11 @@ function renderAll(csvText) {
   // Site cards
   const grid = document.getElementById('siteGrid');
   grid.innerHTML = latestRows.map(r => {
-    const cls = r.OK === 'true' ? 'ok' : 'fail';
-    const timeMs = parseInt(r.TimeMs);
+    const ok = isOk(r.OK);
+    const cls = ok ? 'ok' : 'fail';
+    const timeMs = parseInt(r.TimeMs) || 0;
     let badge = '';
-    if (r.OK !== 'true') badge = '<span class="status-badge down">故障</span>';
+    if (!ok) badge = '<span class="status-badge down">故障</span>';
     else if (timeMs > 2000) badge = '<span class="status-badge slow">较慢</span>';
     else badge = '<span class="status-badge normal">正常</span>';
     return `<div class="site-card ${cls}">

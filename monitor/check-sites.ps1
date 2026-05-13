@@ -60,7 +60,7 @@ foreach ($r in $results) {
         Url        = $r.Url
         StatusCode = $r.StatusCode
         TimeMs     = $r.TimeMs
-        OK         = $r.OK
+        OK         = $r.OK.ToString().ToLower()
     }
     $row | Export-Csv -Path $csvFile -NoTypeInformation -Append
 }
