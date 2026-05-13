@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>站点响应监控 - 星元检验工具箱</title>
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --card-bg: #16213e;
+    --text: #e0e0e0;
+    --ok: #00c853;
+    --warn: #ffab00;
+    --fail: #ff1744;
+    --accent: #533483;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 1.5rem;
+    color: #fff;
+  }
+  .subtitle {
+    text-align: center;
+    color: #888;
+    margin-bottom: 32px;
+    font-size: 0.85rem;
+  }
+  .summary-cards {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .summary-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px 32px;
+    text-align: center;
+    min-width: 140px;
+  }
+  .summary-card .value {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  .summary-card .label {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 4px;
+  }
+  .site-grid {
+    display: grid;
+    gap: 12px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .site-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 4px solid transparent;
+    transition: transform .15s;
+  }
+  .site-card:hover { transform: translateX(4px); }
+  .site-card.ok { border-left-color: var(--ok); }
+  .site-card.fail { border-left-color: var(--fail); }
+  .site-info { flex: 1; }
+  .site-name { font-weight: 600; font-size: 0.95rem; }
+  .site-url { font-size: 0.75rem; color: #777; margin-top: 2px; word-break: break-all; }
+  .site-status { text-align: right; }
+  .status-code { font-size: 1.4rem; font-weight: 700; }
+  .status-code.ok { color: var(--ok); }
+  .status-code.fail { color: var(--fail); }
+  .latency { font-size: 0.8rem; color: #888; margin-top: 2px; }
+  .status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+  .status-badge.normal { background: rgba(0,200,83,.15); color: var(--ok); }
+  .status-badge.slow { background: rgba(255,171,0,.15); color: var(--warn); }
+  .status-badge.down { background: rgba(255,23,68,.15); color: var(--fail); }
+  .error-banner {
+    background: rgba(255,23,68,.1);
+    border: 1px solid rgba(255,23,68,.3);
+    border-radius: 10px;
+    padding: 16px 24px;
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 20px;
+    color: var(--fail);
+  }
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    color: #555;
+    font-size: 0.75rem;
+  }
+  .refresh-btn {
+    display: block;
+    margin: 0 auto 24px;
+    padding: 8px 20px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: opacity .2s;
+  }
+  .refresh-btn:hover { opacity: .85; }
+  .chart-container {
+    max-width: 680px;
+    margin: 32px auto;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .chart-title { font-size: 0.9rem; color: #888; margin-bottom: 16px; }
+  canvas { width: 100%; }
+</style>
+</head>
+<body>
+
+<h1>站点响应监控</h1>
+<p class="subtitle" id="subtitle">加载中...</p>
+
+<div class="summary-cards">
+  <div class="summary-card">
+    <div class="value" id="okCount" style="color:var(--ok)">-</div>
+    <div class="label">正常站点</div>
+  </div>
+  <div class="summary-card">
+    <div class="value" id="avgTime">-</div>
+    <div class="label">平均响应 (ms)</div>
+  </div>
+  <div class="summary-card">
+    <div class="value" id="checkedAt" style="font-size:0.85rem">-</div>
+    <div class="label">最近检测</div>
+  </div>
+</div>
+
+<div id="errorMsg" class="error-banner" style="display:none"></div>
+<div class="site-grid" id="siteGrid"></div>
+
+<div class="chart-container">
+  <div class="chart-title">24小时响应时间趋势</div>
+  <canvas id="chart" height="240"></canvas>
+</div>
+
+<div class="footer">
+  <button class="refresh-btn" onclick="loadData()">刷新</button>
+  <p>数据来源: monitor/logs/response-log.csv | 通过 GitHub Actions 自动更新</p>
+</div>
+
+<script>
+async function loadData() {
+  try {
+    const csvResp = await fetch('logs/response-log.csv?' + Date.now());
+    const csvText = await csvResp.text();
+    renderAll(csvText);
+    document.getElementById('errorMsg').style.display = 'none';
+  } catch(e) {
+    document.getElementById('errorMsg').style.display = 'block';
+    document.getElementById('errorMsg').textContent = '无法加载监控数据: ' + e.message;
+  }
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  if (lines.length < 2) return [];
+  const headers = lines[0].split(',');
+  return lines.slice(1).map(line => {
+    const cols = line.split(',');
+    const row = {};
+    headers.forEach((h, i) => row[h.trim()] = (cols[i] || '').trim());
+    return row;
+  });
+}
+
+function renderAll(csvText) {
+  const rows = parseCSV(csvText);
+  if (rows.length === 0) { document.getElementById('subtitle').textContent = '暂无数据'; return; }
+
+  // Latest check
+  const grouped = {};
+  rows.forEach(r => { grouped[r.Timestamp] = grouped[r.Timestamp] || []; grouped[r.Timestamp].push(r); });
+  const timestamps = Object.keys(grouped).sort();
+  const latestTs = timestamps[timestamps.length - 1];
+  const latestRows = grouped[latestTs];
+
+  // Summary
+  const okCount = latestRows.filter(r => r.OK === 'true').length;
+  const avgTime = Math.round(latestRows.reduce((s, r) => s + parseInt(r.TimeMs), 0) / latestRows.length);
+  document.getElementById('okCount').textContent = okCount + '/' + latestRows.length;
+  document.getElementById('okCount').style.color = okCount === latestRows.length ? 'var(--ok)' : (okCount === 0 ? 'var(--fail)' : 'var(--warn)');
+  document.getElementById('avgTime').textContent = avgTime;
+  document.getElementById('checkedAt').textContent = latestTs;
+
+  // Site cards
+  const grid = document.getElementById('siteGrid');
+  grid.innerHTML = latestRows.map(r => {
+    const cls = r.OK === 'true' ? 'ok' : 'fail';
+    const timeMs = parseInt(r.TimeMs);
+    let badge = '';
+    if (r.OK !== 'true') badge = '<span class="status-badge down">故障</span>';
+    else if (timeMs > 2000) badge = '<span class="status-badge slow">较慢</span>';
+    else badge = '<span class="status-badge normal">正常</span>';
+    return `<div class="site-card ${cls}">
+      <div class="site-info">
+        <div class="site-name">${badge} ${r.Name}</div>
+        <div class="site-url">${r.Url}</div>
+      </div>
+      <div class="site-status">
+        <div class="status-code ${cls}">${r.StatusCode}</div>
+        <div class="latency">${timeMs}ms</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Chart - last 24h per site
+  drawChart(rows);
+}
+
+function drawChart(rows) {
+  const canvas = document.getElementById('chart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 240 * dpr;
+  canvas.style.width = rect.width + 'px';
+  canvas.style.height = '240px';
+  ctx.scale(dpr, dpr);
+
+  const w = rect.width;
+  const h = 240;
+
+  // Get unique site names
+  const siteNames = [...new Set(rows.map(r => r.Name))];
+  const colors = ['#00c853','#448aff','#ffab00','#e040fb','#00e5ff'];
+
+  // Filter last 24h
+  const now = new Date();
+  const cutoff = new Date(now - 24*60*60*1000);
+  const filtered = rows.filter(r => new Date(r.Timestamp) >= cutoff);
+
+  // Group by timestamp
+  const tsMap = {};
+  filtered.forEach(r => {
+    const ts = r.Timestamp.substring(0, 16); // minute precision
+    if (!tsMap[ts]) tsMap[ts] = {};
+    tsMap[ts][r.Name] = parseInt(r.TimeMs);
+  });
+
+  const allTs = Object.keys(tsMap).sort();
+  if (allTs.length < 2) { ctx.fillStyle = '#888'; ctx.fillText('数据不足，需要更多检测记录', 10, h/2); return; }
+
+  // Draw
+  ctx.clearRect(0, 0, w, h);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+  ctx.lineWidth = 0.5;
+  for (let i = 0; i < 5; i++) {
+    const y = 20 + (h - 40) * i / 4;
+    ctx.beginPath(); ctx.moveTo(50, y); ctx.lineTo(w - 10, y); ctx.stroke();
+  }
+
+  // Y axis labels
+  const maxTime = Math.max(...filtered.map(r => parseInt(r.TimeMs)), 1000);
+  ctx.fillStyle = '#666'; ctx.font = '10px monospace';
+  for (let i = 0; i <= 4; i++) {
+    const val = Math.round(maxTime * (4-i) / 4);
+    ctx.fillText(val + 'ms', 4, 24 + (h-40)*i/4);
+  }
+
+  // Lines per site
+  siteNames.forEach((name, si) => {
+    ctx.strokeStyle = colors[si % colors.length];
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    let first = true;
+    allTs.forEach((ts, ti) => {
+      const val = tsMap[ts][name];
+      if (val === undefined) return;
+      const x = 50 + (w - 60) * ti / (allTs.length - 1);
+      const y = 20 + (h - 40) * (1 - val / maxTime);
+      if (first) { ctx.moveTo(x, y); first = false; }
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+  });
+
+  // Legend
+  siteNames.forEach((name, si) => {
+    const y = h - 6 - (siteNames.length - 1 - si) * 14;
+    ctx.fillStyle = colors[si % colors.length];
+    ctx.fillRect(w - 180, y - 6, 10, 10);
+    ctx.fillStyle = '#aaa';
+    ctx.font = '10px sans-serif';
+    ctx.fillText(name, w - 165, y + 3);
+  });
+}
+
+loadData();
+setInterval(loadData, 5 * 60 * 1000);
+</script>
+</body>
+</html>

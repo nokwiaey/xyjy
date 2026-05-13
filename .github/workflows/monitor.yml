@@ -1,0 +1,96 @@
+name: Site Response Monitor
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # every 30 minutes
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check site response times
+        run: |
+          mkdir -p monitor/logs
+
+          sites=(
+            "GitHub（主站）|https://nokwiaey.github.io/xyjy/"
+            "Cloudflare（副站）|https://xyjy.dfly.site/"
+            "帽子云（镜像站）|https://xyjy-rbw5h01el.maozi.io/"
+            "Vercel（镜像站）|https://xyjy-tools.vercel.app/"
+            "Netlify（镜像站）|https://xyjy.netlify.app/"
+          )
+
+          TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M:%S')
+          DATE_STR=$(date -u '+%Y-%m-%d')
+          CSV="monitor/logs/response-log.csv"
+
+          # Create CSV header if new
+          if [ ! -f "$CSV" ]; then
+            echo "Timestamp,Date,Name,Url,StatusCode,TimeMs,OK" > "$CSV"
+          fi
+
+          OK_COUNT=0
+          TOTAL=0
+          TOTAL_TIME=0
+          JSON_SITES=""
+
+          for entry in "${sites[@]}"; do
+            NAME="${entry%%|*}"
+            URL="${entry##*|}"
+
+            START=$(date +%s%3N 2>/dev/null || echo 0)
+            HTTP_CODE=$(curl -o /dev/null -s -w "%{http_code}" --max-time 15 -L "$URL" 2>&1)
+            END=$(date +%s%3N 2>/dev/null || echo 0)
+            ELAPSED=$((END - START))
+
+            if [ "$ELAPSED" -lt 0 ]; then ELAPSED=0; fi
+
+            OK="false"
+            if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ]; then
+              OK="true"
+              OK_COUNT=$((OK_COUNT + 1))
+            fi
+            TOTAL=$((TOTAL + 1))
+            TOTAL_TIME=$((TOTAL_TIME + ELAPSED))
+
+            echo "$TIMESTAMP,$DATE_STR,$NAME,$URL,$HTTP_CODE,$ELAPSED,$OK" >> "$CSV"
+
+            JSON_SITES="${JSON_SITES}{\"Name\":\"$NAME\",\"Url\":\"$URL\",\"StatusCode\":$HTTP_CODE,\"TimeMs\":$ELAPSED,\"OK\":$OK},"
+          done
+
+          JSON_SITES="[${JSON_SITES%,}]"
+
+          if [ $TOTAL -gt 0 ]; then
+            AVG=$((TOTAL_TIME / TOTAL))
+          else
+            AVG=0
+          fi
+
+          cat > monitor/logs/latest.json << JSONEOF
+          {
+            "checkedAt": "$TIMESTAMP",
+            "totalSites": $TOTAL,
+            "okSites": $OK_COUNT,
+            "avgTimeMs": $AVG,
+            "sites": $JSON_SITES
+          }
+          JSONEOF
+
+          echo "== 检测结果 =="
+          cat monitor/logs/latest.json
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add monitor/logs/response-log.csv monitor/logs/latest.json
+          git diff --cached --quiet || git commit -m "monitor: $(date -u '+%Y-%m-%d %H:%M') 站点响应检测"
+          git pull --rebase origin main
+          git push origin main
