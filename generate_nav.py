@@ -615,6 +615,104 @@ def generate_html(tools, site_urls):
             font-weight: 500;
         }}
 
+        /* 二维码弹窗 */
+        .qr-modal-overlay {{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }}
+
+        .qr-modal-overlay.open {{
+            opacity: 1;
+            visibility: visible;
+        }}
+
+        .qr-modal {{
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: 0 20px 60px var(--shadow-color);
+            max-width: 360px;
+            width: 90%;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }}
+
+        .qr-modal-overlay.open .qr-modal {{
+            transform: translateY(0);
+        }}
+
+        .qr-modal-close {{
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: var(--stats-bg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }}
+
+        .qr-modal-close:hover {{
+            background: rgba(207, 54, 54, 0.15);
+            color: #cf3636;
+        }}
+
+        .qr-modal {{
+            position: relative;
+        }}
+
+        .qr-modal-title {{
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }}
+
+        .qr-modal-image {{
+            width: 200px;
+            height: 200px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            background: white;
+        }}
+
+        .qr-modal-url {{
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            word-break: break-all;
+            padding: 8px 12px;
+            background: var(--stats-bg);
+            border-radius: 8px;
+            line-height: 1.5;
+        }}
+
+        .qr-modal-hint {{
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }}
+
         /* 响应式 */
         @media (max-width: 768px) {{
             .container {{
@@ -687,7 +785,7 @@ def generate_html(tools, site_urls):
     <div class="container">
         <!-- 头部 -->
         <header class="header">
-            <div class="logo" id="siteSwitchLogo" role="button" tabindex="0" aria-label="切换访问网址" title="切换访问网址">
+            <div class="logo" id="qrCodeLogo" role="button" tabindex="0" aria-label="查看网站二维码" title="查看网站二维码">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                 </svg>
@@ -728,6 +826,17 @@ def generate_html(tools, site_urls):
                  </span>
              </div>
         </footer>
+    </div>
+
+    <!-- 二维码弹窗 -->
+    <div class="qr-modal-overlay" id="qrModalOverlay">
+        <div class="qr-modal">
+            <button class="qr-modal-close" id="qrModalClose" aria-label="关闭二维码">&times;</button>
+            <div class="qr-modal-title">扫码访问本页</div>
+            <img class="qr-modal-image" id="qrModalImage" src="" alt="当前页面二维码" />
+            <div class="qr-modal-url" id="qrModalUrl"></div>
+            <div class="qr-modal-hint">使用手机扫描二维码即可访问</div>
+        </div>
     </div>
 
     <!-- 页面加载动画 -->
@@ -862,16 +971,6 @@ def generate_html(tools, site_urls):
             return targetUrl.href;
         }}
 
-        function getNextSiteUrl() {{
-            if (!SITE_URLS.length) {{
-                return window.location.href;
-            }}
-
-            const currentIndex = getCurrentSiteIndex();
-            const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % SITE_URLS.length : 0;
-            return getSiteUrl(SITE_URLS[nextIndex]);
-        }}
-
         function renderSiteMenu() {{
             const siteMenu = document.getElementById('siteMenu');
             if (!siteMenu || !SITE_URLS.length) {{
@@ -922,19 +1021,55 @@ def generate_html(tools, site_urls):
             }});
         }}
 
-        const siteSwitchLogo = document.getElementById('siteSwitchLogo');
-        if (siteSwitchLogo) {{
-            siteSwitchLogo.addEventListener('click', function() {{
-                window.location.href = getNextSiteUrl();
-            }});
+        // ============================================
+        // 点击 Logo 展示当前页面二维码
+        // ============================================
+        const qrCodeLogo = document.getElementById('qrCodeLogo');
+        const qrModalOverlay = document.getElementById('qrModalOverlay');
+        const qrModalClose = document.getElementById('qrModalClose');
+        const qrModalImage = document.getElementById('qrModalImage');
+        const qrModalUrl = document.getElementById('qrModalUrl');
 
-            siteSwitchLogo.addEventListener('keydown', function(event) {{
+        function showQrModal() {{
+            const currentUrl = window.location.href;
+            const qrApiUrl = `https://api.2dcode.biz/v1/create-qr-code?data=${{encodeURIComponent(currentUrl)}}&size=256x256`;
+            qrModalImage.src = qrApiUrl;
+            qrModalUrl.textContent = currentUrl;
+            qrModalOverlay.classList.add('open');
+        }}
+
+        function hideQrModal() {{
+            qrModalOverlay.classList.remove('open');
+        }}
+
+        if (qrCodeLogo) {{
+            qrCodeLogo.addEventListener('click', showQrModal);
+
+            qrCodeLogo.addEventListener('keydown', function(event) {{
                 if (event.key === 'Enter' || event.key === ' ') {{
                     event.preventDefault();
-                    window.location.href = getNextSiteUrl();
+                    showQrModal();
                 }}
             }});
         }}
+
+        if (qrModalClose) {{
+            qrModalClose.addEventListener('click', hideQrModal);
+        }}
+
+        if (qrModalOverlay) {{
+            qrModalOverlay.addEventListener('click', function(event) {{
+                if (event.target === qrModalOverlay) {{
+                    hideQrModal();
+                }}
+            }});
+        }}
+
+        document.addEventListener('keydown', function(event) {{
+            if (event.key === 'Escape' && qrModalOverlay && qrModalOverlay.classList.contains('open')) {{
+                hideQrModal();
+            }}
+        }});
         // ============================================
 
         // ============================================
