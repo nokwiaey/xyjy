@@ -183,11 +183,12 @@ async function loadData() {
 function parseCSV(text) {
   const lines = text.trim().split('\n');
   if (lines.length < 2) return [];
-  const headers = lines[0].split(',');
+  const strip = (s) => (s || '').replace(/^"|"$/g, '');
+  const headers = lines[0].split(',').map(strip);
   return lines.slice(1).map(line => {
-    const cols = line.split(',');
+    const cols = line.split(',').map(strip);
     const row = {};
-    headers.forEach((h, i) => row[h.trim()] = (cols[i] || '').trim());
+    headers.forEach((h, i) => row[h] = cols[i] || '');
     return row;
   });
 }
