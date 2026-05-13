@@ -99,13 +99,13 @@ def generate_html(tools, site_urls):
         # 3. 如果为空，自动获取网站 favicon
         if custom_icon and (custom_icon.startswith('http://') or custom_icon.startswith('https://')):
             # 使用指定的图标 URL
-            icon_html = f'<div class="tool-icon {color} favicon-icon"><img src="{custom_icon}" alt="" onerror="this.style.display=\'none\'; this.parentElement.innerHTML=\'🔗\';"></div>'
+            icon_html = f'<div class="tool-icon {color} favicon-icon"><img src="{custom_icon}" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display=\'none\'; this.parentElement.innerHTML=\'🔗\';"></div>'
         elif custom_icon:
             # 使用 Emoji 图标
             icon_html = f'<div class="tool-icon {color}">{custom_icon}</div>'
         else:
             # 使用 Google Favicon 服务获取网站图标
-            icon_html = f'<div class="tool-icon {color} favicon-icon"><img src="https://www.google.com/s2/favicons?domain={url}&sz=64" alt="" onerror="this.style.display=\'none\'; this.parentElement.innerHTML=\'🔗\';"></div>'
+            icon_html = f'<div class="tool-icon {color} favicon-icon"><img src="https://www.google.com/s2/favicons?domain={url}&sz=64" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display=\'none\'; this.parentElement.innerHTML=\'🔗\';"></div>'
 
         card = f'''            <a href="{url}" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="{tags_attr}">
                 {icon_html}
@@ -127,6 +127,13 @@ def generate_html(tools, site_urls):
     <meta property="og:title" content="星元检验工具箱" />
     <meta property="og:description" content="专业、便捷的检验工具集合，助力高效工作" />
     <meta property="og:image" content="" id="ogImage" />
+    <!-- 资源预连接 - 加速第三方域名解析与连接 -->
+    <link rel="dns-prefetch" href="https://vercount.one">
+    <link rel="dns-prefetch" href="https://res.wx.qq.com">
+    <link rel="dns-prefetch" href="https://api.2dcode.biz">
+
+    <link rel="preconnect" href="https://vercount.one" crossorigin>
+    <link rel="preconnect" href="https://res.wx.qq.com" crossorigin>
     <style>
         * {{
             margin: 0;
@@ -441,6 +448,8 @@ def generate_html(tools, site_urls):
             border: 1px solid var(--border-color);
             position: relative;
             overflow: hidden;
+            content-visibility: auto;
+            contain-intrinsic-size: auto 240px;
         }}
 
         .tool-card::before {{
@@ -875,10 +884,10 @@ def generate_html(tools, site_urls):
     </div>
 
     <!-- Vercount 访问统计 -->
-    <script src="https://vercount.one/js"></script>
-    
+    <script src="https://vercount.one/js" defer></script>
+
     <!-- 微信 JS-SDK -->
-    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js" defer></script>
     
     <script>
         // ============================================
