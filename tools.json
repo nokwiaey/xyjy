@@ -166,6 +166,28 @@
       ]
     },
     {
+      "title": "中国卫生人才网",
+      "url": "https://www.21wecan.com/",
+      "desc": "国家卫生健康委人才交流服务中心",
+      "icon": "🌐",
+      "color": "blue",
+      "tags": [
+        "继续教育",
+        "查阅"
+      ]
+    },
+    {
+      "title": "学信网",
+      "url": "https://www.chsi.com.cn/",
+      "desc": "中国高等教育学生信息网（学信网）",
+      "icon": "https://www.chsi.com.cn/favicon.ico",
+      "color": "blue",
+      "tags": [
+        "继续教育",
+        "查阅"
+      ]
+    },
+    {
       "title": "好医生",
       "url": "https://www.cmechina.net/cme/subject.jsp",
       "desc": "好医生继续教育平台",
