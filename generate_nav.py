@@ -696,8 +696,15 @@ def generate_html(tools, site_urls):
             background: white;
         }}
 
-        .qr-modal-url {{
+        .qr-modal-url-row {{
             margin-top: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }}
+
+        .qr-modal-url {{
+            flex: 1;
             font-size: 13px;
             color: var(--text-secondary);
             word-break: break-all;
@@ -705,6 +712,29 @@ def generate_html(tools, site_urls):
             background: var(--stats-bg);
             border-radius: 8px;
             line-height: 1.5;
+            text-align: left;
+        }}
+
+        .qr-modal-copy {{
+            flex: 0 0 auto;
+            padding: 8px 14px;
+            border: none;
+            background: linear-gradient(135deg, #1a5fb4 0%, #3584e4 100%);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }}
+
+        .qr-modal-copy:hover {{
+            box-shadow: 0 4px 12px rgba(26, 95, 180, 0.35);
+            transform: translateY(-1px);
+        }}
+
+        .qr-modal-copy.copied {{
+            background: #2ea043;
         }}
 
         .qr-modal-hint {{
@@ -834,7 +864,10 @@ def generate_html(tools, site_urls):
             <button class="qr-modal-close" id="qrModalClose" aria-label="关闭二维码">&times;</button>
             <div class="qr-modal-title">扫码访问本页</div>
             <img class="qr-modal-image" id="qrModalImage" src="" alt="当前页面二维码" />
-            <div class="qr-modal-url" id="qrModalUrl"></div>
+            <div class="qr-modal-url-row">
+                <div class="qr-modal-url" id="qrModalUrl"></div>
+                <button class="qr-modal-copy" id="qrModalCopy">复制</button>
+            </div>
             <div class="qr-modal-hint">使用手机扫描二维码即可访问</div>
         </div>
     </div>
@@ -1029,6 +1062,7 @@ def generate_html(tools, site_urls):
         const qrModalClose = document.getElementById('qrModalClose');
         const qrModalImage = document.getElementById('qrModalImage');
         const qrModalUrl = document.getElementById('qrModalUrl');
+        const qrModalCopy = document.getElementById('qrModalCopy');
 
         function showQrModal() {{
             const currentUrl = window.location.href;
@@ -1070,6 +1104,38 @@ def generate_html(tools, site_urls):
                 hideQrModal();
             }}
         }});
+
+        if (qrModalCopy) {{
+            qrModalCopy.addEventListener('click', function() {{
+                const url = qrModalUrl.textContent;
+                if (navigator.clipboard && navigator.clipboard.writeText) {{
+                    navigator.clipboard.writeText(url).then(function() {{
+                        qrModalCopy.textContent = '已复制';
+                        qrModalCopy.classList.add('copied');
+                        setTimeout(function() {{
+                            qrModalCopy.textContent = '复制';
+                            qrModalCopy.classList.remove('copied');
+                        }}, 2000);
+                    }});
+                }} else {{
+                    // 降级方案：使用传统方法
+                    var textarea = document.createElement('textarea');
+                    textarea.value = url;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    qrModalCopy.textContent = '已复制';
+                    qrModalCopy.classList.add('copied');
+                    setTimeout(function() {{
+                        qrModalCopy.textContent = '复制';
+                        qrModalCopy.classList.remove('copied');
+                    }}, 2000);
+                }}
+            }});
+        }}
         // ============================================
 
         // ============================================
