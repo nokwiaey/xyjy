@@ -27,8 +27,9 @@ jobs:
             "Netlify（镜像站）|https://xyjy.netlify.app/"
           )
 
-          TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M:%S')
-          DATE_STR=$(date -u '+%Y-%m-%d')
+          export TZ='Asia/Shanghai'
+          TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+          DATE_STR=$(date '+%Y-%m-%d')
           CSV="monitor/logs/response-log.csv"
 
           # Create CSV header if new
@@ -91,6 +92,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add monitor/logs/response-log.csv monitor/logs/latest.json
-          git diff --cached --quiet || git commit -m "monitor: $(date -u '+%Y-%m-%d %H:%M') 站点响应检测"
+          git diff --cached --quiet || git commit -m "monitor: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M') 站点响应检测"
           git pull --rebase origin main
           git push origin main
