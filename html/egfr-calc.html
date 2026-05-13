@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eGFR 多版本计算工具</title>
+
+<style>
+body{
+    margin:0;
+    background:linear-gradient(135deg,#4e73df,#1cc88a);
+    font-family:"Segoe UI",Arial,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.card{
+    background:#fff;
+    width:420px;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:25px;
+    color:#333;
+}
+
+label{
+    font-size:14px;
+    color:#555;
+    margin-top:15px;
+    display:block;
+}
+
+.form-control{
+    width:100%;
+    padding:10px;
+    margin-top:6px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    transition:0.3s;
+    font-size:14px;
+    box-sizing:border-box;
+}
+
+.form-control:focus{
+    border-color:#4e73df;
+    outline:none;
+    box-shadow:0 0 6px rgba(78,115,223,0.3);
+}
+
+/* 性别滑块样式 */
+.sex-toggle{
+    position:relative;
+    display:flex;
+    margin-top:8px;
+    border-radius:12px;
+    background:#e9ecf5;
+    height:42px;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.sex-toggle input{
+    display:none;
+}
+
+.sex-toggle label{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100%;
+    margin-top:0; /* 覆盖全局label的margin */
+    line-height:1;
+    z-index:2;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:500;
+    color:#555;
+    transition:0.3s;
+}
+
+.sex-toggle .slider{
+    position:absolute;
+    width:50%;
+    height:100%;
+    background:linear-gradient(90deg,#4e73df,#1cc88a);
+    transition:0.3s;
+    left:0;
+    border-radius:12px 0 0 12px;
+}
+
+#female:checked ~ .slider{
+    left:50%;
+    border-radius:0 12px 12px 0;
+}
+
+#female:checked ~ .slider{
+    left:50%;
+}
+
+#male:checked ~ label[for="male"],
+#female:checked ~ label[for="female"]{
+    color:#fff;
+    font-weight:bold;
+}
+
+button{
+    width:100%;
+    margin-top:25px;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(90deg,#4e73df,#1cc88a);
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    opacity:0.9;
+    transform:translateY(-2px);
+}
+
+.result{
+    margin-top:25px;
+    background:#f8f9fc;
+    padding:15px;
+    border-radius:10px;
+    font-size:14px;
+    line-height:1.8;
+    border-left:5px solid #4e73df;
+}
+
+.highlight{
+    font-size:16px;
+    font-weight:bold;
+    color:#1cc88a;
+}
+
+.links{
+    margin-top:30px;
+}
+
+.link-title{
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:12px;
+    color:#444;
+}
+
+.ext-btn{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    background:#f4f6fb;
+    padding:12px 14px;
+    border-radius:12px;
+    margin-bottom:10px;
+    transition:0.2s;
+    border:1px solid #e3e6f0;
+}
+
+.ext-btn:hover{
+    background:#e9f2ff;
+    transform:translateY(-2px);
+}
+
+.icon{
+    font-size:20px;
+}
+
+.btn-main{
+    font-size:14px;
+    font-weight:600;
+    color:#2e3a59;
+}
+
+.btn-sub{
+    font-size:12px;
+    color:#6c757d;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>eGFR 计算工具<br>(2009 & 2021)</h2>
+
+<label>性别</label>
+<div class="sex-toggle">
+    <input type="radio" name="sex" value="male" id="male" checked>
+    <input type="radio" name="sex" value="female" id="female">
+
+    <div class="slider"></div>
+
+    <label for="male">男</label>
+    <label for="female">女</label>
+</div>
+
+<label>年龄（岁）</label>
+<input type="number" id="age" class="form-control" placeholder="请输入年龄">
+
+<label>肌酐（μmol/L）</label>
+<input type="number" id="scr" class="form-control" placeholder="请输入肌酐数值">
+
+<button onclick="calculate()">开始计算</button>
+
+<div class="result" id="output"></div>
+
+<div class="links">
+    <div class="link-title">权威在线计算工具</div>
+
+    <a class="ext-btn" href="https://www.mdcalc.com/calc/3939/ckd-epi-equations-glomerular-filtration-rate-gfr" target="_blank">
+        <span class="icon">🧮</span>
+        <span>
+            <div class="btn-main">MDCalc</div>
+            <div class="btn-sub">CKD‑EPI GFR Calculator</div>
+        </span>
+    </a>
+
+    <a class="ext-btn" href="https://www.kidney.org/professionals/gfr_calculator" target="_blank">
+        <span class="icon">🏥</span>
+        <span>
+            <div class="btn-main">National Kidney Foundation</div>
+            <div class="btn-sub">eGFR Calculator</div>
+        </span>
+    </a>
+</div>
+
+</div>
+
+<script>
+function stage(egfr){
+    if(egfr>=90) return "G1 正常或高";
+    if(egfr>=60) return "G2 轻度下降";
+    if(egfr>=45) return "G3a 轻中度下降";
+    if(egfr>=30) return "G3b 中重度下降";
+    if(egfr>=15) return "G4 重度下降";
+    return "G5 肾衰竭";
+}
+
+function getSex(){
+    var radios=document.getElementsByName("sex");
+    for(var i=0;i<radios.length;i++){
+        if(radios[i].checked) return radios[i].value;
+    }
+}
+
+function calculate(){
+    var sex=getSex();
+    var age=parseFloat(document.getElementById("age").value);
+    var scr_umol=parseFloat(document.getElementById("scr").value);
+
+    if(!age || !scr_umol){
+        document.getElementById("output").innerHTML="请完整填写信息";
+        return;
+    }
+
+    if(age < 18){
+        document.getElementById("output").innerHTML =
+        "⚠️ CKD‑EPI 公式不适用于 18 岁以下儿童。<br>" +
+        "儿童建议使用 Schwartz 公式进行评估。";
+        return;
+    }
+
+    var scr=scr_umol/88.4;
+
+    // 2009
+    var k2009=(sex=="male")?0.9:0.7;
+    var a2009=(sex=="male")?-0.411:-0.329;
+    var f2009=(sex=="female")?1.018:1;
+    var r2009=scr/k2009;
+    var egfr2009=141*Math.pow(Math.min(r2009,1),a2009)*
+        Math.pow(Math.max(r2009,1),-1.209)*
+        Math.pow(0.993,age)*f2009;
+
+    // 2021
+    var k2021=(sex=="male")?0.9:0.7;
+    var a2021=(sex=="male")?-0.302:-0.241;
+    var f2021=(sex=="female")?1.012:1;
+    var r2021=scr/k2021;
+    var egfr2021=142*Math.pow(Math.min(r2021,1),a2021)*
+        Math.pow(Math.max(r2021,1),-1.2)*
+        Math.pow(0.9938,age)*f2021;
+
+    egfr2009=egfr2009.toFixed(1);
+    egfr2021=egfr2021.toFixed(1);
+    var diff=(egfr2021-egfr2009).toFixed(1);
+
+    document.getElementById("output").innerHTML=
+        "<div><b>CKD-EPI 2009：</b><span class='highlight'>"+egfr2009+
+        "</span> mL/min/1.73㎡<br>分期："+stage(egfr2009)+"</div><br>"+
+        "<div><b>CKD-EPI 2021：</b><span class='highlight'>"+egfr2021+
+        "</span> mL/min/1.73㎡<br>分期："+stage(egfr2021)+"</div><br>"+
+        "<div><b>差值 (2021-2009)：</b>"+diff+"</div>";
+}
+</script>
+
+</body>
+</html>

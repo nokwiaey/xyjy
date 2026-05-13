@@ -80,7 +80,7 @@
     },
     {
       "title": "eGFR 计算工具",
-      "url": "https://nokwiaey.github.io/egfr-calculator/",
+      "url": "html/egfr-calc.html",
       "desc": "eGFR 多版本计算工具",
       "icon": "🔢",
       "color": "red",
