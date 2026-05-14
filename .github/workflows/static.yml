@@ -11,7 +11,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -37,6 +37,11 @@ jobs:
           python-version: '3.12'
       - name: Generate index.html
         run: python generate_nav.py
+      - name: Commit updated index.html
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: auto-generate index.html from tools.json'
+          file_pattern: 'index.html'
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
