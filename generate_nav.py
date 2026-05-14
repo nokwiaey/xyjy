@@ -1031,6 +1031,67 @@ def generate_html(tools, site_urls):
                 padding: 6px 10px;
             }}
         }}
+
+        /* 返回顶部按钮 */
+        .back-to-top {{
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(12px);
+        }}
+
+        .back-to-top.visible {{
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }}
+
+        .back-to-top:hover {{
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow-color);
+        }}
+
+        .back-to-top.visible:hover {{
+            transform: translateY(-2px);
+        }}
+
+        .back-to-top svg {{
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: var(--text-primary);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }}
+
+        @media (max-width: 768px) {{
+            .back-to-top {{
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+            }}
+
+            .back-to-top svg {{
+                width: 18px;
+                height: 18px;
+            }}
+        }}
     </style>
 </head>
 <body>
@@ -1043,6 +1104,13 @@ def generate_html(tools, site_urls):
         </button>
         <div class="site-menu" id="siteMenu" role="menu"></div>
     </div>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="18 15 12 9 6 15"/>
+        </svg>
+    </button>
 
     <!-- 主题切换按钮 -->
     <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
@@ -1547,6 +1615,25 @@ def generate_html(tools, site_urls):
 
         renderRecentVisits();
         // ============================================
+
+        // ============================================
+        // 返回顶部按钮
+        // ============================================
+        const backToTop = document.getElementById('backToTop');
+
+        function toggleBackToTop() {{
+            if (window.scrollY > 300) {{
+                backToTop.classList.add('visible');
+            }} else {{
+                backToTop.classList.remove('visible');
+            }}
+        }}
+
+        window.addEventListener('scroll', toggleBackToTop, {{ passive: true }});
+
+        backToTop.addEventListener('click', function() {{
+            window.scrollTo({{ top: 0, behavior: 'smooth' }});
+        }});
 
         // ============================================
         // 主题切换功能
