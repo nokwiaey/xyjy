@@ -268,9 +268,19 @@
                 align-items: flex-start;
                 gap: 10px;
             }
-            .phone-numbers {
+            .phone-item .phone-numbers {
                 width: 100%;
                 justify-content: flex-start;
+            }
+            .user-name {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                display: block;
+            }
+            .user-item .phone-numbers {
+                flex-shrink: 0;
+                margin-left: 8px;
             }
         }
     </style>
@@ -19415,11 +19425,6 @@
                             <span class="user-name">申苗</span>
                             <span class="user-meta"></span>
                         </div>
-                        <div class="phone-numbers">
-                            <a href="tel:" class="user-phone-btn">
-                                <span></span>
-                            </a>
-                        </div>
                     </div>
                     <div class="user-item" data-search="杨兴玲 爱国卫生运动委员会办公室 13474440408 ">
                         <div class="user-info">
@@ -20347,11 +20352,6 @@
                         <div class="user-info">
                             <span class="user-name">金蔚涛</span>
                             <span class="user-meta">员工</span>
-                        </div>
-                        <div class="phone-numbers">
-                            <a href="tel:" class="user-phone-btn">
-                                <span></span>
-                            </a>
                         </div>
                     </div>
                 </div>
