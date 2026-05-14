@@ -47,7 +47,7 @@
 
 - GitHub Pages: https://nokwiaey.github.io/xyjy/ — 主站，长期可用，但国内访问速度较慢
 - Cloudflare Pages: https://xyjy.dfly.site/ — 副站，绑定了自定义域名，未来可能更换域名
-- DevFile: https://devfile.cn/preview/vnc648bu/xyjy-main/index.html — 镜像站，访问速度较快，需手动更新部署
+- DevFile: https://devfile.cn/preview/vnc648bu/xyjy-main/index.html — 镜像站，访问速度较快，需手动更新部署，内容可能不够及时
 - 帽子云: https://xyjy-rbw5h01el.maozi.io/ — 镜像站
 - Vercel: https://xyjy-tools.vercel.app/ — 镜像站
 
