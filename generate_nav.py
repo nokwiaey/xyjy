@@ -123,6 +123,7 @@ def generate_html(tools, site_urls):
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>星元检验工具箱</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a5fb4'/%3E%3Cpath d='M16 6L8 25h16z' fill='%23fff'/%3E%3C/svg%3E">
     <!-- Open Graph Meta 标签 - 用于微信分享卡片 -->
     <meta property="og:title" content="星元检验工具箱" />
     <meta property="og:description" content="专业、便捷的检验工具集合，助力高效工作" />
