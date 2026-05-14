@@ -7,3 +7,4 @@
 - 帽子云（镜像站）: https://xyjy-rbw5h01el.maozi.io/
 - Vercel（镜像站）: https://xyjy-tools.vercel.app/
 - Netlify（镜像站）: https://xyjy.netlify.app/
+- DevFile（镜像站）: https://devfile.cn/preview/vnc648bu/xyjy-main/index.html
