@@ -962,7 +962,7 @@
         // ============================================
         // 点击 Logo 切换访问网址
         // ============================================
-        const SITE_URLS = [{"name": "GitHub（主站）", "url": "https://nokwiaey.github.io/xyjy/"}, {"name": "Cloudflare（副站）", "url": "https://xyjy.dfly.site/"}, {"name": "帽子云（镜像站）", "url": "https://xyjy-rbw5h01el.maozi.io/"}, {"name": "Vercel（镜像站）", "url": "https://xyjy-tools.vercel.app/"}, {"name": "Netlify（镜像站）", "url": "https://xyjy.netlify.app/"}];
+        const SITE_URLS = [{"name": "GitHub（主站）", "url": "https://nokwiaey.github.io/xyjy/"}, {"name": "Cloudflare（副站）", "url": "https://xyjy.dfly.site/"}, {"name": "帽子云（镜像站）", "url": "https://xyjy-rbw5h01el.maozi.io/"}, {"name": "Vercel（镜像站）", "url": "https://xyjy-tools.vercel.app/"}, {"name": "Netlify（镜像站）", "url": "https://xyjy.netlify.app/"}, {"name": "DevFile（镜像站）", "url": "https://devfile.cn/preview/vnc648bu/xyjy-main/index.html"}];
 
         function getSiteBaseUrl(site) {
             return new URL(site.url);
@@ -1007,12 +1007,8 @@
         }
 
         function getSiteUrl(site) {
-            const currentUrl = new URL(window.location.href);
             const targetUrl = getSiteBaseUrl(site);
-            const basePath = targetUrl.pathname.endsWith('/') ? targetUrl.pathname : `${targetUrl.pathname}/`;
-            const relativePath = getCurrentRelativePath();
-
-            targetUrl.pathname = `${basePath}${relativePath}`.replace(/\/+$/, '/');
+            const currentUrl = new URL(window.location.href);
             targetUrl.search = currentUrl.search;
             targetUrl.hash = currentUrl.hash;
             return targetUrl.href;
