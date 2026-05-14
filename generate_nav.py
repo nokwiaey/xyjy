@@ -828,6 +828,208 @@ def generate_html(tools, site_urls):
                 height: 20px;
             }}
         }}
+
+        /* 搜索框 */
+        .search-wrapper {{
+            display: flex;
+            justify-content: center;
+            margin: 0 0 28px 0;
+        }}
+
+        .search-box {{
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+        }}
+
+        .search-input {{
+            width: 100%;
+            padding: 12px 44px;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 15px;
+            transition: all 0.3s ease;
+            outline: none;
+        }}
+
+        .search-input:focus {{
+            border-color: #1a5fb4;
+            box-shadow: 0 0 0 3px rgba(26, 95, 180, 0.1);
+        }}
+
+        .search-input::placeholder {{
+            color: var(--text-tertiary);
+        }}
+
+        .search-icon {{
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+            pointer-events: none;
+            width: 18px;
+            height: 18px;
+        }}
+
+        .search-clear {{
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: var(--text-tertiary);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }}
+
+        .search-clear.visible {{
+            display: flex;
+        }}
+
+        .search-clear:hover {{
+            background: var(--stats-bg);
+            color: var(--text-primary);
+        }}
+
+        .search-shortcut {{
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            color: var(--text-tertiary);
+            background: var(--stats-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            pointer-events: none;
+            transition: opacity 0.15s ease;
+        }}
+
+        .search-input:focus ~ .search-shortcut,
+        .search-input:not(:placeholder-shown) ~ .search-shortcut {{
+            opacity: 0;
+        }}
+
+        .search-input:not(:placeholder-shown) ~ .search-clear {{
+            display: flex;
+        }}
+
+        /* 无搜索结果 */
+        .no-results {{
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--text-tertiary);
+            font-size: 15px;
+            display: none;
+        }}
+
+        .no-results.visible {{
+            display: block;
+        }}
+
+        /* 最近访问 */
+        .recent-section {{
+            margin-bottom: 24px;
+            display: none;
+        }}
+
+        .recent-section.visible {{
+            display: block;
+        }}
+
+        .recent-header {{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }}
+
+        .recent-title {{
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }}
+
+        .recent-clear {{
+            font-size: 12px;
+            color: var(--text-tertiary);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }}
+
+        .recent-clear:hover {{
+            color: #cf3636;
+            background: rgba(207, 54, 54, 0.08);
+        }}
+
+        .recent-list {{
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }}
+
+        .recent-item {{
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 13px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            max-width: 200px;
+        }}
+
+        .recent-item:hover {{
+            border-color: #1a5fb4;
+            background: rgba(26, 95, 180, 0.05);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }}
+
+        .recent-item-icon {{
+            font-size: 16px;
+            flex-shrink: 0;
+            width: 20px;
+            text-align: center;
+        }}
+
+        .recent-item-name {{
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }}
+
+        @media (max-width: 768px) {{
+            .search-box {{
+                max-width: 100%;
+            }}
+
+            .recent-item {{
+                max-width: 160px;
+                font-size: 12px;
+                padding: 6px 10px;
+            }}
+        }}
     </style>
 </head>
 <body>
@@ -859,9 +1061,28 @@ def generate_html(tools, site_urls):
             <p class="subtitle">专业、便捷的检验工具集合，助力高效工作</p>
         </header>
 
+        <!-- 搜索框 -->
+        <div class="search-wrapper">
+            <div class="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <input class="search-input" id="searchInput" type="text" placeholder="搜索工具名称、描述..." autocomplete="off" autofocus>
+                <span class="search-shortcut">Ctrl+K</span>
+                <button class="search-clear" id="searchClear" aria-label="清除搜索">&times;</button>
+            </div>
+        </div>
+
         <!-- 标签筛选器 -->
         <div class="tag-filters">
 {tags_html}
+        </div>
+
+        <!-- 最近访问 -->
+        <div class="recent-section" id="recentSection">
+            <div class="recent-header">
+                <span class="recent-title">最近访问</span>
+                <button class="recent-clear" id="recentClear">清除记录</button>
+            </div>
+            <div class="recent-list" id="recentList"></div>
         </div>
 
         <!-- 工具网格 -->
@@ -1178,46 +1399,152 @@ def generate_html(tools, site_urls):
         // ============================================
 
         // ============================================
-        // 标签筛选功能
+        // 搜索 + 标签筛选（统一过滤）
         // ============================================
+        const searchInput = document.getElementById('searchInput');
+        const searchClear = document.getElementById('searchClear');
         const tagFilters = document.querySelectorAll('.tag-filter');
         const toolCards = document.querySelectorAll('.tool-card');
+        const toolsGrid = document.querySelector('.tools-grid');
+        const RECENT_KEY = 'recentTools';
+        const MAX_RECENT = 6;
+        let activeTag = 'all';
+        let searchQuery = '';
+
+        function applyFilters() {{
+            var visibleCount = 0;
+            toolCards.forEach(function(card) {{
+                var name = (card.querySelector('.tool-name')?.textContent || '').toLowerCase();
+                var desc = (card.querySelector('.tool-desc')?.textContent || '').toLowerCase();
+                var tags = (card.getAttribute('data-tags') || '').toLowerCase();
+                var matchesSearch = !searchQuery || name.indexOf(searchQuery) !== -1 || desc.indexOf(searchQuery) !== -1 || tags.indexOf(searchQuery) !== -1;
+                var matchesTag = activeTag === 'all' || (card.getAttribute('data-tags') || '').split(',').includes(activeTag);
+                if (matchesSearch && matchesTag) {{
+                    card.style.display = '';
+                    visibleCount++;
+                }} else {{
+                    card.style.display = 'none';
+                }}
+            }});
+            var noResults = document.getElementById('noResults');
+            if (visibleCount === 0) {{
+                if (!noResults) {{
+                    noResults = document.createElement('div');
+                    noResults.id = 'noResults';
+                    noResults.className = 'no-results';
+                    noResults.textContent = '未找到匹配的工具';
+                    toolsGrid.insertAdjacentElement('afterend', noResults);
+                }}
+                noResults.classList.add('visible');
+            }} else if (noResults) {{
+                noResults.classList.remove('visible');
+            }}
+        }}
+
+        searchInput.addEventListener('input', function() {{
+            searchQuery = this.value.toLowerCase().trim();
+            if (searchQuery) {{
+                searchClear.classList.add('visible');
+            }} else {{
+                searchClear.classList.remove('visible');
+            }}
+            applyFilters();
+        }});
+
+        searchClear.addEventListener('click', function() {{
+            searchInput.value = '';
+            searchQuery = '';
+            searchClear.classList.remove('visible');
+            applyFilters();
+            searchInput.focus();
+        }});
+
+        document.addEventListener('keydown', function(e) {{
+            if ((e.ctrlKey && e.key === 'k') || (e.key === '/' && document.activeElement !== searchInput && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA')) {{
+                e.preventDefault();
+                searchInput.focus();
+                searchInput.select();
+            }}
+        }});
 
         tagFilters.forEach(function(filter) {{
             filter.addEventListener('click', function() {{
-                // 更新按钮状态
                 tagFilters.forEach(function(f) {{ f.classList.remove('active'); }});
                 filter.classList.add('active');
-
-                const selectedTag = filter.getAttribute('data-tag');
-
-                // 筛选工具卡片
-                toolCards.forEach(function(card) {{
-                    if (selectedTag === 'all') {{
-                        card.style.display = 'block';
-                        setTimeout(function() {{
-                            card.style.opacity = '1';
-                            card.style.transform = 'scale(1)';
-                        }}, 10);
-                    }} else {{
-                        const cardTags = card.getAttribute('data-tags');
-                        if (cardTags && cardTags.split(',').includes(selectedTag)) {{
-                            card.style.display = 'block';
-                            setTimeout(function() {{
-                                card.style.opacity = '1';
-                                card.style.transform = 'scale(1)';
-                            }}, 10);
-                        }} else {{
-                            card.style.opacity = '0';
-                            card.style.transform = 'scale(0.95)';
-                            setTimeout(function() {{
-                                card.style.display = 'none';
-                            }}, 300);
-                        }}
-                    }}
-                }});
+                activeTag = filter.getAttribute('data-tag');
+                applyFilters();
             }});
         }});
+
+        // ============================================
+        // 最近访问
+        // ============================================
+        var recentSection = document.getElementById('recentSection');
+        var recentList = document.getElementById('recentList');
+        var recentClearBtn = document.getElementById('recentClear');
+
+        function getRecentTools() {{
+            try {{ return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); }} catch(e) {{ return []; }}
+        }}
+
+        function saveRecentTools(recent) {{
+            try {{ localStorage.setItem(RECENT_KEY, JSON.stringify(recent)); }} catch(e) {{}}
+        }}
+
+        function recordVisit(card) {{
+            var name = card.querySelector('.tool-name')?.textContent || '';
+            var url = card.getAttribute('href') || '';
+            var iconEl = card.querySelector('.tool-icon');
+            var iconHtml = '';
+            if (iconEl) {{
+                var img = iconEl.querySelector('img');
+                if (img) {{
+                    iconHtml = '<img src="' + img.getAttribute('src') + '" alt="" width="16" height="16" style="object-fit:contain;border-radius:2px;">';
+                }} else {{
+                    iconHtml = iconEl.textContent?.trim() || '🔗';
+                }}
+            }}
+            var recent = getRecentTools();
+            recent = recent.filter(function(item) {{ return item.url !== url; }});
+            recent.unshift({{ name: name, url: url, iconHtml: iconHtml, time: Date.now() }});
+            recent = recent.slice(0, MAX_RECENT);
+            saveRecentTools(recent);
+            renderRecentVisits();
+        }}
+
+        function renderRecentVisits() {{
+            var recent = getRecentTools();
+            if (recent.length === 0) {{
+                recentSection.classList.remove('visible');
+                return;
+            }}
+            recentSection.classList.add('visible');
+            recentList.innerHTML = '';
+            recent.forEach(function(item) {{
+                var a = document.createElement('a');
+                a.href = item.url;
+                a.className = 'recent-item';
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.title = item.name;
+                a.innerHTML = '<span class="recent-item-icon">' + item.iconHtml + '</span><span class="recent-item-name">' + item.name + '</span>';
+                recentList.appendChild(a);
+            }});
+        }}
+
+        toolCards.forEach(function(card) {{
+            card.addEventListener('click', function() {{
+                recordVisit(card);
+            }});
+        }});
+
+        recentClearBtn.addEventListener('click', function() {{
+            localStorage.removeItem(RECENT_KEY);
+            recentSection.classList.remove('visible');
+            recentList.innerHTML = '';
+        }});
+
+        renderRecentVisits();
         // ============================================
 
         // ============================================
