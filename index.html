@@ -253,14 +253,24 @@
             color: var(--text-primary);
             cursor: pointer;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 10px 12px;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            padding: 10px 28px 10px 12px;
             border-radius: 6px;
-            font-size: 14px;
             text-align: left;
-            white-space: nowrap;
+        }
+
+        .site-menu-item-name {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .site-menu-item-desc {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            line-height: 1.3;
+            margin-top: 2px;
         }
 
         .site-menu-item:hover,
@@ -269,8 +279,18 @@
             color: #1a5fb4;
         }
 
-        .site-menu-item.active::after {
+        .site-menu-item:hover .site-menu-item-desc,
+        .site-menu-item.active .site-menu-item-desc {
+            color: #1a5fb4;
+            opacity: 0.7;
+        }
+
+        .site-menu-item.active::before {
             content: '';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
             width: 7px;
             height: 7px;
             border-radius: 50%;
@@ -739,7 +759,7 @@
         <!-- 工具网格 -->
         <div class="tools-grid">
             <a href="html/phone-directory.html" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="⭐常用,查阅">
-                <div class="tool-icon blue">📞</div>
+                <div class="tool-icon blue">📖</div>
                 <h3 class="tool-name">榆林市星元医院电话号码簿</h3>
                 <p class="tool-desc">榆林市星元医院2026年内外线电话号码查询</p>
                 <div class="tool-tags"><span class="tool-tag">⭐常用</span><span class="tool-tag">查阅</span></div>
@@ -962,7 +982,7 @@
         // ============================================
         // 点击 Logo 切换访问网址
         // ============================================
-        const SITE_URLS = [{"name": "GitHub（主站）", "url": "https://nokwiaey.github.io/xyjy/"}, {"name": "Cloudflare（副站）", "url": "https://xyjy.dfly.site/"}, {"name": "帽子云（镜像站）", "url": "https://xyjy-rbw5h01el.maozi.io/"}, {"name": "Vercel（镜像站）", "url": "https://xyjy-tools.vercel.app/"}, {"name": "Netlify（镜像站）", "url": "https://xyjy.netlify.app/"}, {"name": "DevFile（镜像站）", "url": "https://devfile.cn/preview/vnc648bu/xyjy-main/index.html"}];
+        const SITE_URLS = [{"name": "GitHub Pages", "url": "https://nokwiaey.github.io/xyjy/", "desc": "GitHub Pages 主站，长期可用，但国内访问速度较慢", "enabled": true}, {"name": "Cloudflare Pages", "url": "https://xyjy.dfly.site/", "desc": "Cloudflare Pages 副站，绑定了自定义域名，未来可能更换域名", "enabled": true}, {"name": "DevFile", "url": "https://devfile.cn/preview/vnc648bu/xyjy-main/index.html", "desc": "DevFile 镜像站，访问速度较快，需手动更新部署，内容可能不够及时", "enabled": true}, {"name": "帽子云", "url": "https://xyjy-rbw5h01el.maozi.io/", "desc": "帽子云镜像站", "enabled": true}, {"name": "Vercel", "url": "https://xyjy-tools.vercel.app/", "desc": "Vercel 镜像站", "enabled": true}];
 
         function getSiteBaseUrl(site) {
             return new URL(site.url);
@@ -1027,8 +1047,16 @@
                 const item = document.createElement('button');
                 item.type = 'button';
                 item.className = `site-menu-item${index === currentIndex ? ' active' : ''}`;
-                item.textContent = site.name || site.url;
                 item.setAttribute('role', 'menuitem');
+                item.title = site.desc || site.name || site.url;
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'site-menu-item-name';
+                nameSpan.textContent = site.name || site.url;
+                const descSpan = document.createElement('span');
+                descSpan.className = 'site-menu-item-desc';
+                descSpan.textContent = site.desc || '';
+                item.appendChild(nameSpan);
+                if (site.desc) item.appendChild(descSpan);
                 item.addEventListener('click', function() {
                     window.location.href = getSiteUrl(site);
                 });

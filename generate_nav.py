@@ -22,7 +22,7 @@ def parse_json(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
     
-    site_urls = data.get('siteUrls', [])
+    site_urls = [s for s in data.get('siteUrls', []) if s.get('enabled', True)]
     tools = []
     for tool in data.get('tools', []):
         title = tool.get('title', '')
@@ -372,14 +372,24 @@ def generate_html(tools, site_urls):
             color: var(--text-primary);
             cursor: pointer;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 10px 12px;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            padding: 10px 28px 10px 12px;
             border-radius: 6px;
-            font-size: 14px;
             text-align: left;
-            white-space: nowrap;
+        }}
+
+        .site-menu-item-name {{
+            font-size: 14px;
+            line-height: 1.4;
+        }}
+
+        .site-menu-item-desc {{
+            font-size: 11px;
+            color: var(--text-tertiary);
+            line-height: 1.3;
+            margin-top: 2px;
         }}
 
         .site-menu-item:hover,
@@ -388,8 +398,18 @@ def generate_html(tools, site_urls):
             color: #1a5fb4;
         }}
 
-        .site-menu-item.active::after {{
+        .site-menu-item:hover .site-menu-item-desc,
+        .site-menu-item.active .site-menu-item-desc {{
+            color: #1a5fb4;
+            opacity: 0.7;
+        }}
+
+        .site-menu-item.active::before {{
             content: '';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
             width: 7px;
             height: 7px;
             border-radius: 50%;
@@ -1028,8 +1048,16 @@ def generate_html(tools, site_urls):
                 const item = document.createElement('button');
                 item.type = 'button';
                 item.className = `site-menu-item${{index === currentIndex ? ' active' : ''}}`;
-                item.textContent = site.name || site.url;
                 item.setAttribute('role', 'menuitem');
+                item.title = site.desc || site.name || site.url;
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'site-menu-item-name';
+                nameSpan.textContent = site.name || site.url;
+                const descSpan = document.createElement('span');
+                descSpan.className = 'site-menu-item-desc';
+                descSpan.textContent = site.desc || '';
+                item.appendChild(nameSpan);
+                if (site.desc) item.appendChild(descSpan);
                 item.addEventListener('click', function() {{
                     window.location.href = getSiteUrl(site);
                 }});
