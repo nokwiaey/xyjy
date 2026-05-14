@@ -19,6 +19,10 @@
     {
       "name": "Netlify（镜像站）",
       "url": "https://xyjy.netlify.app/"
+    },
+    {
+      "name": "DevFile（镜像站）",
+      "url": "https://devfile.cn/preview/vnc648bu/xyjy-main/index.html"
     }
   ],
   "tools": [
