@@ -1,7 +1,7 @@
 {
-  "checkedAt": "2026-05-14 10:54:17",
+  "checkedAt": "2026-05-14 14:24:12",
   "totalSites": 5,
   "okSites": 5,
-  "avgTimeMs": 786,
-  "sites": [{"Name":"GitHub（主站）","Url":"https://nokwiaey.github.io/xyjy/","StatusCode":200,"TimeMs":196,"OK":true},{"Name":"Cloudflare（副站）","Url":"https://xyjy.dfly.site/","StatusCode":200,"TimeMs":312,"OK":true},{"Name":"帽子云（镜像站）","Url":"https://xyjy-rbw5h01el.maozi.io/","StatusCode":200,"TimeMs":2098,"OK":true},{"Name":"Vercel（镜像站）","Url":"https://xyjy-tools.vercel.app/","StatusCode":200,"TimeMs":575,"OK":true},{"Name":"Netlify（镜像站）","Url":"https://xyjy.netlify.app/","StatusCode":200,"TimeMs":750,"OK":true}]
+  "avgTimeMs": 638,
+  "sites": [{"Name":"GitHub（主站）","Url":"https://nokwiaey.github.io/xyjy/","StatusCode":200,"TimeMs":68,"OK":true},{"Name":"Cloudflare（副站）","Url":"https://xyjy.dfly.site/","StatusCode":200,"TimeMs":124,"OK":true},{"Name":"帽子云（镜像站）","Url":"https://xyjy-rbw5h01el.maozi.io/","StatusCode":200,"TimeMs":2222,"OK":true},{"Name":"Vercel（镜像站）","Url":"https://xyjy-tools.vercel.app/","StatusCode":200,"TimeMs":179,"OK":true},{"Name":"Netlify（镜像站）","Url":"https://xyjy.netlify.app/","StatusCode":200,"TimeMs":600,"OK":true}]
 }
