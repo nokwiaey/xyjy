@@ -1008,12 +1008,8 @@ def generate_html(tools, site_urls):
         }}
 
         function getSiteUrl(site) {{
-            const currentUrl = new URL(window.location.href);
             const targetUrl = getSiteBaseUrl(site);
-            const basePath = targetUrl.pathname.endsWith('/') ? targetUrl.pathname : `${{targetUrl.pathname}}/`;
-            const relativePath = getCurrentRelativePath();
-
-            targetUrl.pathname = `${{basePath}}${{relativePath}}`.replace(/\/+$/, '/');
+            const currentUrl = new URL(window.location.href);
             targetUrl.search = currentUrl.search;
             targetUrl.hash = currentUrl.hash;
             return targetUrl.href;
