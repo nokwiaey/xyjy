@@ -214,8 +214,6 @@ def generate_html(tools, site_urls):
     <link rel="preconnect" href="https://res.wx.qq.com" crossorigin>
     <style>
 {css_content}
-        /* 隐藏 DevFile 平台注入的广告徽章 */
-        #devfile-badge-content, #devfile-badge, [id^="devfile-badge"] {{ display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }}
     </style>
 </head>
 <body>
@@ -338,18 +336,6 @@ def generate_html(tools, site_urls):
 
     <script>
 {js_content}
-        // 隐藏 DevFile 平台注入的广告徽章（CSS 兜底 + DOM 监控）
-        (function() {{
-            var removeBadge = function() {{
-                var el = document.getElementById('devfile-badge-content');
-                if (el) {{ el.remove(); }}
-                var els = document.querySelectorAll('[id^="devfile-badge"]');
-                els.forEach(function(e) {{ e.remove(); }});
-            }};
-            removeBadge();
-            var observer = new MutationObserver(removeBadge);
-            observer.observe(document.documentElement, {{ childList: true, subtree: true }});
-        }})();
     </script>
 </body>
 </html>'''

@@ -603,3 +603,19 @@ if (document.readyState === 'loading') {
     initWechatShare();
 }
 // ============================================
+
+// ============================================
+// 隐藏 DevFile 平台注入的广告徽章（CSS 兜底 + DOM 监控）
+// ============================================
+(function() {
+    var removeBadge = function() {
+        var el = document.getElementById('devfile-badge-content');
+        if (el) { el.remove(); }
+        var els = document.querySelectorAll('[id^="devfile-badge"]');
+        els.forEach(function(e) { e.remove(); });
+    };
+    removeBadge();
+    var observer = new MutationObserver(removeBadge);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+})();
+// ============================================

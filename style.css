@@ -1026,3 +1026,13 @@ body {
         height: 18px;
     }
 }
+
+/* 隐藏 DevFile 平台注入的广告徽章 */
+#devfile-badge-content,
+#devfile-badge,
+[id^="devfile-badge"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
