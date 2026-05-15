@@ -7,11 +7,66 @@
 
 import json
 import os
+import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 # 设置 stdout 编码为 utf-8
 sys.stdout.reconfigure(encoding='utf-8')
+
+
+def get_version():
+    """从 git tag 获取版本号，失败时返回默认值"""
+    try:
+        result = subprocess.run(
+            ['git', 'describe', '--tags', '--abbrev=0'],
+            capture_output=True, text=True, timeout=10
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            tag = result.stdout.strip()
+            return tag.lstrip('v')
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        pass
+    return '1.1.0'
+
+
+def validate_tools(data):
+    """校验 tools.json 数据，返回错误列表"""
+    errors = []
+
+    if 'tools' not in data:
+        errors.append("缺少 'tools' 字段")
+        return errors
+
+    tools = data['tools']
+    if not isinstance(tools, list):
+        errors.append("'tools' 必须是数组")
+        return errors
+
+    urls = []
+    titles = []
+    for i, tool in enumerate(tools):
+        idx = f"tools[{i}]"
+        if not tool.get('title'):
+            errors.append(f"{idx}: 缺少必填字段 'title'")
+        else:
+            titles.append(tool['title'])
+
+        if not tool.get('url'):
+            errors.append(f"{idx}: 缺少必填字段 'url'")
+        else:
+            urls.append((idx, tool['url']))
+
+    # 检查重复 URL
+    seen_urls = {}
+    for idx, url in urls:
+        if url in seen_urls:
+            errors.append(f"{idx}: URL '{url}' 与 {seen_urls[url]} 重复")
+        else:
+            seen_urls[url] = idx
+
+    return errors
 
 
 def parse_json(file_path):
@@ -21,7 +76,15 @@ def parse_json(file_path):
     """
     with open(file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
-    
+
+    # 校验数据
+    errors = validate_tools(data)
+    if errors:
+        print("❌ tools.json 校验失败:")
+        for e in errors:
+            print(f"   • {e}")
+        sys.exit(1)
+
     site_urls = [s for s in data.get('siteUrls', []) if s.get('enabled', True)]
     tools = []
     for tool in data.get('tools', []):
@@ -32,7 +95,7 @@ def parse_json(file_path):
         color = tool.get('color')
         tags = tool.get('tags', [])
         tools.append((title, url, desc, icon, color, tags))
-    
+
     return tools, site_urls
 
 
@@ -48,37 +111,57 @@ def get_icon_and_color(index, custom_icon=None, custom_color=None):
 
     # 可用的颜色名称（用于验证）
     valid_colors = ['blue', 'green', 'orange', 'purple', 'red', 'cyan', 'white']
-    
+
     # 确定图标
     if custom_icon:
         icon = custom_icon
     else:
         icon = default_icons[index % len(default_icons)]
-    
+
     # 确定颜色
     if custom_color and custom_color.lower() in valid_colors:
         color = custom_color.lower()
     else:
         color = default_colors[index % len(default_colors)]
-    
+
     return icon, color
+
+
+def read_asset(script_dir, filename):
+    """读取资源文件内容"""
+    filepath = script_dir / filename
+    if filepath.exists():
+        with open(filepath, 'r', encoding='utf-8') as f:
+            return f.read()
+    print(f"⚠️ 警告: 未找到 {filename}，将跳过")
+    return ''
 
 
 def generate_html(tools, site_urls):
     """生成 HTML 内容"""
+    script_dir = Path(__file__).parent
     site_urls_json = json.dumps(site_urls, ensure_ascii=False)
-    
+    version = get_version()
+    build_date = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+
+    # 读取外部 CSS 和 JS
+    css_content = read_asset(script_dir, 'style.css')
+    js_content = read_asset(script_dir, 'script.js')
+
+    # 替换 JS 中的站点URL占位符
+    js_content = js_content.replace('{site_urls_json}', site_urls_json)
+
     # 收集所有标签
     all_tags = set()
     for tool in tools:
         all_tags.update(tool[5])
     all_tags = sorted(list(all_tags))
-    
+
     # 生成标签筛选器 HTML
     tags_html = '<button class="tag-filter active" data-tag="all">全部</button>'
     for tag in all_tags:
         tags_html += f'\n            <button class="tag-filter" data-tag="{tag}">{tag}</button>'
-    
+
     # 生成工具卡片
     tool_cards = []
     for i, (title, url, desc, custom_icon, custom_color, tags) in enumerate(tools):
@@ -86,25 +169,19 @@ def generate_html(tools, site_urls):
         # 如果没有描述，使用默认描述
         if not desc:
             desc = f"点击访问{title}"
-        
+
         # 生成标签 HTML
         tags_attr = ','.join(tags) if tags else ''
         tags_display = ''
         if tags:
             tags_display = '<div class="tool-tags">' + ''.join([f'<span class="tool-tag">{tag}</span>' for tag in tags]) + '</div>'
-        
+
         # 生成图标 HTML
-        # 1. 如果是 URL（以 http:// 或 https:// 开头），直接使用该 URL 作为图标
-        # 2. 如果是 Emoji，直接显示
-        # 3. 如果为空，自动获取网站 favicon
         if custom_icon and (custom_icon.startswith('http://') or custom_icon.startswith('https://')):
-            # 使用指定的图标 URL
             icon_html = f'<div class="tool-icon {color} favicon-icon"><img src="{custom_icon}" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display=\'none\'; this.parentElement.innerHTML=\'🔗\';"></div>'
         elif custom_icon:
-            # 使用 Emoji 图标
             icon_html = f'<div class="tool-icon {color}">{custom_icon}</div>'
         else:
-            # 使用 Google Favicon 服务获取网站图标
             icon_html = f'<div class="tool-icon {color} favicon-icon"><img src="https://www.google.com/s2/favicons?domain={url}&sz=64" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display=\'none\'; this.parentElement.innerHTML=\'🔗\';"></div>'
 
         card = f'''            <a href="{url}" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="{tags_attr}">
@@ -114,9 +191,9 @@ def generate_html(tools, site_urls):
                 {tags_display}
             </a>'''
         tool_cards.append(card)
-    
+
     tools_html = '\n'.join(tool_cards)
-    
+
     html_content = f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -136,962 +213,9 @@ def generate_html(tools, site_urls):
     <link rel="preconnect" href="https://www.vercount.one" crossorigin>
     <link rel="preconnect" href="https://res.wx.qq.com" crossorigin>
     <style>
-        * {{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }}
-
-        :root {{
-            --bg-primary: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
-            --bg-card: white;
-            --text-primary: #1a1a1a;
-            --text-secondary: #666;
-            --text-tertiary: #999;
-            --border-color: rgba(0, 0, 0, 0.04);
-            --shadow-color: rgba(0, 0, 0, 0.08);
-            --footer-border: rgba(0, 0, 0, 0.06);
-            --stats-bg: rgba(0, 0, 0, 0.03);
-        }}
-
-        [data-theme="dark"] {{
-            --bg-primary: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            --bg-card: #252542;
-            --text-primary: #e4e4e4;
-            --text-secondary: #a0a0a0;
-            --text-tertiary: #707070;
-            --border-color: rgba(255, 255, 255, 0.06);
-            --shadow-color: rgba(0, 0, 0, 0.3);
-            --footer-border: rgba(255, 255, 255, 0.08);
-            --stats-bg: rgba(255, 255, 255, 0.05);
-        }}
-
-        /* 页面加载动画 */
-        .page-loader {{
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-primary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }}
-
-        .page-loader.hidden {{
-            opacity: 0;
-            visibility: hidden;
-        }}
-
-        .loader-spinner {{
-            width: 50px;
-            height: 50px;
-            border: 3px solid var(--border-color);
-            border-top-color: #1a5fb4;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }}
-
-        .loader-text {{
-            margin-top: 16px;
-            font-size: 14px;
-            color: var(--text-secondary);
-        }}
-
-        @keyframes spin {{
-            to {{ transform: rotate(360deg); }}
-        }}
-
-        body {{
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-            background: var(--bg-primary);
-            min-height: 100vh;
-            color: var(--text-primary);
-            transition: background 0.3s ease, color 0.3s ease;
-        }}
-
-        .container {{
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
-        }}
-
-        /* 头部区域 */
-        .header {{
-            text-align: center;
-            margin-bottom: 60px;
-        }}
-
-        .logo {{
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #1a5fb4 0%, #3584e4 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 24px;
-            box-shadow: 0 10px 30px rgba(26, 95, 180, 0.2);
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }}
-
-        .logo:hover {{
-            transform: translateY(-2px);
-            box-shadow: 0 14px 34px rgba(26, 95, 180, 0.28);
-        }}
-
-        .logo:focus-visible {{
-            outline: 3px solid rgba(26, 95, 180, 0.35);
-            outline-offset: 4px;
-        }}
-
-        .logo svg {{
-            width: 40px;
-            height: 40px;
-            fill: white;
-        }}
-
-        .title {{
-            font-size: 32px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-            letter-spacing: 2px;
-        }}
-
-        .subtitle {{
-            font-size: 16px;
-            color: var(--text-secondary);
-            font-weight: 400;
-        }}
-
-        /* 主题切换按钮 */
-        .theme-toggle {{
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px var(--shadow-color);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }}
-
-        .theme-toggle:hover {{
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px var(--shadow-color);
-        }}
-
-        .theme-toggle svg {{
-            width: 24px;
-            height: 24px;
-            fill: var(--text-primary);
-            transition: transform 0.3s ease;
-        }}
-
-        .theme-toggle:hover svg {{
-            transform: rotate(20deg);
-        }}
-
-        [data-theme="dark"] .theme-toggle .sun-icon {{
-            display: none;
-        }}
-
-        [data-theme="light"] .theme-toggle .moon-icon,
-        :root:not([data-theme]) .theme-toggle .moon-icon {{
-            display: none;
-        }}
-
-        /* 站点切换菜单 */
-        .site-switcher {{
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-        }}
-
-        .site-menu-toggle {{
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px var(--shadow-color);
-            transition: all 0.3s ease;
-        }}
-
-        .site-menu-toggle:hover {{
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px var(--shadow-color);
-        }}
-
-        .site-menu-toggle svg {{
-            width: 24px;
-            height: 24px;
-            stroke: var(--text-primary);
-            stroke-width: 2;
-            stroke-linecap: round;
-        }}
-
-        .site-menu {{
-            position: absolute;
-            top: 58px;
-            left: 0;
-            min-width: 180px;
-            padding: 8px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            box-shadow: 0 12px 30px var(--shadow-color);
-            display: none;
-        }}
-
-        .site-menu.open {{
-            display: block;
-        }}
-
-        .site-menu-item {{
-            width: 100%;
-            border: 0;
-            background: transparent;
-            color: var(--text-primary);
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            position: relative;
-            padding: 10px 28px 10px 12px;
-            border-radius: 6px;
-            text-align: left;
-        }}
-
-        .site-menu-item-name {{
-            font-size: 14px;
-            line-height: 1.4;
-        }}
-
-        .site-menu-item-desc {{
-            font-size: 11px;
-            color: var(--text-tertiary);
-            line-height: 1.3;
-            margin-top: 2px;
-        }}
-
-        .site-menu-item:hover,
-        .site-menu-item.active {{
-            background: rgba(26, 95, 180, 0.1);
-            color: #1a5fb4;
-        }}
-
-        .site-menu-item:hover .site-menu-item-desc,
-        .site-menu-item.active .site-menu-item-desc {{
-            color: #1a5fb4;
-            opacity: 0.7;
-        }}
-
-        .site-menu-item.active::before {{
-            content: '';
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #1a5fb4;
-            flex: 0 0 auto;
-        }}
-
-        /* 标签筛选器 */
-        .tag-filters {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 32px;
-            padding: 0 20px;
-        }}
-
-        .tag-filter {{
-            padding: 8px 16px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-card);
-            color: var(--text-secondary);
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }}
-
-        .tag-filter:hover {{
-            background: rgba(26, 95, 180, 0.1);
-            color: #1a5fb4;
-            border-color: rgba(26, 95, 180, 0.3);
-        }}
-
-        .tag-filter.active {{
-            background: #1a5fb4;
-            color: white;
-            border-color: #1a5fb4;
-        }}
-
-        /* 工具网格 */
-        .tools-grid {{
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
-        }}
-
-        .tool-card {{
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 32px;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
-            content-visibility: auto;
-            contain-intrinsic-size: auto 240px;
-        }}
-
-        .tool-card::before {{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #1a5fb4, #3584e4);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }}
-
-        .tool-card:hover {{
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px var(--shadow-color);
-        }}
-
-        .tool-card:hover::before {{
-            transform: scaleX(1);
-        }}
-
-        .tool-icon {{
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-            overflow: hidden;
-        }}
-
-        .tool-icon.favicon-icon img {{
-            width: 32px;
-            height: 32px;
-            object-fit: contain;
-        }}
-
-        .tool-icon.blue {{
-            background: rgba(26, 95, 180, 0.1);
-            color: #1a5fb4;
-        }}
-
-        .tool-icon.green {{
-            background: rgba(46, 160, 67, 0.1);
-            color: #2ea043;
-        }}
-
-        .tool-icon.orange {{
-            background: rgba(232, 121, 0, 0.1);
-            color: #e87900;
-        }}
-
-        .tool-icon.purple {{
-            background: rgba(130, 80, 200, 0.1);
-            color: #8250c8;
-        }}
-
-        .tool-icon.red {{
-            background: rgba(207, 54, 54, 0.1);
-            color: #cf3636;
-        }}
-
-        .tool-icon.cyan {{
-            background: rgba(0, 150, 150, 0.1);
-            color: #009696;
-        }}
-
-        .tool-icon.white {{
-            background: rgba(0, 0, 0, 0.06);
-            color: #555;
-        }}
-
-        [data-theme="dark"] .tool-icon.white {{
-            background: rgba(255, 255, 255, 0.1);
-            color: #ccc;
-        }}
-
-        .tool-name {{
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }}
-
-        .tool-desc {{
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }}
-
-        .tool-tags {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 12px;
-        }}
-
-        .tool-tag {{
-            font-size: 12px;
-            padding: 3px 10px;
-            background: rgba(26, 95, 180, 0.08);
-            color: #1a5fb4;
-            border-radius: 12px;
-        }}
-
-        [data-theme="dark"] .tool-tag {{
-            background: rgba(26, 95, 180, 0.2);
-            color: #5a9fd4;
-        }}
-
-        /* 页脚 */
-        .footer {{
-            text-align: center;
-            padding-top: 40px;
-            border-top: 1px solid var(--footer-border);
-        }}
-
-        .footer-text {{
-            font-size: 14px;
-            color: var(--text-tertiary);
-            margin-bottom: 16px;
-        }}
-
-        .version {{
-            display: inline-block;
-            background: rgba(26, 95, 180, 0.1);
-            color: #1a5fb4;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            margin-left: 8px;
-        }}
-
-        .feedback-link {{
-            display: inline-block;
-            background: rgba(26, 95, 180, 0.1);
-            color: #1a5fb4;
-            text-decoration: none;
-            font-size: 12px;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-left: 8px;
-            transition: all 0.3s ease;
-        }}
-
-        .feedback-link:hover {{
-            background: rgba(26, 95, 180, 0.2);
-        }}
-
-        /* 访问统计 */
-        .stats {{
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin: 16px 0;
-            flex-wrap: wrap;
-        }}
-
-        .stat-item {{
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            color: var(--text-tertiary);
-            padding: 6px 12px;
-            background: var(--stats-bg);
-            border-radius: 20px;
-        }}
-
-        .stat-item svg {{
-            width: 14px;
-            height: 14px;
-            fill: var(--text-tertiary);
-        }}
-
-        .stat-item span {{
-            color: #1a5fb4;
-            font-weight: 500;
-        }}
-
-        /* 二维码弹窗 */
-        .qr-modal-overlay {{
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }}
-
-        .qr-modal-overlay.open {{
-            opacity: 1;
-            visibility: visible;
-        }}
-
-        .qr-modal {{
-            background: var(--bg-card);
-            border-radius: 20px;
-            padding: 32px;
-            text-align: center;
-            box-shadow: 0 20px 60px var(--shadow-color);
-            max-width: 360px;
-            width: 90%;
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-        }}
-
-        .qr-modal-overlay.open .qr-modal {{
-            transform: translateY(0);
-        }}
-
-        .qr-modal-close {{
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: none;
-            background: var(--stats-bg);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            font-size: 18px;
-            transition: all 0.2s ease;
-        }}
-
-        .qr-modal-close:hover {{
-            background: rgba(207, 54, 54, 0.15);
-            color: #cf3636;
-        }}
-
-        .qr-modal {{
-            position: relative;
-        }}
-
-        .qr-modal-title {{
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 20px;
-        }}
-
-        .qr-modal-image {{
-            width: 200px;
-            height: 200px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            padding: 8px;
-            background: white;
-        }}
-
-        .qr-modal-url-row {{
-            margin-top: 16px;
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-        }}
-
-        .qr-modal-url {{
-            flex: 1;
-            font-size: 13px;
-            color: var(--text-secondary);
-            word-break: break-all;
-            padding: 8px 12px;
-            background: var(--stats-bg);
-            border-radius: 8px;
-            line-height: 1.5;
-            text-align: left;
-        }}
-
-        .qr-modal-copy {{
-            flex: 0 0 auto;
-            padding: 8px 14px;
-            border: none;
-            background: linear-gradient(135deg, #1a5fb4 0%, #3584e4 100%);
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            white-space: nowrap;
-            transition: all 0.2s ease;
-        }}
-
-        .qr-modal-copy:hover {{
-            box-shadow: 0 4px 12px rgba(26, 95, 180, 0.35);
-            transform: translateY(-1px);
-        }}
-
-        .qr-modal-copy.copied {{
-            background: #2ea043;
-        }}
-
-        .qr-modal-hint {{
-            margin-top: 12px;
-            font-size: 12px;
-            color: var(--text-tertiary);
-        }}
-
-        /* 响应式 */
-        @media (max-width: 768px) {{
-            .container {{
-                padding: 40px 16px;
-            }}
-
-            .title {{
-                font-size: 24px;
-            }}
-
-            .tools-grid {{
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }}
-
-            .tool-card {{
-                padding: 24px;
-            }}
-
-            .theme-toggle {{
-                top: 16px;
-                right: 16px;
-                width: 40px;
-                height: 40px;
-            }}
-
-            .site-switcher {{
-                top: 16px;
-                left: 16px;
-            }}
-
-            .site-menu-toggle {{
-                width: 40px;
-                height: 40px;
-            }}
-
-            .theme-toggle svg {{
-                width: 20px;
-                height: 20px;
-            }}
-
-            .site-menu-toggle svg {{
-                width: 20px;
-                height: 20px;
-            }}
-        }}
-
-        /* 搜索框 */
-        .search-wrapper {{
-            display: flex;
-            justify-content: center;
-            margin: 0 0 28px 0;
-        }}
-
-        .search-box {{
-            position: relative;
-            width: 100%;
-            max-width: 480px;
-        }}
-
-        .search-input {{
-            width: 100%;
-            padding: 12px 44px;
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            background: var(--bg-card);
-            color: var(--text-primary);
-            font-size: 15px;
-            transition: all 0.3s ease;
-            outline: none;
-        }}
-
-        .search-input:focus {{
-            border-color: #1a5fb4;
-            box-shadow: 0 0 0 3px rgba(26, 95, 180, 0.1);
-        }}
-
-        .search-input::placeholder {{
-            color: var(--text-tertiary);
-        }}
-
-        .search-icon {{
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-tertiary);
-            pointer-events: none;
-            width: 18px;
-            height: 18px;
-        }}
-
-        .search-clear {{
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            color: var(--text-tertiary);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            transition: all 0.2s ease;
-        }}
-
-        .search-clear.visible {{
-            display: flex;
-        }}
-
-        .search-clear:hover {{
-            background: var(--stats-bg);
-            color: var(--text-primary);
-        }}
-
-        .search-shortcut {{
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 11px;
-            color: var(--text-tertiary);
-            background: var(--stats-bg);
-            padding: 2px 6px;
-            border-radius: 4px;
-            pointer-events: none;
-            transition: opacity 0.15s ease;
-        }}
-
-        .search-input:focus ~ .search-shortcut,
-        .search-input:not(:placeholder-shown) ~ .search-shortcut {{
-            opacity: 0;
-        }}
-
-        .search-input:not(:placeholder-shown) ~ .search-clear {{
-            display: flex;
-        }}
-
-        /* 无搜索结果 */
-        .no-results {{
-            text-align: center;
-            padding: 48px 20px;
-            color: var(--text-tertiary);
-            font-size: 15px;
-            display: none;
-        }}
-
-        .no-results.visible {{
-            display: block;
-        }}
-
-        /* 最近访问 */
-        .recent-section {{
-            margin-bottom: 24px;
-            display: none;
-        }}
-
-        .recent-section.visible {{
-            display: block;
-        }}
-
-        .recent-header {{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            padding: 0 4px;
-        }}
-
-        .recent-title {{
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-secondary);
-        }}
-
-        .recent-clear {{
-            font-size: 12px;
-            color: var(--text-tertiary);
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }}
-
-        .recent-clear:hover {{
-            color: #cf3636;
-            background: rgba(207, 54, 54, 0.08);
-        }}
-
-        .recent-list {{
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }}
-
-        .recent-item {{
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 14px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            text-decoration: none;
-            color: var(--text-primary);
-            font-size: 13px;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            max-width: 200px;
-        }}
-
-        .recent-item:hover {{
-            border-color: #1a5fb4;
-            background: rgba(26, 95, 180, 0.05);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px var(--shadow-color);
-        }}
-
-        .recent-item-icon {{
-            font-size: 16px;
-            flex-shrink: 0;
-            width: 20px;
-            text-align: center;
-        }}
-
-        .recent-item-name {{
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }}
-
-        @media (max-width: 768px) {{
-            .search-box {{
-                max-width: 100%;
-            }}
-
-            .recent-item {{
-                max-width: 160px;
-                font-size: 12px;
-                padding: 6px 10px;
-            }}
-        }}
-
-        /* 返回顶部按钮 */
-        .back-to-top {{
-            position: fixed;
-            bottom: 32px;
-            right: 32px;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px var(--shadow-color);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(12px);
-        }}
-
-        .back-to-top.visible {{
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }}
-
-        .back-to-top:hover {{
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--shadow-color);
-        }}
-
-        .back-to-top.visible:hover {{
-            transform: translateY(-2px);
-        }}
-
-        .back-to-top svg {{
-            width: 22px;
-            height: 22px;
-            fill: none;
-            stroke: var(--text-primary);
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }}
-
-        @media (max-width: 768px) {{
-            .back-to-top {{
-                bottom: 20px;
-                right: 20px;
-                width: 40px;
-                height: 40px;
-            }}
-
-            .back-to-top svg {{
-                width: 18px;
-                height: 18px;
-            }}
-        }}
+{css_content}
+        /* 隐藏 DevFile 平台注入的广告徽章 */
+        #devfile-badge-content, #devfile-badge, [id^="devfile-badge"] {{ display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }}
     </style>
 </head>
 <body>
@@ -1163,8 +287,11 @@ def generate_html(tools, site_urls):
         <footer class="footer">
             <p class="footer-text">
                 星元检验工具箱
-                <span class="version">v1.1.0</span>
+                <span class="version">v{version}</span>
                 <a href="https://f.kdocs.cn/g/sn7KOMnc/" class="feedback-link" target="_blank" rel="noopener noreferrer">反馈建议</a>
+            </p>
+            <p class="footer-text">
+                <span class="update-date">最后更新: {build_date}</span>
             </p>
             <div class="stats">
                  <span class="stat-item">
@@ -1208,485 +335,25 @@ def generate_html(tools, site_urls):
 
     <!-- 微信 JS-SDK -->
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js" defer></script>
-    
+
     <script>
-        // ============================================
-        // 微信分享配置 - 可自定义分享卡片内容
-        // ============================================
-        const WECHAT_SHARE_CONFIG = {{
-            title: '星元检验工具箱',              // 分享标题
-            desc: '专业、便捷的检验工具集合，助力高效工作',  // 分享描述
-            // 分享图片URL（必须是绝对路径，建议使用 https）
-            // 如果留空，会自动生成当前页面的二维码作为分享图
-            imgUrl: '',
-            // 是否使用当前页面二维码作为分享图
-            useCurrentPageQrCode: true
-        }};
-        // ============================================
-
-        // ============================================
-        // 微信分享初始化
-        // ============================================
-        function initWechatShare() {{
-            const currentUrl = window.location.href;
-
-            // 确定分享图片URL
-            let shareImageUrl = WECHAT_SHARE_CONFIG.imgUrl;
-            if (!shareImageUrl && WECHAT_SHARE_CONFIG.useCurrentPageQrCode) {{
-                // 使用当前页面URL生成二维码
-                shareImageUrl = `https://api.2dcode.biz/v1/create-qr-code?data=${{encodeURIComponent(currentUrl)}}&size=500x500`;
-            }}
-
-            // 更新 Open Graph Meta 标签
-            const ogImage = document.getElementById('ogImage');
-            if (ogImage && shareImageUrl) {{
-                ogImage.setAttribute('content', shareImageUrl);
-            }}
-
-            // 如果页面中已加载微信 JS-SDK，配置分享
-            if (typeof wx !== 'undefined' && wx.ready) {{
-                wx.ready(function() {{
-                    // 分享给朋友
-                    wx.updateAppMessageShareData({{
-                        title: WECHAT_SHARE_CONFIG.title,
-                        desc: WECHAT_SHARE_CONFIG.desc,
-                        link: currentUrl,
-                        imgUrl: shareImageUrl,
-                        success: function() {{
-                            console.log('微信分享配置成功');
-                        }}
-                    }});
-                    
-                    // 分享到朋友圈
-                    wx.updateTimelineShareData({{
-                        title: WECHAT_SHARE_CONFIG.title,
-                        link: currentUrl,
-                        imgUrl: shareImageUrl,
-                        success: function() {{
-                            console.log('微信朋友圈分享配置成功');
-                        }}
-                    }});
-                }});
-            }}
-        }}
-
-        // ============================================
-        // 点击 Logo 切换访问网址
-        // ============================================
-        const SITE_URLS = {site_urls_json};
-
-        function getSiteBaseUrl(site) {{
-            return new URL(site.url);
-        }}
-
-        function getCurrentSiteIndex() {{
-            const currentUrl = new URL(window.location.href);
-            let currentIndex = SITE_URLS.findIndex(function(site) {{
-                const siteUrl = getSiteBaseUrl(site);
-                const basePath = siteUrl.pathname.endsWith('/') ? siteUrl.pathname : `${{siteUrl.pathname}}/`;
-                const basePathWithoutSlash = basePath.replace(/\/$/, '');
-                return currentUrl.hostname === siteUrl.hostname &&
-                    (currentUrl.pathname === basePathWithoutSlash || currentUrl.pathname.startsWith(basePath));
-            }});
-
-            if (currentIndex === -1) {{
-                currentIndex = SITE_URLS.findIndex(function(site) {{
-                    return currentUrl.hostname === getSiteBaseUrl(site).hostname;
-                }});
-            }}
-
-            return currentIndex;
-        }}
-
-        function getCurrentRelativePath() {{
-            const currentUrl = new URL(window.location.href);
-            const currentIndex = getCurrentSiteIndex();
-
-            if (currentIndex >= 0) {{
-                const currentSiteUrl = getSiteBaseUrl(SITE_URLS[currentIndex]);
-                const basePath = currentSiteUrl.pathname.endsWith('/') ? currentSiteUrl.pathname : `${{currentSiteUrl.pathname}}/`;
-                const basePathWithoutSlash = basePath.replace(/\/$/, '');
-                if (currentUrl.pathname === basePathWithoutSlash) {{
-                    return '';
-                }}
-                if (currentUrl.pathname.startsWith(basePath)) {{
-                    return currentUrl.pathname.slice(basePath.length);
-                }}
-            }}
-
-            return currentUrl.pathname.replace(/^\/+/, '');
-        }}
-
-        function getSiteUrl(site) {{
-            const targetUrl = getSiteBaseUrl(site);
-            const currentUrl = new URL(window.location.href);
-            targetUrl.search = currentUrl.search;
-            targetUrl.hash = currentUrl.hash;
-            return targetUrl.href;
-        }}
-
-        function renderSiteMenu() {{
-            const siteMenu = document.getElementById('siteMenu');
-            if (!siteMenu || !SITE_URLS.length) {{
-                return;
-            }}
-
-            const currentIndex = getCurrentSiteIndex();
-            siteMenu.innerHTML = '';
-
-            SITE_URLS.forEach(function(site, index) {{
-                const item = document.createElement('button');
-                item.type = 'button';
-                item.className = `site-menu-item${{index === currentIndex ? ' active' : ''}}`;
-                item.setAttribute('role', 'menuitem');
-                item.title = site.desc || site.name || site.url;
-                const nameSpan = document.createElement('span');
-                nameSpan.className = 'site-menu-item-name';
-                nameSpan.textContent = site.name || site.url;
-                const descSpan = document.createElement('span');
-                descSpan.className = 'site-menu-item-desc';
-                descSpan.textContent = site.desc || '';
-                item.appendChild(nameSpan);
-                if (site.desc) item.appendChild(descSpan);
-                item.addEventListener('click', function() {{
-                    window.location.href = getSiteUrl(site);
-                }});
-                siteMenu.appendChild(item);
-            }});
-        }}
-
-        const siteSwitcher = document.getElementById('siteSwitcher');
-        const siteMenuToggle = document.getElementById('siteMenuToggle');
-        const siteMenu = document.getElementById('siteMenu');
-
-        if (siteMenuToggle && siteMenu) {{
-            renderSiteMenu();
-
-            siteMenuToggle.addEventListener('click', function(event) {{
-                event.stopPropagation();
-                const isOpen = siteMenu.classList.toggle('open');
-                siteMenuToggle.setAttribute('aria-expanded', String(isOpen));
-            }});
-
-            document.addEventListener('click', function(event) {{
-                if (siteSwitcher && !siteSwitcher.contains(event.target)) {{
-                    siteMenu.classList.remove('open');
-                    siteMenuToggle.setAttribute('aria-expanded', 'false');
-                }}
-            }});
-
-            document.addEventListener('keydown', function(event) {{
-                if (event.key === 'Escape') {{
-                    siteMenu.classList.remove('open');
-                    siteMenuToggle.setAttribute('aria-expanded', 'false');
-                }}
-            }});
-        }}
-
-        // ============================================
-        // 点击 Logo 展示当前页面二维码
-        // ============================================
-        const qrCodeLogo = document.getElementById('qrCodeLogo');
-        const qrModalOverlay = document.getElementById('qrModalOverlay');
-        const qrModalClose = document.getElementById('qrModalClose');
-        const qrModalImage = document.getElementById('qrModalImage');
-        const qrModalUrl = document.getElementById('qrModalUrl');
-        const qrModalCopy = document.getElementById('qrModalCopy');
-
-        function showQrModal() {{
-            const currentUrl = window.location.href;
-            const qrApiUrl = `https://api.2dcode.biz/v1/create-qr-code?data=${{encodeURIComponent(currentUrl)}}&size=256x256`;
-            qrModalImage.src = qrApiUrl;
-            qrModalUrl.textContent = currentUrl;
-            qrModalOverlay.classList.add('open');
-        }}
-
-        function hideQrModal() {{
-            qrModalOverlay.classList.remove('open');
-        }}
-
-        if (qrCodeLogo) {{
-            qrCodeLogo.addEventListener('click', showQrModal);
-
-            qrCodeLogo.addEventListener('keydown', function(event) {{
-                if (event.key === 'Enter' || event.key === ' ') {{
-                    event.preventDefault();
-                    showQrModal();
-                }}
-            }});
-        }}
-
-        if (qrModalClose) {{
-            qrModalClose.addEventListener('click', hideQrModal);
-        }}
-
-        if (qrModalOverlay) {{
-            qrModalOverlay.addEventListener('click', function(event) {{
-                if (event.target === qrModalOverlay) {{
-                    hideQrModal();
-                }}
-            }});
-        }}
-
-        document.addEventListener('keydown', function(event) {{
-            if (event.key === 'Escape' && qrModalOverlay && qrModalOverlay.classList.contains('open')) {{
-                hideQrModal();
-            }}
-        }});
-
-        if (qrModalCopy) {{
-            qrModalCopy.addEventListener('click', function() {{
-                const url = qrModalUrl.textContent;
-                if (navigator.clipboard && navigator.clipboard.writeText) {{
-                    navigator.clipboard.writeText(url).then(function() {{
-                        qrModalCopy.textContent = '已复制';
-                        qrModalCopy.classList.add('copied');
-                        setTimeout(function() {{
-                            qrModalCopy.textContent = '复制';
-                            qrModalCopy.classList.remove('copied');
-                        }}, 2000);
-                    }});
-                }} else {{
-                    // 降级方案：使用传统方法
-                    var textarea = document.createElement('textarea');
-                    textarea.value = url;
-                    textarea.style.position = 'fixed';
-                    textarea.style.opacity = '0';
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textarea);
-                    qrModalCopy.textContent = '已复制';
-                    qrModalCopy.classList.add('copied');
-                    setTimeout(function() {{
-                        qrModalCopy.textContent = '复制';
-                        qrModalCopy.classList.remove('copied');
-                    }}, 2000);
-                }}
-            }});
-        }}
-        // ============================================
-
-        // ============================================
-        // 搜索 + 标签筛选（统一过滤）
-        // ============================================
-        const searchInput = document.getElementById('searchInput');
-        const searchClear = document.getElementById('searchClear');
-        const tagFilters = document.querySelectorAll('.tag-filter');
-        const toolCards = document.querySelectorAll('.tool-card');
-        const toolsGrid = document.querySelector('.tools-grid');
-        const RECENT_KEY = 'recentTools';
-        const MAX_RECENT = 6;
-        let activeTag = 'all';
-        let searchQuery = '';
-
-        function applyFilters() {{
-            var visibleCount = 0;
-            toolCards.forEach(function(card) {{
-                var name = (card.querySelector('.tool-name')?.textContent || '').toLowerCase();
-                var desc = (card.querySelector('.tool-desc')?.textContent || '').toLowerCase();
-                var tags = (card.getAttribute('data-tags') || '').toLowerCase();
-                var matchesSearch = !searchQuery || name.indexOf(searchQuery) !== -1 || desc.indexOf(searchQuery) !== -1 || tags.indexOf(searchQuery) !== -1;
-                var matchesTag = activeTag === 'all' || (card.getAttribute('data-tags') || '').split(',').includes(activeTag);
-                if (matchesSearch && matchesTag) {{
-                    card.style.display = '';
-                    visibleCount++;
-                }} else {{
-                    card.style.display = 'none';
-                }}
-            }});
-            var noResults = document.getElementById('noResults');
-            if (visibleCount === 0) {{
-                if (!noResults) {{
-                    noResults = document.createElement('div');
-                    noResults.id = 'noResults';
-                    noResults.className = 'no-results';
-                    noResults.textContent = '未找到匹配的工具';
-                    toolsGrid.insertAdjacentElement('afterend', noResults);
-                }}
-                noResults.classList.add('visible');
-            }} else if (noResults) {{
-                noResults.classList.remove('visible');
-            }}
-        }}
-
-        searchInput.addEventListener('input', function() {{
-            searchQuery = this.value.toLowerCase().trim();
-            if (searchQuery) {{
-                searchClear.classList.add('visible');
-            }} else {{
-                searchClear.classList.remove('visible');
-            }}
-            applyFilters();
-        }});
-
-        searchClear.addEventListener('click', function() {{
-            searchInput.value = '';
-            searchQuery = '';
-            searchClear.classList.remove('visible');
-            applyFilters();
-            searchInput.focus();
-        }});
-
-        document.addEventListener('keydown', function(e) {{
-            if ((e.ctrlKey && e.key === 'k') || (e.key === '/' && document.activeElement !== searchInput && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA')) {{
-                e.preventDefault();
-                searchInput.focus();
-                searchInput.select();
-            }}
-        }});
-
-        tagFilters.forEach(function(filter) {{
-            filter.addEventListener('click', function() {{
-                tagFilters.forEach(function(f) {{ f.classList.remove('active'); }});
-                filter.classList.add('active');
-                activeTag = filter.getAttribute('data-tag');
-                applyFilters();
-            }});
-        }});
-
-        // ============================================
-        // 最近访问
-        // ============================================
-        var recentSection = document.getElementById('recentSection');
-        var recentList = document.getElementById('recentList');
-        var recentClearBtn = document.getElementById('recentClear');
-
-        function getRecentTools() {{
-            try {{ return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); }} catch(e) {{ return []; }}
-        }}
-
-        function saveRecentTools(recent) {{
-            try {{ localStorage.setItem(RECENT_KEY, JSON.stringify(recent)); }} catch(e) {{}}
-        }}
-
-        function recordVisit(card) {{
-            var name = card.querySelector('.tool-name')?.textContent || '';
-            var url = card.getAttribute('href') || '';
-            var iconEl = card.querySelector('.tool-icon');
-            var iconHtml = '';
-            if (iconEl) {{
-                var img = iconEl.querySelector('img');
-                if (img) {{
-                    iconHtml = '<img src="' + img.getAttribute('src') + '" alt="" width="16" height="16" style="object-fit:contain;border-radius:2px;">';
-                }} else {{
-                    iconHtml = iconEl.textContent?.trim() || '🔗';
-                }}
-            }}
-            var recent = getRecentTools();
-            recent = recent.filter(function(item) {{ return item.url !== url; }});
-            recent.unshift({{ name: name, url: url, iconHtml: iconHtml, time: Date.now() }});
-            recent = recent.slice(0, MAX_RECENT);
-            saveRecentTools(recent);
-            renderRecentVisits();
-        }}
-
-        function renderRecentVisits() {{
-            var recent = getRecentTools();
-            if (recent.length === 0) {{
-                recentSection.classList.remove('visible');
-                return;
-            }}
-            recentSection.classList.add('visible');
-            recentList.innerHTML = '';
-            recent.forEach(function(item) {{
-                var a = document.createElement('a');
-                a.href = item.url;
-                a.className = 'recent-item';
-                a.target = '_blank';
-                a.rel = 'noopener noreferrer';
-                a.title = item.name;
-                a.innerHTML = '<span class="recent-item-icon">' + item.iconHtml + '</span><span class="recent-item-name">' + item.name + '</span>';
-                recentList.appendChild(a);
-            }});
-        }}
-
-        toolCards.forEach(function(card) {{
-            card.addEventListener('click', function() {{
-                recordVisit(card);
-            }});
-        }});
-
-        recentClearBtn.addEventListener('click', function() {{
-            localStorage.removeItem(RECENT_KEY);
-            recentSection.classList.remove('visible');
-            recentList.innerHTML = '';
-        }});
-
-        renderRecentVisits();
-        // ============================================
-
-        // ============================================
-        // 返回顶部按钮
-        // ============================================
-        const backToTop = document.getElementById('backToTop');
-
-        function toggleBackToTop() {{
-            if (window.scrollY > 300) {{
-                backToTop.classList.add('visible');
-            }} else {{
-                backToTop.classList.remove('visible');
-            }}
-        }}
-
-        window.addEventListener('scroll', toggleBackToTop, {{ passive: true }});
-
-        backToTop.addEventListener('click', function() {{
-            window.scrollTo({{ top: 0, behavior: 'smooth' }});
-        }});
-
-        // ============================================
-        // 主题切换功能
-        // ============================================
-        const themeToggle = document.getElementById('themeToggle');
-        const root = document.documentElement;
-
-        // 从 localStorage 读取主题设置
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {{
-            root.setAttribute('data-theme', savedTheme);
-        }}
-
-        // 切换主题
-        themeToggle.addEventListener('click', () => {{
-            const currentTheme = root.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            if (newTheme === 'light') {{
-                root.removeAttribute('data-theme');
-                localStorage.removeItem('theme');
-            }} else {{
-                root.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            }}
-        }});
-        // ============================================
-
-        // ============================================
-        // 页面加载动画
-        // ============================================
-        document.addEventListener('DOMContentLoaded', function() {{
-            const loader = document.getElementById('pageLoader');
-            if (loader) {{
-                loader.classList.add('hidden');
-                setTimeout(function() {{
-                    loader.style.display = 'none';
-                }}, 500);
-            }}
-        }});
-        // ============================================
-
-        // 页面加载完成后初始化微信分享
-        if (document.readyState === 'loading') {{
-            document.addEventListener('DOMContentLoaded', initWechatShare);
-        }} else {{
-            initWechatShare();
-        }}
-        // ============================================
+{js_content}
+        // 隐藏 DevFile 平台注入的广告徽章（CSS 兜底 + DOM 监控）
+        (function() {{
+            var removeBadge = function() {{
+                var el = document.getElementById('devfile-badge-content');
+                if (el) {{ el.remove(); }}
+                var els = document.querySelectorAll('[id^="devfile-badge"]');
+                els.forEach(function(e) {{ e.remove(); }});
+            }};
+            removeBadge();
+            var observer = new MutationObserver(removeBadge);
+            observer.observe(document.documentElement, {{ childList: true, subtree: true }});
+        }})();
     </script>
 </body>
 </html>'''
-    
+
     return html_content
 
 
@@ -1694,30 +361,32 @@ def main():
     """主函数"""
     # 获取脚本所在目录
     script_dir = Path(__file__).parent
-    
+
     # 文件路径
     json_path = script_dir / 'tools.json'
     output_path = script_dir / 'index.html'
-    
+
     # 检查 tools.json 是否存在
     if not json_path.exists():
         print(f"❌ 错误: 未找到 {json_path}")
         print("请确保 tools.json 文件与脚本在同一目录下")
         return
-    
+
     # 解析 JSON
     print(f"📖 正在读取 {json_path}...")
     tools, site_urls = parse_json(json_path)
-    
+
     if not tools:
         print("⚠️ 警告: 未在 tools.json 中找到任何工具")
         return
-    
+
     # 收集所有标签用于显示
     all_tags = set()
     for tool in tools:
         all_tags.update(tool[5])
-    
+
+    version = get_version()
+    print(f"📌 版本: v{version}")
     print(f"✅ 找到 {len(tools)} 个工具链接:")
     for title, url, desc, icon, color, tags in tools:
         desc_str = f' - {desc}' if desc else ''
@@ -1725,21 +394,21 @@ def main():
         color_str = f' color={color}' if color else ''
         tags_str = f' tags={",".join(tags)}' if tags else ''
         print(f"   • {title}{desc_str}{icon_str}{color_str}{tags_str}")
-    
+
     if all_tags:
         print(f"\n🏷️ 发现 {len(all_tags)} 个标签: {', '.join(sorted(all_tags))}")
 
     if site_urls:
         print(f"\n🌐 配置 {len(site_urls)} 个访问网址: {', '.join(site.get('name', site.get('url', '')) for site in site_urls)}")
-    
+
     # 生成 HTML
     print("\n🔨 正在生成 HTML...")
     html_content = generate_html(tools, site_urls)
-    
+
     # 写入文件
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
-    
+
     print(f"✅ 导航页已生成: {output_path}")
     print("\n💡 提示: 修改 tools.json 后重新运行此脚本即可更新导航页")
 
