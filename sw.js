@@ -47,10 +47,13 @@ self.addEventListener('fetch', function(event) {
     var url = new URL(event.request.url);
     if (url.hostname !== self.location.hostname) return;
 
+    // 对于导航请求，直接走网络，让浏览器处理重定向（避免 CDN 307 重定向导致 ERR_FAILED）
+    if (event.request.mode === 'navigate') return;
+
     event.respondWith(
         caches.match(event.request).then(function(cached) {
-            // 同时发起网络请求更新缓存
-            var fetchPromise = fetch(event.request.url).then(function(response) {
+            // 同时发起网络请求更新缓存，显式设置 redirect: 'follow'
+            var fetchPromise = fetch(event.request.url, { redirect: 'follow' }).then(function(response) {
                 if (response && response.status === 200) {
                     var clone = response.clone();
                     caches.open(CACHE_NAME).then(function(cache) {
