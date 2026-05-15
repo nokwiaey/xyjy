@@ -1,5 +1,5 @@
 // Service Worker - 离线缓存
-const CACHE_NAME = 'xyjy-tools-v2';
+const CACHE_NAME = 'xyjy-tools-v3';
 
 // 需要预缓存的静态资源
 const PRECACHE_URLS = [
@@ -50,7 +50,7 @@ self.addEventListener('fetch', function(event) {
     event.respondWith(
         caches.match(event.request).then(function(cached) {
             // 同时发起网络请求更新缓存
-            var fetchPromise = fetch(event.request).then(function(response) {
+            var fetchPromise = fetch(event.request.url).then(function(response) {
                 if (response && response.status === 200) {
                     var clone = response.clone();
                     caches.open(CACHE_NAME).then(function(cache) {
