@@ -94,7 +94,8 @@ def parse_json(file_path):
         icon = tool.get('icon')
         color = tool.get('color')
         tags = tool.get('tags', [])
-        tools.append((title, url, desc, icon, color, tags))
+        intranet = tool.get('intranet', False)
+        tools.append((title, url, desc, icon, color, tags, intranet))
 
     return tools, site_urls
 
@@ -164,7 +165,7 @@ def generate_html(tools, site_urls):
 
     # 生成工具卡片
     tool_cards = []
-    for i, (title, url, desc, custom_icon, custom_color, tags) in enumerate(tools):
+    for i, (title, url, desc, custom_icon, custom_color, tags, intranet) in enumerate(tools):
         icon, color = get_icon_and_color(i, custom_icon, custom_color)
         # 如果没有描述，使用默认描述
         if not desc:
@@ -184,7 +185,9 @@ def generate_html(tools, site_urls):
         else:
             icon_html = f'<div class="tool-icon {color} favicon-icon"><img src="https://www.google.com/s2/favicons?domain={url}&sz=64" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display=\'none\'; this.parentElement.innerHTML=\'🔗\';"></div>'
 
-        card = f'''            <a href="{url}" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="{tags_attr}">
+        intranet_attr = ' data-intranet="true"' if intranet else ''
+
+        card = f'''            <a href="{url}" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="{tags_attr}"{intranet_attr}>
                 {icon_html}
                 <h3 class="tool-name">{title}</h3>
                 <p class="tool-desc">{desc}</p>
@@ -371,12 +374,13 @@ def main():
     version = get_version()
     print(f"📌 版本: v{version}")
     print(f"✅ 找到 {len(tools)} 个工具链接:")
-    for title, url, desc, icon, color, tags in tools:
+    for title, url, desc, icon, color, tags, intranet in tools:
         desc_str = f' - {desc}' if desc else ''
         icon_str = f' icon={icon}' if icon else ''
         color_str = f' color={color}' if color else ''
         tags_str = f' tags={",".join(tags)}' if tags else ''
-        print(f"   • {title}{desc_str}{icon_str}{color_str}{tags_str}")
+        intranet_str = ' [内网]' if intranet else ''
+        print(f"   • {title}{desc_str}{icon_str}{color_str}{tags_str}{intranet_str}")
 
     if all_tags:
         print(f"\n🏷️ 发现 {len(all_tags)} 个标签: {', '.join(sorted(all_tags))}")

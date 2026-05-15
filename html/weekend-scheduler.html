@@ -1182,6 +1182,16 @@
         initWechatShare();
         // ============================================
     </script>
+    <!-- Service Worker 离线缓存 -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('../sw.js').catch(function(err) {
+                console.log('Service Worker 注册失败:', err);
+            });
+        });
+    }
+    </script>
     <!-- 微信 JS-SDK -->
     <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
 </body>

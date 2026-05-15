@@ -584,15 +584,18 @@ themeToggle.addEventListener('click', function() {
 // ============================================
 // 页面加载动画
 // ============================================
-document.addEventListener('DOMContentLoaded', function() {
-    const loader = document.getElementById('pageLoader');
+// 注意：不使用 DOMContentLoaded 事件，因为外部 defer 脚本（vercount、微信 JS-SDK）
+// 在离线时会阻塞该事件直到超时，导致 loading 动画长时间遮挡页面。
+// 此脚本位于 </body> 末尾，DOM 在此时已解析完毕，直接隐藏即可。
+(function() {
+    var loader = document.getElementById('pageLoader');
     if (loader) {
         loader.classList.add('hidden');
         setTimeout(function() {
             loader.style.display = 'none';
         }, 500);
     }
-});
+})();
 // ============================================
 
 // ============================================
@@ -617,7 +620,45 @@ if (document.readyState === 'loading') {
 // ============================================
 
 // ============================================
-// 隐藏 DevFile 平台注入的广告徽章（CSS 兜底 + DOM 监控）
+// 内网连通性检测
+// ============================================
+(function() {
+    var intranetCards = document.querySelectorAll('.tool-card[data-intranet="true"]');
+    if (intranetCards.length === 0) return;
+
+    // 检测超时时间（毫秒）
+    var TEST_TIMEOUT = 5000;
+
+    intranetCards.forEach(function(card) {
+        var url = card.getAttribute('href');
+        if (!url) return;
+
+        // 标记为检测中
+        card.classList.add('intranet-testing');
+
+        // 使用 fetch no-cors 模式检测连通性
+        var controller = new AbortController();
+        var timeoutId = setTimeout(function() {
+            controller.abort();
+        }, TEST_TIMEOUT);
+
+        fetch(url, {
+            mode: 'no-cors',
+            signal: controller.signal
+        }).then(function() {
+            // 收到响应（即使是 opaque），说明可达
+            card.classList.remove('intranet-testing');
+        }).catch(function(err) {
+            // 网络错误或混合内容阻止 — 标记为可能不可达
+            clearTimeout(timeoutId);
+            card.classList.remove('intranet-testing');
+            card.classList.add('intranet-unreachable');
+        });
+
+        // 点击时：即使不可达也直接放行，不拦截
+    });
+})();
+// ============================================
 // ============================================
 (function() {
     var removeBadge = function() {
