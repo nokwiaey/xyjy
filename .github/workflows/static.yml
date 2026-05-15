@@ -42,6 +42,7 @@ jobs:
         with:
           commit_message: 'chore: auto-generate index.html from tools.json'
           file_pattern: 'index.html'
+          add_options: '-f'
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
