@@ -586,7 +586,7 @@ themeToggle.addEventListener('click', function() {
 // ============================================
 // 注意：不使用 DOMContentLoaded 事件，因为外部 defer 脚本（vercount、微信 JS-SDK）
 // 在离线时会阻塞该事件直到超时，导致 loading 动画长时间遮挡页面。
-// 此脚本位于 </body> 末尾，DOM 在此时已解析完毕，直接隐藏即可。
+// 此脚本位于 body 末尾，DOM 在此时已解析完毕，直接隐藏即可。
 (function() {
     var loader = document.getElementById('pageLoader');
     if (loader) {
