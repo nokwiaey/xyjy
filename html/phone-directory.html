@@ -41,19 +41,46 @@
             width: 100%;
             max-width: 500px;
             margin: 20px auto 30px;
-            position: relative;
+            position: sticky;
+            top: 10px;
+            z-index: 999;
         }
         .search-box input {
             width: 100%;
-            padding: 15px 20px;
+            padding: 15px 50px 15px 20px;
             border: none;
             border-radius: 50px;
             font-size: 16px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             outline: none;
+            background: white;
         }
         .search-box input::placeholder {
             color: #999;
+        }
+        .search-box .clear-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: none;
+            background: #ccc;
+            color: white;
+            font-size: 14px;
+            line-height: 24px;
+            text-align: center;
+            cursor: pointer;
+            display: none;
+            transition: background 0.2s;
+        }
+        .search-box .clear-btn:hover {
+            background: #999;
+        }
+        .search-box .clear-btn.visible {
+            display: block;
         }
         .location-section {
             background: white;
@@ -336,7 +363,8 @@
         <h1>🏥 榆林市星元医院<br><span class="subtitle">2026年电话号码簿</span></h1>
         <div class="stats">共收录 173 个科室电话 | 1531 名工作人员</div>
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="🔍 搜索科室、位置或电话号码...">
+            <input type="text" id="searchInput" placeholder="🔍 搜索科室、姓名、电话，支持拼音首字母">
+            <button class="clear-btn" id="clearBtn" onclick="clearSearch()" title="清除">✕</button>
         </div>
         <div id="phonebook">
             <div class="location-section" data-location="综合楼">
@@ -20475,14 +20503,30 @@
         // ============================================
 
         // 搜索功能
+        const searchInput = document.getElementById("searchInput");
+        const clearBtn = document.getElementById("clearBtn");
         const userListSection = document.getElementById("userListSection");
         const userItems = document.querySelectorAll(".user-item");
         const userDeptGroups = document.querySelectorAll(".user-dept-group");
 
-        document.getElementById("searchInput").addEventListener("input", function(e) {
+        function clearSearch() {
+            searchInput.value = "";
+            clearBtn.classList.remove("visible");
+            searchInput.dispatchEvent(new Event("input"));
+            searchInput.focus();
+        }
+
+        searchInput.addEventListener("input", function(e) {
             const searchTerm = e.target.value.toLowerCase().trim();
             const phoneItems = document.querySelectorAll(".phone-item");
             const sections = document.querySelectorAll(".location-section");
+
+            // 显示/隐藏清除按钮
+            if (searchTerm) {
+                clearBtn.classList.add("visible");
+            } else {
+                clearBtn.classList.remove("visible");
+            }
 
             if (searchTerm === "") {
                 // 无搜索词：恢复电话簿显示，隐藏人员通讯录
