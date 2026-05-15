@@ -77,7 +77,6 @@
       "desc": "适用于院内局域网快速访问",
       "icon": "🗂️",
       "color": "purple",
-      "intranet": true,
       "tags": [
         "⭐常用",
         "查阅",
@@ -134,7 +133,6 @@
       "desc": "星元医院OA办公系统",
       "icon": "✉️",
       "color": "red",
-      "intranet": true,
       "tags": [
         "⭐常用",
         "医院"

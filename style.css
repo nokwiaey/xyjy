@@ -1027,15 +1027,6 @@ body {
     }
 }
 
-/* 内网工具卡片 - 不可达状态（连通性测试未通过时变暗） */
-.tool-card.intranet-unreachable {
-    opacity: 0.55;
-}
-
-.tool-card.intranet-unreachable:hover {
-    opacity: 0.85;
-}
-
 /* 隐藏 DevFile 平台注入的广告徽章 */
 #devfile-badge-content,
 #devfile-badge,
