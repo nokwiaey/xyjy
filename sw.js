@@ -5,10 +5,10 @@ const CACHE_NAME = 'xyjy-tools-v2';
 const PRECACHE_URLS = [
     './',
     './index.html',
-    './html/phone-directory.html',
-    './html/lab-test-query.html',
-    './html/weekend-scheduler.html',
-    './html/egfr-calc.html',
+    './html/phone-directory',
+    './html/lab-test-query',
+    './html/weekend-scheduler',
+    './html/egfr-calc',
     './html/data/item.json'
 ];
 
