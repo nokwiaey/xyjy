@@ -506,8 +506,20 @@ function initCopyButtons() {
                 a.href = absoluteUrl;
                 absoluteUrl = a.href;
             }
-            copyToClipboard(absoluteUrl, btn, '', '');
-            // 短暂显示勾号
+            // 直接写入剪贴板，不通过 copyToClipboard（它会用 textContent 清空 SVG）
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(absoluteUrl);
+            } else {
+                var textarea = document.createElement('textarea');
+                textarea.value = absoluteUrl;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+            }
+            // 显示勾号，保持可见直到恢复
             btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
             btn.classList.add('copied');
             setTimeout(function() {

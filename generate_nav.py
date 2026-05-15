@@ -9,7 +9,7 @@ import json
 import os
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 # 设置 stdout 编码为 utf-8
@@ -141,8 +141,8 @@ def generate_html(tools, site_urls):
     """生成 HTML 内容"""
     script_dir = Path(__file__).parent
     site_urls_json = json.dumps(site_urls, ensure_ascii=False)
-    version = get_version()
-    build_date = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    tz_cn = timezone(timedelta(hours=8))
+    build_date = datetime.now(tz_cn).strftime('%Y-%m-%d %H:%M')
 
     # 读取外部 CSS 和 JS
     css_content = read_asset(script_dir, 'style.css')
@@ -285,11 +285,8 @@ def generate_html(tools, site_urls):
         <footer class="footer">
             <p class="footer-text">
                 星元检验工具箱
-                <span class="version">v{version}</span>
-                <a href="https://f.kdocs.cn/g/sn7KOMnc/" class="feedback-link" target="_blank" rel="noopener noreferrer">反馈建议</a>
-            </p>
-            <p class="footer-text">
                 <span class="update-date">最后更新: {build_date}</span>
+                <a href="https://f.kdocs.cn/g/sn7KOMnc/" class="feedback-link" target="_blank" rel="noopener noreferrer">反馈建议</a>
             </p>
             <div class="stats">
                  <span class="stat-item">
