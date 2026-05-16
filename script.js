@@ -582,6 +582,148 @@ themeToggle.addEventListener('click', function() {
 // ============================================
 
 // ============================================
+// 今日信息条
+// ============================================
+const todayDate = document.getElementById('todayDate');
+const todayWeek = document.getElementById('todayWeek');
+const todayWeather = document.getElementById('todayWeather');
+const todayWeatherDivider = document.querySelector('.today-weather-divider');
+const WEATHER_CACHE_KEY = 'yulinWeather';
+const WEATHER_CACHE_TTL = 30 * 60 * 1000;
+
+const WEATHER_CODE_TEXT = {
+    0: '晴',
+    1: '大部晴朗',
+    2: '多云',
+    3: '阴',
+    45: '有雾',
+    48: '雾凇',
+    51: '小毛毛雨',
+    53: '毛毛雨',
+    55: '大毛毛雨',
+    56: '冻毛毛雨',
+    57: '强冻毛毛雨',
+    61: '小雨',
+    63: '中雨',
+    65: '大雨',
+    66: '冻雨',
+    67: '强冻雨',
+    71: '小雪',
+    73: '中雪',
+    75: '大雪',
+    77: '雪粒',
+    80: '阵雨',
+    81: '中阵雨',
+    82: '强阵雨',
+    85: '阵雪',
+    86: '强阵雪',
+    95: '雷暴',
+    96: '雷暴伴小冰雹',
+    99: '雷暴伴冰雹'
+};
+
+function formatTodayInfo() {
+    if (!todayDate || !todayWeek) return;
+
+    var now = new Date();
+    var month = now.getMonth() + 1;
+    var date = now.getDate();
+    var weekText = new Intl.DateTimeFormat('zh-CN', { weekday: 'long' }).format(now);
+
+    todayDate.textContent = month + '月' + date + '日';
+    todayWeek.textContent = weekText;
+}
+
+function setWeatherText(text) {
+    if (!todayWeather) return;
+    todayWeather.textContent = text;
+    todayWeather.classList.remove('is-muted');
+    if (todayWeatherDivider) {
+        todayWeatherDivider.classList.remove('is-muted');
+    }
+}
+
+function hideWeatherText() {
+    if (todayWeather) {
+        todayWeather.classList.add('is-muted');
+    }
+    if (todayWeatherDivider) {
+        todayWeatherDivider.classList.add('is-muted');
+    }
+}
+
+function readWeatherCache() {
+    try {
+        var cached = JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY) || 'null');
+        if (cached && cached.text && Date.now() - cached.time < WEATHER_CACHE_TTL) {
+            return cached.text;
+        }
+    } catch (e) {}
+    return '';
+}
+
+function saveWeatherCache(text) {
+    try {
+        localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({
+            text: text,
+            time: Date.now()
+        }));
+    } catch (e) {}
+}
+
+function buildWeatherText(data) {
+    var current = data && data.current;
+    var daily = data && data.daily;
+    if (!current) return '';
+
+    var currentTemp = Math.round(current.temperature_2m);
+    var weatherCode = current.weather_code;
+    var weatherText = WEATHER_CODE_TEXT[weatherCode] || '天气';
+    var tempRange = '';
+
+    if (daily && daily.temperature_2m_min && daily.temperature_2m_max) {
+        var minTemp = Math.round(daily.temperature_2m_min[0]);
+        var maxTemp = Math.round(daily.temperature_2m_max[0]);
+        tempRange = ' ' + minTemp + '~' + maxTemp + '℃';
+    }
+
+    return '榆林 ' + currentTemp + '℃ ' + weatherText + tempRange;
+}
+
+function initTodayStrip() {
+    formatTodayInfo();
+
+    var cachedText = readWeatherCache();
+    if (cachedText) {
+        setWeatherText(cachedText);
+    }
+
+    if (!window.fetch) {
+        if (!cachedText) hideWeatherText();
+        return;
+    }
+
+    var weatherUrl = 'https://api.open-meteo.com/v1/forecast?latitude=38.29&longitude=109.73&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FShanghai&forecast_days=1';
+    fetch(weatherUrl, { cache: 'no-store' })
+        .then(function(response) {
+            if (!response.ok) throw new Error('weather request failed');
+            return response.json();
+        })
+        .then(function(data) {
+            var text = buildWeatherText(data);
+            if (!text) throw new Error('weather data invalid');
+            saveWeatherCache(text);
+            setWeatherText(text);
+        })
+        .catch(function() {
+            if (!cachedText) hideWeatherText();
+        });
+}
+
+initTodayStrip();
+// ============================================
+
+// ============================================
 // 页面加载动画
 // ============================================
 // 注意：不使用 DOMContentLoaded 事件，因为外部 defer 脚本（vercount、微信 JS-SDK）

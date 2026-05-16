@@ -252,6 +252,15 @@ def generate_html(tools, site_urls):
             <p class="subtitle">专业、便捷的检验工具集合，助力高效工作</p>
         </header>
 
+        <!-- 今日信息 -->
+        <div class="today-strip" aria-label="今日信息">
+            <span class="today-strip-item" id="todayDate">--</span>
+            <span class="today-strip-divider" aria-hidden="true"></span>
+            <span class="today-strip-item" id="todayWeek">--</span>
+            <span class="today-strip-divider today-weather-divider" aria-hidden="true"></span>
+            <span class="today-strip-item today-weather" id="todayWeather">榆林天气加载中</span>
+        </div>
+
         <!-- 搜索框 -->
         <div class="search-wrapper">
             <div class="search-box">
