@@ -275,6 +275,57 @@ const MAX_RECENT = 6;
 let activeTag = 'all';
 let searchQuery = '';
 
+const PINYIN_INITIAL_BOUNDARIES = '阿八嚓咑妸发旮哈讥咔垃妈拏噢妑七呥仨他屲夕丫帀';
+const PINYIN_INITIAL_LETTERS = 'abcdefghjklmnopqrstwxyz';
+
+function getPinyinInitials(text) {
+    var result = '';
+    String(text || '').split('').forEach(function(char) {
+        var code = char.charCodeAt(0);
+        if (code < 128) {
+            result += /[a-z0-9]/i.test(char) ? char.toLowerCase() : '';
+            return;
+        }
+
+        var matched = '';
+        for (var i = PINYIN_INITIAL_BOUNDARIES.length - 1; i >= 0; i--) {
+            if (char.localeCompare(PINYIN_INITIAL_BOUNDARIES[i], 'zh-Hans-CN') >= 0) {
+                matched = PINYIN_INITIAL_LETTERS[i];
+                break;
+            }
+        }
+        result += matched;
+    });
+    return result;
+}
+
+function isSubsequence(query, text) {
+    if (!query || !text || query.length < 2) return false;
+
+    var queryIndex = 0;
+    for (var i = 0; i < text.length && queryIndex < query.length; i++) {
+        if (text[i] === query[queryIndex]) {
+            queryIndex++;
+        }
+    }
+    return queryIndex === query.length;
+}
+
+function getCardSearchText(card) {
+    if (card.dataset.searchText) {
+        return card.dataset.searchText;
+    }
+
+    var name = card.querySelector('.tool-name')?.textContent || '';
+    var desc = card.querySelector('.tool-desc')?.textContent || '';
+    var tags = card.getAttribute('data-tags') || '';
+    var rawText = (name + ' ' + desc + ' ' + tags).toLowerCase();
+    var initials = getPinyinInitials(rawText);
+    card.dataset.searchText = rawText + ' ' + initials;
+    card.dataset.searchInitials = initials;
+    return card.dataset.searchText;
+}
+
 function getVisibleCards() {
     var visible = [];
     toolCards.forEach(function(card) {
@@ -326,10 +377,9 @@ function handleSearchKeyboard(e) {
 function applyFilters() {
     var visibleCount = 0;
     toolCards.forEach(function(card) {
-        var name = (card.querySelector('.tool-name')?.textContent || '').toLowerCase();
-        var desc = (card.querySelector('.tool-desc')?.textContent || '').toLowerCase();
-        var tags = (card.getAttribute('data-tags') || '').toLowerCase();
-        var matchesSearch = !searchQuery || name.indexOf(searchQuery) !== -1 || desc.indexOf(searchQuery) !== -1 || tags.indexOf(searchQuery) !== -1;
+        var searchText = getCardSearchText(card);
+        var searchInitials = card.dataset.searchInitials || '';
+        var matchesSearch = !searchQuery || searchText.indexOf(searchQuery) !== -1 || isSubsequence(searchQuery, searchInitials);
         var matchesTag = activeTag === 'all' || (card.getAttribute('data-tags') || '').split(',').includes(activeTag);
         if (matchesSearch && matchesTag) {
             card.style.display = '';
