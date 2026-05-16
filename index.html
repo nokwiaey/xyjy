@@ -343,20 +343,20 @@ body {
 .tag-filters {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
     justify-content: center;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     padding: 0 20px;
 }
 
 .tag-filter {
-    padding: 8px 16px;
+    padding: 7px 14px;
     border: 1px solid var(--border-color);
     background: var(--bg-card);
     color: var(--text-secondary);
     border-radius: 20px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     transition: all 0.3s ease;
 }
 
@@ -375,15 +375,15 @@ body {
 /* 工具网格 */
 .tools-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    margin-bottom: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 18px;
+    margin-bottom: 34px;
 }
 
 .tool-card {
     background: var(--bg-card);
-    border-radius: 16px;
-    padding: 32px;
+    border-radius: 10px;
+    padding: 22px;
     text-decoration: none;
     color: inherit;
     transition: all 0.3s ease;
@@ -391,7 +391,7 @@ body {
     position: relative;
     overflow: hidden;
     content-visibility: auto;
-    contain-intrinsic-size: auto 240px;
+    contain-intrinsic-size: auto 190px;
 }
 
 .tool-card::before {
@@ -407,8 +407,8 @@ body {
 }
 
 .tool-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px var(--shadow-color);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px var(--shadow-color);
 }
 
 .tool-card:hover::before {
@@ -423,20 +423,20 @@ body {
 }
 
 .tool-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 14px;
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
-    font-size: 24px;
+    margin-bottom: 14px;
+    font-size: 22px;
     overflow: hidden;
 }
 
 .tool-icon.favicon-icon img {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     object-fit: contain;
 }
 
@@ -481,28 +481,29 @@ body {
 }
 
 .tool-name {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    line-height: 1.35;
 }
 
 .tool-desc {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 .tool-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 12px;
+    gap: 5px;
+    margin-top: 10px;
 }
 
 .tool-tag {
-    font-size: 12px;
-    padding: 3px 10px;
+    font-size: 11px;
+    padding: 3px 8px;
     background: rgba(26, 95, 180, 0.08);
     color: #1a5fb4;
     border-radius: 12px;
@@ -792,11 +793,11 @@ body {
 
     .tools-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 14px;
     }
 
     .tool-card {
-        padding: 24px;
+        padding: 18px;
     }
 
     .theme-toggle {
@@ -1307,7 +1308,7 @@ body {
         <footer class="footer">
             <p class="footer-text">
                 星元检验工具箱
-                <span class="update-date">最后更新: 2026-05-16 22:42</span>
+                <span class="update-date">最后更新: 2026-05-16 22:45</span>
                 <a href="https://f.kdocs.cn/g/sn7KOMnc/" class="feedback-link" target="_blank" rel="noopener noreferrer">反馈建议</a>
             </p>
             <div class="stats">
@@ -1631,6 +1632,57 @@ const MAX_RECENT = 6;
 let activeTag = 'all';
 let searchQuery = '';
 
+const PINYIN_INITIAL_BOUNDARIES = '阿八嚓咑妸发旮哈讥咔垃妈拏噢妑七呥仨他屲夕丫帀';
+const PINYIN_INITIAL_LETTERS = 'abcdefghjklmnopqrstwxyz';
+
+function getPinyinInitials(text) {
+    var result = '';
+    String(text || '').split('').forEach(function(char) {
+        var code = char.charCodeAt(0);
+        if (code < 128) {
+            result += /[a-z0-9]/i.test(char) ? char.toLowerCase() : '';
+            return;
+        }
+
+        var matched = '';
+        for (var i = PINYIN_INITIAL_BOUNDARIES.length - 1; i >= 0; i--) {
+            if (char.localeCompare(PINYIN_INITIAL_BOUNDARIES[i], 'zh-Hans-CN') >= 0) {
+                matched = PINYIN_INITIAL_LETTERS[i];
+                break;
+            }
+        }
+        result += matched;
+    });
+    return result;
+}
+
+function isSubsequence(query, text) {
+    if (!query || !text || query.length < 2) return false;
+
+    var queryIndex = 0;
+    for (var i = 0; i < text.length && queryIndex < query.length; i++) {
+        if (text[i] === query[queryIndex]) {
+            queryIndex++;
+        }
+    }
+    return queryIndex === query.length;
+}
+
+function getCardSearchText(card) {
+    if (card.dataset.searchText) {
+        return card.dataset.searchText;
+    }
+
+    var name = card.querySelector('.tool-name')?.textContent || '';
+    var desc = card.querySelector('.tool-desc')?.textContent || '';
+    var tags = card.getAttribute('data-tags') || '';
+    var rawText = (name + ' ' + desc + ' ' + tags).toLowerCase();
+    var initials = getPinyinInitials(rawText);
+    card.dataset.searchText = rawText + ' ' + initials;
+    card.dataset.searchInitials = initials;
+    return card.dataset.searchText;
+}
+
 function getVisibleCards() {
     var visible = [];
     toolCards.forEach(function(card) {
@@ -1682,10 +1734,9 @@ function handleSearchKeyboard(e) {
 function applyFilters() {
     var visibleCount = 0;
     toolCards.forEach(function(card) {
-        var name = (card.querySelector('.tool-name')?.textContent || '').toLowerCase();
-        var desc = (card.querySelector('.tool-desc')?.textContent || '').toLowerCase();
-        var tags = (card.getAttribute('data-tags') || '').toLowerCase();
-        var matchesSearch = !searchQuery || name.indexOf(searchQuery) !== -1 || desc.indexOf(searchQuery) !== -1 || tags.indexOf(searchQuery) !== -1;
+        var searchText = getCardSearchText(card);
+        var searchInitials = card.dataset.searchInitials || '';
+        var matchesSearch = !searchQuery || searchText.indexOf(searchQuery) !== -1 || isSubsequence(searchQuery, searchInitials);
         var matchesTag = activeTag === 'all' || (card.getAttribute('data-tags') || '').split(',').includes(activeTag);
         if (matchesSearch && matchesTag) {
             card.style.display = '';
