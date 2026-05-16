@@ -162,42 +162,62 @@ body {
     justify-content: center;
     gap: 10px;
     color: var(--text-secondary);
-    background: var(--stats-bg);
-    border: 1px solid var(--border-color);
+    background: rgba(26, 95, 180, 0.08);
+    border: 1px solid transparent;
     border-radius: 999px;
     font-size: 13px;
     line-height: 1.4;
+    overflow: visible;
+    position: relative;
+}
+
+.today-progress-svg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+}
+
+.today-progress-track,
+.today-progress-path {
+    fill: none;
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+}
+
+.today-progress-track {
+    stroke: rgba(26, 95, 180, 0.18);
+}
+
+.today-progress-path {
+    stroke: #1a5fb4;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.35s ease;
 }
 
 .today-strip-item {
     white-space: nowrap;
+    position: relative;
+    z-index: 2;
 }
 
 .today-strip-divider {
     width: 1px;
     height: 12px;
-    background: var(--border-color);
+    background: rgba(26, 95, 180, 0.22);
+    position: relative;
+    z-index: 2;
 }
 
-.today-shift {
+.today-time {
     color: var(--text-primary);
-}
-
-.shift-progress {
-    width: 96px;
-    height: 5px;
-    background: rgba(26, 95, 180, 0.12);
-    border-radius: 999px;
-    overflow: hidden;
-}
-
-.shift-progress-bar {
-    display: block;
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, #1a5fb4, #3584e4);
-    border-radius: inherit;
-    transition: width 0.4s ease;
+    font-weight: 500;
+    width: 64px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
 /* 主题切换按钮 */
@@ -800,10 +820,6 @@ body {
         border-radius: 16px;
     }
 
-    .shift-progress {
-        width: 80px;
-    }
-
     .tools-grid {
         grid-template-columns: 1fr;
         gap: 14px;
@@ -1163,14 +1179,15 @@ body {
 
         <!-- 今日信息 -->
         <div class="today-strip" aria-label="今日信息">
+            <svg class="today-progress-svg" id="todayProgressSvg" aria-hidden="true">
+                <path class="today-progress-track" id="todayProgressTrack"></path>
+                <path class="today-progress-path" id="todayProgressPath"></path>
+            </svg>
             <span class="today-strip-item" id="todayDate">--</span>
             <span class="today-strip-divider" aria-hidden="true"></span>
             <span class="today-strip-item" id="todayWeek">--</span>
             <span class="today-strip-divider" aria-hidden="true"></span>
-            <span class="today-strip-item today-shift" id="todayShiftText">--</span>
-            <span class="shift-progress" aria-hidden="true">
-                <span class="shift-progress-bar" id="shiftProgressBar"></span>
-            </span>
+            <span class="today-strip-item today-time" id="todayTime">--:--</span>
         </div>
 
         <!-- 搜索框 -->
@@ -1324,7 +1341,7 @@ body {
         <footer class="footer">
             <p class="footer-text">
                 星元检验工具箱
-                <span class="update-date">最后更新: 2026-05-16 23:13</span>
+                <span class="update-date">最后更新: 2026-05-16 23:37</span>
                 <a href="https://f.kdocs.cn/g/sn7KOMnc/" class="feedback-link" target="_blank" rel="noopener noreferrer">反馈建议</a>
             </p>
             <div class="stats">
@@ -2009,8 +2026,14 @@ themeToggle.addEventListener('click', function() {
 // ============================================
 const todayDate = document.getElementById('todayDate');
 const todayWeek = document.getElementById('todayWeek');
-const todayShiftText = document.getElementById('todayShiftText');
-const shiftProgressBar = document.getElementById('shiftProgressBar');
+const todayTime = document.getElementById('todayTime');
+const todayStrip = document.querySelector('.today-strip');
+const todayProgressSvg = document.getElementById('todayProgressSvg');
+const todayProgressTrack = document.getElementById('todayProgressTrack');
+const todayProgressPath = document.getElementById('todayProgressPath');
+let todayProgressPathLength = 0;
+let todayProgressWidth = 0;
+let todayProgressHeight = 0;
 
 const DAY_MINUTES = 24 * 60;
 const MORNING_START = 8 * 60;
@@ -2031,79 +2054,111 @@ function getMinutes(date) {
     return date.getHours() * 60 + date.getMinutes() + date.getSeconds() / 60;
 }
 
-function getShiftSegment(now) {
+function pad2(value) {
+    return String(value).padStart(2, '0');
+}
+
+function getShiftProgress(now) {
     var currentMinutes = getMinutes(now);
     var schedule = getScheduleByMonth(now.getMonth() + 1);
 
     if (currentMinutes < MORNING_START) {
         var previousDate = getPreviousDate(now);
         var previousSchedule = getScheduleByMonth(previousDate.getMonth() + 1);
-        return {
-            name: '夜班',
-            elapsed: currentMinutes + DAY_MINUTES - previousSchedule.dayEnd,
-            total: MORNING_START + DAY_MINUTES - previousSchedule.dayEnd
-        };
+        return (currentMinutes + DAY_MINUTES - previousSchedule.dayEnd) / (MORNING_START + DAY_MINUTES - previousSchedule.dayEnd) * 100;
     }
 
     if (currentMinutes < MORNING_END) {
-        return {
-            name: '上午',
-            elapsed: currentMinutes - MORNING_START,
-            total: MORNING_END - MORNING_START
-        };
+        return (currentMinutes - MORNING_START) / (MORNING_END - MORNING_START) * 100;
     }
 
     if (currentMinutes < schedule.afternoonStart) {
-        return {
-            name: '中午',
-            elapsed: currentMinutes - MORNING_END,
-            total: schedule.afternoonStart - MORNING_END
-        };
+        return (currentMinutes - MORNING_END) / (schedule.afternoonStart - MORNING_END) * 100;
     }
 
     if (currentMinutes < schedule.dayEnd) {
-        return {
-            name: '下午',
-            elapsed: currentMinutes - schedule.afternoonStart,
-            total: schedule.dayEnd - schedule.afternoonStart
-        };
+        return (currentMinutes - schedule.afternoonStart) / (schedule.dayEnd - schedule.afternoonStart) * 100;
     }
 
-    return {
-        name: '夜班',
-        elapsed: currentMinutes - schedule.dayEnd,
-        total: MORNING_START + DAY_MINUTES - schedule.dayEnd
-    };
+    return (currentMinutes - schedule.dayEnd) / (MORNING_START + DAY_MINUTES - schedule.dayEnd) * 100;
 }
 
 function formatTodayInfo() {
-    if (!todayDate || !todayWeek) return;
+    if (!todayDate || !todayWeek || !todayTime) return;
 
     var now = new Date();
     var month = now.getMonth() + 1;
     var date = now.getDate();
     var weekText = new Intl.DateTimeFormat('zh-CN', { weekday: 'long' }).format(now);
+    var timeText = pad2(now.getHours()) + ':' + pad2(now.getMinutes()) + ':' + pad2(now.getSeconds());
 
     todayDate.textContent = month + '月' + date + '日';
     todayWeek.textContent = weekText;
+    todayTime.textContent = timeText;
+}
+
+function getRoundedRectPath(width, height, radius, inset) {
+    var left = inset;
+    var top = inset;
+    var right = width - inset;
+    var bottom = height - inset;
+    var r = Math.max(0, Math.min(radius, (right - left) / 2, (bottom - top) / 2));
+    var middleY = (top + bottom) / 2;
+
+    return [
+        'M', left, middleY,
+        'L', left, top + r,
+        'A', r, r, 0, 0, 1, left + r, top,
+        'H', right - r,
+        'A', r, r, 0, 0, 1, right, top + r,
+        'L', right, bottom - r,
+        'A', r, r, 0, 0, 1, right - r, bottom,
+        'H', left + r,
+        'A', r, r, 0, 0, 1, left, bottom - r,
+        'L', left, middleY,
+        'Z'
+    ].join(' ');
+}
+
+function updateProgressPath() {
+    if (!todayStrip || !todayProgressSvg || !todayProgressTrack || !todayProgressPath) return;
+
+    var width = todayStrip.offsetWidth;
+    var height = todayStrip.offsetHeight;
+    if (!width || !height) return;
+    if (width === todayProgressWidth && height === todayProgressHeight && todayProgressPathLength) return;
+
+    var inset = 1;
+    var radius = height / 2 - inset;
+    var path = getRoundedRectPath(width, height, radius, inset);
+    todayProgressSvg.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
+    todayProgressTrack.setAttribute('d', path);
+    todayProgressPath.setAttribute('d', path);
+    todayProgressPathLength = todayProgressPath.getTotalLength();
+    todayProgressWidth = width;
+    todayProgressHeight = height;
+    todayProgressPath.style.strokeDasharray = String(todayProgressPathLength);
 }
 
 function updateShiftProgress() {
-    if (!todayShiftText || !shiftProgressBar) return;
+    if (!todayProgressPath) return;
 
-    var segment = getShiftSegment(new Date());
-    var progress = Math.max(0, Math.min(100, segment.elapsed / segment.total * 100));
-    todayShiftText.textContent = segment.name;
-    shiftProgressBar.style.width = progress.toFixed(1) + '%';
+    updateProgressPath();
+    if (!todayProgressPathLength) return;
+
+    var progress = Math.max(0, Math.min(100, getShiftProgress(new Date())));
+    todayProgressPath.style.strokeDashoffset = String(todayProgressPathLength * (1 - progress / 100));
+}
+
+function updateTodayStrip() {
+    formatTodayInfo();
+    updateShiftProgress();
 }
 
 function initTodayStrip() {
-    formatTodayInfo();
-    updateShiftProgress();
-    setInterval(function() {
-        formatTodayInfo();
-        updateShiftProgress();
-    }, 30000);
+    updateTodayStrip();
+    setInterval(updateTodayStrip, 1000);
+    window.addEventListener('resize', updateShiftProgress, { passive: true });
 }
 
 initTodayStrip();
