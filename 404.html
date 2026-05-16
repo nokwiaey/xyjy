@@ -3,27 +3,99 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>跳转中...</title>
+<title>正在加载...</title>
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", sans-serif;
+        text-align: center;
+        padding: 80px 20px;
+        background-color: #fafafa;
+        color: #333;
+    }
+    .container {
+        max-width: 500px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 40px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    h1 { font-size: 24px; margin-bottom: 16px; color: #1f1f1f; }
+    p { color: #666; margin-bottom: 24px; font-size: 14px; }
+    a { color: #1677ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .quick-links {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #f0f0f0;
+        text-align: left;
+    }
+    .quick-links h3 { font-size: 14px; color: #999; margin-bottom: 10px; }
+    .quick-links ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 12px; }
+    .quick-links a { background: #f5f5f5; padding: 6px 12px; border-radius: 4px; font-size: 13px; color: #555; }
+    .quick-links a:hover { background: #e6f4ff; color: #1677ff; }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="status-title">正在跳转中...</h1>
+        <p id="status-desc">请稍候，正在为您匹配页面...</p>
+        <a id="home-btn" href="https://nokwiaey.github.io/xyjy" style="display:none;">返回首页 <span id="countdown"></span></a>
+        
+        <!-- 真正的404常用快捷入口，提升用户体验 -->
+        <div id="links-box" class="quick-links" style="display: none;">
+            <h3>您可能想访问：</h3>
+            <ul>
+                <li><a href="/html/lab-test-query.html">星元检验项目查询</a></li>
+            </ul>
+        </div>
+    </div>
+
 <script>
 (function() {
     var path = window.location.pathname;
-    // Known clean URLs → actual .html files
+    
+    // 1. 标准化路径：去掉末尾的斜杠
+    if (path.length > 1 && path.endsWith('/')) {
+        path = path.slice(0, -1);
+    }
+
+    // 2. 路由映射表
     var knownPages = {
         '/html/phone-directory': '/html/phone-directory.html',
         '/html/lab-test-query': '/html/lab-test-query.html',
         '/html/weekend-scheduler': '/html/weekend-scheduler.html',
         '/html/egfr-calc': '/html/egfr-calc.html'
     };
+
     var realPath = knownPages[path];
+
     if (realPath) {
+        // 执行重定向
         window.location.replace(realPath + window.location.search + window.location.hash);
+    } else {
+        // 3. 重定向失败，真正显示 404 界面
+        document.title = "页面未找到 - 404";
+        document.getElementById('status-title').innerText = "页面未找到";
+        document.getElementById('status-desc').innerText = "你访问的页面不存在或已被删除。";
+        document.getElementById('home-btn').style.display = "inline-block";
+        document.getElementById('links-box').style.display = "block";
+
+        // 4. 可选：5秒后自动返回首页
+        var seconds = 5;
+        var countdownEl = document.getElementById('countdown');
+        countdownEl.innerText = "(" + seconds + "s)";
+        var timer = setInterval(function() {
+            seconds--;
+            if (seconds <= 0) {
+                clearInterval(timer);
+                window.location.href = "https://nokwiaey.github.io/xyjy";
+            } else {
+                countdownEl.innerText = "(" + seconds + "s)";
+            }
+        }, 1000);
     }
 })();
 </script>
-</head>
-<body style="font-family:-apple-system,BlinkMacSystemFont,PingFang SC,sans-serif;text-align:center;padding:80px 20px;">
-    <h1 style="color:#333;">页面未找到</h1>
-    <p style="color:#666;">你访问的页面不存在，请返回首页</p>
-    <a href="https://nokwiaey.github.io/xyjy" style="color:#1677ff;">返回首页</a>
 </body>
 </html>
