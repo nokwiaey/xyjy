@@ -143,42 +143,62 @@ body {
     justify-content: center;
     gap: 10px;
     color: var(--text-secondary);
-    background: var(--stats-bg);
-    border: 1px solid var(--border-color);
+    background: rgba(26, 95, 180, 0.08);
+    border: 1px solid transparent;
     border-radius: 999px;
     font-size: 13px;
     line-height: 1.4;
+    overflow: visible;
+    position: relative;
+}
+
+.today-progress-svg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+}
+
+.today-progress-track,
+.today-progress-path {
+    fill: none;
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+}
+
+.today-progress-track {
+    stroke: rgba(26, 95, 180, 0.18);
+}
+
+.today-progress-path {
+    stroke: #1a5fb4;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.35s ease;
 }
 
 .today-strip-item {
     white-space: nowrap;
+    position: relative;
+    z-index: 2;
 }
 
 .today-strip-divider {
     width: 1px;
     height: 12px;
-    background: var(--border-color);
+    background: rgba(26, 95, 180, 0.22);
+    position: relative;
+    z-index: 2;
 }
 
-.today-shift {
+.today-time {
     color: var(--text-primary);
-}
-
-.shift-progress {
-    width: 96px;
-    height: 5px;
-    background: rgba(26, 95, 180, 0.12);
-    border-radius: 999px;
-    overflow: hidden;
-}
-
-.shift-progress-bar {
-    display: block;
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, #1a5fb4, #3584e4);
-    border-radius: inherit;
-    transition: width 0.4s ease;
+    font-weight: 500;
+    width: 64px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
 /* 主题切换按钮 */
@@ -779,10 +799,6 @@ body {
         font-size: 12px;
         flex-wrap: wrap;
         border-radius: 16px;
-    }
-
-    .shift-progress {
-        width: 80px;
     }
 
     .tools-grid {

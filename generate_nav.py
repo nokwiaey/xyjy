@@ -254,14 +254,15 @@ def generate_html(tools, site_urls):
 
         <!-- 今日信息 -->
         <div class="today-strip" aria-label="今日信息">
+            <svg class="today-progress-svg" id="todayProgressSvg" aria-hidden="true">
+                <path class="today-progress-track" id="todayProgressTrack"></path>
+                <path class="today-progress-path" id="todayProgressPath"></path>
+            </svg>
             <span class="today-strip-item" id="todayDate">--</span>
             <span class="today-strip-divider" aria-hidden="true"></span>
             <span class="today-strip-item" id="todayWeek">--</span>
             <span class="today-strip-divider" aria-hidden="true"></span>
-            <span class="today-strip-item today-shift" id="todayShiftText">--</span>
-            <span class="shift-progress" aria-hidden="true">
-                <span class="shift-progress-bar" id="shiftProgressBar"></span>
-            </span>
+            <span class="today-strip-item today-time" id="todayTime">--:--</span>
         </div>
 
         <!-- 搜索框 -->
