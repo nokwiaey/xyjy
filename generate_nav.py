@@ -257,8 +257,11 @@ def generate_html(tools, site_urls):
             <span class="today-strip-item" id="todayDate">--</span>
             <span class="today-strip-divider" aria-hidden="true"></span>
             <span class="today-strip-item" id="todayWeek">--</span>
-            <span class="today-strip-divider today-weather-divider" aria-hidden="true"></span>
-            <span class="today-strip-item today-weather" id="todayWeather">榆林天气加载中</span>
+            <span class="today-strip-divider" aria-hidden="true"></span>
+            <span class="today-strip-item today-shift" id="todayShiftText">--</span>
+            <span class="shift-progress" aria-hidden="true">
+                <span class="shift-progress-bar" id="shiftProgressBar"></span>
+            </span>
         </div>
 
         <!-- 搜索框 -->

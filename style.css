@@ -160,16 +160,25 @@ body {
     background: var(--border-color);
 }
 
-.today-weather {
+.today-shift {
     color: var(--text-primary);
 }
 
-.today-weather.is-muted {
-    display: none;
+.shift-progress {
+    width: 96px;
+    height: 5px;
+    background: rgba(26, 95, 180, 0.12);
+    border-radius: 999px;
+    overflow: hidden;
 }
 
-.today-weather-divider.is-muted {
-    display: none;
+.shift-progress-bar {
+    display: block;
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #1a5fb4, #3584e4);
+    border-radius: inherit;
+    transition: width 0.4s ease;
 }
 
 /* 主题切换按钮 */
@@ -770,6 +779,10 @@ body {
         font-size: 12px;
         flex-wrap: wrap;
         border-radius: 16px;
+    }
+
+    .shift-progress {
+        width: 80px;
     }
 
     .tools-grid {

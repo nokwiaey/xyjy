@@ -636,41 +636,72 @@ themeToggle.addEventListener('click', function() {
 // ============================================
 const todayDate = document.getElementById('todayDate');
 const todayWeek = document.getElementById('todayWeek');
-const todayWeather = document.getElementById('todayWeather');
-const todayWeatherDivider = document.querySelector('.today-weather-divider');
-const WEATHER_CACHE_KEY = 'yulinWeather';
-const WEATHER_CACHE_TTL = 30 * 60 * 1000;
+const todayShiftText = document.getElementById('todayShiftText');
+const shiftProgressBar = document.getElementById('shiftProgressBar');
 
-const WEATHER_CODE_TEXT = {
-    0: '晴',
-    1: '大部晴朗',
-    2: '多云',
-    3: '阴',
-    45: '有雾',
-    48: '雾凇',
-    51: '小毛毛雨',
-    53: '毛毛雨',
-    55: '大毛毛雨',
-    56: '冻毛毛雨',
-    57: '强冻毛毛雨',
-    61: '小雨',
-    63: '中雨',
-    65: '大雨',
-    66: '冻雨',
-    67: '强冻雨',
-    71: '小雪',
-    73: '中雪',
-    75: '大雪',
-    77: '雪粒',
-    80: '阵雨',
-    81: '中阵雨',
-    82: '强阵雨',
-    85: '阵雪',
-    86: '强阵雪',
-    95: '雷暴',
-    96: '雷暴伴小冰雹',
-    99: '雷暴伴冰雹'
-};
+const DAY_MINUTES = 24 * 60;
+const MORNING_START = 8 * 60;
+const MORNING_END = 11 * 60 + 30;
+
+function getScheduleByMonth(month) {
+    return {
+        afternoonStart: month >= 5 && month <= 9 ? 14 * 60 + 30 : 14 * 60,
+        dayEnd: month >= 5 && month <= 9 ? 17 * 60 + 30 : 17 * 60
+    };
+}
+
+function getPreviousDate(date) {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1);
+}
+
+function getMinutes(date) {
+    return date.getHours() * 60 + date.getMinutes() + date.getSeconds() / 60;
+}
+
+function getShiftSegment(now) {
+    var currentMinutes = getMinutes(now);
+    var schedule = getScheduleByMonth(now.getMonth() + 1);
+
+    if (currentMinutes < MORNING_START) {
+        var previousDate = getPreviousDate(now);
+        var previousSchedule = getScheduleByMonth(previousDate.getMonth() + 1);
+        return {
+            name: '夜班',
+            elapsed: currentMinutes + DAY_MINUTES - previousSchedule.dayEnd,
+            total: MORNING_START + DAY_MINUTES - previousSchedule.dayEnd
+        };
+    }
+
+    if (currentMinutes < MORNING_END) {
+        return {
+            name: '上午',
+            elapsed: currentMinutes - MORNING_START,
+            total: MORNING_END - MORNING_START
+        };
+    }
+
+    if (currentMinutes < schedule.afternoonStart) {
+        return {
+            name: '中午',
+            elapsed: currentMinutes - MORNING_END,
+            total: schedule.afternoonStart - MORNING_END
+        };
+    }
+
+    if (currentMinutes < schedule.dayEnd) {
+        return {
+            name: '下午',
+            elapsed: currentMinutes - schedule.afternoonStart,
+            total: schedule.dayEnd - schedule.afternoonStart
+        };
+    }
+
+    return {
+        name: '夜班',
+        elapsed: currentMinutes - schedule.dayEnd,
+        total: MORNING_START + DAY_MINUTES - schedule.dayEnd
+    };
+}
 
 function formatTodayInfo() {
     if (!todayDate || !todayWeek) return;
@@ -684,90 +715,22 @@ function formatTodayInfo() {
     todayWeek.textContent = weekText;
 }
 
-function setWeatherText(text) {
-    if (!todayWeather) return;
-    todayWeather.textContent = text;
-    todayWeather.classList.remove('is-muted');
-    if (todayWeatherDivider) {
-        todayWeatherDivider.classList.remove('is-muted');
-    }
-}
+function updateShiftProgress() {
+    if (!todayShiftText || !shiftProgressBar) return;
 
-function hideWeatherText() {
-    if (todayWeather) {
-        todayWeather.classList.add('is-muted');
-    }
-    if (todayWeatherDivider) {
-        todayWeatherDivider.classList.add('is-muted');
-    }
-}
-
-function readWeatherCache() {
-    try {
-        var cached = JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY) || 'null');
-        if (cached && cached.text && Date.now() - cached.time < WEATHER_CACHE_TTL) {
-            return cached.text;
-        }
-    } catch (e) {}
-    return '';
-}
-
-function saveWeatherCache(text) {
-    try {
-        localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({
-            text: text,
-            time: Date.now()
-        }));
-    } catch (e) {}
-}
-
-function buildWeatherText(data) {
-    var current = data && data.current;
-    var daily = data && data.daily;
-    if (!current) return '';
-
-    var currentTemp = Math.round(current.temperature_2m);
-    var weatherCode = current.weather_code;
-    var weatherText = WEATHER_CODE_TEXT[weatherCode] || '天气';
-    var tempRange = '';
-
-    if (daily && daily.temperature_2m_min && daily.temperature_2m_max) {
-        var minTemp = Math.round(daily.temperature_2m_min[0]);
-        var maxTemp = Math.round(daily.temperature_2m_max[0]);
-        tempRange = ' ' + minTemp + '~' + maxTemp + '℃';
-    }
-
-    return '榆林 ' + currentTemp + '℃ ' + weatherText + tempRange;
+    var segment = getShiftSegment(new Date());
+    var progress = Math.max(0, Math.min(100, segment.elapsed / segment.total * 100));
+    todayShiftText.textContent = segment.name;
+    shiftProgressBar.style.width = progress.toFixed(1) + '%';
 }
 
 function initTodayStrip() {
     formatTodayInfo();
-
-    var cachedText = readWeatherCache();
-    if (cachedText) {
-        setWeatherText(cachedText);
-    }
-
-    if (!window.fetch) {
-        if (!cachedText) hideWeatherText();
-        return;
-    }
-
-    var weatherUrl = 'https://api.open-meteo.com/v1/forecast?latitude=38.29&longitude=109.73&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FShanghai&forecast_days=1';
-    fetch(weatherUrl, { cache: 'no-store' })
-        .then(function(response) {
-            if (!response.ok) throw new Error('weather request failed');
-            return response.json();
-        })
-        .then(function(data) {
-            var text = buildWeatherText(data);
-            if (!text) throw new Error('weather data invalid');
-            saveWeatherCache(text);
-            setWeatherText(text);
-        })
-        .catch(function() {
-            if (!cachedText) hideWeatherText();
-        });
+    updateShiftProgress();
+    setInterval(function() {
+        formatTodayInfo();
+        updateShiftProgress();
+    }, 30000);
 }
 
 initTodayStrip();
