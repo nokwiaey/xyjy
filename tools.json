@@ -232,6 +232,17 @@
       "tags": [
         "继续教育"
       ]
+    },
+    {
+      "title": "星元CA小程序",
+      "url": "weixin://launchapplet/?app_id=wx8dce82d2550cd6d9",
+      "desc": "星元CA小程序",
+      "icon": "",
+      "color": "blue",
+      "tags": [
+        "医院",
+        "小程序"
+      ]
     }
   ]
 }
