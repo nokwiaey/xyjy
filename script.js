@@ -230,6 +230,54 @@ if (qrModalCopy) {
 // ============================================
 
 // ============================================
+// 小程序码弹窗
+// ============================================
+const wxpModalOverlay = document.getElementById('wxpModalOverlay');
+const wxpModalClose = document.getElementById('wxpModalClose');
+const wxpModalImage = document.getElementById('wxpModalImage');
+const wxpModalTitle = document.getElementById('wxpModalTitle');
+
+function showWxpModal(title, imageSrc) {
+    wxpModalTitle.textContent = title;
+    wxpModalImage.src = imageSrc;
+    wxpModalOverlay.classList.add('open');
+}
+
+function hideWxpModal() {
+    wxpModalOverlay.classList.remove('open');
+}
+
+if (wxpModalClose) {
+    wxpModalClose.addEventListener('click', hideWxpModal);
+}
+
+if (wxpModalOverlay) {
+    wxpModalOverlay.addEventListener('click', function(event) {
+        if (event.target === wxpModalOverlay) {
+            hideWxpModal();
+        }
+    });
+}
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && wxpModalOverlay && wxpModalOverlay.classList.contains('open')) {
+        hideWxpModal();
+    }
+});
+
+// 为小程序码卡片绑定点击事件
+document.querySelectorAll('.wxp-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+        var code = card.getAttribute('data-wxp-code');
+        var title = card.getAttribute('data-wxp-title') || '小程序';
+        if (code) {
+            showWxpModal(title, code);
+        }
+    });
+});
+// ============================================
+
+// ============================================
 // 通用复制到剪贴板
 // ============================================
 function copyToClipboard(text, buttonEl, defaultText, successText) {
@@ -422,7 +470,13 @@ searchInput.addEventListener('keydown', function(e) {
         var focused = document.querySelector('.tool-card.keyboard-focus');
         if (focused) {
             e.preventDefault();
-            window.open(focused.getAttribute('href'), '_blank');
+            if (focused.classList.contains('wxp-card')) {
+                var code = focused.getAttribute('data-wxp-code');
+                var title = focused.getAttribute('data-wxp-title') || '小程序';
+                if (code) showWxpModal(title, code);
+            } else {
+                window.open(focused.getAttribute('href'), '_blank');
+            }
         }
     }
 });
@@ -536,6 +590,8 @@ renderRecentVisits();
 // ============================================
 function initCopyButtons() {
     toolCards.forEach(function(card) {
+        // 小程序码卡片没有 URL，跳过复制按钮
+        if (card.classList.contains('wxp-card')) return;
         // 避免重复添加
         if (card.querySelector('.tool-card-copy')) return;
 

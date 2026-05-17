@@ -94,7 +94,8 @@ def parse_json(file_path):
         icon = tool.get('icon')
         color = tool.get('color')
         tags = tool.get('tags', [])
-        tools.append((title, url, desc, icon, color, tags))
+        wxp_code = tool.get('wxpCode', '')
+        tools.append((title, url, desc, icon, color, tags, wxp_code))
 
     return tools, site_urls
 
@@ -154,7 +155,7 @@ def generate_html(tools, site_urls):
     # 收集所有标签
     all_tags = set()
     for tool in tools:
-        all_tags.update(tool[5])
+        all_tags.update(tool[5])  # tags 在第6位
     all_tags = sorted(list(all_tags))
 
     # 生成标签筛选器 HTML
@@ -164,7 +165,7 @@ def generate_html(tools, site_urls):
 
     # 生成工具卡片
     tool_cards = []
-    for i, (title, url, desc, custom_icon, custom_color, tags) in enumerate(tools):
+    for i, (title, url, desc, custom_icon, custom_color, tags, wxp_code) in enumerate(tools):
         icon, color = get_icon_and_color(i, custom_icon, custom_color)
         # 如果没有描述，使用默认描述
         if not desc:
@@ -184,7 +185,16 @@ def generate_html(tools, site_urls):
         else:
             icon_html = f'<div class="tool-icon {color} favicon-icon"><img src="https://www.google.com/s2/favicons?domain={url}&sz=64" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display=\'none\'; this.parentElement.innerHTML=\'🔗\';"></div>'
 
-        card = f'''            <a href="{url}" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="{tags_attr}">
+        # 有小程序码的工具渲染为 button（点击弹窗），否则渲染为 a 链接
+        if wxp_code:
+            card = f'''            <button class="tool-card wxp-card" data-wxp-code="{wxp_code}" data-wxp-title="{title}" data-tags="{tags_attr}" aria-label="{title} - 点击查看小程序码">
+                {icon_html}
+                <h3 class="tool-name">{title}</h3>
+                <p class="tool-desc">{desc}</p>
+                {tags_display}
+            </button>'''
+        else:
+            card = f'''            <a href="{url}" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="{tags_attr}">
                 {icon_html}
                 <h3 class="tool-name">{title}</h3>
                 <p class="tool-desc">{desc}</p>
@@ -332,6 +342,16 @@ def generate_html(tools, site_urls):
         </div>
     </div>
 
+    <!-- 小程序码弹窗 -->
+    <div class="wxp-modal-overlay" id="wxpModalOverlay">
+        <div class="wxp-modal">
+            <button class="wxp-modal-close" id="wxpModalClose" aria-label="关闭小程序码">&times;</button>
+            <div class="wxp-modal-title" id="wxpModalTitle">小程序码</div>
+            <img class="wxp-modal-image" id="wxpModalImage" src="" alt="小程序码" />
+            <div class="wxp-modal-hint">长按识别小程序码即可在微信中打开<wbr>（微信内浏览有效）</div>
+        </div>
+    </div>
+
     <!-- 页面加载动画 -->
     <div class="page-loader" id="pageLoader">
         <div class="loader-spinner"></div>
@@ -384,12 +404,13 @@ def main():
     version = get_version()
     print(f"📌 版本: v{version}")
     print(f"✅ 找到 {len(tools)} 个工具链接:")
-    for title, url, desc, icon, color, tags in tools:
+    for title, url, desc, icon, color, tags, wxp_code in tools:
         desc_str = f' - {desc}' if desc else ''
         icon_str = f' icon={icon}' if icon else ''
         color_str = f' color={color}' if color else ''
         tags_str = f' tags={",".join(tags)}' if tags else ''
-        print(f"   • {title}{desc_str}{icon_str}{color_str}{tags_str}")
+        wxp_str = ' MiniProgram' if wxp_code else ''
+        print(f"   • {title}{desc_str}{icon_str}{color_str}{tags_str}{wxp_str}")
 
     if all_tags:
         print(f"\n🏷️ 发现 {len(all_tags)} 个标签: {', '.join(sorted(all_tags))}")
