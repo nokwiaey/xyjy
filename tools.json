@@ -235,22 +235,10 @@
     },
     {
       "title": "星元CA小程序",
-      "url": "weixin://launchapplet/?app_id=wx8dce82d2550cd6d9",
+      "wxpCode": "html/images/星元CA.jpg",
       "desc": "点击查看小程序码，在微信中长按识别即可打开",
-      "icon": "",
+      "icon": "🔑",
       "color": "blue",
-      "tags": [
-        "医院",
-        "小程序"
-      ],
-      "wxpCode": "html/images/星元CA.jpg"
-    },
-    {
-      "title": "香苑餐厅",
-      "url": "#小程序://香苑餐厅/330n5DjayICUs9i",
-      "desc": "香苑餐厅小程序",
-      "icon": "",
-      "color": "red",
       "tags": [
         "医院",
         "小程序"
