@@ -348,7 +348,7 @@ def generate_html(tools, site_urls):
             <button class="wxp-modal-close" id="wxpModalClose" aria-label="关闭小程序码">&times;</button>
             <div class="wxp-modal-title" id="wxpModalTitle">小程序码</div>
             <img class="wxp-modal-image" id="wxpModalImage" src="" alt="小程序码" />
-            <div class="wxp-modal-hint">长按识别小程序码即可在微信中打开<wbr>（微信内浏览有效）</div>
+            <div class="wxp-modal-hint">长按识别小程序码即可在微信中打开</div>
         </div>
     </div>
 
