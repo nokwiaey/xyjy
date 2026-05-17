@@ -244,6 +244,17 @@
         "小程序"
       ],
       "wxpCode": "html/images/星元CA.jpg"
+    },
+    {
+      "title": "香苑餐厅",
+      "url": "#小程序://香苑餐厅/330n5DjayICUs9i",
+      "desc": "香苑餐厅小程序",
+      "icon": "",
+      "color": "red",
+      "tags": [
+        "医院",
+        "小程序"
+      ]
     }
   ]
 }
