@@ -147,6 +147,51 @@
   .status-dot.on { background: var(--green); }
   .status-dot.soon-dot { background: var(--orange); }
 
+  /* 可视化：距离指示点 */
+  .dist-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 8px;
+    position: relative;
+  }
+  .dist-dot {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    transition: left 0.6s ease;
+    box-shadow: 0 0 6px currentColor;
+  }
+  .dist-dot.soon { background: var(--green); color: var(--green); }
+  .dist-dot.mid  { background: var(--orange); color: var(--orange); }
+  .dist-dot.far  { background: var(--accent); color: var(--accent); }
+
+  /* 可视化：GPS 新鲜度 */
+  .gps-age {
+    font-size: 11px;
+    margin-top: 2px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .gps-age:hover { opacity: 0.8; }
+  .gps-age .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+  .gps-age .dot.fresh { background: var(--green); }
+  .gps-age .dot.warn  { background: var(--orange); }
+  .gps-age .dot.stale { background: var(--red); }
+  .gps-age.fresh-text { color: var(--green); }
+  .gps-age.warn-text  { color: var(--orange); }
+  .gps-age.stale-text { color: var(--red); }
+
   @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.4; }
@@ -197,30 +242,8 @@
 
 <script>
 // ============ 配置 ============
-// 部署 Worker 后替换为你的 Worker URL，例如：
-// const API_BASE = "https://bus-proxy.gx090266.workers.dev";
-// 本地测试可用 Python 代理，保留下面这行：
+// Worker 代理地址（bus-proxy/worker.js），认证头在服务端注入
 const API_BASE = "https://bus-proxy.dfly.site";
-
-const HEADERS = {
-  "osType": "1",
-  "versionName": "1.0.0",
-  "versionCode": "1",
-  "realLatitude": "23.1869065",
-  "realLongitude": "113.4191536",
-  "realCityCode": "020",
-  "deviceBrand": "Samsung",
-  "systemVersion": "12",
-  "channel": "1",
-  "systemModel": "SM-S9110",
-  "deviceId": "f7595059cbff48cebaabed23e0f901f0",
-  "cityCode": "610800",
-  "appCode": "D0A960E40558E85E579596F214D21E193EA16375544207EC6FF74B0FBA0C55FB",
-  "requestIds": "0e78159ebf9f0bd3a738eec19fef8d7e",
-  "Content-Type": "application/json; charset=UTF-8",
-  "Host": "ylnb.16bus.net",
-  "User-Agent": "okhttp/4.8.0",
-};
 
 const BUS_CONFIG = [
   {
@@ -251,19 +274,52 @@ const BUS_CONFIG = [
   }
 ];
 
-const REFRESH_INTERVAL = 5; // 秒
+const REFRESH_INTERVAL = 10; // 秒
 let countdownSec = REFRESH_INTERVAL;
 let countdownTimer = null;
 
 // ============ 请求公交数据 ============
 async function fetchBusInfo(config) {
+  // 简单请求：text/plain 不触发 CORS 预检，Worker 在服务端注入认证头
   const resp = await fetch(API_BASE + "/api/realbus/notAuthor/line/bus/v1/timetable", {
     method: "POST",
-    headers: HEADERS,
+    headers: { "Content-Type": "text/plain" },
     body: JSON.stringify(config.query),
   });
   if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
   return resp.json();
+}
+
+// ============ 工具函数 ============
+function relativeTime(gpsTimeStr) {
+  if (!gpsTimeStr) return null;
+  try {
+    // 尝试多种格式：ISO、yyyy-MM-dd HH:mm:ss、时间戳
+    let ts = Date.parse(gpsTimeStr.replace(/\//g, "-").replace(/\.\d+/, ""));
+    if (isNaN(ts)) {
+      const n = Number(gpsTimeStr);
+      if (!isNaN(n)) ts = n > 1e12 ? n : n * 1000;
+    }
+    if (isNaN(ts)) return null;
+
+    const diff = Date.now() - ts;
+    if (diff < 0) return "刚刚";
+    const sec = Math.floor(diff / 1000);
+    if (sec < 60) return sec + "秒前";
+    const min = Math.floor(sec / 60);
+    if (min < 60) return min + "分钟前";
+    const hr = Math.floor(min / 60);
+    if (hr < 24) return hr + "小时前";
+    return Math.floor(hr / 24) + "天前";
+  } catch (e) {
+    return null;
+  }
+}
+
+function formatDistance(meters) {
+  return meters > 1000
+    ? (meters / 1000).toFixed(1) + " 公里"
+    : meters + " 米";
 }
 
 // ============ 渲染 ============
@@ -276,66 +332,86 @@ function renderBuses(containerId, data) {
       return;
     }
 
+    const onRoad = buses.filter(b => b.plateNumber);
+    const departing = buses.filter(b => !b.plateNumber && b.departureTime);
+
     let html = "";
-    for (const bus of buses) {
-      if (bus.plateNumber) {
-        // 在路上的公交
-        const minutes = Math.floor(bus.runTime / 60);
-        let cls = "far";
-        if (minutes <= 5) cls = "soon";
-        else if (minutes <= 15) cls = "mid";
 
-        const dist = bus.distance > 1000
-          ? (bus.distance / 1000).toFixed(1) + " 公里"
-          : bus.distance + " 米";
+    // 路上车辆
+    for (const bus of onRoad) {
+      const minutes = Math.floor(bus.runTime / 60);
+      let cls = "far";
+      if (minutes <= 5) cls = "soon";
+      else if (minutes <= 15) cls = "mid";
 
-        html += `
-          <div class="bus-row">
-            <span class="bus-icon">🚌</span>
-            <div class="bus-info">
-              <div class="bus-plate" data-gps-time="${escapeHtml(bus.gpsTime || '无GPS数据')}" data-plate="${escapeHtml(bus.plateNumber)}">${escapeHtml(bus.plateNumber)}</div>
-              <div class="bus-detail">距本站 ${escapeHtml(dist)}</div>
-            </div>
-            <div class="bus-eta">
-              <div class="bus-minutes ${cls}">${minutes}<span style="font-size:13px;font-weight:400"> 分钟</span></div>
-            </div>
-          </div>`;
-      } else if (bus.departureTime) {
-        // 尚未发车
-        html += `
-          <div class="bus-row">
-            <span class="bus-icon">⏰</span>
-            <div class="bus-info">
-              <div class="bus-plate">待发车</div>
-              <div class="bus-detail">预计发车时间</div>
-            </div>
-            <div class="bus-eta">
-              <div class="bus-departure">${escapeHtml(bus.departureTime)}</div>
-            </div>
-          </div>`;
+      const dist = formatDistance(bus.distance);
+      // 距离指示点：左端=2000m，右端=0m
+      const dotPct = Math.max(0, Math.min(100, 100 - Math.round((bus.distance / 2000) * 100)));
+
+      // GPS 新鲜度
+      const relTime = relativeTime(bus.gpsTime);
+      let gpsAgeHtml = "";
+      if (relTime) {
+        const isFresh = relTime.includes("秒");
+        const isStale = relTime.includes("小时") || relTime.includes("天");
+        const ageCls = isFresh ? "fresh-text" : isStale ? "stale-text" : "warn-text";
+        const dotCls = isFresh ? "fresh" : isStale ? "stale" : "warn";
+        const rawTs = (bus.gpsTime || "").replace(/\.0+$/, "").replace(/\.(\d{3})\d*$/, ".$1");
+        gpsAgeHtml = `<div class="gps-age ${ageCls}" data-gps-ts="${escapeHtml(bus.gpsTime)}" data-raw-ts="${escapeHtml(rawTs)}"><span class="dot ${dotCls}"></span><span class="gps-text">GPS ${escapeHtml(relTime)}</span></div>`;
       }
+
+      html += `
+        <div class="bus-row">
+          <span class="bus-icon">🚌</span>
+          <div class="bus-info">
+            <div class="bus-plate">${escapeHtml(bus.plateNumber)}</div>
+            <div class="bus-detail">距本站 ${escapeHtml(dist)}${gpsAgeHtml}</div>
+            <div class="dist-track"><div class="dist-dot ${cls}" style="left:${dotPct}%"></div></div>
+          </div>
+          <div class="bus-eta">
+            <div class="bus-minutes ${cls}">${minutes}<span style="font-size:13px;font-weight:400"> 分钟</span></div>
+          </div>
+        </div>`;
     }
+
+    // 待发车辆
+    for (const bus of departing) {
+      html += `
+        <div class="bus-row">
+          <span class="bus-icon">⏰</span>
+          <div class="bus-info">
+            <div class="bus-plate">待发车</div>
+            <div class="bus-detail">预计发车时间</div>
+          </div>
+          <div class="bus-eta">
+            <div class="bus-departure">${escapeHtml(bus.departureTime)}</div>
+          </div>
+        </div>`;
+    }
+
     el.innerHTML = html || '<div class="empty-state">暂无公交信息</div>';
   } catch (e) {
     el.innerHTML = '<div class="empty-state">数据解析失败</div>';
   }
 }
 
-// ============ 点击车牌号显示 GPS 时间 ============
+// ============ 点击 GPS 时间切换显示原始时间戳 ============
 document.addEventListener("click", function(e) {
-  const plate = e.target.closest(".bus-plate");
-  if (!plate) return;
-  const gpsTime = plate.dataset.gpsTime;
-  if (!gpsTime) return;
+  const gps = e.target.closest(".gps-age");
+  if (!gps) return;
+  const textEl = gps.querySelector(".gps-text");
+  if (!textEl) return;
 
-  if (plate.textContent === gpsTime) {
-    plate.textContent = plate.dataset.plate;
+  if (gps._showRaw) {
+    // 切回相对时间
+    const relTime = relativeTime(gps.dataset.gpsTs);
+    if (relTime) textEl.textContent = "GPS " + relTime;
+    gps._showRaw = false;
   } else {
-    plate.textContent = gpsTime;
-    clearTimeout(plate._revertTimer);
-    plate._revertTimer = setTimeout(() => {
-      plate.textContent = plate.dataset.plate;
-    }, 3000);
+    // 显示原始时间戳
+    const raw = gps.dataset.rawTs;
+    if (raw) textEl.textContent = raw;
+    gps._showRaw = true;
   }
 });
 
@@ -353,6 +429,25 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+// ============ GPS 时间实时刷新 ============
+function refreshGpsAges() {
+  document.querySelectorAll(".gps-age[data-gps-ts]").forEach(el => {
+    const relTime = relativeTime(el.dataset.gpsTs);
+    if (!relTime) return;
+    const dot = el.querySelector(".dot");
+    const text = el.querySelector(".gps-text");
+    const isFresh = relTime.includes("秒");
+    const isStale = relTime.includes("小时") || relTime.includes("天");
+    const ageCls = isFresh ? "fresh-text" : isStale ? "stale-text" : "warn-text";
+    const dotCls = isFresh ? "fresh" : isStale ? "stale" : "warn";
+    el.className = "gps-age " + ageCls;
+    if (dot) dot.className = "dot " + dotCls;
+    if (text && !el._showRaw) text.textContent = "GPS " + relTime;
+  });
+}
+
+setInterval(refreshGpsAges, 1000);
+
 // ============ 主流程 ============
 async function fetchAll() {
   let hasError = false;
@@ -367,7 +462,7 @@ async function fetchAll() {
     }
   }
   if (hasError) {
-    showError("部分请求失败 — 请确认代理已启动 (python cors_proxy.py)");
+    showError("部分请求失败 — 请检查 Worker 代理状态");
   }
 
   // 更新时间
