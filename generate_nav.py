@@ -308,7 +308,6 @@ def generate_html(tools, site_urls):
         <footer class="footer">
             <p class="footer-text">
                 星元检验工具箱
-                <span class="update-date">最后更新: {build_date}</span>
                 <a href="https://f.kdocs.cn/g/sn7KOMnc/" class="feedback-link" target="_blank" rel="noopener noreferrer">反馈建议</a>
             </p>
             <div class="stats">
@@ -326,6 +325,8 @@ def generate_html(tools, site_urls):
                  </span>
              </div>
         </footer>
+
+        <p class="update-date">最后更新: {build_date}</p>
     </div>
 
     <!-- 二维码弹窗 -->
