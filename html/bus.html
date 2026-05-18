@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,6 @@
   :root {
     --bg: #0b0b0d;
     --surface: #141417;
-    --surface2: #1a1a1f;
     --border: #252530;
     --text: #e8e4dd;
     --text-dim: #6b6b72;
@@ -20,6 +19,46 @@
     --amber: #ffd166;
     --red: #ff4d6a;
     --radius: 2px;
+    /* 衍生变量 — 需要在主题间切换 */
+    --grid-line: rgba(255,255,255,0.015);
+    --card-glow: rgba(255,255,255,0.06);
+    --row-divider: rgba(255,255,255,0.04);
+    --track-stripe: rgba(255,255,255,0.06);
+    --track-bg: rgba(255,255,255,0.04);
+    --dot-far: rgba(255,255,255,0.3);
+    --stale-bg: rgba(255,209,102,0.08);
+    --stale-border: rgba(255,209,102,0.2);
+    --error-bg: rgba(255,77,106,0.08);
+    --error-border: rgba(255,77,106,0.2);
+    --btn-hover-border: rgba(255,255,255,0.15);
+    --btn-hover-bg: rgba(255,255,255,0.02);
+    --btn-active-bg: rgba(255,255,255,0.04);
+  }
+
+  /* ---- 浅色主题 ---- */
+  [data-theme="light"] {
+    --bg: #f2f0eb;
+    --surface: #fdfcf9;
+    --border: #d9d4cb;
+    --text: #1c1c1c;
+    --text-dim: #8c8780;
+    --accent: #d94a00;
+    --neon: #007a5e;
+    --amber: #b85c00;
+    --red: #c1121f;
+    --grid-line: rgba(0,0,0,0.04);
+    --card-glow: rgba(0,0,0,0.03);
+    --row-divider: rgba(0,0,0,0.04);
+    --track-stripe: rgba(0,0,0,0.06);
+    --track-bg: rgba(0,0,0,0.03);
+    --dot-far: rgba(0,0,0,0.2);
+    --stale-bg: rgba(184,92,0,0.06);
+    --stale-border: rgba(184,92,0,0.15);
+    --error-bg: rgba(193,18,31,0.06);
+    --error-border: rgba(193,18,31,0.15);
+    --btn-hover-border: rgba(0,0,0,0.12);
+    --btn-hover-bg: rgba(0,0,0,0.03);
+    --btn-active-bg: rgba(0,0,0,0.06);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,10 +66,11 @@
   body {
     font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
     background:
-      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
       var(--bg);
     background-size: 40px 40px;
+    background-attachment: fixed;
     color: var(--text);
     min-height: 100vh;
     padding: 24px 16px;
@@ -60,6 +100,26 @@
   .header .meta span { color: var(--text-dim); }
   .header .countdown { color: var(--text-dim) !important; font-weight: 400 !important; }
 
+  .theme-toggle {
+    position: fixed;
+    top: 16px; right: 16px;
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    padding: 6px 14px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+  .theme-toggle:hover {
+    color: var(--text);
+    border-color: var(--btn-hover-border);
+  }
+
   /* ---- Layout ---- */
   .container {
     max-width: 480px;
@@ -84,7 +144,7 @@
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+    background: linear-gradient(90deg, transparent, var(--card-glow), transparent);
   }
 
   .card-header {
@@ -114,7 +174,7 @@
     display: flex;
     align-items: center;
     padding: 16px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid var(--row-divider);
     gap: 16px;
     animation: rowIn 0.3s ease both;
   }
@@ -193,10 +253,10 @@
         90deg,
         transparent,
         transparent calc(12.5% - 1px),
-        rgba(255,255,255,0.06) calc(12.5% - 1px),
-        rgba(255,255,255,0.06) 12.5%
+        var(--track-stripe) calc(12.5% - 1px),
+        var(--track-stripe) 12.5%
       ),
-      linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.04));
+      linear-gradient(90deg, var(--track-bg), var(--track-bg));
     border-radius: 2px;
     margin-top: 10px;
     position: relative;
@@ -207,8 +267,9 @@
     transform: translate(-50%, -50%);
     width: 12px; height: 12px;
     border-radius: 50%;
-    transition: left 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: left 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.15s ease;
     z-index: 1;
+    cursor: pointer;
   }
   .dist-dot::after {
     content: "";
@@ -219,40 +280,64 @@
     opacity: 0.4;
     animation: dotPing 2s ease infinite;
   }
+  .dist-dot:hover { transform: translate(-50%, -50%) scale(1.5); }
+  .dist-dot:active { transform: translate(-50%, -50%) scale(1.2); }
+
   @keyframes dotPing {
     0%, 100% { transform: scale(1); opacity: 0.3; }
     50%      { transform: scale(1.6); opacity: 0; }
   }
   .dist-dot.soon { background: var(--neon); color: var(--neon); }
   .dist-dot.mid  { background: var(--amber); color: var(--amber); }
-  .dist-dot.far  { background: rgba(255,255,255,0.3); color: rgba(255,255,255,0.3); }
+  .dist-dot.far  { background: var(--dot-far); color: var(--dot-far); }
 
-  /* ---- GPS Age ---- */
-  .gps-age {
+  /* ---- GPS Tooltip ---- */
+  .dot-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 12px;
+    white-space: nowrap;
+    z-index: 20;
     font-family: "Space Mono", monospace;
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.5px;
-    cursor: pointer;
-    user-select: none;
-    display: inline-block;
-    transition: opacity 0.2s;
+    color: var(--text);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    animation: tooltipIn 0.15s ease;
   }
-  .gps-age:hover { opacity: 0.65; }
-  .gps-age .dot {
-    display: inline-block;
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    margin-right: 4px;
-    vertical-align: middle;
-    position: relative;
-    top: -1px;
+  .dot-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--border);
   }
-  .gps-age .dot.fresh { background: var(--neon); box-shadow: 0 0 4px var(--neon); }
-  .gps-age .dot.warn  { background: var(--amber); }
-  .gps-age .dot.stale { background: var(--red); }
-  .gps-age.fresh-text { color: var(--neon); }
-  .gps-age.warn-text  { color: var(--amber); }
-  .gps-age.stale-text { color: var(--red); }
+  .dot-tooltip .tt-absolute {
+    display: block;
+    color: var(--text-dim);
+    font-size: 10px;
+    margin-bottom: 2px;
+  }
+  .dot-tooltip .tt-relative {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .dot-tooltip .tt-relative.fresh-text { color: var(--neon); }
+  .dot-tooltip .tt-relative.warn-text  { color: var(--amber); }
+  .dot-tooltip .tt-relative.stale-text { color: var(--red); }
+
+  @keyframes tooltipIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
 
   /* ---- States ---- */
   .empty-state {
@@ -269,8 +354,8 @@
     font-family: "Space Mono", monospace;
     font-size: 9px;
     letter-spacing: 0.5px;
-    background: rgba(255,209,102,0.08);
-    border: 1px solid rgba(255,209,102,0.2);
+    background: var(--stale-bg);
+    border: 1px solid var(--stale-border);
     color: var(--amber);
     padding: 3px 10px;
     border-radius: var(--radius);
@@ -279,8 +364,8 @@
   }
 
   .error-banner {
-    background: rgba(255,77,106,0.08);
-    border: 1px solid rgba(255,77,106,0.2);
+    background: var(--error-bg);
+    border: 1px solid var(--error-border);
     color: var(--red);
     padding: 10px 16px;
     border-radius: var(--radius);
@@ -310,11 +395,11 @@
     transition: all 0.3s ease;
   }
   button:hover {
-    border-color: rgba(255,255,255,0.15);
+    border-color: var(--btn-hover-border);
     color: var(--text);
-    background: rgba(255,255,255,0.02);
+    background: var(--btn-hover-bg);
   }
-  button:active { background: rgba(255,255,255,0.04); }
+  button:active { background: var(--btn-active-bg); }
 
   /* ---- Animations ---- */
   @keyframes pulse {
@@ -329,10 +414,13 @@
     .card { padding: 18px 16px 16px; }
     .bus-minutes { font-size: 34px; }
     .bus-eta { min-width: 64px; }
+    .theme-toggle { top: 10px; right: 8px; padding: 5px 10px; font-size: 10px; }
   }
 </style>
 </head>
 <body>
+
+<button class="theme-toggle" id="themeToggle" title="切换主题">LIGHT</button>
 
 <div class="header">
   <h1>Bus Tracker</h1>
@@ -488,26 +576,15 @@ function renderBuses(containerId, data, staleTime) {
 
       const dist = formatDistance(bus.distance);
       const dotPct = Math.max(0, Math.min(100, 100 - Math.round((bus.distance / 2000) * 100)));
-
-      // GPS 新鲜度
-      const relTime = relativeTime(bus.gpsTime);
-      let gpsAgeHtml = "";
-      if (relTime) {
-        const isFresh = relTime.includes("秒");
-        const isStale = relTime.includes("小时") || relTime.includes("天");
-        const ageCls = isFresh ? "fresh-text" : isStale ? "stale-text" : "warn-text";
-        const dotCls = isFresh ? "fresh" : isStale ? "stale" : "warn";
-        const rawTs = (bus.gpsTime || "").replace(/\.0+$/, "").replace(/\.(\d{3})\d*$/, ".$1");
-        gpsAgeHtml = `<div class="gps-age ${ageCls}" data-gps-ts="${escapeHtml(bus.gpsTime)}" data-raw-ts="${escapeHtml(rawTs)}"><span class="dot ${dotCls}"></span><span class="gps-text">GPS ${escapeHtml(relTime)}</span></div>`;
-      }
+      const rawTs = (bus.gpsTime || "").replace(/\.0+$/, "").replace(/\.(\d{3})\d*$/, ".$1");
 
       html += `
         <div class="bus-row">
           <span class="bus-icon">&#x1F68C;</span>
           <div class="bus-info">
             <div class="bus-plate">${escapeHtml(bus.plateNumber)}</div>
-            <div class="bus-detail">距本站 ${escapeHtml(dist)}${gpsAgeHtml}</div>
-            <div class="dist-track"><div class="dist-dot ${cls}" style="left:${dotPct}%"></div></div>
+            <div class="bus-detail">距本站 ${escapeHtml(dist)}</div>
+            <div class="dist-track"><div class="dist-dot ${cls}" style="left:${dotPct}%" data-gps-ts="${escapeHtml(bus.gpsTime||'')}" data-raw-ts="${escapeHtml(rawTs)}"></div></div>
           </div>
           <div class="bus-eta">
             <div class="bus-minutes ${cls}">${minutes}<span>&thinsp;分钟</span></div>
@@ -541,23 +618,57 @@ function renderBuses(containerId, data, staleTime) {
   }
 }
 
-// ============ 点击 GPS 时间切换显示原始时间戳 ============
+// ============ 点击公交圆点显示 GPS 详情弹窗 ============
 document.addEventListener("click", function(e) {
-  const gps = e.target.closest(".gps-age");
-  if (!gps) return;
-  const textEl = gps.querySelector(".gps-text");
-  if (!textEl) return;
-
-  if (gps._showRaw) {
-    const relTime = relativeTime(gps.dataset.gpsTs);
-    if (relTime) textEl.textContent = "GPS " + relTime;
-    gps._showRaw = false;
-  } else {
-    const raw = gps.dataset.rawTs;
-    if (raw) textEl.textContent = raw;
-    gps._showRaw = true;
+  const dot = e.target.closest(".dist-dot");
+  if (!dot) {
+    // 点击其他地方关闭所有 tooltip
+    document.querySelectorAll(".dot-tooltip").forEach(t => t.remove());
+    return;
   }
+
+  // 如果已打开则关闭
+  const existing = dot.querySelector(".dot-tooltip");
+  if (existing) {
+    existing.remove();
+    return;
+  }
+
+  // 关闭其他 tooltip
+  document.querySelectorAll(".dot-tooltip").forEach(t => t.remove());
+
+  // 创建 tooltip
+  const rawTs = dot.dataset.rawTs || "无数据";
+  const relTime = relativeTime(dot.dataset.gpsTs) || "无数据";
+
+  const isFresh = relTime.includes("秒");
+  const isStale = relTime.includes("小时") || relTime.includes("天");
+  const ageCls = isFresh ? "fresh-text" : isStale ? "stale-text" : "warn-text";
+
+  const tip = document.createElement("div");
+  tip.className = "dot-tooltip";
+  tip.innerHTML = `<span class="tt-absolute">${escapeHtml(rawTs)}</span><span class="tt-relative ${ageCls}">GPS ${escapeHtml(relTime)}</span>`;
+  dot.appendChild(tip);
 });
+
+// ============ GPS 时间实时刷新 ============
+function refreshGpsAges() {
+  document.querySelectorAll(".dot-tooltip").forEach(tip => {
+    const dot = tip.parentElement;
+    if (!dot || !dot.dataset.gpsTs) return;
+    const relTime = relativeTime(dot.dataset.gpsTs);
+    if (!relTime) return;
+    const relEl = tip.querySelector(".tt-relative");
+    if (!relEl) return;
+    const isFresh = relTime.includes("秒");
+    const isStale = relTime.includes("小时") || relTime.includes("天");
+    const ageCls = isFresh ? "fresh-text" : isStale ? "stale-text" : "warn-text";
+    relEl.className = "tt-relative " + ageCls;
+    relEl.textContent = "GPS " + relTime;
+  });
+}
+
+setInterval(refreshGpsAges, 1000);
 
 function showError(msg) {
   document.getElementById("errorArea").innerHTML =
@@ -642,6 +753,22 @@ function updateCountdownDisplay() {
   document.getElementById("countdown").textContent =
     `${m}:${String(s).padStart(2, "0")} 后刷新`;
 }
+
+// ============ 主题切换 ============
+(function initTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById("themeToggle");
+  const saved = localStorage.getItem("bus-theme") || "dark";
+  html.setAttribute("data-theme", saved);
+  btn.textContent = saved === "light" ? "DARK" : "LIGHT";
+
+  btn.addEventListener("click", () => {
+    const next = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    html.setAttribute("data-theme", next);
+    localStorage.setItem("bus-theme", next);
+    btn.textContent = next === "light" ? "DARK" : "LIGHT";
+  });
+})();
 
 // ============ 启动 ============
 fetchAll();
