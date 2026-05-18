@@ -408,6 +408,47 @@ body {
     overflow: visible;
 }
 
+body.related-menu-backdrop::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: rgba(15, 23, 42, 0.18);
+    pointer-events: none;
+    animation: relatedMenuBackdropIn 0.16s ease;
+}
+
+[data-theme="dark"] body.related-menu-backdrop::before {
+    background: rgba(0, 0, 0, 0.28);
+}
+
+@keyframes relatedMenuBackdropIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.tool-card.related-menu-active {
+    z-index: 9001;
+}
+
+.tool-card.related-menu-active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: inherit;
+    background: rgba(15, 23, 42, 0.18);
+    pointer-events: none;
+}
+
+[data-theme="dark"] .tool-card.related-menu-active::after {
+    background: rgba(0, 0, 0, 0.28);
+}
+
 .tool-card::before {
     content: '';
     position: absolute;
@@ -585,6 +626,10 @@ body {
     z-index: 2;
 }
 
+.tool-card-related.menu-open {
+    z-index: 9002;
+}
+
 .related-toggle {
     width: 32px;
     height: 32px;
@@ -603,7 +648,8 @@ body {
 }
 
 .tool-card:hover .related-toggle,
-.tool-card.keyboard-focus .related-toggle {
+.tool-card.keyboard-focus .related-toggle,
+.tool-card-related.menu-open .related-toggle {
     opacity: 1;
     transform: translateY(0);
 }
@@ -631,6 +677,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 12px 30px var(--shadow-color);
     display: none;
+    z-index: 9003;
 }
 
 .related-menu.open {

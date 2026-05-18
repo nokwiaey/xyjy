@@ -178,25 +178,46 @@ if (siteMenuToggle && siteMenu) {
     var toolsGrid = document.querySelector('.tools-grid');
     if (!toolsGrid) return;
 
+    function updateBackdrop() {
+        var hasOpenMenu = Boolean(document.querySelector('.related-menu.open'));
+        document.body.classList.toggle('related-menu-backdrop', hasOpenMenu);
+    }
+
+    function closeRelatedMenu(menu) {
+        menu.classList.remove('open');
+        var related = menu.parentElement;
+        var toggle = related.querySelector('.related-toggle');
+        var card = related.closest('.tool-card');
+        related.classList.remove('menu-open');
+        if (card) card.classList.remove('related-menu-active');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function closeAllRelatedMenus(exceptMenu) {
+        document.querySelectorAll('.related-menu.open').forEach(function(menu) {
+            if (menu !== exceptMenu) closeRelatedMenu(menu);
+        });
+        updateBackdrop();
+    }
+
     toolsGrid.addEventListener('click', function(e) {
         var toggle = e.target.closest('.related-toggle');
         if (toggle) {
             e.stopPropagation();
             e.preventDefault();
 
-            var menu = toggle.parentElement.querySelector('.related-menu');
+            var related = toggle.parentElement;
+            var menu = related.querySelector('.related-menu');
             if (!menu) return;
 
-            document.querySelectorAll('.related-menu.open').forEach(function(m) {
-                if (m !== menu) {
-                    m.classList.remove('open');
-                    var otherToggle = m.parentElement.querySelector('.related-toggle');
-                    if (otherToggle) otherToggle.setAttribute('aria-expanded', 'false');
-                }
-            });
+            closeAllRelatedMenus(menu);
 
             var isOpen = menu.classList.toggle('open');
+            related.classList.toggle('menu-open', isOpen);
+            var card = related.closest('.tool-card');
+            if (card) card.classList.toggle('related-menu-active', isOpen);
             toggle.setAttribute('aria-expanded', String(isOpen));
+            updateBackdrop();
             return;
         }
 
@@ -206,26 +227,19 @@ if (siteMenuToggle && siteMenu) {
             e.preventDefault();
             var url = item.getAttribute('data-url');
             if (url) window.open(url, '_blank');
+            closeAllRelatedMenus();
         }
     });
 
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.tool-card-related')) {
-            document.querySelectorAll('.related-menu.open').forEach(function(menu) {
-                menu.classList.remove('open');
-                var toggle = menu.parentElement.querySelector('.related-toggle');
-                if (toggle) toggle.setAttribute('aria-expanded', 'false');
-            });
+            closeAllRelatedMenus();
         }
     });
 
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            document.querySelectorAll('.related-menu.open').forEach(function(menu) {
-                menu.classList.remove('open');
-                var toggle = menu.parentElement.querySelector('.related-toggle');
-                if (toggle) toggle.setAttribute('aria-expanded', 'false');
-            });
+            closeAllRelatedMenus();
         }
     });
 })();
