@@ -172,6 +172,65 @@ if (siteMenuToggle && siteMenu) {
 }
 
 // ============================================
+// 工具卡片 - 相关链接下拉菜单
+// ============================================
+(function initRelatedMenus() {
+    var toolsGrid = document.querySelector('.tools-grid');
+    if (!toolsGrid) return;
+
+    toolsGrid.addEventListener('click', function(e) {
+        var toggle = e.target.closest('.related-toggle');
+        if (toggle) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            var menu = toggle.parentElement.querySelector('.related-menu');
+            if (!menu) return;
+
+            document.querySelectorAll('.related-menu.open').forEach(function(m) {
+                if (m !== menu) {
+                    m.classList.remove('open');
+                    var otherToggle = m.parentElement.querySelector('.related-toggle');
+                    if (otherToggle) otherToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            var isOpen = menu.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', String(isOpen));
+            return;
+        }
+
+        var item = e.target.closest('.related-menu-item');
+        if (item) {
+            e.stopPropagation();
+            e.preventDefault();
+            var url = item.getAttribute('data-url');
+            if (url) window.open(url, '_blank');
+        }
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.tool-card-related')) {
+            document.querySelectorAll('.related-menu.open').forEach(function(menu) {
+                menu.classList.remove('open');
+                var toggle = menu.parentElement.querySelector('.related-toggle');
+                if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            });
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.related-menu.open').forEach(function(menu) {
+                menu.classList.remove('open');
+                var toggle = menu.parentElement.querySelector('.related-toggle');
+                if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            });
+        }
+    });
+})();
+
+// ============================================
 // 点击 Logo 展示当前页面二维码
 // ============================================
 const qrCodeLogo = document.getElementById('qrCodeLogo');
@@ -568,7 +627,7 @@ function attachCardEvents() {
         // 点击记录访问
         card.addEventListener('click', function(e) {
             // 如果点击的是复制按钮，不记录访问
-            if (e.target.closest('.tool-card-copy')) return;
+            if (e.target.closest('.tool-card-copy, .related-toggle, .related-menu-item')) return;
             recordVisit(card);
         });
     });

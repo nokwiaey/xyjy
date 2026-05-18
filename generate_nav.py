@@ -95,7 +95,11 @@ def parse_json(file_path):
         color = tool.get('color')
         tags = tool.get('tags', [])
         wxp_code = tool.get('wxpCode', '')
-        tools.append((title, url, desc, icon, color, tags, wxp_code))
+        related_links = tool.get('relatedLinks', [])
+        if not isinstance(related_links, list):
+            related_links = []
+        related_links = [rl for rl in related_links if isinstance(rl, dict) and rl.get('name') and rl.get('url')]
+        tools.append((title, url, desc, icon, color, tags, wxp_code, related_links))
 
     return tools, site_urls
 
@@ -165,7 +169,7 @@ def generate_html(tools, site_urls):
 
     # 生成工具卡片
     tool_cards = []
-    for i, (title, url, desc, custom_icon, custom_color, tags, wxp_code) in enumerate(tools):
+    for i, (title, url, desc, custom_icon, custom_color, tags, wxp_code, related_links) in enumerate(tools):
         icon, color = get_icon_and_color(i, custom_icon, custom_color)
         # 如果没有描述，使用默认描述
         if not desc:
@@ -185,6 +189,27 @@ def generate_html(tools, site_urls):
         else:
             icon_html = f'<div class="tool-icon {color} favicon-icon"><img src="https://www.google.com/s2/favicons?domain={url}&sz=64" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display=\'none\'; this.parentElement.innerHTML=\'🔗\';"></div>'
 
+        # 生成相关链接下拉 HTML
+        related_html = ''
+        if related_links:
+            menu_id = f'relatedMenu_{i}'
+            menu_items = '\n'.join([
+                f'                    <span class="related-menu-item" data-url="{rl["url"]}" role="menuitem" tabindex="0">{rl["name"]}</span>'
+                for rl in related_links
+            ])
+            related_html = f'''                    <div class="tool-card-related">
+                        <button class="related-toggle" aria-label="相关链接" aria-expanded="false" aria-controls="{menu_id}" title="相关链接">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle cx="5" cy="12" r="2" fill="currentColor"/>
+                                <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                                <circle cx="19" cy="12" r="2" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <div class="related-menu" id="{menu_id}" role="menu">
+{menu_items}
+                        </div>
+                    </div>'''
+
         # 有小程序码的工具渲染为 button（点击弹窗），否则渲染为 a 链接
         if wxp_code:
             card = f'''            <button class="tool-card wxp-card" data-url="{url}" data-wxp-code="{wxp_code}" data-wxp-title="{title}" data-tags="{tags_attr}" aria-label="{title} - 点击查看小程序码">
@@ -192,6 +217,7 @@ def generate_html(tools, site_urls):
                 <h3 class="tool-name">{title}</h3>
                 <p class="tool-desc">{desc}</p>
                 {tags_display}
+{related_html}
             </button>'''
         else:
             card = f'''            <a href="{url}" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="{tags_attr}">
@@ -199,6 +225,7 @@ def generate_html(tools, site_urls):
                 <h3 class="tool-name">{title}</h3>
                 <p class="tool-desc">{desc}</p>
                 {tags_display}
+{related_html}
             </a>'''
         tool_cards.append(card)
 
@@ -405,13 +432,14 @@ def main():
     version = get_version()
     print(f"📌 版本: v{version}")
     print(f"✅ 找到 {len(tools)} 个工具链接:")
-    for title, url, desc, icon, color, tags, wxp_code in tools:
+    for title, url, desc, icon, color, tags, wxp_code, related_links in tools:
         desc_str = f' - {desc}' if desc else ''
         icon_str = f' icon={icon}' if icon else ''
         color_str = f' color={color}' if color else ''
         tags_str = f' tags={",".join(tags)}' if tags else ''
         wxp_str = ' MiniProgram' if wxp_code else ''
-        print(f"   • {title}{desc_str}{icon_str}{color_str}{tags_str}{wxp_str}")
+        related_str = f' relatedLinks={len(related_links)}' if related_links else ''
+        print(f"   • {title}{desc_str}{icon_str}{color_str}{tags_str}{wxp_str}{related_str}")
 
     if all_tags:
         print(f"\n🏷️ 发现 {len(all_tags)} 个标签: {', '.join(sorted(all_tags))}")
