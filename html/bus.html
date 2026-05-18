@@ -137,7 +137,6 @@
     border-radius: var(--radius);
     padding: 24px 24px 20px;
     position: relative;
-    overflow: hidden;
   }
   .card::before {
     content: "";
@@ -293,22 +292,20 @@
 
   /* ---- GPS Tooltip ---- */
   .dot-tooltip {
-    position: absolute;
-    bottom: calc(100% + 10px);
-    left: 50%;
-    transform: translateX(-50%);
+    position: fixed;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 8px 12px;
     white-space: nowrap;
-    z-index: 20;
+    z-index: 999;
     font-family: "Space Mono", monospace;
     font-size: 11px;
     letter-spacing: 0.5px;
     color: var(--text);
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
     animation: tooltipIn 0.15s ease;
+    pointer-events: none;
   }
   .dot-tooltip::after {
     content: "";
@@ -335,8 +332,8 @@
   .dot-tooltip .tt-relative.stale-text { color: var(--red); }
 
   @keyframes tooltipIn {
-    from { opacity: 0; transform: translateX(-50%) translateY(4px); }
-    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   /* ---- States ---- */
@@ -622,19 +619,18 @@ function renderBuses(containerId, data, staleTime) {
 document.addEventListener("click", function(e) {
   const dot = e.target.closest(".dist-dot");
   if (!dot) {
-    // 点击其他地方关闭所有 tooltip
     document.querySelectorAll(".dot-tooltip").forEach(t => t.remove());
     return;
   }
 
-  // 如果已打开则关闭
-  const existing = dot.querySelector(".dot-tooltip");
-  if (existing) {
+  // 已打开则关闭
+  const existing = document.querySelector(".dot-tooltip[data-for-dot]");
+  if (existing && existing.dataset.forDot === dot.dataset.gpsTs + dot.style.left) {
     existing.remove();
     return;
   }
 
-  // 关闭其他 tooltip
+  // 关闭旧 tooltip
   document.querySelectorAll(".dot-tooltip").forEach(t => t.remove());
 
   // 创建 tooltip
@@ -647,14 +643,24 @@ document.addEventListener("click", function(e) {
 
   const tip = document.createElement("div");
   tip.className = "dot-tooltip";
+  tip.dataset.forDot = dot.dataset.gpsTs + dot.style.left;
   tip.innerHTML = `<span class="tt-absolute">${escapeHtml(rawTs)}</span><span class="tt-relative ${ageCls}">GPS ${escapeHtml(relTime)}</span>`;
-  dot.appendChild(tip);
+  document.body.appendChild(tip);
+
+  // 定位 tooltip
+  const rect = dot.getBoundingClientRect();
+  tip.style.left = (rect.left + rect.width / 2) + "px";
+  tip.style.top = (rect.top - 10) + "px";
+  tip.style.transform = "translate(-50%, -100%)";
+
+  // 存储关联的 dot 引用用于刷新
+  tip._dot = dot;
 });
 
 // ============ GPS 时间实时刷新 ============
 function refreshGpsAges() {
   document.querySelectorAll(".dot-tooltip").forEach(tip => {
-    const dot = tip.parentElement;
+    const dot = tip._dot;
     if (!dot || !dot.dataset.gpsTs) return;
     const relTime = relativeTime(dot.dataset.gpsTs);
     if (!relTime) return;
@@ -665,6 +671,11 @@ function refreshGpsAges() {
     const ageCls = isFresh ? "fresh-text" : isStale ? "stale-text" : "warn-text";
     relEl.className = "tt-relative " + ageCls;
     relEl.textContent = "GPS " + relTime;
+
+    // 跟随 dot 位置（页面滚动/布局变化后）
+    const rect = dot.getBoundingClientRect();
+    tip.style.left = (rect.left + rect.width / 2) + "px";
+    tip.style.top = (rect.top - 10) + "px";
   });
 }
 
