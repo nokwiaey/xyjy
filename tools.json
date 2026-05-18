@@ -345,7 +345,7 @@
     {
       "title": "公交查询",
       "url": "html/bus.html",
-      "desc": "榆林市公交实时信息查询",
+      "desc": "公交实时信息查询",
       "icon": "🚌",
       "color": "green",
       "tags": [
