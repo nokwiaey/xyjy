@@ -117,6 +117,9 @@
       "color": "red",
       "tags": [
         "医院"
+      ],
+      "relatedLinks": [
+        { "name": "首页 > 医院动态 > 检验医学", "url": "https://www.ylxyyy.com/list/jyyx" }
       ]
     },
     {
@@ -154,16 +157,22 @@
       "tags": [
         "⭐常用",
         "室间质评"
+      ],
+      "relatedLinks": [
+        { "name": "EQA登录", "url": "https://www.nccl.org.cn/loginCn" }
       ]
     },
     {
       "title": "SCCL",
-      "url": "https://zkp.sccl.org.cn/qc/Main.htm",
+      "url": "https://www.sccl.org.cn/sportal/entry/index.html",
       "desc": "上海市临床检验中心",
       "icon": "https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260513/4kgB/343X343/0001.png/webp",
       "color": "white",
       "tags": [
         "室间质评"
+      ],
+      "relatedLinks": [
+        { "name": "EQA登录", "url": "https://zkp.sccl.org.cn/qc/Main.htm" }
       ]
     },
     {
@@ -174,6 +183,9 @@
       "color": "red",
       "tags": [
         "认可"
+      ],
+      "relatedLinks": [
+        { "name": "登录", "url": "https://las.cnas.org.cn/LAS/index.jsp" }
       ]
     },
     {
@@ -185,6 +197,9 @@
       "tags": [
         "继续教育",
         "查阅"
+      ],
+      "relatedLinks": [
+        { "name": "登录", "url": "https://socialexam.21wecan.com/#/login" }
       ]
     },
     {
@@ -196,6 +211,9 @@
       "tags": [
         "继续教育",
         "查阅"
+      ],
+      "relatedLinks": [
+        { "name": "登录", "url": "https://account.chsi.com.cn/passport/login" }
       ]
     },
     {
