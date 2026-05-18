@@ -590,48 +590,55 @@ renderRecentVisits();
 // ============================================
 function initCopyButtons() {
     toolCards.forEach(function(card) {
-        // 小程序码卡片没有 URL，跳过复制按钮
-        if (card.classList.contains('wxp-card')) return;
         // 避免重复添加
         if (card.querySelector('.tool-card-copy')) return;
 
+        var isWxp = card.classList.contains('wxp-card');
         var url = card.getAttribute('href') || '';
         var btn = document.createElement('button');
         btn.className = 'tool-card-copy';
-        btn.setAttribute('aria-label', '复制链接');
-        btn.title = '复制链接';
-        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="9" width="13" height="13" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+        if (isWxp) {
+            btn.setAttribute('aria-label', '跳转到小程序');
+            btn.title = '跳转到小程序';
+            btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="15 3 21 3 21 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        } else {
+            btn.setAttribute('aria-label', '复制链接');
+            btn.title = '复制链接';
+            btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="9" width="13" height="13" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+        }
 
         btn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            // 将相对路径转换为绝对URL
-            var absoluteUrl = url;
-            if (!/^https?:\/\//i.test(absoluteUrl)) {
-                var a = document.createElement('a');
-                a.href = absoluteUrl;
-                absoluteUrl = a.href;
-            }
-            // 直接写入剪贴板，不通过 copyToClipboard（它会用 textContent 清空 SVG）
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(absoluteUrl);
+            if (isWxp) {
+                var jumpUrl = card.getAttribute('data-url');
+                if (jumpUrl) window.open(jumpUrl, '_blank');
             } else {
-                var textarea = document.createElement('textarea');
-                textarea.value = absoluteUrl;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
+                var copyText = url;
+                if (!/^https?:\/\//i.test(copyText)) {
+                    var a = document.createElement('a');
+                    a.href = copyText;
+                    copyText = a.href;
+                }
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(copyText);
+                } else {
+                    var textarea = document.createElement('textarea');
+                    textarea.value = copyText;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                }
+                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+                btn.classList.add('copied');
+                setTimeout(function() {
+                    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="9" width="13" height="13" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+                    btn.classList.remove('copied');
+                }, 1500);
             }
-            // 显示勾号，保持可见直到恢复
-            btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-            btn.classList.add('copied');
-            setTimeout(function() {
-                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="9" width="13" height="13" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
-                btn.classList.remove('copied');
-            }, 1500);
         });
 
         card.appendChild(btn);

@@ -187,7 +187,7 @@ def generate_html(tools, site_urls):
 
         # 有小程序码的工具渲染为 button（点击弹窗），否则渲染为 a 链接
         if wxp_code:
-            card = f'''            <button class="tool-card wxp-card" data-wxp-code="{wxp_code}" data-wxp-title="{title}" data-tags="{tags_attr}" aria-label="{title} - 点击查看小程序码">
+            card = f'''            <button class="tool-card wxp-card" data-url="{url}" data-wxp-code="{wxp_code}" data-wxp-title="{title}" data-tags="{tags_attr}" aria-label="{title} - 点击查看小程序码">
                 {icon_html}
                 <h3 class="tool-name">{title}</h3>
                 <p class="tool-desc">{desc}</p>
