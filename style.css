@@ -414,7 +414,7 @@ body.related-menu-backdrop::before {
     inset: 0;
     z-index: 9000;
     background: rgba(15, 23, 42, 0.18);
-    pointer-events: none;
+    pointer-events: auto;
     animation: relatedMenuBackdropIn 0.16s ease;
 }
 
