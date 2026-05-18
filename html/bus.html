@@ -109,6 +109,18 @@
     font-size: 13px;
   }
 
+  .stale-badge {
+    display: inline-block;
+    font-size: 11px;
+    background: #78350f;
+    color: #fbbf24;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: 500;
+    animation: pulse 2s infinite;
+  }
+
   .error-banner {
     background: #7f1d1d;
     border: 1px solid var(--red);
@@ -277,6 +289,8 @@ const BUS_CONFIG = [
 const REFRESH_INTERVAL = 10; // 秒
 let countdownSec = REFRESH_INTERVAL;
 let countdownTimer = null;
+// 缓存上次成功数据，网络异常时继续显示
+const lastBusData = {};
 
 // ============ 请求公交数据 ============
 async function fetchBusInfo(config) {
@@ -316,6 +330,16 @@ function relativeTime(gpsTimeStr) {
   }
 }
 
+function staleIndicatorText(cachedTime) {
+  const diff = Date.now() - cachedTime.getTime();
+  const sec = Math.floor(diff / 1000);
+  if (sec < 60) return sec + "秒前";
+  const min = Math.floor(sec / 60);
+  if (min < 60) return min + "分钟前";
+  const hr = Math.floor(min / 60);
+  return hr + "小时前";
+}
+
 function formatDistance(meters) {
   return meters > 1000
     ? (meters / 1000).toFixed(1) + " 公里"
@@ -323,13 +347,19 @@ function formatDistance(meters) {
 }
 
 // ============ 渲染 ============
-function renderBuses(containerId, data) {
+function renderBuses(containerId, data, staleTime) {
   const el = document.getElementById(containerId);
   try {
     const buses = data?.data?.[0]?.busPosition;
     if (!buses || buses.length === 0) {
-      el.innerHTML = '<div class="empty-state">暂无公交信息</div>';
+      el.innerHTML = '<div class="empty-state">暂无公交信息</div>' + (staleTime ? `<div class="empty-state" style="margin-top:0;padding-top:0;font-size:11px;color:#fbbf24">数据已过期 · ${staleIndicatorText(staleTime)}</div>` : '');
       return;
+    }
+
+    // 数据过期徽标
+    let staleBadgeHtml = "";
+    if (staleTime) {
+      staleBadgeHtml = `<span class="stale-badge" title="上次成功更新时间：${staleTime.toLocaleTimeString("zh-CN",{hour12:false})}">⚠ 数据已过期 · ${staleIndicatorText(staleTime)}</span>`;
     }
 
     const onRoad = buses.filter(b => b.plateNumber);
@@ -389,7 +419,7 @@ function renderBuses(containerId, data) {
         </div>`;
     }
 
-    el.innerHTML = html || '<div class="empty-state">暂无公交信息</div>';
+    el.innerHTML = staleBadgeHtml + html || '<div class="empty-state">暂无公交信息</div>';
   } catch (e) {
     el.innerHTML = '<div class="empty-state">数据解析失败</div>';
   }
@@ -451,22 +481,29 @@ setInterval(refreshGpsAges, 1000);
 // ============ 主流程 ============
 async function fetchAll() {
   let hasError = false;
+  const now = new Date();
   for (const cfg of BUS_CONFIG) {
+    const id = cfg.id;
     try {
       const data = await fetchBusInfo(cfg);
-      renderBuses("busList-" + cfg.id, data);
+      lastBusData[id] = { data, time: now };
+      renderBuses("busList-" + id, data, null);
     } catch (e) {
       hasError = true;
-      document.getElementById("busList-" + cfg.id).innerHTML =
-        '<div class="empty-state">加载失败</div>';
+      const cached = lastBusData[id];
+      if (cached) {
+        renderBuses("busList-" + id, cached.data, cached.time);
+      } else {
+        document.getElementById("busList-" + id).innerHTML =
+          '<div class="empty-state">加载失败</div>';
+      }
     }
   }
   if (hasError) {
-    showError("部分请求失败 — 请检查 Worker 代理状态");
+    showError("部分请求失败 — 已显示最近一次数据");
   }
 
   // 更新时间
-  const now = new Date();
   document.getElementById("lastUpdate").textContent =
     now.toLocaleTimeString("zh-CN", { hour12: false });
   resetCountdown();
