@@ -83,7 +83,8 @@
   }
 
   .bus-info { flex: 1; min-width: 0; }
-  .bus-plate { font-size: 14px; font-weight: 600; }
+  .bus-plate { font-size: 14px; font-weight: 600; cursor: pointer; }
+.bus-plate:hover { color: var(--accent); }
   .bus-detail { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
   .bus-eta {
@@ -292,7 +293,7 @@ function renderBuses(containerId, data) {
           <div class="bus-row">
             <span class="bus-icon">🚌</span>
             <div class="bus-info">
-              <div class="bus-plate">${escapeHtml(bus.plateNumber)}</div>
+              <div class="bus-plate" data-gps-time="${escapeHtml(bus.gpsTime || '无GPS数据')}" data-plate="${escapeHtml(bus.plateNumber)}">${escapeHtml(bus.plateNumber)}</div>
               <div class="bus-detail">距本站 ${escapeHtml(dist)}</div>
             </div>
             <div class="bus-eta">
@@ -319,6 +320,24 @@ function renderBuses(containerId, data) {
     el.innerHTML = '<div class="empty-state">数据解析失败</div>';
   }
 }
+
+// ============ 点击车牌号显示 GPS 时间 ============
+document.addEventListener("click", function(e) {
+  const plate = e.target.closest(".bus-plate");
+  if (!plate) return;
+  const gpsTime = plate.dataset.gpsTime;
+  if (!gpsTime) return;
+
+  if (plate.textContent === gpsTime) {
+    plate.textContent = plate.dataset.plate;
+  } else {
+    plate.textContent = gpsTime;
+    clearTimeout(plate._revertTimer);
+    plate._revertTimer = setTimeout(() => {
+      plate.textContent = plate.dataset.plate;
+    }, 3000);
+  }
+});
 
 function showError(msg) {
   document.getElementById("errorArea").innerHTML =
