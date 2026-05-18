@@ -224,6 +224,10 @@
       "color": "blue",
       "tags": [
         "继续教育"
+      ],
+      "relatedLinks": [
+        { "name": "脚本猫", "url": "https://docs.scriptcat.org/" },
+        { "name": "好医生脚本", "url": "https://github.com/nokwiaey/tampermonkey-scripts/raw/refs/heads/main/scripts/%E5%A5%BD%E5%8C%BB%E7%94%9F%E5%8A%A9%E6%89%8B.user.js" }
       ]
     },
     {
