@@ -707,6 +707,7 @@ const todayProgressPath = document.getElementById('todayProgressPath');
 let todayProgressPathLength = 0;
 let todayProgressWidth = 0;
 let todayProgressHeight = 0;
+let countdownMode = false;
 
 const DAY_MINUTES = 24 * 60;
 const MORNING_START = 8 * 60;
@@ -756,6 +757,31 @@ function getShiftProgress(now) {
     return (currentMinutes - schedule.dayEnd) / (MORNING_START + DAY_MINUTES - schedule.dayEnd) * 100;
 }
 
+function getCountdown(now) {
+    var currentMinutes = getMinutes(now);
+    var schedule = getScheduleByMonth(now.getMonth() + 1);
+    var targetMinutes;
+
+    if (currentMinutes < MORNING_START) {
+        targetMinutes = MORNING_START;
+    } else if (currentMinutes < MORNING_END) {
+        targetMinutes = MORNING_END;
+    } else if (currentMinutes < schedule.afternoonStart) {
+        targetMinutes = schedule.afternoonStart;
+    } else if (currentMinutes < schedule.dayEnd) {
+        targetMinutes = schedule.dayEnd;
+    } else {
+        targetMinutes = MORNING_START + DAY_MINUTES;
+    }
+
+    var remainingMinutes = targetMinutes - currentMinutes;
+    if (remainingMinutes <= 0) remainingMinutes = 0;
+    var hours = Math.floor(remainingMinutes / 60);
+    var mins = Math.floor(remainingMinutes % 60);
+    var secs = Math.floor((remainingMinutes * 60) % 60);
+    return pad2(hours) + ':' + pad2(mins) + ':' + pad2(secs);
+}
+
 function formatTodayInfo() {
     if (!todayDate || !todayWeek || !todayTime) return;
 
@@ -763,11 +789,15 @@ function formatTodayInfo() {
     var month = now.getMonth() + 1;
     var date = now.getDate();
     var weekText = new Intl.DateTimeFormat('zh-CN', { weekday: 'long' }).format(now);
-    var timeText = pad2(now.getHours()) + ':' + pad2(now.getMinutes()) + ':' + pad2(now.getSeconds());
 
     todayDate.textContent = month + '月' + date + '日';
     todayWeek.textContent = weekText;
-    todayTime.textContent = timeText;
+
+    if (countdownMode) {
+        todayTime.textContent = getCountdown(now);
+    } else {
+        todayTime.textContent = pad2(now.getHours()) + ':' + pad2(now.getMinutes()) + ':' + pad2(now.getSeconds());
+    }
 }
 
 function getRoundedRectPath(width, height, radius, inset) {
@@ -832,6 +862,16 @@ function initTodayStrip() {
     updateTodayStrip();
     setInterval(updateTodayStrip, 1000);
     window.addEventListener('resize', updateShiftProgress, { passive: true });
+
+    if (todayTime) {
+        todayTime.style.cursor = 'pointer';
+        todayTime.setAttribute('title', '点击切换倒计时');
+        todayTime.addEventListener('click', function () {
+            countdownMode = !countdownMode;
+            todayTime.setAttribute('title', countdownMode ? '点击恢复时钟' : '点击切换倒计时');
+            updateTodayStrip();
+        });
+    }
 }
 
 initTodayStrip();

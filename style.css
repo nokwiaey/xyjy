@@ -199,6 +199,12 @@ body {
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum";
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    cursor: pointer;
+    user-select: none;
+}
+
+.today-time:hover {
+    opacity: 0.75;
 }
 
 /* 主题切换按钮 */
