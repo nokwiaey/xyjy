@@ -4,220 +4,341 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>公交实时查询</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --border: #334155;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --accent: #38bdf8;
-    --green: #4ade80;
-    --orange: #fb923c;
-    --red: #f87171;
-    --radius: 12px;
+    --bg: #0b0b0d;
+    --surface: #141417;
+    --surface2: #1a1a1f;
+    --border: #252530;
+    --text: #e8e4dd;
+    --text-dim: #6b6b72;
+    --accent: #ff6b35;
+    --neon: #00f5d4;
+    --amber: #ffd166;
+    --red: #ff4d6a;
+    --radius: 2px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg);
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+    background:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px),
+      var(--bg);
+    background-size: 40px 40px;
     color: var(--text);
     min-height: 100vh;
-    padding: 20px;
+    padding: 24px 16px;
+    -webkit-font-smoothing: antialiased;
   }
 
+  /* ---- Header ---- */
   .header {
     text-align: center;
-    padding: 16px 0 24px;
+    padding: 12px 0 28px;
   }
-  .header h1 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
-  .header .meta { font-size: 13px; color: var(--muted); }
-  .header .countdown { color: var(--accent); font-weight: 600; }
+  .header h1 {
+    font-family: "Space Mono", monospace;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+  .header .meta {
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+  .header .meta span { color: var(--text-dim); }
+  .header .countdown { color: var(--text-dim) !important; font-weight: 400 !important; }
 
+  /* ---- Layout ---- */
   .container {
-    max-width: 600px;
+    max-width: 480px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 20px;
   }
 
+  /* ---- Cards ---- */
   .card {
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--border);
+    border-top: 2px solid var(--border);
     border-radius: var(--radius);
-    padding: 20px;
+    padding: 24px 24px 20px;
+    position: relative;
+    overflow: hidden;
   }
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  }
+
   .card-header {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
-    margin-bottom: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
   }
   .card-header .dir-label {
-    font-size: 15px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--text);
   }
   .card-header .station {
-    font-size: 12px;
-    color: var(--muted);
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
   }
 
+  /* ---- Bus Row ---- */
   .bus-row {
     display: flex;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    gap: 16px;
+    animation: rowIn 0.3s ease both;
   }
   .bus-row:last-child { border-bottom: none; }
 
-  .bus-icon {
-    font-size: 24px;
-    flex-shrink: 0;
+  @keyframes rowIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
-  .bus-info { flex: 1; min-width: 0; }
-  .bus-plate { font-size: 14px; font-weight: 600; cursor: pointer; }
-.bus-plate:hover { color: var(--accent); }
-  .bus-detail { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .bus-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    opacity: 0.6;
+    filter: grayscale(0.3);
+  }
 
+  .bus-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .bus-plate {
+    font-family: "Space Mono", monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text);
+  }
+
+  .bus-detail {
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---- ETA Number ---- */
   .bus-eta {
     text-align: right;
     flex-shrink: 0;
+    min-width: 80px;
   }
   .bus-minutes {
-    font-size: 22px;
+    font-family: "Space Mono", monospace;
+    font-size: 40px;
     font-weight: 700;
     line-height: 1;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
   }
-  .bus-minutes.soon { color: var(--green); }
-  .bus-minutes.mid { color: var(--orange); }
-  .bus-minutes.far { color: var(--accent); }
-  .bus-distance { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .bus-departure { font-size: 14px; color: var(--orange); font-weight: 500; }
-
-  .empty-state {
-    text-align: center;
-    padding: 20px 0;
-    color: var(--muted);
+  .bus-minutes span {
     font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0;
+    opacity: 0.5;
+  }
+  .bus-minutes.soon { color: var(--neon); }
+  .bus-minutes.mid  { color: var(--amber); }
+  .bus-minutes.far  { color: var(--text-dim); }
+
+  .bus-departure {
+    font-family: "Space Mono", monospace;
+    font-size: 16px;
+    color: var(--amber);
+    font-weight: 400;
+    letter-spacing: 1px;
   }
 
-  .stale-badge {
-    display: inline-block;
-    font-size: 11px;
-    background: #78350f;
-    color: #fbbf24;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-left: 8px;
-    font-weight: 500;
-    animation: pulse 2s infinite;
-  }
-
-  .error-banner {
-    background: #7f1d1d;
-    border: 1px solid var(--red);
-    color: #fca5a5;
-    padding: 10px 16px;
-    border-radius: var(--radius);
-    font-size: 13px;
-    text-align: center;
-  }
-
-  .btn-row {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding: 8px 0;
-  }
-  button {
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--text);
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  button:hover { background: #334155; }
-  button:active { background: #475569; }
-
-  .status-dot {
-    display: inline-block;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    margin-right: 4px;
-  }
-  .status-dot.on { background: var(--green); }
-  .status-dot.soon-dot { background: var(--orange); }
-
-  /* 可视化：距离指示点 */
+  /* ---- Distance Track ---- */
   .dist-track {
-    height: 3px;
-    background: var(--border);
+    height: 4px;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent calc(12.5% - 1px),
+        rgba(255,255,255,0.06) calc(12.5% - 1px),
+        rgba(255,255,255,0.06) 12.5%
+      ),
+      linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.04));
     border-radius: 2px;
-    margin-top: 8px;
+    margin-top: 10px;
     position: relative;
   }
   .dist-dot {
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 10px; height: 10px;
+    width: 12px; height: 12px;
     border-radius: 50%;
-    transition: left 0.6s ease;
-    box-shadow: 0 0 6px currentColor;
+    transition: left 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+    z-index: 1;
   }
-  .dist-dot.soon { background: var(--green); color: var(--green); }
-  .dist-dot.mid  { background: var(--orange); color: var(--orange); }
-  .dist-dot.far  { background: var(--accent); color: var(--accent); }
+  .dist-dot::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    opacity: 0.4;
+    animation: dotPing 2s ease infinite;
+  }
+  @keyframes dotPing {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50%      { transform: scale(1.6); opacity: 0; }
+  }
+  .dist-dot.soon { background: var(--neon); color: var(--neon); }
+  .dist-dot.mid  { background: var(--amber); color: var(--amber); }
+  .dist-dot.far  { background: rgba(255,255,255,0.3); color: rgba(255,255,255,0.3); }
 
-  /* 可视化：GPS 新鲜度 */
+  /* ---- GPS Age ---- */
   .gps-age {
-    font-size: 11px;
-    margin-top: 2px;
+    font-family: "Space Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.5px;
     cursor: pointer;
     user-select: none;
+    display: inline-block;
+    transition: opacity 0.2s;
   }
-  .gps-age:hover { opacity: 0.8; }
+  .gps-age:hover { opacity: 0.65; }
   .gps-age .dot {
     display: inline-block;
-    width: 6px; height: 6px;
+    width: 5px; height: 5px;
     border-radius: 50%;
     margin-right: 4px;
     vertical-align: middle;
     position: relative;
     top: -1px;
   }
-  .gps-age .dot.fresh { background: var(--green); }
-  .gps-age .dot.warn  { background: var(--orange); }
+  .gps-age .dot.fresh { background: var(--neon); box-shadow: 0 0 4px var(--neon); }
+  .gps-age .dot.warn  { background: var(--amber); }
   .gps-age .dot.stale { background: var(--red); }
-  .gps-age.fresh-text { color: var(--green); }
-  .gps-age.warn-text  { color: var(--orange); }
+  .gps-age.fresh-text { color: var(--neon); }
+  .gps-age.warn-text  { color: var(--amber); }
   .gps-age.stale-text { color: var(--red); }
 
+  /* ---- States ---- */
+  .empty-state {
+    text-align: center;
+    padding: 28px 0 18px;
+    color: var(--text-dim);
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .stale-badge {
+    display: inline-block;
+    font-family: "Space Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    background: rgba(255,209,102,0.08);
+    border: 1px solid rgba(255,209,102,0.2);
+    color: var(--amber);
+    padding: 3px 10px;
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    animation: pulse 2.5s ease infinite;
+  }
+
+  .error-banner {
+    background: rgba(255,77,106,0.08);
+    border: 1px solid rgba(255,77,106,0.2);
+    color: var(--red);
+    padding: 10px 16px;
+    border-radius: var(--radius);
+    font-size: 12px;
+    text-align: center;
+    font-family: "Space Mono", monospace;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---- Button ---- */
+  .btn-row {
+    display: flex;
+    justify-content: center;
+    padding: 4px 0;
+  }
+  button {
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    padding: 10px 32px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  button:hover {
+    border-color: rgba(255,255,255,0.15);
+    color: var(--text);
+    background: rgba(255,255,255,0.02);
+  }
+  button:active { background: rgba(255,255,255,0.04); }
+
+  /* ---- Animations ---- */
   @keyframes pulse {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+    50%      { opacity: 0.35; }
   }
-  .loading .bus-icon { animation: pulse 1s infinite; }
+  .loading .bus-icon { animation: pulse 1.2s ease infinite; }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 400px) {
+    body { padding: 16px 8px; }
+    .card { padding: 18px 16px 16px; }
+    .bus-minutes { font-size: 34px; }
+    .bus-eta { min-width: 64px; }
+  }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>公交实时查询</h1>
+  <h1>Bus Tracker</h1>
   <div class="meta">
-    上次刷新：<span id="lastUpdate">--:--:--</span>
-    &nbsp;·&nbsp;
+    上次刷新&nbsp;<span id="lastUpdate">--:--:--</span>
+    &nbsp;/&nbsp;
     <span class="countdown" id="countdown"></span>
   </div>
 </div>
@@ -225,30 +346,24 @@
 <div class="container">
   <div id="errorArea"></div>
 
-  <!-- 上班方向 -->
-  <div class="card" id="card-work">
-    <div class="card-header">
-      <div>
-        <span class="dir-label">🏢 上班方向</span>
-        <span class="station">本站：圣都乐园</span>
-      </div>
-    </div>
-    <div id="busList-work"><div class="empty-state">加载中...</div></div>
-  </div>
-
-  <!-- 回家方向 -->
   <div class="card">
     <div class="card-header">
-      <div>
-        <span class="dir-label">🏠 回家方向</span>
-        <span class="station">本站：星元医院</span>
-      </div>
+      <span class="dir-label">上班方向</span>
+      <span class="station">圣都乐园</span>
     </div>
-    <div id="busList-home"><div class="empty-state">加载中...</div></div>
+    <div id="busList-work"><div class="empty-state">LOADING</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="dir-label">回家方向</span>
+      <span class="station">星元医院</span>
+    </div>
+    <div id="busList-home"><div class="empty-state">LOADING</div></div>
   </div>
 
   <div class="btn-row">
-    <button onclick="fetchAll()">🔄 立即刷新</button>
+    <button onclick="fetchAll()">Refresh</button>
   </div>
 </div>
 
@@ -294,7 +409,6 @@ const lastBusData = {};
 
 // ============ 请求公交数据 ============
 async function fetchBusInfo(config) {
-  // 简单请求：text/plain 不触发 CORS 预检，Worker 在服务端注入认证头
   const resp = await fetch(API_BASE + "/api/realbus/notAuthor/line/bus/v1/timetable", {
     method: "POST",
     headers: { "Content-Type": "text/plain" },
@@ -308,7 +422,6 @@ async function fetchBusInfo(config) {
 function relativeTime(gpsTimeStr) {
   if (!gpsTimeStr) return null;
   try {
-    // 尝试多种格式：ISO、yyyy-MM-dd HH:mm:ss、时间戳
     let ts = Date.parse(gpsTimeStr.replace(/\//g, "-").replace(/\.\d+/, ""));
     if (isNaN(ts)) {
       const n = Number(gpsTimeStr);
@@ -352,14 +465,13 @@ function renderBuses(containerId, data, staleTime) {
   try {
     const buses = data?.data?.[0]?.busPosition;
     if (!buses || buses.length === 0) {
-      el.innerHTML = '<div class="empty-state">暂无公交信息</div>' + (staleTime ? `<div class="empty-state" style="margin-top:0;padding-top:0;font-size:11px;color:#fbbf24">数据已过期 · ${staleIndicatorText(staleTime)}</div>` : '');
+      el.innerHTML = '<div class="empty-state">暂无公交信息</div>' + (staleTime ? `<div class="empty-state" style="margin-top:0;padding-top:4px;font-size:10px;color:var(--amber)">数据已过期 · ${staleIndicatorText(staleTime)}</div>` : '');
       return;
     }
 
-    // 数据过期徽标
     let staleBadgeHtml = "";
     if (staleTime) {
-      staleBadgeHtml = `<span class="stale-badge" title="上次成功更新时间：${staleTime.toLocaleTimeString("zh-CN",{hour12:false})}">⚠ 数据已过期 · ${staleIndicatorText(staleTime)}</span>`;
+      staleBadgeHtml = `<span class="stale-badge">EXPIRED · ${staleIndicatorText(staleTime)}</span>`;
     }
 
     const onRoad = buses.filter(b => b.plateNumber);
@@ -375,7 +487,6 @@ function renderBuses(containerId, data, staleTime) {
       else if (minutes <= 15) cls = "mid";
 
       const dist = formatDistance(bus.distance);
-      // 距离指示点：左端=2000m，右端=0m
       const dotPct = Math.max(0, Math.min(100, 100 - Math.round((bus.distance / 2000) * 100)));
 
       // GPS 新鲜度
@@ -392,14 +503,14 @@ function renderBuses(containerId, data, staleTime) {
 
       html += `
         <div class="bus-row">
-          <span class="bus-icon">🚌</span>
+          <span class="bus-icon">&#x1F68C;</span>
           <div class="bus-info">
             <div class="bus-plate">${escapeHtml(bus.plateNumber)}</div>
             <div class="bus-detail">距本站 ${escapeHtml(dist)}${gpsAgeHtml}</div>
             <div class="dist-track"><div class="dist-dot ${cls}" style="left:${dotPct}%"></div></div>
           </div>
           <div class="bus-eta">
-            <div class="bus-minutes ${cls}">${minutes}<span style="font-size:13px;font-weight:400"> 分钟</span></div>
+            <div class="bus-minutes ${cls}">${minutes}<span>&thinsp;分钟</span></div>
           </div>
         </div>`;
     }
@@ -408,7 +519,7 @@ function renderBuses(containerId, data, staleTime) {
     for (const bus of departing) {
       html += `
         <div class="bus-row">
-          <span class="bus-icon">⏰</span>
+          <span class="bus-icon">&#x23F0;</span>
           <div class="bus-info">
             <div class="bus-plate">待发车</div>
             <div class="bus-detail">预计发车时间</div>
@@ -419,7 +530,12 @@ function renderBuses(containerId, data, staleTime) {
         </div>`;
     }
 
-    el.innerHTML = staleBadgeHtml + html || '<div class="empty-state">暂无公交信息</div>';
+    el.innerHTML = staleBadgeHtml + (html || '<div class="empty-state">暂无公交信息</div>');
+
+    // 错开每行动画延迟
+    el.querySelectorAll(".bus-row").forEach((row, i) => {
+      row.style.animationDelay = (i * 0.06) + "s";
+    });
   } catch (e) {
     el.innerHTML = '<div class="empty-state">数据解析失败</div>';
   }
@@ -433,12 +549,10 @@ document.addEventListener("click", function(e) {
   if (!textEl) return;
 
   if (gps._showRaw) {
-    // 切回相对时间
     const relTime = relativeTime(gps.dataset.gpsTs);
     if (relTime) textEl.textContent = "GPS " + relTime;
     gps._showRaw = false;
   } else {
-    // 显示原始时间戳
     const raw = gps.dataset.rawTs;
     if (raw) textEl.textContent = raw;
     gps._showRaw = true;
@@ -503,7 +617,6 @@ async function fetchAll() {
     showError("部分请求失败 — 已显示最近一次数据");
   }
 
-  // 更新时间
   document.getElementById("lastUpdate").textContent =
     now.toLocaleTimeString("zh-CN", { hour12: false });
   resetCountdown();
