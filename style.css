@@ -580,41 +580,50 @@ body {
 /* 工具卡片 - 相关链接下拉菜单 */
 .tool-card-related {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    z-index: 10;
+    bottom: 12px;
+    right: 12px;
+    z-index: 2;
 }
 
 .related-toggle {
-    width: 28px;
-    height: 28px;
-    border: none;
-    background: transparent;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px 0 8px 0;
-    color: var(--text-tertiary);
+    opacity: 0;
+    transform: translateY(-4px);
     transition: all 0.2s ease;
+    color: var(--text-tertiary);
     font: inherit;
+}
+
+.tool-card:hover .related-toggle,
+.tool-card.keyboard-focus .related-toggle {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .related-toggle:hover {
     background: rgba(26, 95, 180, 0.1);
     color: #1a5fb4;
+    border-color: rgba(26, 95, 180, 0.3);
 }
 
 .related-toggle svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     pointer-events: none;
 }
 
 .related-menu {
     position: absolute;
-    bottom: 32px;
-    right: 4px;
+    bottom: 40px;
+    right: 0;
     min-width: 120px;
     padding: 4px;
     background: var(--bg-card);
@@ -644,10 +653,6 @@ body {
 .related-menu-item:hover {
     background: rgba(26, 95, 180, 0.1);
     color: #1a5fb4;
-}
-
-[data-theme="dark"] .related-toggle:hover {
-    background: rgba(26, 95, 180, 0.2);
 }
 
 [data-theme="dark"] .related-menu-item:hover {
@@ -1022,13 +1027,15 @@ body {
     }
 
     .related-toggle {
-        width: 26px;
-        height: 26px;
+        opacity: 1;
+        width: 28px;
+        height: 28px;
+        transform: none;
     }
 
     .related-menu {
-        right: 2px;
-        bottom: 30px;
+        right: 0;
+        bottom: 36px;
         min-width: 110px;
     }
 }
