@@ -63,13 +63,19 @@
     },
     {
       "title": "检验科排班表",
-      "url": "https://pub.mini-tools.uk/30-day/98d8b995-e8ed-40bb-8cf8-947f81851dec.webp",
-      "desc": "2026年05月排班表",
+      "url": "html/data/2026年05月排班表.pdf",
+      "desc": "2026年05月排班表.pdf",
       "icon": "📅",
       "color": "green",
       "tags": [
         "⭐常用",
         "查阅"
+      ],
+      "relatedLinks": [
+        {
+          "name": "2026五一排班表.pdf",
+          "url": "html/data/2026五一排班表.pdf"
+        }
       ]
     },
     {
