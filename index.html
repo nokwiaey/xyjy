@@ -599,41 +599,50 @@ body {
 /* 工具卡片 - 相关链接下拉菜单 */
 .tool-card-related {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    z-index: 10;
+    bottom: 12px;
+    right: 12px;
+    z-index: 2;
 }
 
 .related-toggle {
-    width: 28px;
-    height: 28px;
-    border: none;
-    background: transparent;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px 0 8px 0;
-    color: var(--text-tertiary);
+    opacity: 0;
+    transform: translateY(-4px);
     transition: all 0.2s ease;
+    color: var(--text-tertiary);
     font: inherit;
+}
+
+.tool-card:hover .related-toggle,
+.tool-card.keyboard-focus .related-toggle {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .related-toggle:hover {
     background: rgba(26, 95, 180, 0.1);
     color: #1a5fb4;
+    border-color: rgba(26, 95, 180, 0.3);
 }
 
 .related-toggle svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     pointer-events: none;
 }
 
 .related-menu {
     position: absolute;
-    bottom: 32px;
-    right: 4px;
+    bottom: 40px;
+    right: 0;
     min-width: 120px;
     padding: 4px;
     background: var(--bg-card);
@@ -663,10 +672,6 @@ body {
 .related-menu-item:hover {
     background: rgba(26, 95, 180, 0.1);
     color: #1a5fb4;
-}
-
-[data-theme="dark"] .related-toggle:hover {
-    background: rgba(26, 95, 180, 0.2);
 }
 
 [data-theme="dark"] .related-menu-item:hover {
@@ -1041,13 +1046,15 @@ body {
     }
 
     .related-toggle {
-        width: 26px;
-        height: 26px;
+        opacity: 1;
+        width: 28px;
+        height: 28px;
+        transform: none;
     }
 
     .related-menu {
-        right: 2px;
-        bottom: 30px;
+        right: 0;
+        bottom: 36px;
         min-width: 110px;
     }
 }
@@ -1489,7 +1496,18 @@ body {
                 <h3 class="tool-name">OA系统</h3>
                 <p class="tool-desc">星元医院OA办公系统</p>
                 <div class="tool-tags"><span class="tool-tag">⭐常用</span><span class="tool-tag">医院</span></div>
-
+                    <div class="tool-card-related">
+                        <button class="related-toggle" aria-label="相关链接" aria-expanded="false" aria-controls="relatedMenu_7" title="相关链接">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle cx="5" cy="12" r="2" fill="currentColor"/>
+                                <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                                <circle cx="19" cy="12" r="2" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <div class="related-menu" id="relatedMenu_7" role="menu">
+                    <span class="related-menu-item" data-url="http://oa.ylxyyy.com:8002/home/circulation/write///" role="menuitem" tabindex="0">发起传阅</span>
+                        </div>
+                    </div>
             </a>
             <a href="https://std.samr.gov.cn/" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="⭐常用,标准,查阅">
                 <div class="tool-icon red favicon-icon"><img src="https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260427/e0Hm/387X387/image.png/webp" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display='none'; this.parentElement.innerHTML='🔗';"></div>
@@ -1585,7 +1603,7 @@ body {
              </div>
         </footer>
 
-        <p class="update-date">最后更新: 2026-05-18 10:25</p>
+        <p class="update-date">最后更新: 2026-05-18 10:32</p>
     </div>
 
     <!-- 二维码弹窗 -->
