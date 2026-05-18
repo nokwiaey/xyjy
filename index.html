@@ -424,9 +424,7 @@ body {
     transition: all 0.3s ease;
     border: 1px solid var(--border-color);
     position: relative;
-    overflow: hidden;
-    content-visibility: auto;
-    contain-intrinsic-size: auto 190px;
+    overflow: visible;
 }
 
 .tool-card::before {
@@ -596,6 +594,83 @@ body {
     width: 14px;
     height: 14px;
     pointer-events: none;
+}
+
+/* 工具卡片 - 相关链接下拉菜单 */
+.tool-card-related {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.related-toggle {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px 0 8px 0;
+    color: var(--text-tertiary);
+    transition: all 0.2s ease;
+    font: inherit;
+}
+
+.related-toggle:hover {
+    background: rgba(26, 95, 180, 0.1);
+    color: #1a5fb4;
+}
+
+.related-toggle svg {
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+}
+
+.related-menu {
+    position: absolute;
+    bottom: 32px;
+    right: 4px;
+    min-width: 120px;
+    padding: 4px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 12px 30px var(--shadow-color);
+    display: none;
+}
+
+.related-menu.open {
+    display: block;
+}
+
+.related-menu-item {
+    display: block;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: 6px;
+    white-space: nowrap;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.related-menu-item:hover {
+    background: rgba(26, 95, 180, 0.1);
+    color: #1a5fb4;
+}
+
+[data-theme="dark"] .related-toggle:hover {
+    background: rgba(26, 95, 180, 0.2);
+}
+
+[data-theme="dark"] .related-menu-item:hover {
+    background: rgba(26, 95, 180, 0.2);
 }
 
 /* 页脚 */
@@ -963,6 +1038,17 @@ body {
         top: 8px;
         right: 8px;
         transform: none;
+    }
+
+    .related-toggle {
+        width: 26px;
+        height: 26px;
+    }
+
+    .related-menu {
+        right: 2px;
+        bottom: 30px;
+        min-width: 110px;
     }
 }
 
@@ -1343,114 +1429,137 @@ body {
                 <h3 class="tool-name">榆林市星元医院电话号码簿</h3>
                 <p class="tool-desc">榆林市星元医院2026年内外线电话号码查询</p>
                 <div class="tool-tags"><span class="tool-tag">⭐常用</span><span class="tool-tag">查阅</span></div>
+
             </a>
             <a href="html/lab-test-query.html" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="⭐常用,查阅,检验">
                 <div class="tool-icon green">🔬</div>
                 <h3 class="tool-name">星元检验项目查询</h3>
                 <p class="tool-desc">星元医院检验科收费及报告项目查询</p>
                 <div class="tool-tags"><span class="tool-tag">⭐常用</span><span class="tool-tag">查阅</span><span class="tool-tag">检验</span></div>
+
             </a>
             <a href="html/weekend-scheduler.html" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="计算">
                 <div class="tool-icon orange">🧮</div>
                 <h3 class="tool-name">周末分时段排班工具</h3>
                 <p class="tool-desc">智能分配时间，灵活调整时段，轻松管理周末排班</p>
                 <div class="tool-tags"><span class="tool-tag">计算</span></div>
+
             </a>
             <a href="http://172.30.3.58:9991/" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="⭐常用,查阅,文档">
                 <div class="tool-icon purple">🗂️</div>
-                <h3 class="tool-name">文档中心（院内）</h3>
-                <p class="tool-desc">适用于院内局域网快速访问</p>
+                <h3 class="tool-name">文档中心</h3>
+                <p class="tool-desc">适用于院内局域网快速访问，院外互联网入口见右下角</p>
                 <div class="tool-tags"><span class="tool-tag">⭐常用</span><span class="tool-tag">查阅</span><span class="tool-tag">文档</span></div>
-            </a>
-            <a href="https://docs.dfly.site/login" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="查阅,文档">
-                <div class="tool-icon purple">🗂️</div>
-                <h3 class="tool-name">文档中心（院外）</h3>
-                <p class="tool-desc">适用于院外互联网访问</p>
-                <div class="tool-tags"><span class="tool-tag">查阅</span><span class="tool-tag">文档</span></div>
+                    <div class="tool-card-related">
+                        <button class="related-toggle" aria-label="相关链接" aria-expanded="false" aria-controls="relatedMenu_3" title="相关链接">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle cx="5" cy="12" r="2" fill="currentColor"/>
+                                <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                                <circle cx="19" cy="12" r="2" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <div class="related-menu" id="relatedMenu_3" role="menu">
+                    <span class="related-menu-item" data-url="https://docs.dfly.site/login" role="menuitem" tabindex="0">文档中心（院外）</span>
+                        </div>
+                    </div>
             </a>
             <a href="html/egfr-calc.html" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="计算,检验">
                 <div class="tool-icon red">🔢</div>
                 <h3 class="tool-name">eGFR 计算工具</h3>
                 <p class="tool-desc">eGFR 多版本计算工具</p>
                 <div class="tool-tags"><span class="tool-tag">计算</span><span class="tool-tag">检验</span></div>
+
             </a>
             <a href="https://nokwiaey.github.io/sigma-qc-webapp/" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="计算,检验,质控">
                 <div class="tool-icon red">🎯</div>
                 <h3 class="tool-name">西格玛性能验证图</h3>
                 <p class="tool-desc">基于六西格玛理论的临床检验质量评价与控制规则选择系统</p>
                 <div class="tool-tags"><span class="tool-tag">计算</span><span class="tool-tag">检验</span><span class="tool-tag">质控</span></div>
+
             </a>
             <a href="https://www.ylxyyy.com/" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="医院">
                 <div class="tool-icon red favicon-icon"><img src="https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260427/0awB/32X32/image.png/webp" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display='none'; this.parentElement.innerHTML='🔗';"></div>
                 <h3 class="tool-name">医院官网</h3>
                 <p class="tool-desc">星元医院官网</p>
                 <div class="tool-tags"><span class="tool-tag">医院</span></div>
+
             </a>
             <a href="http://oa.ylxyyy.com:8002" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="⭐常用,医院">
                 <div class="tool-icon red">✉️</div>
                 <h3 class="tool-name">OA系统</h3>
                 <p class="tool-desc">星元医院OA办公系统</p>
                 <div class="tool-tags"><span class="tool-tag">⭐常用</span><span class="tool-tag">医院</span></div>
+
             </a>
             <a href="https://std.samr.gov.cn/" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="⭐常用,标准,查阅">
                 <div class="tool-icon red favicon-icon"><img src="https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260427/e0Hm/387X387/image.png/webp" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display='none'; this.parentElement.innerHTML='🔗';"></div>
                 <h3 class="tool-name">全国标准信息公共服务平台</h3>
                 <p class="tool-desc">全国标准信息公共服务平台</p>
                 <div class="tool-tags"><span class="tool-tag">⭐常用</span><span class="tool-tag">标准</span><span class="tool-tag">查阅</span></div>
+
             </a>
             <a href="https://www.nccl.org.cn/mainCn" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="⭐常用,室间质评">
                 <div class="tool-icon red favicon-icon"><img src="https://www.nccl.org.cn/static/img/favicon.ico" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display='none'; this.parentElement.innerHTML='🔗';"></div>
                 <h3 class="tool-name">NCCL</h3>
                 <p class="tool-desc">国家卫生健康委临床检验中心</p>
                 <div class="tool-tags"><span class="tool-tag">⭐常用</span><span class="tool-tag">室间质评</span></div>
+
             </a>
             <a href="https://zkp.sccl.org.cn/qc/Main.htm" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="室间质评">
                 <div class="tool-icon white favicon-icon"><img src="https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260513/4kgB/343X343/0001.png/webp" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display='none'; this.parentElement.innerHTML='🔗';"></div>
                 <h3 class="tool-name">SCCL</h3>
                 <p class="tool-desc">上海市临床检验中心</p>
                 <div class="tool-tags"><span class="tool-tag">室间质评</span></div>
+
             </a>
             <a href="https://www.cnas.org.cn/" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="认可">
                 <div class="tool-icon red favicon-icon"><img src="https://www.cnas.org.cn/favicon.ico" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display='none'; this.parentElement.innerHTML='🔗';"></div>
                 <h3 class="tool-name">CNAS</h3>
                 <p class="tool-desc">中国合格评定国家认可委员会</p>
                 <div class="tool-tags"><span class="tool-tag">认可</span></div>
+
             </a>
             <a href="https://www.21wecan.com/" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="继续教育,查阅">
                 <div class="tool-icon blue favicon-icon"><img src="https://www.21wecan.com/favicon.ico" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display='none'; this.parentElement.innerHTML='🔗';"></div>
                 <h3 class="tool-name">中国卫生人才网</h3>
                 <p class="tool-desc">国家卫生健康委人才交流服务中心</p>
                 <div class="tool-tags"><span class="tool-tag">继续教育</span><span class="tool-tag">查阅</span></div>
+
             </a>
             <a href="https://www.chsi.com.cn/" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="继续教育,查阅">
                 <div class="tool-icon blue favicon-icon"><img src="https://t4.chei.com.cn/chsi/favicon.ico" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display='none'; this.parentElement.innerHTML='🔗';"></div>
                 <h3 class="tool-name">学信网</h3>
                 <p class="tool-desc">中国高等教育学生信息网（学信网）</p>
                 <div class="tool-tags"><span class="tool-tag">继续教育</span><span class="tool-tag">查阅</span></div>
+
             </a>
             <a href="https://www.cmechina.net/cme/subject.jsp" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="继续教育">
                 <div class="tool-icon blue favicon-icon"><img src="https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260427/6O1f/200X200/image.png/webp" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display='none'; this.parentElement.innerHTML='🔗';"></div>
                 <h3 class="tool-name">好医生</h3>
                 <p class="tool-desc">好医生继续教育平台</p>
                 <div class="tool-tags"><span class="tool-tag">继续教育</span></div>
+
             </a>
             <a href="https://pxsxzj.xidian.edu.cn/portal/login" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="继续教育">
                 <div class="tool-icon blue favicon-icon"><img src="https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260513/3n6N/391X391/shiyuanedu.png/webp" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display='none'; this.parentElement.innerHTML='🔗';"></div>
                 <h3 class="tool-name">专业技术人员继续教育</h3>
                 <p class="tool-desc">陕西省专业技术人员继续教育学习平台</p>
                 <div class="tool-tags"><span class="tool-tag">继续教育</span></div>
+
             </a>
             <a href="https://www.91huayi.com/" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="继续教育">
                 <div class="tool-icon blue favicon-icon"><img src="https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260427/6tnU/32X32/image.png/webp" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display='none'; this.parentElement.innerHTML='🔗';"></div>
                 <h3 class="tool-name">华医网</h3>
                 <p class="tool-desc">华医网继续教育</p>
                 <div class="tool-tags"><span class="tool-tag">继续教育</span></div>
+
             </a>
             <button class="tool-card wxp-card" data-url="weixin://launchapplet/?app_id=wx8dce82d2550cd6d9" data-wxp-code="https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260517/U2Sg/430X430/%25E6%2598%259F%25E5%2585%2583CA.jpg/webp" data-wxp-title="星元CA小程序" data-tags="医院,小程序" aria-label="星元CA小程序 - 点击查看小程序码">
                 <div class="tool-icon blue">🔑</div>
                 <h3 class="tool-name">星元CA小程序</h3>
                 <p class="tool-desc">点击查看小程序码，在微信中长按识别即可打开</p>
                 <div class="tool-tags"><span class="tool-tag">医院</span><span class="tool-tag">小程序</span></div>
+
             </button>
         </div>
 
@@ -1476,7 +1585,7 @@ body {
              </div>
         </footer>
 
-        <p class="update-date">最后更新: 2026-05-18 09:42</p>
+        <p class="update-date">最后更新: 2026-05-18 10:25</p>
     </div>
 
     <!-- 二维码弹窗 -->
@@ -1688,6 +1797,65 @@ if (siteMenuToggle && siteMenu) {
         }
     });
 }
+
+// ============================================
+// 工具卡片 - 相关链接下拉菜单
+// ============================================
+(function initRelatedMenus() {
+    var toolsGrid = document.querySelector('.tools-grid');
+    if (!toolsGrid) return;
+
+    toolsGrid.addEventListener('click', function(e) {
+        var toggle = e.target.closest('.related-toggle');
+        if (toggle) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            var menu = toggle.parentElement.querySelector('.related-menu');
+            if (!menu) return;
+
+            document.querySelectorAll('.related-menu.open').forEach(function(m) {
+                if (m !== menu) {
+                    m.classList.remove('open');
+                    var otherToggle = m.parentElement.querySelector('.related-toggle');
+                    if (otherToggle) otherToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            var isOpen = menu.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', String(isOpen));
+            return;
+        }
+
+        var item = e.target.closest('.related-menu-item');
+        if (item) {
+            e.stopPropagation();
+            e.preventDefault();
+            var url = item.getAttribute('data-url');
+            if (url) window.open(url, '_blank');
+        }
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.tool-card-related')) {
+            document.querySelectorAll('.related-menu.open').forEach(function(menu) {
+                menu.classList.remove('open');
+                var toggle = menu.parentElement.querySelector('.related-toggle');
+                if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            });
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.related-menu.open').forEach(function(menu) {
+                menu.classList.remove('open');
+                var toggle = menu.parentElement.querySelector('.related-toggle');
+                if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            });
+        }
+    });
+})();
 
 // ============================================
 // 点击 Logo 展示当前页面二维码
@@ -2086,7 +2254,7 @@ function attachCardEvents() {
         // 点击记录访问
         card.addEventListener('click', function(e) {
             // 如果点击的是复制按钮，不记录访问
-            if (e.target.closest('.tool-card-copy')) return;
+            if (e.target.closest('.tool-card-copy, .related-toggle, .related-menu-item')) return;
             recordVisit(card);
         });
     });
