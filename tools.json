@@ -3,7 +3,7 @@
     {
       "name": "GitHub Pages",
       "url": "https://nokwiaey.github.io/xyjy/",
-      "desc": "主站，免费，长期可用，但国内速度不稳定",
+      "desc": "主站，长期可用，推荐收藏本站",
       "enabled": true
     },
     {
@@ -15,25 +15,25 @@
     {
       "name": "DevFile",
       "url": "https://devfile.cn/preview/s90emmf5/index.html",
-      "desc": "镜像站，访问速度较快，但需手动更新部署，更新可能滞后",
+      "desc": "镜像站，访问速度较快，手动更新，内容可能滞后",
       "enabled": true
     },
     {
       "name": "帽子云",
       "url": "https://xyjy-rbw5h01el.maozi.io/",
-      "desc": "镜像站，备选",
+      "desc": "镜像站，速度尚可，备用",
       "enabled": true
     },
     {
       "name": "Vercel",
       "url": "https://xyjy-tools.vercel.app/",
-      "desc": "镜像站，备选",
+      "desc": "镜像站，备用",
       "enabled": true
     },
     {
       "name": "Netlify",
       "url": "https://xyjy.netlify.app/",
-      "desc": "镜像站，备选，每月免费构建额度有限",
+      "desc": "镜像站，每月免费构建额度有限，备用",
       "enabled": true
     }
   ],
