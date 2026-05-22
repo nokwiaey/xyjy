@@ -1453,11 +1453,13 @@ body.related-menu-backdrop::before {
         <!-- 标签筛选器 -->
         <div class="tag-filters">
 <button class="tag-filter active" data-tag="all">全部</button>
+            <button class="tag-filter" data-tag="PDF">PDF</button>
             <button class="tag-filter" data-tag="⭐常用">⭐常用</button>
             <button class="tag-filter" data-tag="交通">交通</button>
             <button class="tag-filter" data-tag="医院">医院</button>
             <button class="tag-filter" data-tag="室间质评">室间质评</button>
             <button class="tag-filter" data-tag="小程序">小程序</button>
+            <button class="tag-filter" data-tag="工具">工具</button>
             <button class="tag-filter" data-tag="查阅">查阅</button>
             <button class="tag-filter" data-tag="标准">标准</button>
             <button class="tag-filter" data-tag="检验">检验</button>
@@ -1747,6 +1749,24 @@ body.related-menu-backdrop::before {
                 <div class="tool-tags"><span class="tool-tag">交通</span><span class="tool-tag">查阅</span></div>
 
             </a>
+            <a href="https://www.sejda.com/zh/" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="PDF,工具">
+                <div class="tool-icon green favicon-icon"><img src="https://www.sejda.com/images/icon_128.png" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display='none'; this.parentElement.innerHTML='🔗';"></div>
+                <h3 class="tool-name">Sejda PDF 在线工具</h3>
+                <p class="tool-desc">拆分双页布局扫描件，A3 转为双 A4 或 A4 转为双 A5</p>
+                <div class="tool-tags"><span class="tool-tag">PDF</span><span class="tool-tag">工具</span></div>
+                    <div class="tool-card-related">
+                        <button class="related-toggle" aria-label="相关链接" aria-expanded="false" aria-controls="relatedMenu_20" title="相关链接">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle cx="5" cy="12" r="2" fill="currentColor"/>
+                                <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                                <circle cx="19" cy="12" r="2" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <div class="related-menu" id="relatedMenu_20" role="menu">
+                    <span class="related-menu-item" data-url="https://www.sejda.com/zh/split-pdf-down-the-middle" role="menuitem" tabindex="0">从中间拆分 PDF 页面</span>
+                        </div>
+                    </div>
+            </a>
         </div>
 
         <!-- 页脚 -->
@@ -1771,7 +1791,7 @@ body.related-menu-backdrop::before {
              </div>
         </footer>
 
-        <p class="update-date">最后更新: 2026-05-20 12:09</p>
+        <p class="update-date">最后更新: 2026-05-22 22:57</p>
     </div>
 
     <!-- 二维码弹窗 -->
