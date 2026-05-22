@@ -369,6 +369,23 @@
           "url": "https://www.sejda.com/zh/split-pdf-down-the-middle"
         }
       ]
+    },
+    {
+      "title": "PDF24 Tools",
+      "url": "https://tools.pdf24.org/zh/",
+      "desc": "免费且易于使用的在线PDF工具",
+      "icon": "https://tools.pdf24.org/static/img/favIcons/sheep.svg?v=69a9889c",
+      "color": "green",
+      "tags": [
+        "PDF",
+        "工具"
+      ],
+      "relatedLinks": [
+        {
+          "name": "将PDF页面裁切为两半",
+          "url": "https://tools.pdf24.org/zh/halve-pdf-pages"
+        }
+      ]
     }
   ]
 }
