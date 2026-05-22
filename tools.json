@@ -352,6 +352,22 @@
         "交通",
         "查阅"
       ]
+    },
+    {
+      "title": "Sejda PDF 在线工具",
+      "url": "https://www.sejda.com/zh/",
+      "desc": "拆分双页布局扫描件，A3 转为双 A4 或 A4 转为双 A5",
+      "icon": "🚇",
+      "color": "green",
+      "tags": [
+        "PDF",
+        "工具"
+      ],
+      "relatedLinks": [
+        {
+          "name": "从中间拆分 PDF 页面",
+          "url": "https://www.sejda.com/zh/split-pdf-down-the-middle"
+        }
     }
   ]
 }
