@@ -457,6 +457,7 @@ body.related-menu-backdrop::before {
     right: 0;
     height: 4px;
     background: linear-gradient(90deg, #1a5fb4, #3584e4);
+    border-radius: 10px 10px 0 0;
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
