@@ -386,6 +386,40 @@
           "url": "https://tools.pdf24.org/zh/halve-pdf-pages"
         }
       ]
+    },
+    {
+      "title": "iLovePDF",
+      "url": "https://www.ilovepdf.com/zh-cn",
+      "desc": "PDF爱好者的在线工具",
+      "icon": "https://www.ilovepdf.com/img/favicons-pdf/favicon-32x32.png",
+      "color": "green",
+      "tags": [
+        "PDF",
+        "工具"
+      ],
+      "relatedLinks": [
+        {
+          "name": "iLoveIMG",
+          "url": "https://www.iloveimg.com/zh-cn"
+        }
+      ]
+    },
+    {
+      "title": "iLoveIMG",
+      "url": "https://www.iloveimg.com/zh-cn",
+      "desc": "可批量编辑图片的所有工具",
+      "icon": "https://www.iloveimg.com/img/favicons-img/favicon-16x16.png",
+      "color": "green",
+      "tags": [
+        "图片",
+        "工具"
+      ],
+      "relatedLinks": [
+        {
+          "name": "iLovePDF",
+          "url": "https://www.ilovepdf.com/zh-cn"
+        }
+      ]
     }
   ]
 }
