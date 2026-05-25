@@ -174,7 +174,7 @@ body {
 .today-progress-path {
     stroke: #1a5fb4;
     stroke-linecap: round;
-    transition: stroke-dashoffset 0.35s ease;
+    will-change: stroke-dashoffset, stroke-dasharray;
 }
 
 .today-strip-item {

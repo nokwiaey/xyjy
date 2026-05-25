@@ -781,6 +781,9 @@ let todayProgressPathLength = 0;
 let todayProgressWidth = 0;
 let todayProgressHeight = 0;
 let countdownMode = false;
+let animationOffset = 0;
+let lastFrameTime = null;
+const PROGRESS_SPIN_DURATION = 2500;
 
 const DAY_MINUTES = 24 * 60;
 const MORNING_START = 8 * 60;
@@ -916,25 +919,40 @@ function updateProgressPath() {
     todayProgressPath.style.strokeDasharray = String(todayProgressPathLength);
 }
 
-function updateShiftProgress() {
-    if (!todayProgressPath) return;
-
+function updateProgressAnimation(timestamp) {
     updateProgressPath();
-    if (!todayProgressPathLength) return;
+
+    if (!todayProgressPathLength) {
+        lastFrameTime = null;
+        requestAnimationFrame(updateProgressAnimation);
+        return;
+    }
+
+    if (lastFrameTime !== null) {
+        var dt = Math.min(timestamp - lastFrameTime, 100);
+        var speed = todayProgressPathLength / PROGRESS_SPIN_DURATION;
+        animationOffset = (animationOffset + speed * dt) % todayProgressPathLength;
+    }
+    lastFrameTime = timestamp;
 
     var progress = Math.max(0, Math.min(100, getShiftProgress(new Date())));
-    todayProgressPath.style.strokeDashoffset = String(todayProgressPathLength * (1 - progress / 100));
+    var dashLength = Math.max(8, todayProgressPathLength * progress / 100);
+
+    todayProgressPath.style.strokeDasharray = dashLength + ' ' + todayProgressPathLength;
+    todayProgressPath.style.strokeDashoffset = String(-animationOffset);
+
+    requestAnimationFrame(updateProgressAnimation);
 }
 
 function updateTodayStrip() {
     formatTodayInfo();
-    updateShiftProgress();
 }
 
 function initTodayStrip() {
-    updateTodayStrip();
-    setInterval(updateTodayStrip, 1000);
-    window.addEventListener('resize', updateShiftProgress, { passive: true });
+    formatTodayInfo();
+    requestAnimationFrame(updateProgressAnimation);
+    setInterval(formatTodayInfo, 1000);
+    window.addEventListener('resize', updateProgressPath, { passive: true });
 
     if (todayTime) {
         todayTime.style.cursor = 'pointer';
@@ -942,7 +960,7 @@ function initTodayStrip() {
         todayTime.addEventListener('click', function () {
             countdownMode = !countdownMode;
             todayTime.setAttribute('title', countdownMode ? '点击恢复时钟' : '点击切换倒计时');
-            updateTodayStrip();
+            formatTodayInfo();
         });
     }
 }
