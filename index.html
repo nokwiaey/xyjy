@@ -1501,7 +1501,7 @@ body.related-menu-backdrop::before {
                 <div class="tool-tags"><span class="tool-tag">⭐常用</span><span class="tool-tag">查阅</span><span class="tool-tag">检验</span></div>
 
             </a>
-            <a href="html/data/2026-05-schedule.pdf" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="⭐常用,查阅">
+            <a href="html/data/2026-05-schedule.pdf" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="⭐常用,查阅" download="2026年05月排班表.pdf">
                 <div class="tool-icon green">📅</div>
                 <h3 class="tool-name">检验科排班表</h3>
                 <p class="tool-desc">2026年05月排班表.pdf</p>
@@ -1515,10 +1515,10 @@ body.related-menu-backdrop::before {
                             </svg>
                         </button>
                         <div class="related-menu" id="relatedMenu_2" role="menu">
-                    <span class="related-menu-item" data-url="html/data/2026-05-schedule.pdf" role="menuitem" tabindex="0">2026年05月排班表.pdf</span>
-                    <span class="related-menu-item" data-url="html/data/2026-may-day-schedule.pdf" role="menuitem" tabindex="0">2026五一排班表.pdf</span>
-                    <span class="related-menu-item" data-url="html/data/2026-06-schedule-new.pdf" role="menuitem" tabindex="0">2026年06月排班表（新）.pdf</span>
-                    <span class="related-menu-item" data-url="html/data/2026-dragon-boat-schedule-new.pdf" role="menuitem" tabindex="0">2026年端午节排班表（新）.pdf</span>
+                    <span class="related-menu-item" data-url="html/data/2026-05-schedule.pdf" data-download="2026年05月排班表.pdf" role="menuitem" tabindex="0">2026年05月排班表.pdf</span>
+                    <span class="related-menu-item" data-url="html/data/2026-may-day-schedule.pdf" data-download="2026五一排班表.pdf" role="menuitem" tabindex="0">2026五一排班表.pdf</span>
+                    <span class="related-menu-item" data-url="html/data/2026-06-schedule-new.pdf" data-download="2026年06月排班表（新）.pdf" role="menuitem" tabindex="0">2026年06月排班表（新）.pdf</span>
+                    <span class="related-menu-item" data-url="html/data/2026-dragon-boat-schedule-new.pdf" data-download="2026年端午节排班表（新）.pdf" role="menuitem" tabindex="0">2026年端午节排班表（新）.pdf</span>
                         </div>
                     </div>
             </a>
@@ -1855,7 +1855,7 @@ body.related-menu-backdrop::before {
              </div>
         </footer>
 
-        <p class="update-date">最后更新: 2026-05-25 16:18</p>
+        <p class="update-date">最后更新: 2026-05-25 16:26</p>
     </div>
 
     <!-- 二维码弹窗 -->
@@ -2123,7 +2123,21 @@ if (siteMenuToggle && siteMenu) {
             e.stopPropagation();
             e.preventDefault();
             var url = item.getAttribute('data-url');
-            if (url) window.open(url, '_blank');
+            var downloadName = item.getAttribute('data-download');
+            if (url) {
+                if (downloadName) {
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = downloadName;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                } else {
+                    window.open(url, '_blank');
+                }
+            }
             closeAllRelatedMenus();
         }
     });
