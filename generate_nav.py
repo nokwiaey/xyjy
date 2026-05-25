@@ -203,9 +203,7 @@ def generate_html(tools, site_urls):
         if related_links:
             menu_id = f'relatedMenu_{i}'
             menu_items = '\n'.join([
-                f'                    <span class="related-menu-item" data-url="{encode_url(rl["url"])}" data-download="{rl["name"]}" role="menuitem" tabindex="0">{rl["name"]}</span>'
-                if not rl["url"].startswith('http')
-                else f'                    <span class="related-menu-item" data-url="{encode_url(rl["url"])}" role="menuitem" tabindex="0">{rl["name"]}</span>'
+                f'                    <span class="related-menu-item" data-url="{encode_url(rl["url"])}" role="menuitem" tabindex="0">{rl["name"]}</span>'
                 for rl in related_links
             ])
             related_html = f'''                    <div class="tool-card-related">
@@ -231,8 +229,7 @@ def generate_html(tools, site_urls):
 {related_html}
             </button>'''
         else:
-            download_attr = f' download="{desc}"' if url.endswith('.pdf') else ''
-            card = f'''            <a href="{encode_url(url)}" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="{tags_attr}"{download_attr}>
+            card = f'''            <a href="{encode_url(url)}" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="{tags_attr}">
                 {icon_html}
                 <h3 class="tool-name">{title}</h3>
                 <p class="tool-desc">{desc}</p>
