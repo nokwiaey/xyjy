@@ -206,9 +206,9 @@ body {
 }
 
 .today-progress-food {
-    fill: #2ea043;
-    stroke: var(--bg-card);
-    stroke-width: 1.5;
+    fill: rgba(26, 95, 180, 0.35);
+    stroke: transparent;
+    stroke-width: 0;
     vector-effect: non-scaling-stroke;
 }
 
@@ -1870,7 +1870,7 @@ body.related-menu-backdrop::before {
              </div>
         </footer>
 
-        <p class="update-date">最后更新: 2026-05-25 18:34</p>
+        <p class="update-date">最后更新: 2026-05-25 18:37</p>
     </div>
 
     <!-- 二维码弹窗 -->
@@ -2700,7 +2700,7 @@ let animationOffset = 0;
 let lastFrameTime = null;
 const PROGRESS_SPIN_DURATION = 6000; // 6秒一圈
 const SNAKE_MIN_LENGTH = 8;
-const FOOD_RADIUS = 3;
+const FOOD_RADIUS = 2.2;
 let snakeLength = 0;
 let foods = [];
 let lastSecondKey = null;
