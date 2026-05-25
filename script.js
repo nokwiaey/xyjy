@@ -787,6 +787,11 @@ let countdownMode = false;
 let animationOffset = 0;
 let lastFrameTime = null;
 const PROGRESS_SPIN_DURATION = 2500;
+const SNAKE_MIN_LENGTH = 8;
+const FOOD_RADIUS = 3;
+let snakeLength = 0;
+let foods = [];
+let lastSecondKey = null;
 
 if (todayProgressPathExtra) {
     todayProgressPathExtra.id = 'todayProgressPathExtra';
@@ -815,6 +820,10 @@ function getMinutes(date) {
 
 function pad2(value) {
     return String(value).padStart(2, '0');
+}
+
+function getSecondKey(date) {
+    return Math.floor(date.getTime() / 1000);
 }
 
 function getShiftProgress(now) {
@@ -928,6 +937,11 @@ function updateProgressPath() {
     todayProgressPathLength = todayProgressPath.getTotalLength();
     todayProgressWidth = width;
     todayProgressHeight = height;
+    snakeLength = getCurrentSnakeLength();
+    foods.forEach(function (food) {
+        food.element.remove();
+    });
+    foods = [];
     todayProgressPath.style.strokeDasharray = String(todayProgressPathLength);
     if (todayProgressPathExtra) {
         todayProgressPathExtra.style.display = 'none';
@@ -957,6 +971,80 @@ function drawProgressSegment(start, length) {
     }
 }
 
+function isPositionInsideSnake(position, start, length) {
+    if (!todayProgressPathLength) return false;
+
+    var pathLength = todayProgressPathLength;
+    var normalizedPosition = ((position % pathLength) + pathLength) % pathLength;
+    var normalizedStart = ((start % pathLength) + pathLength) % pathLength;
+    var distanceFromTail = (normalizedPosition - normalizedStart + pathLength) % pathLength;
+
+    return distanceFromTail <= length;
+}
+
+function getCurrentSnakeLength() {
+    if (!todayProgressPathLength) return 0;
+
+    var progress = Math.max(0, Math.min(100, getShiftProgress(new Date())));
+    return Math.max(SNAKE_MIN_LENGTH, todayProgressPathLength * progress / 100);
+}
+
+function createFood(position) {
+    if (!todayProgressSvg || !todayProgressPathLength) return;
+
+    var point = todayProgressPath.getPointAtLength(position);
+    var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('class', 'today-progress-food');
+    circle.setAttribute('r', String(FOOD_RADIUS));
+    circle.setAttribute('cx', String(point.x));
+    circle.setAttribute('cy', String(point.y));
+    todayProgressSvg.insertBefore(circle, todayProgressPath);
+    foods.push({ position: position, element: circle });
+}
+
+function spawnFood() {
+    if (!todayProgressPathLength) return;
+
+    var pathLength = todayProgressPathLength;
+    var safeGap = Math.max(FOOD_RADIUS * 4, pathLength * 0.04);
+    var tail = (animationOffset - snakeLength + pathLength) % pathLength;
+    var availableLength = pathLength - snakeLength - safeGap * 2;
+    if (availableLength <= 0) return;
+
+    for (var i = 0; i < 12; i++) {
+        var position = Math.random() * pathLength;
+        var tooCloseToFood = foods.some(function (food) {
+            var distance = Math.abs(food.position - position);
+            return Math.min(distance, pathLength - distance) < safeGap;
+        });
+
+        if (!isPositionInsideSnake(position, tail, snakeLength + safeGap) && !tooCloseToFood) {
+            createFood(position);
+            return;
+        }
+    }
+}
+
+function eatFoods(previousHead, currentHead) {
+    if (!todayProgressPathLength || !foods.length) return;
+
+    var pathLength = todayProgressPathLength;
+    var traveled = (currentHead - previousHead + pathLength) % pathLength;
+    if (traveled <= 0) return;
+
+    foods = foods.filter(function (food) {
+        var distanceFromPreviousHead = (food.position - previousHead + pathLength) % pathLength;
+        var eaten = distanceFromPreviousHead <= traveled + FOOD_RADIUS;
+
+        if (eaten) {
+            food.element.remove();
+            snakeLength = getCurrentSnakeLength();
+        }
+
+        return !eaten;
+    });
+}
+
 function updateProgressAnimation(timestamp) {
     updateProgressPath();
 
@@ -966,6 +1054,18 @@ function updateProgressAnimation(timestamp) {
         return;
     }
 
+    var now = new Date();
+    var secondKey = getSecondKey(now);
+    var shouldTickSecond = secondKey !== lastSecondKey;
+
+    if (shouldTickSecond) {
+        lastSecondKey = secondKey;
+        formatTodayInfo();
+    }
+
+    snakeLength = getCurrentSnakeLength();
+    var previousHead = animationOffset;
+
     if (lastFrameTime !== null) {
         var dt = Math.min(timestamp - lastFrameTime, 100);
         var speed = todayProgressPathLength / PROGRESS_SPIN_DURATION;
@@ -973,10 +1073,12 @@ function updateProgressAnimation(timestamp) {
     }
     lastFrameTime = timestamp;
 
-    var progress = Math.max(0, Math.min(100, getShiftProgress(new Date())));
-    var dashLength = Math.max(8, todayProgressPathLength * progress / 100);
+    if (shouldTickSecond) {
+        spawnFood();
+    }
+    eatFoods(previousHead, animationOffset);
 
-    drawProgressSegment(animationOffset, dashLength);
+    drawProgressSegment(animationOffset - snakeLength, snakeLength);
 
     requestAnimationFrame(updateProgressAnimation);
 }
@@ -988,7 +1090,6 @@ function updateTodayStrip() {
 function initTodayStrip() {
     formatTodayInfo();
     requestAnimationFrame(updateProgressAnimation);
-    setInterval(formatTodayInfo, 1000);
     window.addEventListener('resize', updateProgressPath, { passive: true });
 
     if (todayTime) {

@@ -179,6 +179,13 @@ body {
     will-change: stroke-dashoffset, stroke-dasharray;
 }
 
+.today-progress-food {
+    fill: #2ea043;
+    stroke: var(--bg-card);
+    stroke-width: 1.5;
+    vector-effect: non-scaling-stroke;
+}
+
 .today-strip-item {
     white-space: nowrap;
     position: relative;
