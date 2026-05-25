@@ -226,7 +226,21 @@ if (siteMenuToggle && siteMenu) {
             e.stopPropagation();
             e.preventDefault();
             var url = item.getAttribute('data-url');
-            if (url) window.open(url, '_blank');
+            var downloadName = item.getAttribute('data-download');
+            if (url) {
+                if (downloadName) {
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = downloadName;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                } else {
+                    window.open(url, '_blank');
+                }
+            }
             closeAllRelatedMenus();
         }
     });
