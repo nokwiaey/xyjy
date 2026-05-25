@@ -4,6 +4,8 @@ const CACHE_NAME = 'xyjy-tools-v4';
 // 需要预缓存的静态资源
 const PRECACHE_URLS = [
     './index.html',
+    './manifest.json',
+    './icon.svg',
     './html/phone-directory.html',
     './html/lab-test-query.html',
     './html/weekend-scheduler.html',

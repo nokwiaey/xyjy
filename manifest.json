@@ -1,0 +1,19 @@
+{
+  "name": "星元检验工具箱",
+  "short_name": "星检工具箱",
+  "description": "专业、便捷的检验工具集合，助力高效工作",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f5f7fa",
+  "theme_color": "#1a5fb4",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "lang": "zh-CN"
+}

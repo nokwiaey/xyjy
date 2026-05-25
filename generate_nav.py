@@ -245,6 +245,13 @@ def generate_html(tools, site_urls):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a5fb4">
+    <link rel="manifest" href="manifest.json">
+    <!-- iOS PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="星检工具箱">
+    <link rel="apple-touch-icon" href="icon.svg">
     <title>星元检验工具箱</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231a5fb4'/%3E%3Cstop offset='100%25' stop-color='%233584e4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='url(%23bg)'/%3E%3Cg transform='translate(4,4)'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5' fill='white'/%3E%3C/g%3E%3C/svg%3E">
     <!-- Open Graph Meta 标签 - 用于微信分享卡片 -->
