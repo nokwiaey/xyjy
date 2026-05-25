@@ -11,6 +11,7 @@ import subprocess
 import sys
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+from urllib.parse import quote, urlparse, urlunparse
 
 # 设置 stdout 编码为 utf-8
 sys.stdout.reconfigure(encoding='utf-8')
@@ -67,6 +68,14 @@ def validate_tools(data):
             seen_urls[url] = idx
 
     return errors
+
+
+def encode_url(url):
+    """对 URL 中的非 ASCII 字符进行百分号编码，确保浏览器兼容性"""
+    parsed = urlparse(url)
+    encoded_path = quote(parsed.path, safe='/:@!$&\'()*+,;=-._~')
+    encoded_query = quote(parsed.query, safe='/:@!$&\'()*+,;=-._~?=%')
+    return urlunparse((parsed.scheme, parsed.netloc, encoded_path, parsed.params, encoded_query, parsed.fragment))
 
 
 def parse_json(file_path):
@@ -194,7 +203,7 @@ def generate_html(tools, site_urls):
         if related_links:
             menu_id = f'relatedMenu_{i}'
             menu_items = '\n'.join([
-                f'                    <span class="related-menu-item" data-url="{rl["url"]}" role="menuitem" tabindex="0">{rl["name"]}</span>'
+                f'                    <span class="related-menu-item" data-url="{encode_url(rl["url"])}" role="menuitem" tabindex="0">{rl["name"]}</span>'
                 for rl in related_links
             ])
             related_html = f'''                    <div class="tool-card-related">
@@ -212,7 +221,7 @@ def generate_html(tools, site_urls):
 
         # 有小程序码的工具渲染为 button（点击弹窗），否则渲染为 a 链接
         if wxp_code:
-            card = f'''            <button class="tool-card wxp-card" data-url="{url}" data-wxp-code="{wxp_code}" data-wxp-title="{title}" data-tags="{tags_attr}" aria-label="{title} - 点击查看小程序码">
+            card = f'''            <button class="tool-card wxp-card" data-url="{encode_url(url)}" data-wxp-code="{wxp_code}" data-wxp-title="{title}" data-tags="{tags_attr}" aria-label="{title} - 点击查看小程序码">
                 {icon_html}
                 <h3 class="tool-name">{title}</h3>
                 <p class="tool-desc">{desc}</p>
@@ -220,7 +229,7 @@ def generate_html(tools, site_urls):
 {related_html}
             </button>'''
         else:
-            card = f'''            <a href="{url}" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="{tags_attr}">
+            card = f'''            <a href="{encode_url(url)}" class="tool-card" target="_blank" rel="noopener noreferrer" data-tags="{tags_attr}">
                 {icon_html}
                 <h3 class="tool-name">{title}</h3>
                 <p class="tool-desc">{desc}</p>
