@@ -63,7 +63,7 @@
     },
     {
       "title": "检验科排班表",
-      "url": "html/data/2026年05月排班表.pdf",
+      "url": "html/data/2026-05-schedule.pdf",
       "desc": "2026年05月排班表.pdf",
       "icon": "📅",
       "color": "green",
@@ -74,19 +74,19 @@
       "relatedLinks": [
         {
           "name": "2026年05月排班表.pdf",
-          "url": "html/data/2026年05月排班表.pdf"
+          "url": "html/data/2026-05-schedule.pdf"
         },
         {
           "name": "2026五一排班表.pdf",
-          "url": "html/data/2026五一排班表.pdf"
+          "url": "html/data/2026-may-day-schedule.pdf"
         },
         {
           "name": "2026年06月排班表（新）.pdf",
-          "url": "html/data/2026年06月排班表（新）.pdf"
+          "url": "html/data/2026-06-schedule-new.pdf"
         },
         {
           "name": "2026年端午节排班表（新）.pdf",
-          "url": "html/data/2026年端午节排班表（新）.pdf"
+          "url": "html/data/2026-dragon-boat-schedule-new.pdf"
         }
       ]
     },
