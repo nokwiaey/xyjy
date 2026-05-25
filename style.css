@@ -180,9 +180,9 @@ body {
 }
 
 .today-progress-food {
-    fill: #2ea043;
-    stroke: var(--bg-card);
-    stroke-width: 1.5;
+    fill: rgba(26, 95, 180, 0.35);
+    stroke: transparent;
+    stroke-width: 0;
     vector-effect: non-scaling-stroke;
 }
 
