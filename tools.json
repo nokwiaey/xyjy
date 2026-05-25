@@ -34,7 +34,7 @@
       "name": "Netlify",
       "url": "https://xyjy.netlify.app/",
       "desc": "镜像站，每月免费构建额度有限，备用",
-      "enabled": true
+      "enabled": false
     }
   ],
   "tools": [
