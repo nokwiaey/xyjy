@@ -777,6 +777,9 @@ const todayStrip = document.querySelector('.today-strip');
 const todayProgressSvg = document.getElementById('todayProgressSvg');
 const todayProgressTrack = document.getElementById('todayProgressTrack');
 const todayProgressPath = document.getElementById('todayProgressPath');
+const todayProgressPathExtra = todayProgressSvg && todayProgressPath
+    ? todayProgressPath.cloneNode(false)
+    : null;
 let todayProgressPathLength = 0;
 let todayProgressWidth = 0;
 let todayProgressHeight = 0;
@@ -784,6 +787,12 @@ let countdownMode = false;
 let animationOffset = 0;
 let lastFrameTime = null;
 const PROGRESS_SPIN_DURATION = 2500;
+
+if (todayProgressPathExtra) {
+    todayProgressPathExtra.id = 'todayProgressPathExtra';
+    todayProgressPathExtra.classList.add('today-progress-path-extra');
+    todayProgressSvg.appendChild(todayProgressPathExtra);
+}
 
 const DAY_MINUTES = 24 * 60;
 const MORNING_START = 8 * 60;
@@ -913,10 +922,39 @@ function updateProgressPath() {
     todayProgressSvg.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
     todayProgressTrack.setAttribute('d', path);
     todayProgressPath.setAttribute('d', path);
+    if (todayProgressPathExtra) {
+        todayProgressPathExtra.setAttribute('d', path);
+    }
     todayProgressPathLength = todayProgressPath.getTotalLength();
     todayProgressWidth = width;
     todayProgressHeight = height;
     todayProgressPath.style.strokeDasharray = String(todayProgressPathLength);
+    if (todayProgressPathExtra) {
+        todayProgressPathExtra.style.display = 'none';
+    }
+}
+
+function drawProgressSegment(start, length) {
+    if (!todayProgressPathLength) return;
+
+    var pathLength = todayProgressPathLength;
+    var segmentStart = ((start % pathLength) + pathLength) % pathLength;
+    var segmentLength = Math.min(length, pathLength);
+    var firstLength = Math.min(segmentLength, pathLength - segmentStart);
+    var secondLength = segmentLength - firstLength;
+
+    todayProgressPath.style.strokeDasharray = firstLength + ' ' + pathLength;
+    todayProgressPath.style.strokeDashoffset = String(-segmentStart);
+
+    if (!todayProgressPathExtra) return;
+
+    if (secondLength > 0.01) {
+        todayProgressPathExtra.style.display = '';
+        todayProgressPathExtra.style.strokeDasharray = secondLength + ' ' + pathLength;
+        todayProgressPathExtra.style.strokeDashoffset = '0';
+    } else {
+        todayProgressPathExtra.style.display = 'none';
+    }
 }
 
 function updateProgressAnimation(timestamp) {
@@ -938,8 +976,7 @@ function updateProgressAnimation(timestamp) {
     var progress = Math.max(0, Math.min(100, getShiftProgress(new Date())));
     var dashLength = Math.max(8, todayProgressPathLength * progress / 100);
 
-    todayProgressPath.style.strokeDasharray = dashLength + ' ' + todayProgressPathLength;
-    todayProgressPath.style.strokeDashoffset = String(-animationOffset);
+    drawProgressSegment(animationOffset, dashLength);
 
     requestAnimationFrame(updateProgressAnimation);
 }
