@@ -13,12 +13,6 @@
       "enabled": true
     },
     {
-      "name": "DevFile",
-      "url": "https://devfile.cn/preview/fjar6lco/index.html",
-      "desc": "镜像站，访问速度较快，手动更新，内容可能滞后",
-      "enabled": true
-    },
-    {
       "name": "帽子云",
       "url": "https://xyjy-rbw5h01el.maozi.io/",
       "desc": "镜像站，速度尚可，备用",
@@ -28,6 +22,12 @@
       "name": "Vercel",
       "url": "https://xyjy-tools.vercel.app/",
       "desc": "镜像站，备用",
+      "enabled": true
+    },
+    {
+      "name": "DevFile",
+      "url": "https://devfile.cn/preview/fjar6lco/index.html",
+      "desc": "镜像站，访问速度较快，手动更新，内容可能滞后",
       "enabled": true
     },
     {
