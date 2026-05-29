@@ -62,41 +62,6 @@
       ]
     },
     {
-      "title": "检验科排班表",
-      "url": "html/data/2026-05-schedule.pdf",
-      "desc": "2026年05月排班表.pdf",
-      "icon": "📅",
-      "color": "green",
-      "tags": [
-        "⭐常用",
-        "查阅"
-      ],
-      "relatedLinks": [
-        {
-          "name": "2026五一排班表.pdf",
-          "url": "html/data/2026-may-day-schedule.pdf"
-        },
-        {
-          "name": "2026年06月排班表（新）.pdf",
-          "url": "html/data/2026-06-schedule-new.pdf"
-        },
-        {
-          "name": "2026年端午节排班表（新）.pdf",
-          "url": "html/data/2026-dragon-boat-schedule-new.pdf"
-        }
-      ]
-    },
-    {
-      "title": "周末分时段排班工具",
-      "url": "html/weekend-scheduler.html",
-      "desc": "智能分配时间，灵活调整时段，轻松管理周末排班",
-      "icon": "🧮",
-      "color": "orange",
-      "tags": [
-        "计算"
-      ]
-    },
-    {
       "title": "文档中心",
       "url": "http://172.30.3.58:9991/",
       "desc": "适用于院内局域网快速访问，院外互联网入口见右下角",
@@ -129,6 +94,41 @@
           "name": "国家计量技术规范全文公开系统",
           "url": "https://jjg.spc.org.cn/"
         }
+      ]
+    },
+    {
+      "title": "检验科排班表",
+      "url": "html/data/2026-05-schedule.pdf",
+      "desc": "2026年05月排班表.pdf",
+      "icon": "📅",
+      "color": "green",
+      "tags": [
+        "⭐常用",
+        "查阅"
+      ],
+      "relatedLinks": [
+        {
+          "name": "2026五一排班表.pdf",
+          "url": "html/data/2026-may-day-schedule.pdf"
+        },
+        {
+          "name": "2026年06月排班表（新）.pdf",
+          "url": "html/data/2026-06-schedule-new.pdf"
+        },
+        {
+          "name": "2026年端午节排班表（新）.pdf",
+          "url": "html/data/2026-dragon-boat-schedule-new.pdf"
+        }
+      ]
+    },
+    {
+      "title": "周末分时段排班工具",
+      "url": "html/weekend-scheduler.html",
+      "desc": "智能分配时间，灵活调整时段，轻松管理周末排班",
+      "icon": "🧮",
+      "color": "orange",
+      "tags": [
+        "计算"
       ]
     },
     {
