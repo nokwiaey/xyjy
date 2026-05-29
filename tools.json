@@ -91,6 +91,10 @@
       ],
       "relatedLinks": [
         {
+          "name": "全国团体标准信息平台",
+          "url": "https://www.ttbz.org.cn/"
+        },
+        {
           "name": "国家计量技术规范全文公开系统",
           "url": "https://jjg.spc.org.cn/"
         }
