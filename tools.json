@@ -63,8 +63,8 @@
     },
     {
       "title": "文档中心",
-      "url": "http://172.30.3.58:9991/",
-      "desc": "适用于院内局域网快速访问，院外互联网入口见右下角",
+      "url": "https://docs.dfly.site/login",
+      "desc": "局域网入口见右下角",
       "icon": "🗂️",
       "color": "purple",
       "tags": [
@@ -73,8 +73,8 @@
       ],
       "relatedLinks": [
         {
-          "name": "文档中心（院外）",
-          "url": "https://docs.dfly.site/login"
+          "name": "文档中心（局域网）",
+          "url": "http://172.30.3.58:9991/"
         }
       ]
     },
