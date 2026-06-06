@@ -155,6 +155,19 @@
       ]
     },
     {
+      "title": "室间质评结果分析",
+      "url": "html/data/室间质评结果分析v1.6.xlsx",
+      "desc": "室间质评结果分析v1.6.xlsx",
+      "icon": "🔢",
+      "color": "green",
+      "tags": [
+        "计算",
+        "检验",
+        "质控",
+        "工具"
+      ]
+    },
+    {
       "title": "医院官网",
       "url": "https://www.ylxyyy.com/",
       "desc": "星元医院官网",
@@ -449,16 +462,6 @@
           "name": "PaperStudio - 打印纸设计工具",
           "url": "https://jingguanzhang.github.io/PaperStudio/"
         }
-      ]
-    },
-    {
-      "title": "室间质评结果分析",
-      "url": "html/data/室间质评结果分析v1.6.xlsx",
-      "desc": "室间质评结果分析v1.6.xlsx",
-      "icon": "🔢",
-      "color": "green",
-      "tags": [
-        "工具"
       ]
     }
   ]
