@@ -46,7 +46,7 @@
       "color": "blue",
       "tags": [
         "⭐常用",
-        "查阅"
+        "院内服务"
       ]
     },
     {
@@ -57,8 +57,8 @@
       "color": "green",
       "tags": [
         "⭐常用",
-        "查阅",
-        "检验"
+        "院内服务",
+        "检验业务"
       ]
     },
     {
@@ -69,7 +69,7 @@
       "color": "purple",
       "tags": [
         "⭐常用",
-        "查阅"
+        "院内服务"
       ],
       "relatedLinks": [
         {
@@ -86,8 +86,7 @@
       "color": "red",
       "tags": [
         "⭐常用",
-        "标准",
-        "查阅"
+        "标准认可"
       ],
       "relatedLinks": [
         {
@@ -108,7 +107,8 @@
       "color": "green",
       "tags": [
         "⭐常用",
-        "查阅"
+        "院内服务",
+        "排班"
       ],
       "relatedLinks": [
         {
@@ -128,7 +128,8 @@
       "icon": "🧮",
       "color": "orange",
       "tags": [
-        "计算"
+        "排班",
+        "计算工具"
       ]
     },
     {
@@ -138,8 +139,8 @@
       "icon": "🔢",
       "color": "red",
       "tags": [
-        "计算",
-        "检验"
+        "检验业务",
+        "计算工具"
       ]
     },
     {
@@ -149,9 +150,9 @@
       "icon": "🎯",
       "color": "red",
       "tags": [
-        "计算",
-        "检验",
-        "质控"
+        "检验业务",
+        "质控评价",
+        "计算工具"
       ]
     },
     {
@@ -161,10 +162,10 @@
       "icon": "🔢",
       "color": "green",
       "tags": [
-        "计算",
-        "检验",
-        "质控",
-        "工具"
+        "检验业务",
+        "质控评价",
+        "室间质评",
+        "计算工具"
       ]
     },
     {
@@ -174,7 +175,7 @@
       "icon": "https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260427/0awB/32X32/image.png/webp",
       "color": "red",
       "tags": [
-        "医院"
+        "院内服务"
       ],
       "relatedLinks": [
         {
@@ -191,7 +192,7 @@
       "color": "red",
       "tags": [
         "⭐常用",
-        "医院"
+        "院内服务"
       ],
       "relatedLinks": [
         {
@@ -208,6 +209,7 @@
       "color": "red",
       "tags": [
         "⭐常用",
+        "质控评价",
         "室间质评"
       ],
       "relatedLinks": [
@@ -236,6 +238,7 @@
       "icon": "https://test.fukit.cn/autoupload/f/xebGl-XrKxWyTpfRE-0jto12_FRYNb81z6UPhMWD8iI/20260513/4kgB/343X343/0001.png/webp",
       "color": "white",
       "tags": [
+        "质控评价",
         "室间质评"
       ],
       "relatedLinks": [
@@ -252,7 +255,7 @@
       "icon": "https://www.cnas.org.cn/favicon.ico",
       "color": "red",
       "tags": [
-        "认可"
+        "标准认可"
       ],
       "relatedLinks": [
         {
@@ -276,8 +279,7 @@
       "icon": "https://www.21wecan.com/favicon.ico",
       "color": "blue",
       "tags": [
-        "继续教育",
-        "查阅"
+        "继续教育"
       ],
       "relatedLinks": [
         {
@@ -293,8 +295,7 @@
       "icon": "https://t4.chei.com.cn/chsi/favicon.ico",
       "color": "blue",
       "tags": [
-        "继续教育",
-        "查阅"
+        "继续教育"
       ],
       "relatedLinks": [
         {
@@ -365,8 +366,7 @@
       "icon": "🔑",
       "color": "blue",
       "tags": [
-        "医院",
-        "小程序"
+        "院内服务"
       ]
     },
     {
@@ -376,8 +376,7 @@
       "icon": "🚌",
       "color": "green",
       "tags": [
-        "交通",
-        "查阅"
+        "生活服务"
       ]
     },
     {
@@ -387,8 +386,7 @@
       "icon": "https://www.sejda.com/images/icon_128.png",
       "color": "green",
       "tags": [
-        "PDF",
-        "工具"
+        "文档处理"
       ],
       "relatedLinks": [
         {
@@ -404,8 +402,7 @@
       "icon": "https://tools.pdf24.org/static/img/favIcons/sheep.svg?v=69a9889c",
       "color": "green",
       "tags": [
-        "PDF",
-        "工具"
+        "文档处理"
       ],
       "relatedLinks": [
         {
@@ -421,8 +418,7 @@
       "icon": "https://www.ilovepdf.com/mediapress/thumbnails/th_iLovePDF_logos.jpg",
       "color": "green",
       "tags": [
-        "PDF",
-        "工具"
+        "文档处理"
       ],
       "relatedLinks": [
         {
@@ -438,8 +434,7 @@
       "icon": "https://www.iloveimg.com/mediapress/thumbnails/logos.jpg",
       "color": "green",
       "tags": [
-        "图片",
-        "工具"
+        "文档处理"
       ],
       "relatedLinks": [
         {
@@ -455,7 +450,7 @@
       "icon": "📄",
       "color": "green",
       "tags": [
-        "工具"
+        "文档处理"
       ],
       "relatedLinks": [
         {
