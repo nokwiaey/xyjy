@@ -458,6 +458,16 @@
           "url": "https://jingguanzhang.github.io/PaperStudio/"
         }
       ]
+    },
+    {
+      "title": "image-splitter",
+      "url": "repositories/image-splitter/index.html",
+      "desc": "长图拆分打印工具",
+      "icon": "📄",
+      "color": "green",
+      "tags": [
+        "文档处理"
+      ]
     }
   ]
 }
