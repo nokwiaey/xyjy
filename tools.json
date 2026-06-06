@@ -434,6 +434,32 @@
           "url": "https://www.ilovepdf.com/zh-cn"
         }
       ]
+    },
+    {
+      "title": "PaperStudio",
+      "url": "repositories/PaperStudio/index.html",
+      "desc": "简单易用纸张打印设计工具",
+      "icon": "📄",
+      "color": "green",
+      "tags": [
+        "工具"
+      ],
+      "relatedLinks": [
+        {
+          "name": "PaperStudio - 打印纸设计工具",
+          "url": "https://jingguanzhang.github.io/PaperStudio/"
+        }
+      ]
+    },
+    {
+      "title": "室间质评结果分析v1.6",
+      "url": "html/data/室间质评结果分析v1.6.xlsx",
+      "desc": "室间质评结果分析v1.6.xlsx",
+      "icon": "🔢",
+      "color": "green",
+      "tags": [
+        "工具"
+      ]
     }
   ]
 }
