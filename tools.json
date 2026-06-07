@@ -463,7 +463,7 @@
       "title": "image-splitter",
       "url": "repositories/image-splitter/index.html",
       "desc": "长图拆分打印工具",
-      "icon": "📄",
+      "icon": "repositories/image-splitter/favicon.svg",
       "color": "green",
       "tags": [
         "文档处理"
