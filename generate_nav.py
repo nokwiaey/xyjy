@@ -191,7 +191,12 @@ def generate_html(tools, site_urls):
             tags_display = '<div class="tool-tags">' + ''.join([f'<span class="tool-tag">{tag}</span>' for tag in tags]) + '</div>'
 
         # 生成图标 HTML
-        if custom_icon and (custom_icon.startswith('http://') or custom_icon.startswith('https://')):
+        # 判断是否为图片路径（外部 URL 或本地图片文件）
+        is_image_path = custom_icon and (
+            custom_icon.startswith('http://') or custom_icon.startswith('https://') or
+            any(custom_icon.lower().endswith(ext) for ext in ('.svg', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.ico'))
+        )
+        if is_image_path:
             icon_html = f'<div class="tool-icon {color} favicon-icon"><img src="{custom_icon}" alt="" loading="lazy" decoding="async" width="32" height="32" onerror="this.style.display=\'none\'; this.parentElement.innerHTML=\'🔗\';"></div>'
         elif custom_icon:
             icon_html = f'<div class="tool-icon {color}">{custom_icon}</div>'
