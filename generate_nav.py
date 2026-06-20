@@ -73,8 +73,8 @@ def validate_tools(data):
 def encode_url(url):
     """对 URL 中的非 ASCII 字符进行百分号编码，确保浏览器兼容性"""
     parsed = urlparse(url)
-    encoded_path = quote(parsed.path, safe='/:@!$&\'()*+,;=-._~')
-    encoded_query = quote(parsed.query, safe='/:@!$&\'()*+,;=-._~?=%')
+    encoded_path = quote(parsed.path, safe='/:@!$&\'()*+,;=-._~%')
+    encoded_query = quote(parsed.query, safe='/:@!$&\'()*+,;=-.?~%')
     return urlunparse((parsed.scheme, parsed.netloc, encoded_path, parsed.params, encoded_query, parsed.fragment))
 
 
