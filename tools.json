@@ -464,6 +464,16 @@
       "tags": [
         "文档处理"
       ]
+    },
+    {
+      "title": "差异比较",
+      "url": "https://www.diffchecker.com/zh-Hans/",
+      "desc": "比较文本、图像和文件的差异",
+      "icon": "https://www.diffchecker.com/favicon.ico",
+      "color": "green",
+      "tags": [
+        "文档处理"
+      ]
     }
   ]
 }
