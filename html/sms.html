@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一键发送短信</title>
+
+<style>
+body {
+    font-family: "Microsoft YaHei", Arial, sans-serif;
+    text-align: center;
+    padding: 40px 20px;
+    background: #f5f5f5;
+}
+
+button {
+    width: 90%;
+    max-width: 320px;
+    height: 55px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background: #1677ff;
+    color: white;
+}
+
+.info {
+    margin-top: 30px;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.error {
+    color: red;
+}
+</style>
+
+</head>
+
+<body>
+
+<button id="sendBtn">
+    一键发送短信
+</button>
+
+<div class="info" id="info">
+    正在读取参数...
+</div>
+
+
+<script>
+
+function getParam(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name) || "";
+}
+
+
+const phone = getParam("phone");
+const text = getParam("text");
+
+const info = document.getElementById("info");
+const btn = document.getElementById("sendBtn");
+
+
+if (!phone || !text) {
+
+    info.innerHTML =
+        "<span class='error'>参数错误</span><br>" +
+        "需要 URL 参数：phone 和 text<br><br>" +
+        "示例：<br>" +
+        "?phone=13800138000&text=您的短信内容";
+
+    btn.disabled = true;
+
+} else {
+
+    info.innerHTML =
+        "短信号码：" + phone +
+        "<br>短信内容：" + text;
+
+}
+
+
+btn.onclick = function() {
+
+    if (!phone || !text) {
+        return;
+    }
+
+
+    // 编码短信内容
+    const body = encodeURIComponent(text);
+
+
+    // 自动适配
+    const ua = navigator.userAgent.toLowerCase();
+
+
+    let url;
+
+
+    if (/iphone|ipad|ipod/.test(ua)) {
+
+        url = "sms:" + phone + "&body=" + body;
+
+    } else {
+
+        url = "sms:" + phone + "?body=" + body;
+
+    }
+
+
+    window.location.href = url;
+
+};
+
+
+</script>
+
+</body>
+</html>
