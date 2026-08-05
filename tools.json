@@ -376,6 +376,16 @@
       ]
     },
     {
+      "title": "一键发送短信",
+      "url": "html/sms.html",
+      "desc": "一键发送短信或分享本工具",
+      "icon": "✉️",
+      "color": "green",
+      "tags": [
+        "生活服务"
+      ]
+    },
+    {
       "title": "Sejda PDF 在线工具",
       "url": "https://www.sejda.com/zh/",
       "desc": "简单、愉快且高效的 PDF 编辑器",
