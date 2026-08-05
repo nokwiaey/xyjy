@@ -8,90 +8,80 @@
 <style>
 body {
     font-family: "Microsoft YaHei", Arial, sans-serif;
-    background: #f5f5f5;
-    padding: 30px 20px;
+    background:#f5f5f5;
+    padding:30px 20px;
 }
 
 .container {
-    max-width: 500px;
-    margin: auto;
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
+    max-width:500px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:10px;
 }
 
 h3 {
-    text-align: center;
-}
-
-button {
-    width: 100%;
-    height: 45px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 6px;
-    background: #1677ff;
-    color: white;
-    font-size: 16px;
-}
-
-button:disabled {
-    background: #aaa;
+    text-align:center;
 }
 
 input,
 textarea {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px;
-    margin-top: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 15px;
+    width:100%;
+    box-sizing:border-box;
+    margin-top:10px;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:5px;
+    font-size:15px;
 }
 
 textarea {
-    height: 120px;
-    resize: vertical;
+    height:120px;
+}
+
+button {
+    width:100%;
+    height:45px;
+    margin-top:15px;
+    border:0;
+    border-radius:6px;
+    background:#1677ff;
+    color:white;
+    font-size:16px;
 }
 
 .info {
-    margin-top: 20px;
-    line-height: 1.8;
-    color: #666;
+    margin-top:15px;
+    color:#666;
+    line-height:1.8;
 }
 
 .url-box {
-    margin-top: 15px;
-    word-break: break-all;
-    background: #f6f6f6;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
+    margin-top:15px;
+    padding:10px;
+    background:#f6f6f6;
+    word-break:break-all;
+    font-size:14px;
 }
 
 .qrcode {
-    margin-top: 20px;
-    text-align: center;
+    margin-top:20px;
+    text-align:center;
 }
 
 .qrcode img {
-    width: 200px;
-    height: 200px;
+    width:200px;
+    height:200px;
 }
 
-.qrcode-tip {
-    margin-top: 10px;
-    color: #999;
-    font-size: 13px;
+.tip {
+    margin-top:10px;
+    color:#999;
+    font-size:13px;
 }
 
 .hidden {
-    display: none;
-}
-
-.error {
-    color:red;
+    display:none;
 }
 
 </style>
@@ -101,31 +91,9 @@ textarea {
 
 <body>
 
-
 <div class="container">
 
 <h3>一键发送短信</h3>
-
-
-<!-- 发送短信区域 -->
-
-<div id="sendArea" class="hidden">
-
-<button id="sendBtn">
-发送短信
-</button>
-
-
-<div class="info" id="smsInfo"></div>
-
-
-</div>
-
-
-
-<!-- 创建链接区域 -->
-
-<div id="createArea" class="hidden">
 
 
 <label>
@@ -149,6 +117,11 @@ placeholder="请输入短信内容"></textarea>
 
 
 
+<button id="sendBtn">
+发送短信
+</button>
+
+
 <button id="createBtn">
 生成分享链接
 </button>
@@ -158,7 +131,9 @@ placeholder="请输入短信内容"></textarea>
 <div id="result" class="url-box hidden"></div>
 
 
+
 <div id="qrcode" class="qrcode hidden"></div>
+
 
 
 <button id="copyBtn" class="hidden">
@@ -166,12 +141,25 @@ placeholder="请输入短信内容"></textarea>
 </button>
 
 
+
+<div class="info">
+
+说明：
+<br>
+1. 可通过 URL 参数自动填充手机号和短信内容。
+<br>
+2. 参数格式：
+<br>
+?phone=手机号&text=短信内容
+<br>
+3. 点击发送短信将在手机短信 APP 中打开。
+<br>
+4. 修改内容后需要重新生成二维码。
+
 </div>
 
 
-
 </div>
-
 
 
 <script>
@@ -187,280 +175,264 @@ function getParam(name){
 
 
 
-const phone = getParam("phone");
-
-const text = getParam("text");
-
+const phoneInput =
+document.getElementById("phoneInput");
 
 
-const sendArea =
-document.getElementById("sendArea");
-
-
-const createArea =
-document.getElementById("createArea");
+const textInput =
+document.getElementById("textInput");
 
 
 
+// 自动读取参数
 
-/*
- 有参数模式
-*/
-
-if(phone && text){
+phoneInput.value =
+getParam("phone");
 
 
-    sendArea.classList.remove("hidden");
-
-
-    document.getElementById("smsInfo")
-    .innerHTML =
-    "号码：" + phone +
-    "<br>内容：" + text;
+textInput.value =
+getParam("text");
 
 
 
-    document.getElementById("sendBtn")
-    .onclick=function(){
 
 
-        let body =
-        encodeURIComponent(text);
+// 当前页面生成 URL
+
+function createUrl(){
 
 
-
-        let ua =
-        navigator.userAgent.toLowerCase();
-
+    let phone =
+    phoneInput.value.trim();
 
 
-        let url;
-
-
-
-        if(/iphone|ipad|ipod/.test(ua)){
-
-
-            url =
-            "sms:" + phone +
-            "&body=" + body;
-
-
-        }else{
-
-
-            url =
-            "sms:" + phone +
-            "?body=" + body;
-
-
-        }
+    let text =
+    textInput.value.trim();
 
 
 
-        window.location.href=url;
-
-
-    };
-
+    return location.origin +
+    location.pathname +
+    "?phone=" +
+    encodeURIComponent(phone) +
+    "&text=" +
+    encodeURIComponent(text);
 
 }
 
 
-/*
- 无参数模式
-*/
 
-else{
 
 
-    createArea.classList.remove("hidden");
+// 发送短信
 
+document.getElementById("sendBtn")
+.onclick=function(){
 
 
-    document.getElementById("createBtn")
-    .onclick=function(){
+    let phone =
+    phoneInput.value.trim();
 
 
+    let text =
+    textInput.value.trim();
 
-        let p =
-        document.getElementById("phoneInput")
-        .value.trim();
 
 
+    if(!phone || !text){
 
-        let t =
-        document.getElementById("textInput")
-        .value.trim();
+        alert("请输入手机号和短信内容");
 
+        return;
 
+    }
 
-        if(!p || !t){
 
-            alert(
-            "请输入手机号和短信内容"
-            );
 
-            return;
+    let body =
+    encodeURIComponent(text);
 
-        }
 
 
+    let ua =
+    navigator.userAgent.toLowerCase();
 
 
-        let url =
-        location.origin +
-        location.pathname +
-        "?phone=" +
-        encodeURIComponent(p) +
-        "&text=" +
-        encodeURIComponent(t);
 
+    let url;
 
 
 
-        let result =
-        document.getElementById("result");
+    if(/iphone|ipad|ipod/.test(ua)){
 
 
+        url =
+        "sms:" +
+        phone +
+        "&body=" +
+        body;
 
-        result.innerText=url;
 
-        result.classList.remove("hidden");
+    }else{
 
 
+        url =
+        "sms:" +
+        phone +
+        "?body=" +
+        body;
 
 
-        /*
-          生成二维码
-        */
+    }
 
 
-        let qr =
-        document.getElementById("qrcode");
 
+    location.href=url;
 
 
-        let qrApi =
-        "https://api.2dcode.biz/v1/create-qr-code?data="
-        + encodeURIComponent(url);
+};
 
 
 
 
-        let img =
-        new Image();
 
 
+// 生成链接和二维码
 
-        img.width=200;
+document.getElementById("createBtn")
+.onclick=function(){
 
-        img.height=200;
 
+    let phone =
+    phoneInput.value.trim();
 
 
-        img.onload=function(){
+    let text =
+    textInput.value.trim();
 
 
-            qr.innerHTML="";
 
-            qr.appendChild(img);
+    if(!phone || !text){
 
+        alert("请输入手机号和短信内容");
 
-            let tip =
-            document.createElement("div");
+        return;
 
+    }
 
-            tip.className="qrcode-tip";
 
-            tip.innerText="扫码打开短信页面";
 
+    let url=createUrl();
 
-            qr.appendChild(tip);
 
 
+    let result =
+    document.getElementById("result");
 
-            qr.classList.remove("hidden");
 
+    result.innerText=url;
 
-        };
+    result.classList.remove("hidden");
 
 
 
-        img.onerror=function(){
 
+    //二维码
 
-            /*
-             二维码接口失败
-             */
+    let qr =
+    document.getElementById("qrcode");
 
-            qr.innerHTML="";
 
-            qr.classList.add("hidden");
+    let img =
+    new Image();
 
 
-        };
+    img.width=200;
 
+    img.height=200;
 
 
-        img.src=qrApi;
 
+    img.onload=function(){
 
 
+        qr.innerHTML="";
 
 
-        document.getElementById("copyBtn")
-        .classList.remove("hidden");
+        qr.appendChild(img);
 
+
+        let tip =
+        document.createElement("div");
+
+
+        tip.className="tip";
+
+        tip.innerText="扫码打开短信页面";
+
+
+        qr.appendChild(tip);
+
+
+        qr.classList.remove("hidden");
 
 
     };
+
+
+
+    img.onerror=function(){
+
+
+        qr.innerHTML="";
+
+
+        qr.classList.add("hidden");
+
+
+    };
+
+
+
+    img.src =
+    "https://api.2dcode.biz/v1/create-qr-code?data="
+    + encodeURIComponent(url);
 
 
 
 
 
     document.getElementById("copyBtn")
-    .onclick=function(){
+    .classList.remove("hidden");
+
+
+};
 
 
 
-        let url =
-        document.getElementById("result")
-        .innerText;
 
 
 
-        if(navigator.clipboard){
+//复制
+
+document.getElementById("copyBtn")
+.onclick=function(){
 
 
-            navigator.clipboard.writeText(url)
-            .then(function(){
+    let url =
+    document.getElementById("result")
+    .innerText;
 
 
-                alert("已复制");
+    navigator.clipboard.writeText(url)
+    .then(function(){
+
+        alert("已复制");
+
+    });
 
 
-            });
-
-
-
-        }else{
-
-
-            alert(
-            "浏览器不支持自动复制，请手动复制"
-            );
-
-
-        }
-
-
-
-    };
-
-}
-
+};
 
 
 </script>
