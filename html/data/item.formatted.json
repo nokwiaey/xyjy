@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-07-13T11:16:27.837024",
+  "exportTime": "2026-08-07T10:39:34.157795",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -976,14 +976,6 @@
       "remark": null
     },
     {
-      "itemCode": "JY020111",
-      "itemName": "微量元素（铜,锌,钙,镁,铁）",
-      "applyFormCode": "14243",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
       "itemCode": "JY020113",
       "itemName": "肝癌三联检",
       "applyFormCode": "14243",
@@ -1197,7 +1189,7 @@
       "applyFormCode": "14247",
       "sample": "全血,脑脊液,腹水,穿刺液,胸水,关节腔积液,胃液,心包积液,胆汁,胆囊腔积液,引流液,硬膜下积液,骨髓腔积液,骨髓",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
     },
     {
       "itemCode": "JY030006",
@@ -1205,7 +1197,7 @@
       "applyFormCode": "14247",
       "sample": "全血,脑脊液,腹水,穿刺液,胸水,关节腔积液,胃液,心包积液,胆汁,胆囊腔积液,断端软组织,引流液,硬膜下积液,骨髓腔积液,骨髓",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
     },
     {
       "itemCode": "JY030007",
@@ -1213,7 +1205,7 @@
       "applyFormCode": "14247",
       "sample": "全血,脑脊液,腹水,穿刺液,胸水,关节腔积液,胃液,心包积液,胆汁,胆囊腔积液,引流液,硬膜下积液,骨髓腔积液,骨髓",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
     },
     {
       "itemCode": "JY030011",
@@ -1253,7 +1245,7 @@
       "applyFormCode": "14247",
       "sample": "全血,尿液,精液,灌洗液,白带,分泌物,粪便,前列腺液,痰,脓液,静脉导管,咽拭子,刀口渗液,断端软组织,肺及支气管灌洗液,肛拭子,鼻拭子,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": null
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
     },
     {
       "itemCode": "JY030021",
@@ -1261,7 +1253,7 @@
       "applyFormCode": "14247",
       "sample": "尿液,穿刺液,精液,白带,分泌物,前列腺液,脓液,引流液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
     },
     {
       "itemCode": "JY030022",
@@ -1269,7 +1261,7 @@
       "applyFormCode": "14247",
       "sample": "尿液,精液,灌洗液,白带,分泌物,粪便,前列腺液,痰,脓液,静脉导管,咽拭子,刀口渗液,断端软组织,肺及支气管灌洗液,肛拭子,透析用水,透析液,鼻拭子,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
     },
     {
       "itemCode": "JY030024",
@@ -1309,7 +1301,7 @@
       "applyFormCode": "14247",
       "sample": "尿液,精液,灌洗液,白带,分泌物,粪便,前列腺液,痰,脓液,静脉导管,咽拭子,刀口渗液,断端软组织,肺及支气管灌洗液,肛拭子,透析用水,透析液,鼻拭子,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
     },
     {
       "itemCode": "JY030030",
@@ -1317,7 +1309,7 @@
       "applyFormCode": "14247",
       "sample": "尿液,精液,灌洗液,白带,分泌物,粪便,前列腺液,痰,脓液,静脉导管,咽拭子,刀口渗液,断端软组织,肺及支气管灌洗液,肛拭子,透析用水,透析液,鼻拭子,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
     },
     {
       "itemCode": "JY030031",
@@ -1325,7 +1317,7 @@
       "applyFormCode": "14247",
       "sample": "尿液,精液,灌洗液,白带,分泌物,粪便,前列腺液,痰,脓液,静脉导管,咽拭子,刀口渗液,断端软组织,肺及支气管灌洗液,肛拭子,透析用水,透析液,鼻拭子,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
     },
     {
       "itemCode": "JY030033",
@@ -3814,6 +3806,22 @@
       "sample": "全血",
       "isEmergency": 0,
       "remark": ""
+    },
+    {
+      "itemCode": "JY070246",
+      "itemName": "微量元素（铜、锌、钙、镁、铁）",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": ""
+    },
+    {
+      "itemCode": "JY070247",
+      "itemName": "全血铅",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": ""
     }
   ],
   "priceMap": {
@@ -4889,93 +4897,6 @@
       ],
       "sum": 72.5
     },
-    "JY020051": {
-      "details": [
-        {
-          "detailCode": "250304009",
-          "detailName": "全血铅测定",
-          "price": 17.0,
-          "count": 1.0,
-          "total": 17.0
-        },
-        {
-          "detailCode": "250309004a",
-          "detailName": "血清维生素定量测定",
-          "price": 77.0,
-          "count": 1.0,
-          "total": 77.0
-        },
-        {
-          "detailCode": "250304013",
-          "detailName": "微量元素测定",
-          "price": 6.0,
-          "count": 2.0,
-          "total": 12.0
-        },
-        {
-          "detailCode": "250304004",
-          "detailName": "钙测定",
-          "price": 4.5,
-          "count": 1.0,
-          "total": 4.5
-        },
-        {
-          "detailCode": "250304006",
-          "detailName": "镁测定",
-          "price": 6.0,
-          "count": 1.0,
-          "total": 6.0
-        },
-        {
-          "detailCode": "250304013a",
-          "detailName": "微量元素测定",
-          "price": 17.0,
-          "count": 1.0,
-          "total": 17.0
-        }
-      ],
-      "sum": 133.5
-    },
-    "JY020052": {
-      "details": [
-        {
-          "detailCode": "250304009",
-          "detailName": "全血铅测定",
-          "price": 17.0,
-          "count": 1.0,
-          "total": 17.0
-        },
-        {
-          "detailCode": "250304013",
-          "detailName": "微量元素测定",
-          "price": 6.0,
-          "count": 2.0,
-          "total": 12.0
-        },
-        {
-          "detailCode": "250304004",
-          "detailName": "钙测定",
-          "price": 4.5,
-          "count": 1.0,
-          "total": 4.5
-        },
-        {
-          "detailCode": "250304006",
-          "detailName": "镁测定",
-          "price": 6.0,
-          "count": 2.0,
-          "total": 12.0
-        },
-        {
-          "detailCode": "250304013a",
-          "detailName": "微量元素测定",
-          "price": 17.0,
-          "count": 1.0,
-          "total": 17.0
-        }
-      ],
-      "sum": 62.5
-    },
     "JY020053": {
       "details": [
         {
@@ -5666,39 +5587,6 @@
         }
       ],
       "sum": 21.0
-    },
-    "JY020111": {
-      "details": [
-        {
-          "detailCode": "250304007",
-          "detailName": "铁测定",
-          "price": 6.0,
-          "count": 1.0,
-          "total": 6.0
-        },
-        {
-          "detailCode": "250304013",
-          "detailName": "微量元素测定",
-          "price": 6.0,
-          "count": 2.0,
-          "total": 12.0
-        },
-        {
-          "detailCode": "250304004",
-          "detailName": "钙测定",
-          "price": 4.5,
-          "count": 1.0,
-          "total": 4.5
-        },
-        {
-          "detailCode": "250304006",
-          "detailName": "镁测定",
-          "price": 6.0,
-          "count": 1.0,
-          "total": 6.0
-        }
-      ],
-      "sum": 28.5
     },
     "JY020113": {
       "details": [
@@ -11863,6 +11751,51 @@
       ],
       "sum": 990.0
     },
+    "JY070246": {
+      "details": [
+        {
+          "detailCode": "250304013",
+          "detailName": "微量元素测定",
+          "price": 6.0,
+          "count": 2.0,
+          "total": 12.0
+        },
+        {
+          "detailCode": "250304004",
+          "detailName": "钙测定",
+          "price": 4.5,
+          "count": 1.0,
+          "total": 4.5
+        },
+        {
+          "detailCode": "250304006",
+          "detailName": "镁测定",
+          "price": 6.0,
+          "count": 1.0,
+          "total": 6.0
+        },
+        {
+          "detailCode": "250304007",
+          "detailName": "铁测定",
+          "price": 6.0,
+          "count": 1.0,
+          "total": 6.0
+        }
+      ],
+      "sum": 28.5
+    },
+    "JY070247": {
+      "details": [
+        {
+          "detailCode": "250304009",
+          "detailName": "全血铅测定",
+          "price": 17.0,
+          "count": 1.0,
+          "total": 17.0
+        }
+      ],
+      "sum": 17.0
+    },
     "YJ-A001": {
       "details": [
         {
@@ -12848,12 +12781,6 @@
         "chineseName": "醛固酮",
         "charge": 21.0,
         "hisId": "JY020110"
-      },
-      {
-        "chargeItemId": "LIS0490",
-        "chineseName": "微量元素（铜,锌,钙,镁,铁）",
-        "charge": 28.5,
-        "hisId": "JY020111"
       },
       {
         "chargeItemId": "LIS0491",
@@ -15944,6 +15871,18 @@
         "chineseName": "抗癫痫焦虑镇静催眠类安全用药基因检测",
         "charge": 990.0,
         "hisId": "JY070245"
+      },
+      {
+        "chargeItemId": "LIS0490",
+        "chineseName": "微量元素（铜,锌,钙,镁,铁）",
+        "charge": 28.5,
+        "hisId": "JY070246"
+      },
+      {
+        "chargeItemId": "LIS0893",
+        "chineseName": "全血铅",
+        "charge": 17.0,
+        "hisId": "JY070247"
       }
     ],
     "chargeItemLists": [
@@ -29575,6 +29514,48 @@
       },
       {
         "groupId": "G024",
+        "chargeItemId": "LIS0376",
+        "testItemId": "5885",
+        "itemSort": "Z5885"
+      },
+      {
+        "groupId": "G024",
+        "chargeItemId": "LIS0893",
+        "testItemId": "5968",
+        "itemSort": "Z5968"
+      },
+      {
+        "groupId": "G024",
+        "chargeItemId": "LIS0490",
+        "testItemId": "5970",
+        "itemSort": "Z5970"
+      },
+      {
+        "groupId": "G024",
+        "chargeItemId": "LIS0490",
+        "testItemId": "5971",
+        "itemSort": "Z5971"
+      },
+      {
+        "groupId": "G024",
+        "chargeItemId": "LIS0490",
+        "testItemId": "5972",
+        "itemSort": "Z5972"
+      },
+      {
+        "groupId": "G024",
+        "chargeItemId": "LIS0490",
+        "testItemId": "5973",
+        "itemSort": "Z5973"
+      },
+      {
+        "groupId": "G024",
+        "chargeItemId": "LIS0490",
+        "testItemId": "5974",
+        "itemSort": "Z5974"
+      },
+      {
+        "groupId": "G024",
         "chargeItemId": "LIS0560",
         "testItemId": "8401",
         "itemSort": "Z8401"
@@ -30881,7 +30862,7 @@
         "testItemId": "5025",
         "testItemCode": "TBA",
         "chineseName": "总胆汁酸",
-        "itemDes": "陕HR"
+        "itemDes": null
       },
       {
         "testItemId": "5026",
@@ -40373,6 +40354,18 @@
         "testItemId": "8660",
         "testItemCode": null,
         "chineseName": "Rh血型抗原",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8661",
+        "testItemCode": null,
+        "chineseName": "RHE",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8662",
+        "testItemCode": null,
+        "chineseName": "RHC",
         "itemDes": null
       }
     ]
