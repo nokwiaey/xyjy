@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-08-07T10:39:34.157795",
+  "exportTime": "2026-08-08T11:54:41.184516",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -6477,11 +6477,11 @@
           "detailCode": "250403054",
           "detailName": "快速血浆反应素试验(RPR)",
           "price": 13.0,
-          "count": 7.0,
-          "total": 91.0
+          "count": 1.0,
+          "total": 13.0
         }
       ],
-      "sum": 129.0
+      "sum": 51.0
     },
     "JY040008": {
       "details": [
