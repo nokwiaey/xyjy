@@ -105,8 +105,8 @@
     },
     {
       "title": "检验科排班表",
-      "url": "html/data/2026-08-schedule.pdf",
-      "desc": "2026年08月排班表.pdf",
+      "url": "html/data/2026-09-schedule.pdf",
+      "desc": "2026年09月排班表.pdf",
       "icon": "📅",
       "color": "green",
       "tags": [
@@ -116,8 +116,12 @@
       ],
       "relatedLinks": [
         {
-          "name": "2026年07月排班表.pdf",
-          "url": "html/data/2026-07-schedule.pdf"
+          "name": "2026年08月排班表.pdf",
+          "url": "html/data/2026-08-schedule.pdf"
+        },
+        {
+          "name": "2026年中秋节排班表.pdf",
+          "url": "html/data/2026-ZQ-schedule.pdf"
         }
       ]
     },
