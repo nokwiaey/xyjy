@@ -63,8 +63,8 @@
     },
     {
       "title": "文档中心",
-      "url": "https://docs.dfly.site/",
-      "desc": "局域网入口见右下角",
+      "url": "http://172.30.3.58:9991/",
+      "desc": "互联网入口见右下角",
       "icon": "🗂️",
       "color": "purple",
       "tags": [
@@ -73,8 +73,8 @@
       ],
       "relatedLinks": [
         {
-          "name": "文档中心（局域网）",
-          "url": "http://172.30.3.58:9991/"
+          "name": "文档中心（互联网）",
+          "url": "https://docs.dfly.site/"
         }
       ]
     },
@@ -89,6 +89,10 @@
         "标准认可"
       ],
       "relatedLinks": [
+        {
+          "name": "卫生行业标准",
+          "url": "https://www.nhc.gov.cn/wjw/wsbzxx/wsbz.shtml"
+        },
         {
           "name": "全国团体标准信息平台",
           "url": "https://www.ttbz.org.cn/"
