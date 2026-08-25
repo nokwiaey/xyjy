@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-08-08T11:54:41.184516",
+  "exportTime": "2026-08-25T11:25:43.628786",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -248,14 +248,6 @@
       "remark": ""
     },
     {
-      "itemCode": "JY020009",
-      "itemName": "血脂1",
-      "applyFormCode": "14243",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
       "itemCode": "JY020010",
       "itemName": "血脂常规",
       "applyFormCode": "14243",
@@ -333,14 +325,6 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
-    },
-    {
-      "itemCode": "JY020022",
-      "itemName": "贫血系列（生化）",
-      "applyFormCode": "14243",
-      "sample": "全血",
-      "isEmergency": 0,
       "remark": null
     },
     {
@@ -1013,14 +997,6 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
-    },
-    {
-      "itemCode": "JY020119",
-      "itemName": "心肌3项",
-      "applyFormCode": "14243",
-      "sample": "全血",
-      "isEmergency": 1,
       "remark": ""
     },
     {
@@ -2384,14 +2360,6 @@
       "remark": ""
     },
     {
-      "itemCode": "JY050050",
-      "itemName": "甲状腺相关自身抗体3项",
-      "applyFormCode": "14330",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
       "itemCode": "JY050051",
       "itemName": "性激素6项",
       "applyFormCode": "14330",
@@ -2558,38 +2526,6 @@
       "sample": "全血",
       "isEmergency": 0,
       "remark": null
-    },
-    {
-      "itemCode": "JY050079",
-      "itemName": "肠胃肿瘤2项",
-      "applyFormCode": "14330",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
-      "itemCode": "JY050080",
-      "itemName": "乳腺妇科肿瘤3项",
-      "applyFormCode": "14330",
-      "sample": "全血,腹水,胸水",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
-      "itemCode": "JY050082",
-      "itemName": "前列腺肿瘤2项",
-      "applyFormCode": "14330",
-      "sample": "全血,腹水,胸水",
-      "isEmergency": 0,
-      "remark": null
-    },
-    {
-      "itemCode": "JY050083",
-      "itemName": "睾丸肿瘤2项",
-      "applyFormCode": "14330",
-      "sample": "全血,腹水,胸水",
-      "isEmergency": 0,
-      "remark": ""
     },
     {
       "itemCode": "JY050085",
@@ -13137,12 +13073,6 @@
         "hisId": "JY030034"
       },
       {
-        "chargeItemId": "LIS0560",
-        "chineseName": "血清药物浓度测定(丙戊酸)",
-        "charge": 120.0,
-        "hisId": "JY030039"
-      },
-      {
         "chargeItemId": "LIS0561",
         "chineseName": "血清药物浓度测定(卡马西平)",
         "charge": 120.0,
@@ -15037,6 +14967,12 @@
         "chineseName": "伏立康唑（VCZ）血药浓度监测",
         "charge": 120.0,
         "hisId": "JY070096"
+      },
+      {
+        "chargeItemId": "LIS0560",
+        "chineseName": "血清药物浓度测定(丙戊酸)",
+        "charge": 120.0,
+        "hisId": "JY070097"
       },
       {
         "chargeItemId": "LIS0684",
@@ -39092,38 +39028,38 @@
       },
       {
         "testItemId": "8447",
-        "testItemCode": "*1/*1",
+        "testItemCode": "CYP2C19*2",
         "chineseName": "CYP2C19*2(G681A)",
         "itemDes": null
       },
       {
         "testItemId": "8448",
-        "testItemCode": "*1/*2",
+        "testItemCode": "CYP2C19*3",
         "chineseName": "CYP2C19*3(G636A)",
         "itemDes": null
       },
       {
         "testItemId": "8449",
-        "testItemCode": "*1/*3",
+        "testItemCode": "CYP2C19*17",
         "chineseName": "CYP2C19*17(C-806T)",
         "itemDes": null
       },
       {
         "testItemId": "8450",
-        "testItemCode": "*2/*2",
+        "testItemCode": "CYP2C19_A",
         "chineseName": "检测结果",
         "itemDes": null
       },
       {
         "testItemId": "8451",
-        "testItemCode": "*2/*3",
+        "testItemCode": "CYP2C19_B",
         "chineseName": "代谢型",
         "itemDes": null
       },
       {
         "testItemId": "8452",
-        "testItemCode": "*3/*3",
-        "chineseName": "681GG，636AA",
+        "testItemCode": null,
+        "chineseName": "【曾用】681GG，636AA",
         "itemDes": null
       },
       {
