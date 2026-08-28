@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-08-28T16:32:20.273552",
+  "exportTime": "2026-08-28T16:48:28.270745",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -3738,14 +3738,6 @@
     {
       "itemCode": "JY070246",
       "itemName": "微量元素（铜、锌、钙、镁、铁、铅）",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
-      "itemCode": "JY070247",
-      "itemName": "全血铅",
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
@@ -11714,18 +11706,6 @@
         }
       ],
       "sum": 45.5
-    },
-    "JY070247": {
-      "details": [
-        {
-          "detailCode": "250304009",
-          "detailName": "全血铅测定",
-          "price": 17.0,
-          "count": 1.0,
-          "total": 17.0
-        }
-      ],
-      "sum": 17.0
     },
     "JY070248": {
       "details": [
