@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-08-25T11:25:43.628786",
+  "exportTime": "2026-08-28T16:17:41.174363",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -1944,22 +1944,6 @@
       "remark": "定量  化学发光法"
     },
     {
-      "itemCode": "JY040112",
-      "itemName": "细胞角蛋白19片段",
-      "applyFormCode": "14242",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "定量  化学发光法"
-    },
-    {
-      "itemCode": "JY040113",
-      "itemName": "胃泌素释放肽前体",
-      "applyFormCode": "14242",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "定量  化学发光法"
-    },
-    {
       "itemCode": "JY040114",
       "itemName": "红细胞叶酸定量检测",
       "applyFormCode": "14242",
@@ -2112,6 +2096,14 @@
       "remark": null
     },
     {
+      "itemCode": "JY050013",
+      "itemName": "细胞角蛋白19片段",
+      "applyFormCode": "14330",
+      "sample": "全血,腹水,胸水,心包积液,肺及支气管灌洗液",
+      "isEmergency": 0,
+      "remark": ""
+    },
+    {
       "itemCode": "JY050014",
       "itemName": "神经元特异烯醇化酶",
       "applyFormCode": "14330",
@@ -2174,6 +2166,14 @@
       "sample": "全血,腹水,穿刺液,胸水,心包积液,肺及支气管灌洗液,支气管肺泡灌洗液",
       "isEmergency": 0,
       "remark": null
+    },
+    {
+      "itemCode": "JY050022",
+      "itemName": "胃泌素释放肽前体",
+      "applyFormCode": "14330",
+      "sample": "全血,腹水,胸水,心包积液",
+      "isEmergency": 0,
+      "remark": ""
     },
     {
       "itemCode": "JY050023",
@@ -3745,7 +3745,7 @@
     },
     {
       "itemCode": "JY070246",
-      "itemName": "微量元素（铜、锌、钙、镁、铁）",
+      "itemName": "微量元素（铜、锌、钙、镁、铁、铅）",
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
@@ -3756,6 +3756,14 @@
       "itemName": "全血铅",
       "applyFormCode": "14253",
       "sample": "全血",
+      "isEmergency": 0,
+      "remark": ""
+    },
+    {
+      "itemCode": "JY070248",
+      "itemName": "真菌细胞壁（1,3）-B-D葡聚糖检测",
+      "applyFormCode": "14253",
+      "sample": "血清",
       "isEmergency": 0,
       "remark": ""
     }
@@ -8043,30 +8051,6 @@
       ],
       "sum": 78.0
     },
-    "JY040112": {
-      "details": [
-        {
-          "detailCode": "250404010a",
-          "detailName": "细胞角蛋白19片段测定(CYFRA21-1)",
-          "price": 50.0,
-          "count": 1.0,
-          "total": 50.0
-        }
-      ],
-      "sum": 50.0
-    },
-    "JY040113": {
-      "details": [
-        {
-          "detailCode": "250404025",
-          "detailName": "血清胃泌素释放肽前体(ProGRP)测定",
-          "price": 50.0,
-          "count": 1.0,
-          "total": 50.0
-        }
-      ],
-      "sum": 50.0
-    },
     "JY040114": {
       "details": [
         {
@@ -8295,6 +8279,18 @@
       ],
       "sum": 50.0
     },
+    "JY050013": {
+      "details": [
+        {
+          "detailCode": "250404010a",
+          "detailName": "细胞角蛋白19片段测定(CYFRA21-1)",
+          "price": 50.0,
+          "count": 1.0,
+          "total": 50.0
+        }
+      ],
+      "sum": 50.0
+    },
     "JY050014": {
       "details": [
         {
@@ -8384,6 +8380,18 @@
         {
           "detailCode": "250404012a",
           "detailName": "鳞状细胞癌相关抗原测定(SCC)",
+          "price": 50.0,
+          "count": 1.0,
+          "total": 50.0
+        }
+      ],
+      "sum": 50.0
+    },
+    "JY050022": {
+      "details": [
+        {
+          "detailCode": "250404025",
+          "detailName": "血清胃泌素释放肽前体(ProGRP)测定",
           "price": 50.0,
           "count": 1.0,
           "total": 50.0
@@ -11716,9 +11724,16 @@
           "price": 6.0,
           "count": 1.0,
           "total": 6.0
+        },
+        {
+          "detailCode": "250304009",
+          "detailName": "全血铅测定",
+          "price": 17.0,
+          "count": 1.0,
+          "total": 17.0
         }
       ],
-      "sum": 28.5
+      "sum": 45.5
     },
     "JY070247": {
       "details": [
@@ -11731,6 +11746,18 @@
         }
       ],
       "sum": 17.0
+    },
+    "JY070248": {
+      "details": [
+        {
+          "detailCode": "250501038",
+          "detailName": "真菌D-葡聚糖检测",
+          "price": 110.0,
+          "count": 4.0,
+          "total": 440.0
+        }
+      ],
+      "sum": 440.0
     },
     "YJ-A001": {
       "details": [
@@ -12929,12 +12956,6 @@
         "hisId": "JY030010"
       },
       {
-        "chargeItemId": "LIS02116",
-        "chineseName": "真菌细胞壁（1，3）-β-D-葡聚糖试验",
-        "charge": 110.0,
-        "hisId": "JY030011"
-      },
-      {
         "chargeItemId": "LIS02017",
         "chineseName": "内毒素鲎定量试验",
         "charge": 38.0,
@@ -13721,18 +13742,6 @@
         "hisId": "JY040111"
       },
       {
-        "chargeItemId": "LIS01059",
-        "chineseName": "细胞角蛋白19片段",
-        "charge": 50.0,
-        "hisId": "JY040112"
-      },
-      {
-        "chargeItemId": "LIS0212",
-        "chineseName": "胃泌素释放肽前体",
-        "charge": 50.0,
-        "hisId": "JY040113"
-      },
-      {
         "chargeItemId": "LIS0620",
         "chineseName": "红细胞叶酸定量检测",
         "charge": 280.0,
@@ -13859,6 +13868,12 @@
         "hisId": "JY050012"
       },
       {
+        "chargeItemId": "LIS01059",
+        "chineseName": "细胞角蛋白19片段",
+        "charge": 50.0,
+        "hisId": "JY050013"
+      },
+      {
         "chargeItemId": "LIS01057",
         "chineseName": "神经元特异烯醇化酶",
         "charge": 50.0,
@@ -13905,6 +13920,12 @@
         "chineseName": "鳞状细胞癌相关抗原",
         "charge": 50.0,
         "hisId": "JY050021"
+      },
+      {
+        "chargeItemId": "LIS0212",
+        "chineseName": "胃泌素释放肽前体",
+        "charge": 50.0,
+        "hisId": "JY050022"
       },
       {
         "chargeItemId": "LIS0213",
@@ -14975,12 +14996,6 @@
         "hisId": "JY070097"
       },
       {
-        "chargeItemId": "LIS0684",
-        "chineseName": "丙戊酸（VPA）血药浓度监测",
-        "charge": 120.0,
-        "hisId": "JY070097"
-      },
-      {
         "chargeItemId": "LIS0685",
         "chineseName": "左乙拉西坦（LEV）血药浓度监测",
         "charge": 120.0,
@@ -15810,7 +15825,7 @@
       },
       {
         "chargeItemId": "LIS0490",
-        "chineseName": "微量元素（铜,锌,钙,镁,铁）",
+        "chineseName": "微量元素（铜,锌,钙,镁,铁,铅）",
         "charge": 28.5,
         "hisId": "JY070246"
       },
@@ -15819,6 +15834,12 @@
         "chineseName": "全血铅",
         "charge": 17.0,
         "hisId": "JY070247"
+      },
+      {
+        "chargeItemId": "LIS02116",
+        "chineseName": "真菌细胞壁（1，3）-β-D-葡聚糖试验",
+        "charge": 110.0,
+        "hisId": "JY070248"
       }
     ],
     "chargeItemLists": [
@@ -26546,6 +26567,12 @@
       },
       {
         "groupId": "G005",
+        "chargeItemId": "LIS01059",
+        "testItemId": "5614",
+        "itemSort": "D016"
+      },
+      {
+        "groupId": "G005",
         "chargeItemId": "LIS02413",
         "testItemId": "5614",
         "itemSort": "D016"
@@ -27419,6 +27446,12 @@
         "chargeItemId": "LIS0210",
         "testItemId": "8151",
         "itemSort": "Z8151"
+      },
+      {
+        "groupId": "G005",
+        "chargeItemId": "LIS0212",
+        "testItemId": "8153",
+        "itemSort": "Z8153"
       },
       {
         "groupId": "G005",
@@ -29453,6 +29486,18 @@
         "chargeItemId": "LIS0376",
         "testItemId": "5885",
         "itemSort": "Z5885"
+      },
+      {
+        "groupId": "G024",
+        "chargeItemId": "LIS02116",
+        "testItemId": "5967",
+        "itemSort": "Z5967"
+      },
+      {
+        "groupId": "G024",
+        "chargeItemId": "LIS0490",
+        "testItemId": "5968",
+        "itemSort": "Z5968"
       },
       {
         "groupId": "G024",
