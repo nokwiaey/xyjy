@@ -1974,8 +1974,11 @@ body.related-menu-backdrop::before {
              </div>
         </footer>
 
-        <p class="update-date">最后更新: 2026-09-01 11:34</p>
+        <p class="update-date">最后更新: 2026-09-01 11:41</p>
     </div>
+
+    <!-- 质量方针逐词弹出层（点击页面空白处显示，由 script.js 控制） -->
+    <div class="policy-word-pop" id="policyWordPop" aria-hidden="true"></div>
 
     <!-- 二维码弹窗 -->
     <div class="qr-modal-overlay" id="qrModalOverlay">
@@ -2806,10 +2809,15 @@ document.addEventListener('click', function(e) {
 });
 
 function showPolicyWord(word, clientX, clientY) {
+    // 优先使用 generate_nav.py 模板中预置的弹层元素；缺失时（如旧缓存页面）动态创建兜底
     if (!policyWordEl) {
-        policyWordEl = document.createElement('div');
-        policyWordEl.className = 'policy-word-pop';
-        document.body.appendChild(policyWordEl);
+        policyWordEl = document.getElementById('policyWordPop');
+        if (!policyWordEl) {
+            policyWordEl = document.createElement('div');
+            policyWordEl.className = 'policy-word-pop';
+            policyWordEl.id = 'policyWordPop';
+            document.body.appendChild(policyWordEl);
+        }
     }
     policyWordEl.textContent = word;
 

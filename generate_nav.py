@@ -377,6 +377,9 @@ def generate_html(tools, site_urls):
         <p class="update-date">最后更新: {build_date}</p>
     </div>
 
+    <!-- 质量方针逐词弹出层（点击页面空白处显示，由 script.js 控制） -->
+    <div class="policy-word-pop" id="policyWordPop" aria-hidden="true"></div>
+
     <!-- 二维码弹窗 -->
     <div class="qr-modal-overlay" id="qrModalOverlay">
         <div class="qr-modal">

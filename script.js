@@ -790,10 +790,15 @@ document.addEventListener('click', function(e) {
 });
 
 function showPolicyWord(word, clientX, clientY) {
+    // 优先使用 generate_nav.py 模板中预置的弹层元素；缺失时（如旧缓存页面）动态创建兜底
     if (!policyWordEl) {
-        policyWordEl = document.createElement('div');
-        policyWordEl.className = 'policy-word-pop';
-        document.body.appendChild(policyWordEl);
+        policyWordEl = document.getElementById('policyWordPop');
+        if (!policyWordEl) {
+            policyWordEl = document.createElement('div');
+            policyWordEl.className = 'policy-word-pop';
+            policyWordEl.id = 'policyWordPop';
+            document.body.appendChild(policyWordEl);
+        }
     }
     policyWordEl.textContent = word;
 
