@@ -1415,20 +1415,19 @@ body.related-menu-backdrop::before {
 .policy-word-pop {
     position: fixed;
     transform: translate(-50%, -50%) scale(0.6);
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 2px;
     white-space: nowrap;
     color: var(--text-primary);
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 12px 22px;
-    box-shadow: 0 16px 48px var(--shadow-color);
+    border-radius: 8px;
+    padding: 8px 14px;
+    box-shadow: 0 8px 24px var(--shadow-color);
     z-index: 99999;
     pointer-events: none;
     opacity: 0;
-    animation: policyWordIn 0.35s ease forwards, policyWordOut 0.45s ease 1.15s forwards;
+    animation: policyWordIn 0.15s ease forwards, policyWordOut 0.25s ease 0.6s forwards;
 }
 
 @keyframes policyWordIn {
@@ -1455,9 +1454,9 @@ body.related-menu-backdrop::before {
 
 @media (max-width: 768px) {
     .policy-word-pop {
-        font-size: 20px;
-        letter-spacing: 4px;
-        padding: 10px 16px;
+        font-size: 14px;
+        letter-spacing: 1px;
+        padding: 6px 10px;
     }
 }
 
@@ -1974,7 +1973,7 @@ body.related-menu-backdrop::before {
              </div>
         </footer>
 
-        <p class="update-date">最后更新: 2026-09-01 11:47</p>
+        <p class="update-date">最后更新: 2026-09-01 11:56</p>
     </div>
 
     <!-- 质量方针逐词弹出层（点击页面空白处显示，由 script.js 控制） -->
