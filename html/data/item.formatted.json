@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-08-31T11:07:12.518372",
+  "exportTime": "2026-09-01T11:15:19.216597",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -1286,22 +1286,6 @@
       "sample": "尿液,精液,灌洗液,白带,分泌物,粪便,前列腺液,痰,脓液,静脉导管,咽拭子,刀口渗液,断端软组织,肺及支气管灌洗液,肛拭子,透析用水,透析液,鼻拭子,支气管肺泡灌洗液",
       "isEmergency": 0,
       "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
-    },
-    {
-      "itemCode": "JY030033",
-      "itemName": "涂片革兰染色镜检查真菌（不需浓缩的标本）",
-      "applyFormCode": "14247",
-      "sample": "精液,白带,分泌物,皮屑,粪便,痰,脓液,咽拭子,断端软组织,骨髓,肛拭子,鼻拭子,前列腺液\r\n",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
-      "itemCode": "JY030034",
-      "itemName": "浓缩集菌涂片革兰染色镜检查真菌（需浓缩的标本）",
-      "applyFormCode": "14247",
-      "sample": "尿液,脑脊液,腹水,穿刺液,胸水,灌洗液,关节腔积液,胃液,心包积液,胆汁,刀口渗液,胆囊腔积液,引流液,硬膜下积液,骨髓腔积液,肺及支气管灌洗液,支气管肺泡灌洗液",
-      "isEmergency": 0,
-      "remark": ""
     },
     {
       "itemCode": "JY030041",
@@ -6083,18 +6067,6 @@
       ],
       "sum": 5.0
     },
-    "JY030019": {
-      "details": [
-        {
-          "detailCode": "250501026",
-          "detailName": "真菌涂片检查",
-          "price": 8.5,
-          "count": 1.0,
-          "total": 8.5
-        }
-      ],
-      "sum": 8.5
-    },
     "JY030020": {
       "details": [
         {
@@ -6226,30 +6198,6 @@
         }
       ],
       "sum": 2.0
-    },
-    "JY030033": {
-      "details": [
-        {
-          "detailCode": "250501026",
-          "detailName": "真菌涂片检查",
-          "price": 8.5,
-          "count": 1.0,
-          "total": 8.5
-        }
-      ],
-      "sum": 8.5
-    },
-    "JY030034": {
-      "details": [
-        {
-          "detailCode": "250501026",
-          "detailName": "真菌涂片检查",
-          "price": 8.5,
-          "count": 1.0,
-          "total": 8.5
-        }
-      ],
-      "sum": 8.5
     },
     "JY030035": {
       "details": [
@@ -21170,6 +21118,12 @@
       {
         "groupId": "G002",
         "chargeItemId": "LIS0849",
+        "testItemId": "5276",
+        "itemSort": "L001"
+      },
+      {
+        "groupId": "G002",
+        "chargeItemId": "LIS0857",
         "testItemId": "5276",
         "itemSort": "L001"
       },
