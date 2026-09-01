@@ -768,6 +768,51 @@ themeToggle.addEventListener('click', function() {
 // ============================================
 
 // ============================================
+// 质量方针：点击页面空白处逐词显示
+// 每次单击空白区域依次弹出“公正准确 及时满意 求真务实 持续改进”，
+// 四个词循环展示（同社会主义核心价值观彩蛋效果）。
+// ============================================
+const QUALITY_POLICY_WORDS = ['公正准确', '及时满意', '求真务实', '持续改进'];
+let policyWordIndex = 0;
+let policyWordEl = null;
+
+// 点击空白处（非交互元素）时逐词显示质量方针
+document.addEventListener('click', function(e) {
+    // 忽略对交互元素 / 工具卡片 / 菜单 / 弹窗等的点击
+    if (!(e.target instanceof Element)) return;
+    if (e.target.closest('a, button, input, textarea, select, .tool-card, .tag-filter, .recent-item, .site-switcher, .site-menu, .theme-toggle, .back-to-top, .qr-modal-overlay, .wxp-modal-overlay, .search-box, .search-shortcut, .feedback-link')) return;
+
+    // 二维码 / 小程序码弹窗打开时不响应（由弹窗自身处理关闭）
+    if (document.querySelector('.qr-modal-overlay.open, .wxp-modal-overlay.open')) return;
+
+    showPolicyWord(QUALITY_POLICY_WORDS[policyWordIndex], e.clientX, e.clientY);
+    policyWordIndex = (policyWordIndex + 1) % QUALITY_POLICY_WORDS.length;
+});
+
+function showPolicyWord(word, clientX, clientY) {
+    if (!policyWordEl) {
+        policyWordEl = document.createElement('div');
+        policyWordEl.className = 'policy-word-pop';
+        document.body.appendChild(policyWordEl);
+    }
+    policyWordEl.textContent = word;
+
+    // 以点击位置为中心显示，并限制在视口内避免溢出
+    var width = policyWordEl.offsetWidth;
+    var height = policyWordEl.offsetHeight;
+    var left = Math.min(Math.max(clientX, width / 2 + 8), window.innerWidth - width / 2 - 8);
+    var top = Math.min(Math.max(clientY, height / 2 + 8), window.innerHeight - height / 2 - 8);
+    policyWordEl.style.left = left + 'px';
+    policyWordEl.style.top = top + 'px';
+
+    // 重新触发弹入/弹出动画
+    policyWordEl.style.animation = 'none';
+    void policyWordEl.offsetWidth; // 强制回流以重启 CSS 动画
+    policyWordEl.style.animation = '';
+}
+// ============================================
+
+// ============================================
 // 今日信息条
 // ============================================
 const todayDate = document.getElementById('todayDate');

@@ -1384,3 +1384,53 @@ body.related-menu-backdrop::before {
     opacity: 0 !important;
     pointer-events: none !important;
 }
+
+/* 质量方针逐词弹出（点击页面空白处，在点击位置依次显示） */
+.policy-word-pop {
+    position: fixed;
+    transform: translate(-50%, -50%) scale(0.6);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    white-space: nowrap;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px 22px;
+    box-shadow: 0 16px 48px var(--shadow-color);
+    z-index: 99999;
+    pointer-events: none;
+    opacity: 0;
+    animation: policyWordIn 0.35s ease forwards, policyWordOut 0.45s ease 1.15s forwards;
+}
+
+@keyframes policyWordIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.6);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes policyWordOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.06);
+    }
+}
+
+@media (max-width: 768px) {
+    .policy-word-pop {
+        font-size: 20px;
+        letter-spacing: 4px;
+        padding: 10px 16px;
+    }
+}

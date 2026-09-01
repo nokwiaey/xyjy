@@ -1411,6 +1411,56 @@ body.related-menu-backdrop::before {
     pointer-events: none !important;
 }
 
+/* 质量方针逐词弹出（点击页面空白处，在点击位置依次显示） */
+.policy-word-pop {
+    position: fixed;
+    transform: translate(-50%, -50%) scale(0.6);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    white-space: nowrap;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px 22px;
+    box-shadow: 0 16px 48px var(--shadow-color);
+    z-index: 99999;
+    pointer-events: none;
+    opacity: 0;
+    animation: policyWordIn 0.35s ease forwards, policyWordOut 0.45s ease 1.15s forwards;
+}
+
+@keyframes policyWordIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.6);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes policyWordOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.06);
+    }
+}
+
+@media (max-width: 768px) {
+    .policy-word-pop {
+        font-size: 20px;
+        letter-spacing: 4px;
+        padding: 10px 16px;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -1924,7 +1974,7 @@ body.related-menu-backdrop::before {
              </div>
         </footer>
 
-        <p class="update-date">最后更新: 2026-09-01 11:12</p>
+        <p class="update-date">最后更新: 2026-09-01 11:34</p>
     </div>
 
     <!-- 二维码弹窗 -->
@@ -2027,7 +2077,7 @@ function initWechatShare() {
 // ============================================
 // 站点切换菜单
 // ============================================
-const SITE_URLS = [{"name": "GitHub Pages", "url": "https://nokwiaey.github.io/xyjy/", "desc": "主站，长期可用", "enabled": true}, {"name": "Cloudflare Pages", "url": "https://xyjy.dfly.site/", "desc": "镜像站，域名到期前可用", "enabled": true}, {"name": "帽子云", "url": "https://xyjy-rbw5h01el.maozi.io/", "desc": "镜像站，速度尚可，备用", "enabled": true}, {"name": "Vercel", "url": "https://xyjy-tools.vercel.app/", "desc": "镜像站，备用", "enabled": true}];
+const SITE_URLS = [{"name": "GitHub Pages", "url": "https://nokwiaey.github.io/xyjy/", "desc": "主站，长期可用", "enabled": true}, {"name": "Cloudflare Pages", "url": "https://xyjy.dfly.site/", "desc": "镜像站，域名到期前可用", "enabled": true}, {"name": "Vercel", "url": "https://xyjy-tools.vercel.app/", "desc": "镜像站，备用", "enabled": true}, {"name": "Netlify", "url": "https://xyjy.netlify.app/", "desc": "镜像站，每月免费构建额度有限，备用", "enabled": true}];
 
 function getSiteBaseUrl(site) {
     return new URL(site.url);
@@ -2731,6 +2781,51 @@ themeToggle.addEventListener('click', function() {
         localStorage.setItem('theme', 'dark');
     }
 });
+// ============================================
+
+// ============================================
+// 质量方针：点击页面空白处逐词显示
+// 每次单击空白区域依次弹出“公正准确 及时满意 求真务实 持续改进”，
+// 四个词循环展示（同社会主义核心价值观彩蛋效果）。
+// ============================================
+const QUALITY_POLICY_WORDS = ['公正准确', '及时满意', '求真务实', '持续改进'];
+let policyWordIndex = 0;
+let policyWordEl = null;
+
+// 点击空白处（非交互元素）时逐词显示质量方针
+document.addEventListener('click', function(e) {
+    // 忽略对交互元素 / 工具卡片 / 菜单 / 弹窗等的点击
+    if (!(e.target instanceof Element)) return;
+    if (e.target.closest('a, button, input, textarea, select, .tool-card, .tag-filter, .recent-item, .site-switcher, .site-menu, .theme-toggle, .back-to-top, .qr-modal-overlay, .wxp-modal-overlay, .search-box, .search-shortcut, .feedback-link')) return;
+
+    // 二维码 / 小程序码弹窗打开时不响应（由弹窗自身处理关闭）
+    if (document.querySelector('.qr-modal-overlay.open, .wxp-modal-overlay.open')) return;
+
+    showPolicyWord(QUALITY_POLICY_WORDS[policyWordIndex], e.clientX, e.clientY);
+    policyWordIndex = (policyWordIndex + 1) % QUALITY_POLICY_WORDS.length;
+});
+
+function showPolicyWord(word, clientX, clientY) {
+    if (!policyWordEl) {
+        policyWordEl = document.createElement('div');
+        policyWordEl.className = 'policy-word-pop';
+        document.body.appendChild(policyWordEl);
+    }
+    policyWordEl.textContent = word;
+
+    // 以点击位置为中心显示，并限制在视口内避免溢出
+    var width = policyWordEl.offsetWidth;
+    var height = policyWordEl.offsetHeight;
+    var left = Math.min(Math.max(clientX, width / 2 + 8), window.innerWidth - width / 2 - 8);
+    var top = Math.min(Math.max(clientY, height / 2 + 8), window.innerHeight - height / 2 - 8);
+    policyWordEl.style.left = left + 'px';
+    policyWordEl.style.top = top + 'px';
+
+    // 重新触发弹入/弹出动画
+    policyWordEl.style.animation = 'none';
+    void policyWordEl.offsetWidth; // 强制回流以重启 CSS 动画
+    policyWordEl.style.animation = '';
+}
 // ============================================
 
 // ============================================

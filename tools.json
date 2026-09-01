@@ -16,7 +16,7 @@
       "name": "帽子云",
       "url": "https://xyjy-rbw5h01el.maozi.io/",
       "desc": "镜像站，速度尚可，备用",
-      "enabled": true
+      "enabled": false
     },
     {
       "name": "Vercel",
@@ -34,7 +34,7 @@
       "name": "Netlify",
       "url": "https://xyjy.netlify.app/",
       "desc": "镜像站，每月免费构建额度有限，备用",
-      "enabled": false
+      "enabled": true
     }
   ],
   "tools": [
