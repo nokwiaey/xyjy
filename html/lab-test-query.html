@@ -858,6 +858,68 @@ body {
   border-bottom: none;
 }
 
+/* 数据更新提示条 */
+.update-banner {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #fff7e6;
+  border-bottom: 1px solid #ffd591;
+  font-size: 13px;
+  color: #ad6800;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  animation: updateBannerSlideDown 0.3s ease;
+}
+
+.update-banner-text {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.5;
+}
+
+.update-banner-btn {
+  flex-shrink: 0;
+  padding: 5px 16px;
+  border: none;
+  border-radius: 999px;
+  background: #1677ff;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.update-banner-btn:active {
+  opacity: 0.85;
+}
+
+.update-banner-close {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: #ad6800;
+  font-size: 16px;
+  line-height: 1;
+  padding: 4px;
+  cursor: pointer;
+}
+
+@keyframes updateBannerSlideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -1076,6 +1138,11 @@ function initData(data) {
     selectForm(data.applyForms[0].applyFormCode);
   }
   hideLoading();
+
+  // 记录当前展示数据的版本标识，并启动后台更新检测
+  // （sw.js 缓存优先策略下，页面可能展示缓存中的旧数据，需主动检测新版本）
+  currentDataVersion = getDataVersion(data);
+  startUpdateCheck();
 }
 
 // 并行加载多个数据源，使用最先成功返回的
@@ -2596,6 +2663,174 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initHintTooltip);
 } else {
   initHintTooltip();
+}
+// ============================================
+
+// ============================================
+// 数据更新检测
+// 说明：由于 sw.js 采用缓存优先策略，页面可能一直展示缓存中的旧数据。
+// 本功能在数据加载完成后，后台请求服务器上的最新数据（URL 追加时间戳，
+// 绕过 Service Worker 缓存与 HTTP 缓存）并与当前数据比对；若发现更新，
+// 则在页面顶部提示用户刷新。同时把最新数据写入 Service Worker 缓存的
+// 正式条目，确保用户点击“立即刷新”后能立刻看到最新内容。
+// ============================================
+const UPDATE_CHECK_INTERVAL = 10 * 60 * 1000; // 定期检查间隔（10分钟）
+let currentDataVersion = '';   // 当前页面展示数据的版本标识
+let updatePromptShown = false; // 本次会话是否已提示过更新
+let updateCheckInFlight = false;
+let updateCheckTimer = null;
+
+// 生成数据版本标识（exportTime + version 同时比较，两个字段任一变化都视为更新）
+function getDataVersion(data) {
+  if (!data) return '';
+  return String(data.exportTime || '') + '|' + String(data.version || '');
+}
+
+// 启动更新检测：加载后立即检查一次，之后定期检查，并在页面重新可见/网络恢复时检查
+function startUpdateCheck() {
+  if (updateCheckTimer) return;
+
+  // 数据加载完成后稍作延迟，先检查一次
+  setTimeout(checkForUpdates, 500);
+
+  // 定期检查（页面长时间保持打开时也能发现更新）
+  updateCheckTimer = setInterval(checkForUpdates, UPDATE_CHECK_INTERVAL);
+
+  // 页面重新变为可见时检查
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) checkForUpdates();
+  });
+
+  // 网络恢复时检查
+  window.addEventListener('online', checkForUpdates);
+}
+
+// 后台检查数据是否有更新（以第一个数据源为基准）
+async function checkForUpdates() {
+  if (updateCheckInFlight || updatePromptShown) return;
+  if (!currentDataVersion || DATA_URLS.length === 0) return;
+
+  updateCheckInFlight = true;
+  try {
+    const baseUrl = DATA_URLS[0];
+    // 追加时间戳生成一次性 URL，绕过 SW 缓存与 HTTP 缓存，获取服务器最新数据
+    const sep = baseUrl.includes('?') ? '&' : '?';
+    const res = await fetch(baseUrl + sep + '_t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) return;
+
+    const freshClone = res.clone();
+    const fresh = await res.json();
+    const freshVersion = getDataVersion(fresh);
+
+    if (freshVersion && freshVersion !== currentDataVersion) {
+      // 把最新数据写入 SW 缓存的正式条目，保证用户刷新后立即看到新数据
+      try {
+        await updateCanonicalCache(baseUrl, freshClone);
+      } catch (e) {
+        // 缓存更新失败不阻塞提示（刷新时 SW 的后台更新也可能已生效）
+      }
+      showUpdatePrompt(fresh);
+    }
+  } catch (e) {
+    // 网络异常（如离线）时静默忽略，等待下次检查
+  } finally {
+    updateCheckInFlight = false;
+    // 清理带时间戳的临时缓存条目（SW 会把检查请求的响应也写入缓存）
+    cleanupTempCacheEntries();
+  }
+}
+
+// 将最新响应写入 SW 缓存的正式条目（不带时间戳的 URL）
+async function updateCanonicalCache(relativeUrl, freshResponse) {
+  if (!('caches' in window)) return;
+  const canonicalUrl = new URL(relativeUrl, location.href).href;
+  const names = await caches.keys();
+  for (const name of names) {
+    const cache = await caches.open(name);
+    const hit = await cache.match(canonicalUrl);
+    if (hit) {
+      await cache.put(canonicalUrl, freshResponse.clone());
+    }
+  }
+}
+
+// 清理带时间戳的临时缓存条目，避免缓存无限增长
+async function cleanupTempCacheEntries() {
+  if (!('caches' in window)) return;
+  try {
+    const canonicalUrl = new URL(DATA_URLS[0], location.href).href;
+    const names = await caches.keys();
+    for (const name of names) {
+      const cache = await caches.open(name);
+      const keys = await cache.keys();
+      for (const key of keys) {
+        if (key.url.startsWith(canonicalUrl + '?')) {
+          await cache.delete(key);
+        }
+      }
+    }
+  } catch (e) {
+    // 忽略清理失败
+  }
+}
+
+// 在页面顶部显示数据更新提示条
+function showUpdatePrompt(freshData) {
+  if (updatePromptShown) return;
+  updatePromptShown = true;
+
+  // 提示已展示后停止定期检查
+  if (updateCheckTimer) {
+    clearInterval(updateCheckTimer);
+    updateCheckTimer = null;
+  }
+
+  let banner = document.getElementById('updateBanner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.className = 'update-banner';
+    banner.id = 'updateBanner';
+    banner.innerHTML = `
+      <span class="update-banner-text" id="updateBannerText">检测到数据更新，点击刷新查看最新内容</span>
+      <button class="update-banner-btn" id="updateBannerRefresh">立即刷新</button>
+      <button class="update-banner-close" id="updateBannerClose" title="忽略" aria-label="忽略">✕</button>
+    `;
+    document.body.appendChild(banner);
+  }
+
+  // 提示文案中带上最新数据的更新时间
+  const text = banner.querySelector('#updateBannerText');
+  if (text) {
+    if (freshData && freshData.exportTime) {
+      try {
+        const date = new Date(freshData.exportTime);
+        const formatted = date.toLocaleString('zh-CN', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+        text.textContent = `检测到数据更新（更新时间：${formatted}），点击刷新查看最新内容`;
+      } catch (e) {
+        text.textContent = '检测到数据更新，点击刷新查看最新内容';
+      }
+    } else {
+      text.textContent = '检测到数据更新，点击刷新查看最新内容';
+    }
+  }
+
+  const refreshBtn = banner.querySelector('#updateBannerRefresh');
+  if (refreshBtn) {
+    refreshBtn.onclick = () => location.reload();
+  }
+
+  const closeBtn = banner.querySelector('#updateBannerClose');
+  if (closeBtn) {
+    closeBtn.onclick = () => {
+      if (banner.parentNode) banner.parentNode.removeChild(banner);
+    };
+  }
 }
 // ============================================
 </script>
