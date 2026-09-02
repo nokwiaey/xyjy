@@ -342,7 +342,6 @@ def generate_html(tools, site_urls):
         <div class="recent-section" id="favSection">
             <div class="recent-header">
                 <span class="recent-title recent-title-btn" id="favTitle" role="button" tabindex="0" title="点击管理（排序/删除）">我的收藏</span>
-                <button class="recent-clear" id="favClear">清除收藏</button>
             </div>
             <div class="recent-list" id="favList"></div>
         </div>
@@ -351,7 +350,6 @@ def generate_html(tools, site_urls):
         <div class="recent-section" id="recentSection">
             <div class="recent-header">
                 <span class="recent-title recent-title-btn" id="recentTitle" role="button" tabindex="0" title="点击管理（排序/删除）">最近访问</span>
-                <button class="recent-clear" id="recentClear">清除记录</button>
             </div>
             <div class="recent-list" id="recentList"></div>
         </div>

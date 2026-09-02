@@ -585,7 +585,6 @@ tagFilters.forEach(function(filter) {
 // ============================================
 var recentSection = document.getElementById('recentSection');
 var recentList = document.getElementById('recentList');
-var recentClearBtn = document.getElementById('recentClear');
 
 function getRecentTools() {
     try { return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch(e) { return []; }
@@ -653,12 +652,6 @@ function attachCardEvents() {
 
 attachCardEvents();
 
-recentClearBtn.addEventListener('click', function() {
-    localStorage.removeItem(RECENT_KEY);
-    recentSection.classList.remove('visible');
-    recentList.innerHTML = '';
-});
-
 renderRecentVisits();
 // ============================================
 
@@ -668,7 +661,6 @@ renderRecentVisits();
 const FAV_KEY = 'favoriteTools';
 const favSection = document.getElementById('favSection');
 const favList = document.getElementById('favList');
-const favClearBtn = document.getElementById('favClear');
 
 function getFavTools() {
     try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch(e) { return []; }
@@ -926,15 +918,6 @@ function initFavButtons() {
 
 initFavButtons();
 renderFavSection();
-
-if (favClearBtn) {
-    favClearBtn.addEventListener('click', function() {
-        localStorage.removeItem(FAV_KEY);
-        favSection.classList.remove('visible');
-        favList.innerHTML = '';
-        renderFavState();
-    });
-}
 // ============================================
 
 // ============================================
