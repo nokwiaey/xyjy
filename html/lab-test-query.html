@@ -55,8 +55,15 @@
   color: #666;
 }
 
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   margin: 0;
+  height: 100%;
+  overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC";
   background: #f5f5f5;
   color: #333;
@@ -130,6 +137,8 @@ body {
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   display: none;
   z-index: 100;
+  max-height: calc(100vh - 56px);
+  overflow-y: auto;
 }
 
 .advanced-search-panel.show {
@@ -241,7 +250,7 @@ body {
 .container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 56px);
 }
 
 /* 侧边栏包装器 - 桌面端也使用 */
@@ -384,6 +393,36 @@ body {
   margin: 0 0 10px;
   position: relative;
   padding-right: 50px;
+}
+
+.drawer-title {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* 复制成功提示 */
+.copy-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 80px;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  z-index: 10001;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  max-width: 80vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.copy-toast.show {
+  opacity: 1;
 }
 
 .drawer-emergency-badge {
@@ -2091,8 +2130,54 @@ function getRecognition(itemDes, groupId) {
   return itemDes;
 }
 
-// 每页显示的收费项数量
-const PAGE_SIZE = 5;
+// ============================================
+// 复制到剪贴板（带提示）
+// ============================================
+let copyToastTimer = null;
+
+function showCopyToast(text) {
+  let toast = document.getElementById('copyToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'copyToast';
+    toast.className = 'copy-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = text;
+  toast.classList.add('show');
+  clearTimeout(copyToastTimer);
+  copyToastTimer = setTimeout(function() {
+    toast.classList.remove('show');
+  }, 1600);
+}
+
+function fallbackCopyText(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+  } catch (e) { /* 忽略 */ }
+  document.body.removeChild(ta);
+}
+
+function copyText(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function() {
+      showCopyToast('已复制：' + text);
+    }).catch(function() {
+      fallbackCopyText(text);
+      showCopyToast('已复制：' + text);
+    });
+  } else {
+    fallbackCopyText(text);
+    showCopyToast('已复制：' + text);
+  }
+}
+// ============================================
 
 function showPrice(code) {
   const drawer = document.getElementById('drawer');
@@ -2105,19 +2190,11 @@ function showPrice(code) {
   }
 
   const applyFormName = findApplyFormName(item.applyFormCode);
-  
-  // 分页状态
-  let currentPage = 1;
-  const totalPages = Math.ceil(price.details.length / PAGE_SIZE);
 
-  // 渲染收费明细（根据当前页）
-  function renderPriceDetails() {
-    const start = (currentPage - 1) * PAGE_SIZE;
-    const end = start + PAGE_SIZE;
-    const pageDetails = price.details.slice(start, end);
-    
+  // 渲染全部收费明细（drawer 内容区可上下滚动，不分页）
+  function renderAllDetails() {
     let detailsHtml = '';
-    pageDetails.forEach(d => {
+    price.details.forEach(d => {
       detailsHtml += `
         <div class="price-row">
           <div class="price-row-info">
@@ -2128,32 +2205,17 @@ function showPrice(code) {
         </div>
       `;
     });
-    
+
     // 更新明细区域
     const detailsContainer = document.getElementById('price-details-container');
     if (detailsContainer) {
       detailsContainer.innerHTML = detailsHtml;
     }
-    
-    // 更新分页信息
-    const pageInfo = document.getElementById('page-info');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    
-    if (pageInfo) {
-      pageInfo.textContent = `${currentPage} / ${totalPages} 页 (${price.details.length}项)`;
-    }
-    if (prevBtn) {
-      prevBtn.disabled = currentPage <= 1;
-    }
-    if (nextBtn) {
-      nextBtn.disabled = currentPage >= totalPages;
-    }
   }
 
   // 固定头部：标题和基本信息
   let html = `<div class="drawer-header">`;
-  html += `<h3>${item.itemName}${item.isEmergency ? '<span class="drawer-emergency-badge">急诊</span>' : ''}</h3>`;
+  html += `<h3 class="drawer-title" title="点击复制项目编码与名称">${item.itemName}${item.isEmergency ? '<span class="drawer-emergency-badge">急诊</span>' : ''}</h3>`;
   html += `
     <div class="drawer-basic">
       <span>项目编码：${item.itemCode}</span>
@@ -2168,17 +2230,6 @@ function showPrice(code) {
 
   // 收费明细容器
   html += `<div id="price-details-container"></div>`;
-
-  // 分页控件（只有超过一页时才显示）
-  if (totalPages > 1) {
-    html += `
-      <div class="pagination">
-        <button id="prev-btn" ${currentPage <= 1 ? 'disabled' : ''}>上一页</button>
-        <span class="page-info" id="page-info">${currentPage} / ${totalPages} 页 (${price.details.length}项)</span>
-        <button id="next-btn" ${currentPage >= totalPages ? 'disabled' : ''}>下一页</button>
-      </div>
-    `;
-  }
 
   // 合计金额和价格提示（移到LIS之前）
   html += `<div class="price-sum">合计：¥${formatPrice(price.sum)}</div>`;
@@ -2234,9 +2285,14 @@ function showPrice(code) {
   drawer.innerHTML = html;
   mask.style.display = 'block';
   drawer.classList.add('show');
-  
-  // 初始渲染
-  renderPriceDetails();
+  // 渲染全部收费明细
+  renderAllDetails();
+
+  // 点击抽屉标题复制“项目编码 项目名称”
+  const titleEl = drawer.querySelector('.drawer-title');
+  if (titleEl) {
+    titleEl.onclick = () => copyText(`${item.itemCode} ${item.itemName}`);
+  }
 
   // 隐藏滚动指示器
   const leftHint = document.getElementById('scrollHintLeft');
@@ -2250,29 +2306,6 @@ function showPrice(code) {
   if (printBtn) {
     printBtn.onclick = () => printItemDetail(item, price, applyFormName);
   }
-  
-  // 绑定分页按钮事件
-  const prevBtn = document.getElementById('prev-btn');
-  const nextBtn = document.getElementById('next-btn');
-  
-  if (prevBtn) {
-    prevBtn.onclick = () => {
-      if (currentPage > 1) {
-        currentPage--;
-        renderPriceDetails();
-      }
-    };
-  }
-  
-  if (nextBtn) {
-    nextBtn.onclick = () => {
-      if (currentPage < totalPages) {
-        currentPage++;
-        renderPriceDetails();
-      }
-    };
-  }
-
   // 绑定 LIS 分析项目折叠/展开
   const lisToggle = document.getElementById('lis-toggle');
   const lisContent = document.getElementById('lis-content');
@@ -2364,10 +2397,10 @@ function buildDetailHtml(item, price, applyFormName) {
     <p style="margin-top:10px;text-align:right;font-weight:600;">
       合计：¥${formatPrice(price.sum)}
     </p>
-    ${lisHtml}
-    <p style="margin-top:6px;font-size:12px;color:#666;">
+    <p style="margin-top:6px;font-size:12px;color:#666;text-align:right;">
       价格以医院结算为准
     </p>
+    ${lisHtml}
   `;
 }
 
