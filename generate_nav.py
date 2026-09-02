@@ -338,6 +338,15 @@ def generate_html(tools, site_urls):
 {tags_html}
         </div>
 
+        <!-- 我的收藏 -->
+        <div class="recent-section" id="favSection">
+            <div class="recent-header">
+                <span class="recent-title">我的收藏</span>
+                <button class="recent-clear" id="favClear">清空收藏</button>
+            </div>
+            <div class="recent-list" id="favList"></div>
+        </div>
+
         <!-- 最近访问 -->
         <div class="recent-section" id="recentSection">
             <div class="recent-header">

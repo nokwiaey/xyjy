@@ -584,12 +584,12 @@ body.related-menu-backdrop::before {
     color: #5a9fd4;
 }
 
-/* 工具卡片 - 复制链接按钮 */
+/* 工具卡片 - 收藏按钮 */
 .tool-card {
     position: relative;
 }
 
-.tool-card-copy {
+.tool-card-fav {
     position: absolute;
     top: 12px;
     right: 12px;
@@ -609,28 +609,38 @@ body.related-menu-backdrop::before {
     color: var(--text-tertiary);
 }
 
-.tool-card:hover .tool-card-copy,
-.tool-card.keyboard-focus .tool-card-copy {
+.tool-card:hover .tool-card-fav,
+.tool-card.keyboard-focus .tool-card-fav {
     opacity: 1;
     transform: translateY(0);
 }
 
-.tool-card-copy:hover {
-    background: rgba(26, 95, 180, 0.1);
-    color: #1a5fb4;
-    border-color: rgba(26, 95, 180, 0.3);
+.tool-card-fav:hover {
+    background: rgba(255, 193, 7, 0.12);
+    color: #f5a623;
+    border-color: rgba(255, 193, 7, 0.35);
 }
 
-.tool-card-copy.copied {
-    background: #2ea043;
-    color: white;
-    border-color: #2ea043;
+.tool-card-fav.active {
+    opacity: 1;
+    transform: translateY(0);
+    color: #f5a623;
+    background: rgba(255, 193, 7, 0.12);
+    border-color: rgba(255, 193, 7, 0.4);
 }
 
-.tool-card-copy svg {
-    width: 14px;
-    height: 14px;
+.tool-card-fav svg {
+    width: 15px;
+    height: 15px;
     pointer-events: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linejoin: round;
+}
+
+.tool-card-fav.active svg {
+    fill: currentColor;
 }
 
 /* 工具卡片 - 相关链接下拉菜单 */
@@ -1079,7 +1089,7 @@ body.related-menu-backdrop::before {
         height: 20px;
     }
 
-    .tool-card-copy {
+    .tool-card-fav {
         opacity: 1;
         width: 28px;
         height: 28px;
@@ -1296,6 +1306,59 @@ body.related-menu-backdrop::before {
 .recent-item-name {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* 我的收藏 - 排序项 */
+.fav-item {
+    max-width: 260px;
+    padding: 4px 6px 4px 14px;
+}
+
+.fav-item .fav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--text-primary);
+    min-width: 0;
+    flex: 1;
+}
+
+.fav-item .recent-item-name {
+    min-width: 0;
+}
+
+.fav-actions {
+    display: inline-flex;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.fav-move {
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-tertiary);
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.fav-move:hover:not(:disabled) {
+    background: rgba(26, 95, 180, 0.1);
+    color: #1a5fb4;
+}
+
+.fav-move:disabled {
+    opacity: 0.3;
+    cursor: default;
 }
 
 @media (max-width: 768px) {

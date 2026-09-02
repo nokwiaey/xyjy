@@ -610,12 +610,12 @@ body.related-menu-backdrop::before {
     color: #5a9fd4;
 }
 
-/* 工具卡片 - 复制链接按钮 */
+/* 工具卡片 - 收藏按钮 */
 .tool-card {
     position: relative;
 }
 
-.tool-card-copy {
+.tool-card-fav {
     position: absolute;
     top: 12px;
     right: 12px;
@@ -635,28 +635,38 @@ body.related-menu-backdrop::before {
     color: var(--text-tertiary);
 }
 
-.tool-card:hover .tool-card-copy,
-.tool-card.keyboard-focus .tool-card-copy {
+.tool-card:hover .tool-card-fav,
+.tool-card.keyboard-focus .tool-card-fav {
     opacity: 1;
     transform: translateY(0);
 }
 
-.tool-card-copy:hover {
-    background: rgba(26, 95, 180, 0.1);
-    color: #1a5fb4;
-    border-color: rgba(26, 95, 180, 0.3);
+.tool-card-fav:hover {
+    background: rgba(255, 193, 7, 0.12);
+    color: #f5a623;
+    border-color: rgba(255, 193, 7, 0.35);
 }
 
-.tool-card-copy.copied {
-    background: #2ea043;
-    color: white;
-    border-color: #2ea043;
+.tool-card-fav.active {
+    opacity: 1;
+    transform: translateY(0);
+    color: #f5a623;
+    background: rgba(255, 193, 7, 0.12);
+    border-color: rgba(255, 193, 7, 0.4);
 }
 
-.tool-card-copy svg {
-    width: 14px;
-    height: 14px;
+.tool-card-fav svg {
+    width: 15px;
+    height: 15px;
     pointer-events: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linejoin: round;
+}
+
+.tool-card-fav.active svg {
+    fill: currentColor;
 }
 
 /* 工具卡片 - 相关链接下拉菜单 */
@@ -1105,7 +1115,7 @@ body.related-menu-backdrop::before {
         height: 20px;
     }
 
-    .tool-card-copy {
+    .tool-card-fav {
         opacity: 1;
         width: 28px;
         height: 28px;
@@ -1324,6 +1334,59 @@ body.related-menu-backdrop::before {
     text-overflow: ellipsis;
 }
 
+/* 我的收藏 - 排序项 */
+.fav-item {
+    max-width: 260px;
+    padding: 4px 6px 4px 14px;
+}
+
+.fav-item .fav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--text-primary);
+    min-width: 0;
+    flex: 1;
+}
+
+.fav-item .recent-item-name {
+    min-width: 0;
+}
+
+.fav-actions {
+    display: inline-flex;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.fav-move {
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-tertiary);
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.fav-move:hover:not(:disabled) {
+    background: rgba(26, 95, 180, 0.1);
+    color: #1a5fb4;
+}
+
+.fav-move:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
 @media (max-width: 768px) {
     .search-box {
         max-width: 100%;
@@ -1535,6 +1598,15 @@ body.related-menu-backdrop::before {
             <button class="tag-filter" data-tag="计算工具">计算工具</button>
             <button class="tag-filter" data-tag="质控评价">质控评价</button>
             <button class="tag-filter" data-tag="院内服务">院内服务</button>
+        </div>
+
+        <!-- 我的收藏 -->
+        <div class="recent-section" id="favSection">
+            <div class="recent-header">
+                <span class="recent-title">我的收藏</span>
+                <button class="recent-clear" id="favClear">清空收藏</button>
+            </div>
+            <div class="recent-list" id="favList"></div>
         </div>
 
         <!-- 最近访问 -->
@@ -1973,7 +2045,7 @@ body.related-menu-backdrop::before {
              </div>
         </footer>
 
-        <p class="update-date">最后更新: 2026-09-02 09:29</p>
+        <p class="update-date">最后更新: 2026-09-02 09:48</p>
     </div>
 
     <!-- 质量方针逐词弹出层（点击页面空白处显示，由 script.js 控制） -->
@@ -2613,25 +2685,29 @@ function saveRecentTools(recent) {
     try { localStorage.setItem(RECENT_KEY, JSON.stringify(recent)); } catch(e) {}
 }
 
-function recordVisit(card) {
-    var name = card.querySelector('.tool-name')?.textContent || '';
-    var url = card.getAttribute('href') || '';
+function getCardIconHtml(card) {
     var iconEl = card.querySelector('.tool-icon');
-    var iconHtml = '';
-    if (iconEl) {
-        var img = iconEl.querySelector('img');
-        if (img) {
-            iconHtml = '<img src="' + img.getAttribute('src') + '" alt="" width="16" height="16" style="object-fit:contain;border-radius:2px;">';
-        } else {
-            iconHtml = iconEl.textContent?.trim() || '🔗';
-        }
+    if (!iconEl) return '';
+    var img = iconEl.querySelector('img');
+    if (img) {
+        return '<img src="' + img.getAttribute('src') + '" alt="" width="16" height="16" style="object-fit:contain;border-radius:2px;">';
     }
+    return iconEl.textContent?.trim() || '🔗';
+}
+
+function recordVisitData(name, url, iconHtml) {
     var recent = getRecentTools();
     recent = recent.filter(function(item) { return item.url !== url; });
     recent.unshift({ name: name, url: url, iconHtml: iconHtml, time: Date.now() });
     recent = recent.slice(0, MAX_RECENT);
     saveRecentTools(recent);
     renderRecentVisits();
+}
+
+function recordVisit(card) {
+    var name = card.querySelector('.tool-name')?.textContent || '';
+    var url = card.getAttribute('href') || card.getAttribute('data-url') || '';
+    recordVisitData(name, url, getCardIconHtml(card));
 }
 
 function renderRecentVisits() {
@@ -2658,8 +2734,8 @@ function attachCardEvents() {
     toolCards.forEach(function(card) {
         // 点击记录访问
         card.addEventListener('click', function(e) {
-            // 如果点击的是复制按钮，不记录访问
-            if (e.target.closest('.tool-card-copy, .related-toggle, .related-menu-item')) return;
+            // 如果点击的是收藏按钮或相关链接按钮，不记录访问
+            if (e.target.closest('.tool-card-fav, .related-toggle, .related-menu-item')) return;
             recordVisit(card);
         });
     });
@@ -2677,66 +2753,158 @@ renderRecentVisits();
 // ============================================
 
 // ============================================
-// 工具卡片 - 添加复制链接按钮
+// 我的收藏：卡片右上角星标收藏 + 收藏区块排序
 // ============================================
-function initCopyButtons() {
+const FAV_KEY = 'favoriteTools';
+const favSection = document.getElementById('favSection');
+const favList = document.getElementById('favList');
+const favClearBtn = document.getElementById('favClear');
+
+function getFavTools() {
+    try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch(e) { return []; }
+}
+
+function saveFavTools(fav) {
+    try { localStorage.setItem(FAV_KEY, JSON.stringify(fav)); } catch(e) {}
+}
+
+function isFavorited(url) {
+    if (!url) return false;
+    return getFavTools().some(function(item) { return item.url === url; });
+}
+
+function toggleFavorite(card) {
+    var url = card.getAttribute('href') || card.getAttribute('data-url') || '';
+    if (!url) return;
+    var name = card.querySelector('.tool-name')?.textContent || '';
+    var iconHtml = getCardIconHtml(card);
+    var fav = getFavTools();
+    var idx = -1;
+    fav.forEach(function(item, i) { if (item.url === url) idx = i; });
+    if (idx > -1) {
+        fav.splice(idx, 1);
+    } else {
+        fav.push({ name: name, url: url, iconHtml: iconHtml, time: Date.now() });
+    }
+    saveFavTools(fav);
+    renderFavSection();
+    renderFavState();
+}
+
+// 同步所有卡片右上角星标的收藏状态
+function renderFavState() {
     toolCards.forEach(function(card) {
-        // 避免重复添加
-        if (card.querySelector('.tool-card-copy')) return;
-
-        var isWxp = card.classList.contains('wxp-card');
-        var url = card.getAttribute('href') || '';
-        var btn = document.createElement('button');
-        btn.className = 'tool-card-copy';
-        if (isWxp) {
-            btn.setAttribute('aria-label', '跳转到小程序');
-            btn.title = '跳转到小程序';
-            btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="15 3 21 3 21 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        } else {
-            btn.setAttribute('aria-label', '复制链接');
-            btn.title = '复制链接';
-            btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="9" width="13" height="13" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
-        }
-
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (isWxp) {
-                var jumpUrl = card.getAttribute('data-url');
-                if (jumpUrl) window.open(jumpUrl, '_blank');
-            } else {
-                var copyText = url;
-                if (!/^https?:\/\//i.test(copyText)) {
-                    var a = document.createElement('a');
-                    a.href = copyText;
-                    copyText = a.href;
-                }
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(copyText);
-                } else {
-                    var textarea = document.createElement('textarea');
-                    textarea.value = copyText;
-                    textarea.style.position = 'fixed';
-                    textarea.style.opacity = '0';
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textarea);
-                }
-                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-                btn.classList.add('copied');
-                setTimeout(function() {
-                    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="9" width="13" height="13" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
-                    btn.classList.remove('copied');
-                }, 1500);
-            }
-        });
-
-        card.appendChild(btn);
+        var url = card.getAttribute('href') || card.getAttribute('data-url') || '';
+        var btn = card.querySelector('.tool-card-fav');
+        if (btn) btn.classList.toggle('active', isFavorited(url));
     });
 }
 
-initCopyButtons();
+// 渲染“我的收藏”区块
+function renderFavSection() {
+    if (!favSection || !favList) return;
+    var fav = getFavTools();
+    if (fav.length === 0) {
+        favSection.classList.remove('visible');
+        return;
+    }
+    favSection.classList.add('visible');
+    favList.innerHTML = '';
+    fav.forEach(function(item, index) {
+        var div = document.createElement('div');
+        div.className = 'recent-item fav-item';
+
+        var link = document.createElement('a');
+        link.className = 'fav-link';
+        link.href = item.url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.title = item.name;
+        link.innerHTML = '<span class="recent-item-icon">' + item.iconHtml + '</span><span class="recent-item-name">' + item.name + '</span>';
+        link.addEventListener('click', function() {
+            recordVisitData(item.name, item.url, item.iconHtml);
+        });
+        div.appendChild(link);
+
+        var actions = document.createElement('div');
+        actions.className = 'fav-actions';
+
+        var up = document.createElement('button');
+        up.type = 'button';
+        up.className = 'fav-move';
+        up.title = '上移';
+        up.setAttribute('aria-label', '上移');
+        up.textContent = '↑';
+        up.disabled = index === 0;
+        up.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            moveFav(index, -1);
+        });
+        actions.appendChild(up);
+
+        var down = document.createElement('button');
+        down.type = 'button';
+        down.className = 'fav-move';
+        down.title = '下移';
+        down.setAttribute('aria-label', '下移');
+        down.textContent = '↓';
+        down.disabled = index === fav.length - 1;
+        down.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            moveFav(index, 1);
+        });
+        actions.appendChild(down);
+
+        div.appendChild(actions);
+        favList.appendChild(div);
+    });
+}
+
+// 调整收藏顺序
+function moveFav(index, delta) {
+    var fav = getFavTools();
+    var target = index + delta;
+    if (target < 0 || target >= fav.length) return;
+    var item = fav.splice(index, 1)[0];
+    fav.splice(target, 0, item);
+    saveFavTools(fav);
+    renderFavSection();
+}
+
+// 卡片右上角收藏按钮（替代原“复制链接”按钮）
+function initFavButtons() {
+    toolCards.forEach(function(card) {
+        // 避免重复添加
+        if (card.querySelector('.tool-card-fav')) return;
+
+        var btn = document.createElement('button');
+        btn.className = 'tool-card-fav';
+        btn.setAttribute('aria-label', '收藏');
+        btn.title = '收藏';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleFavorite(card);
+        });
+        card.appendChild(btn);
+    });
+    renderFavState();
+}
+
+initFavButtons();
+renderFavSection();
+
+if (favClearBtn) {
+    favClearBtn.addEventListener('click', function() {
+        localStorage.removeItem(FAV_KEY);
+        favSection.classList.remove('visible');
+        favList.innerHTML = '';
+        renderFavState();
+    });
+}
 // ============================================
 
 // ============================================
