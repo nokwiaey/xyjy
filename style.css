@@ -1308,10 +1308,18 @@ body.related-menu-backdrop::before {
     text-overflow: ellipsis;
 }
 
-/* 我的收藏 - 排序项 */
+/* 我的收藏 - 拖拽排序项 */
 .fav-item {
     max-width: 260px;
-    padding: 4px 6px 4px 14px;
+    padding: 8px 12px 8px 14px;
+    cursor: grab;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.fav-item:active {
+    cursor: grabbing;
 }
 
 .fav-item .fav-link {
@@ -1328,37 +1336,27 @@ body.related-menu-backdrop::before {
     min-width: 0;
 }
 
-.fav-actions {
-    display: inline-flex;
-    gap: 2px;
+.fav-grip {
     flex-shrink: 0;
-}
-
-.fav-move {
-    width: 24px;
-    height: 24px;
-    border: none;
-    border-radius: 50%;
-    background: transparent;
-    color: var(--text-tertiary);
-    font-size: 12px;
-    line-height: 1;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 0;
-    transition: all 0.2s ease;
+    color: var(--text-tertiary);
+    opacity: 0.6;
 }
 
-.fav-move:hover:not(:disabled) {
-    background: rgba(26, 95, 180, 0.1);
-    color: #1a5fb4;
+.fav-grip svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
 }
 
-.fav-move:disabled {
-    opacity: 0.3;
-    cursor: default;
+.fav-item.dragging {
+    opacity: 0.85;
+    box-shadow: 0 8px 24px var(--shadow-color);
+    border-color: #1a5fb4;
 }
 
 @media (max-width: 768px) {
@@ -1374,6 +1372,10 @@ body.related-menu-backdrop::before {
         max-width: 160px;
         font-size: 12px;
         padding: 6px 10px;
+    }
+
+    .fav-item {
+        max-width: 220px;
     }
 }
 

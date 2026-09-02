@@ -600,7 +600,7 @@ function getCardIconHtml(card) {
     if (!iconEl) return '';
     var img = iconEl.querySelector('img');
     if (img) {
-        return '<img src="' + img.getAttribute('src') + '" alt="" width="16" height="16" style="object-fit:contain;border-radius:2px;">';
+        return '<img src="' + img.getAttribute('src') + '" alt="" width="16" height="16" draggable="false" style="object-fit:contain;border-radius:2px;">';
     }
     return iconEl.textContent?.trim() || '🔗';
 }
@@ -663,7 +663,7 @@ renderRecentVisits();
 // ============================================
 
 // ============================================
-// 我的收藏：卡片右上角星标收藏 + 收藏区块排序
+// 我的收藏：卡片右上角星标收藏 + 收藏区块拖拽排序
 // ============================================
 const FAV_KEY = 'favoriteTools';
 const favSection = document.getElementById('favSection');
@@ -720,7 +720,7 @@ function renderFavSection() {
     }
     favSection.classList.add('visible');
     favList.innerHTML = '';
-    fav.forEach(function(item, index) {
+    fav.forEach(function(item) {
         var div = document.createElement('div');
         div.className = 'recent-item fav-item';
 
@@ -736,52 +736,100 @@ function renderFavSection() {
         });
         div.appendChild(link);
 
-        var actions = document.createElement('div');
-        actions.className = 'fav-actions';
+        // 拖拽手柄（视觉提示，非交互元素）
+        var grip = document.createElement('span');
+        grip.className = 'fav-grip';
+        grip.setAttribute('aria-hidden', 'true');
+        grip.innerHTML = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+        div.appendChild(grip);
 
-        var up = document.createElement('button');
-        up.type = 'button';
-        up.className = 'fav-move';
-        up.title = '上移';
-        up.setAttribute('aria-label', '上移');
-        up.textContent = '↑';
-        up.disabled = index === 0;
-        up.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            moveFav(index, -1);
-        });
-        actions.appendChild(up);
-
-        var down = document.createElement('button');
-        down.type = 'button';
-        down.className = 'fav-move';
-        down.title = '下移';
-        down.setAttribute('aria-label', '下移');
-        down.textContent = '↓';
-        down.disabled = index === fav.length - 1;
-        down.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            moveFav(index, 1);
-        });
-        actions.appendChild(down);
-
-        div.appendChild(actions);
         favList.appendChild(div);
     });
 }
 
-// 调整收藏顺序
-function moveFav(index, delta) {
-    var fav = getFavTools();
-    var target = index + delta;
-    if (target < 0 || target >= fav.length) return;
-    var item = fav.splice(index, 1)[0];
-    fav.splice(target, 0, item);
-    saveFavTools(fav);
-    renderFavSection();
+// 拖拽排序（Pointer Events，鼠标与触摸通用）
+let favDrag = null;
+let favJustDragged = false;
+
+function initFavDrag() {
+    if (!favList) return;
+
+    favList.addEventListener('pointerdown', function(e) {
+        var item = e.target.closest('.fav-item');
+        if (!item) return;
+        favDrag = {
+            pointerId: e.pointerId,
+            item: item,
+            index: Array.prototype.indexOf.call(favList.children, item),
+            startY: e.clientY,
+            moved: false
+        };
+    });
+
+    favList.addEventListener('pointermove', function(e) {
+        if (!favDrag || e.pointerId !== favDrag.pointerId) return;
+        var dy = e.clientY - favDrag.startY;
+        if (!favDrag.moved && Math.abs(dy) < 6) return; // 位移过小视为点击
+
+        if (!favDrag.moved) {
+            favDrag.moved = true;
+            try { favDrag.item.setPointerCapture(e.pointerId); } catch (err) { /* 忽略 */ }
+            favDrag.item.classList.add('dragging');
+            favDrag.item.style.zIndex = '3';
+        }
+        e.preventDefault();
+        favDrag.item.style.transform = 'translateY(' + dy + 'px)';
+    });
+
+    function finishDrag(e) {
+        if (!favDrag) return;
+        var drag = favDrag;
+        favDrag = null;
+        if (!drag.moved) return; // 未发生拖拽，按普通点击处理
+
+        // 计算落点：统计中点位于指针上方的其他条目数量
+        var items = Array.prototype.slice.call(favList.children);
+        var pointerY = e.clientY;
+        var targetIndex = 0;
+        items.forEach(function(el) {
+            if (el === drag.item) return;
+            var rect = el.getBoundingClientRect();
+            if (pointerY > rect.top + rect.height / 2) {
+                targetIndex++;
+            }
+        });
+
+        var fav = getFavTools();
+        var movedItem = fav.splice(drag.index, 1)[0];
+        fav.splice(targetIndex, 0, movedItem);
+        saveFavTools(fav);
+        favJustDragged = true;
+        renderFavSection();
+    }
+
+    favList.addEventListener('pointerup', finishDrag);
+
+    favList.addEventListener('pointercancel', function() {
+        if (!favDrag) return;
+        if (favDrag.moved) {
+            favDrag.item.classList.remove('dragging');
+            favDrag.item.style.transform = '';
+            favDrag.item.style.zIndex = '';
+        }
+        favDrag = null;
+    });
+
+    // 拖拽结束后抑制随之触发的 click，避免误打开链接
+    favList.addEventListener('click', function(e) {
+        if (favJustDragged) {
+            e.preventDefault();
+            e.stopPropagation();
+            favJustDragged = false;
+        }
+    }, true);
 }
+
+initFavDrag();
 
 // 卡片右上角收藏按钮（替代原“复制链接”按钮）
 function initFavButtons() {
