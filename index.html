@@ -1622,7 +1622,7 @@ body.related-menu-backdrop::before {
     pointer-events: none !important;
 }
 
-/* 质量方针逐词弹出（点击页面空白处，在点击位置依次显示） */
+/* 质量方针彩蛋弹层（点击标题“星元检验”四字，在点击位置依次显示） */
 .policy-word-pop {
     position: fixed;
     transform: translate(-50%, -50%) scale(0.6);
@@ -1705,7 +1705,7 @@ body.related-menu-backdrop::before {
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                 </svg>
             </div>
-            <h1 class="title">星元检验工具箱</h1>
+            <h1 class="title"><span id="policyTrigger">星元检验</span>工具箱</h1>
             <p class="subtitle">专业、便捷的检验工具集合，助力高效工作</p>
         </header>
 
@@ -2193,7 +2193,7 @@ body.related-menu-backdrop::before {
              </div>
         </footer>
 
-        <p class="update-date">最后更新: 2026-09-02 10:08</p>
+        <p class="update-date">最后更新: 2026-09-02 10:16</p>
     </div>
 
     <!-- 质量方针逐词弹出层（点击页面空白处显示，由 script.js 控制） -->
@@ -3235,26 +3235,21 @@ themeToggle.addEventListener('click', function() {
 // ============================================
 
 // ============================================
-// 质量方针：点击页面空白处逐词显示
-// 每次单击空白区域依次弹出“公正准确 及时满意 求真务实 持续改进”，
-// 四个词循环展示（同社会主义核心价值观彩蛋效果）。
+// 质量方针彩蛋：点击标题中的“星元检验”四字逐词显示
+// 依次弹出“公正准确 及时满意 求真务实 持续改进”，循环展示。
 // ============================================
 const QUALITY_POLICY_WORDS = ['公正准确', '及时满意', '求真务实', '持续改进'];
 let policyWordIndex = 0;
 let policyWordEl = null;
 
-// 点击空白处（非交互元素）时逐词显示质量方针
-document.addEventListener('click', function(e) {
-    // 忽略对交互元素 / 工具卡片 / 菜单 / 弹窗等的点击
-    if (!(e.target instanceof Element)) return;
-    if (e.target.closest('a, button, input, textarea, select, .tool-card, .tag-filter, .recent-item, .site-switcher, .site-menu, .theme-toggle, .back-to-top, .qr-modal-overlay, .wxp-modal-overlay, .search-box, .search-shortcut, .feedback-link')) return;
-
-    // 二维码 / 小程序码弹窗打开时不响应（由弹窗自身处理关闭）
-    if (document.querySelector('.qr-modal-overlay.open, .wxp-modal-overlay.open')) return;
-
-    showPolicyWord(QUALITY_POLICY_WORDS[policyWordIndex], e.clientX, e.clientY);
-    policyWordIndex = (policyWordIndex + 1) % QUALITY_POLICY_WORDS.length;
-});
+// 仅在点击“星元检验”四字时触发（彩蛋，无任何视觉提示）
+const policyTrigger = document.getElementById('policyTrigger');
+if (policyTrigger) {
+    policyTrigger.addEventListener('click', function(e) {
+        showPolicyWord(QUALITY_POLICY_WORDS[policyWordIndex], e.clientX, e.clientY);
+        policyWordIndex = (policyWordIndex + 1) % QUALITY_POLICY_WORDS.length;
+    });
+}
 
 function showPolicyWord(word, clientX, clientY) {
     // 优先使用 generate_nav.py 模板中预置的弹层元素；缺失时（如旧缓存页面）动态创建兜底

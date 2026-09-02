@@ -1596,7 +1596,7 @@ body.related-menu-backdrop::before {
     pointer-events: none !important;
 }
 
-/* 质量方针逐词弹出（点击页面空白处，在点击位置依次显示） */
+/* 质量方针彩蛋弹层（点击标题“星元检验”四字，在点击位置依次显示） */
 .policy-word-pop {
     position: fixed;
     transform: translate(-50%, -50%) scale(0.6);

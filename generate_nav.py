@@ -306,7 +306,7 @@ def generate_html(tools, site_urls):
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                 </svg>
             </div>
-            <h1 class="title">星元检验工具箱</h1>
+            <h1 class="title"><span id="policyTrigger">星元检验</span>工具箱</h1>
             <p class="subtitle">专业、便捷的检验工具集合，助力高效工作</p>
         </header>
 
