@@ -1318,6 +1318,19 @@ body.related-menu-backdrop::before {
     user-select: none;
 }
 
+/* 我的收藏 - 横向排布（不换行，超出横向滚动） */
+.fav-list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.fav-list::-webkit-scrollbar {
+    display: none;
+}
+
 .fav-item:active {
     cursor: grabbing;
 }

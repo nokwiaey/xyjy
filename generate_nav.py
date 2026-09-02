@@ -342,9 +342,9 @@ def generate_html(tools, site_urls):
         <div class="recent-section" id="favSection">
             <div class="recent-header">
                 <span class="recent-title">我的收藏</span>
-                <button class="recent-clear" id="favClear">清空收藏</button>
+                <button class="recent-clear" id="favClear">清除收藏</button>
             </div>
-            <div class="recent-list" id="favList"></div>
+            <div class="recent-list fav-list" id="favList"></div>
         </div>
 
         <!-- 最近访问 -->

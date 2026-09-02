@@ -747,7 +747,7 @@ function renderFavSection() {
     });
 }
 
-// 拖拽排序（Pointer Events，鼠标与触摸通用）
+// 拖拽排序（Pointer Events，鼠标与触摸通用；按布局方向自适应横/纵向拖动）
 let favDrag = null;
 let favJustDragged = false;
 
@@ -761,24 +761,30 @@ function initFavDrag() {
             pointerId: e.pointerId,
             item: item,
             index: Array.prototype.indexOf.call(favList.children, item),
+            startX: e.clientX,
             startY: e.clientY,
+            axis: '', // 'x' 横向 / 'y' 纵向，首次位移超过阈值时按占优方向判定
             moved: false
         };
     });
 
     favList.addEventListener('pointermove', function(e) {
         if (!favDrag || e.pointerId !== favDrag.pointerId) return;
+        var dx = e.clientX - favDrag.startX;
         var dy = e.clientY - favDrag.startY;
-        if (!favDrag.moved && Math.abs(dy) < 6) return; // 位移过小视为点击
+        if (!favDrag.moved && Math.abs(dx) < 6 && Math.abs(dy) < 6) return; // 位移过小视为点击
 
         if (!favDrag.moved) {
+            // 横向排布走 X 轴，纵向排布走 Y 轴
+            favDrag.axis = Math.abs(dx) >= Math.abs(dy) ? 'x' : 'y';
             favDrag.moved = true;
             try { favDrag.item.setPointerCapture(e.pointerId); } catch (err) { /* 忽略 */ }
             favDrag.item.classList.add('dragging');
             favDrag.item.style.zIndex = '3';
         }
         e.preventDefault();
-        favDrag.item.style.transform = 'translateY(' + dy + 'px)';
+        var offset = favDrag.axis === 'x' ? dx : dy;
+        favDrag.item.style.transform = (favDrag.axis === 'x' ? 'translateX(' : 'translateY(') + offset + 'px)';
     });
 
     function finishDrag(e) {
@@ -787,14 +793,15 @@ function initFavDrag() {
         favDrag = null;
         if (!drag.moved) return; // 未发生拖拽，按普通点击处理
 
-        // 计算落点：统计中点位于指针上方的其他条目数量
+        // 计算落点：按拖动方向统计中点位于指针前方的其他条目数量
         var items = Array.prototype.slice.call(favList.children);
-        var pointerY = e.clientY;
+        var pointer = drag.axis === 'x' ? e.clientX : e.clientY;
         var targetIndex = 0;
         items.forEach(function(el) {
             if (el === drag.item) return;
             var rect = el.getBoundingClientRect();
-            if (pointerY > rect.top + rect.height / 2) {
+            var mid = drag.axis === 'x' ? rect.left + rect.width / 2 : rect.top + rect.height / 2;
+            if (pointer > mid) {
                 targetIndex++;
             }
         });
