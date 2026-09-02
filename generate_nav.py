@@ -341,16 +341,16 @@ def generate_html(tools, site_urls):
         <!-- 我的收藏 -->
         <div class="recent-section" id="favSection">
             <div class="recent-header">
-                <span class="recent-title">我的收藏</span>
+                <span class="recent-title recent-title-btn" id="favTitle" role="button" tabindex="0" title="点击管理（排序/删除）">我的收藏</span>
                 <button class="recent-clear" id="favClear">清除收藏</button>
             </div>
-            <div class="recent-list fav-list" id="favList"></div>
+            <div class="recent-list" id="favList"></div>
         </div>
 
         <!-- 最近访问 -->
         <div class="recent-section" id="recentSection">
             <div class="recent-header">
-                <span class="recent-title">最近访问</span>
+                <span class="recent-title recent-title-btn" id="recentTitle" role="button" tabindex="0" title="点击管理（排序/删除）">最近访问</span>
                 <button class="recent-clear" id="recentClear">清除记录</button>
             </div>
             <div class="recent-list" id="recentList"></div>
@@ -410,6 +410,19 @@ def generate_html(tools, site_urls):
             <div class="wxp-modal-title" id="wxpModalTitle">小程序码</div>
             <img class="wxp-modal-image" id="wxpModalImage" src="" alt="小程序码" />
             <div class="wxp-modal-hint">长按识别小程序码即可在微信中打开</div>
+        </div>
+    </div>
+
+    <!-- 收藏/最近访问 管理弹窗 -->
+    <div class="fav-modal-overlay" id="favModalOverlay">
+        <div class="fav-modal">
+            <button class="fav-modal-close" id="favModalClose" aria-label="关闭">&times;</button>
+            <div class="fav-modal-title" id="favModalTitle">管理我的收藏</div>
+            <div class="fav-modal-list" id="favModalList"></div>
+            <div class="fav-modal-footer">
+                <button class="fav-modal-clear" id="favModalClear">清除全部</button>
+                <button class="fav-modal-done" id="favModalDone">完成</button>
+            </div>
         </div>
     </div>
 

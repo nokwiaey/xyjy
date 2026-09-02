@@ -663,7 +663,7 @@ renderRecentVisits();
 // ============================================
 
 // ============================================
-// 我的收藏：卡片右上角星标收藏 + 收藏区块拖拽排序
+// 我的收藏：卡片右上角星标收藏 + 收藏/最近管理弹窗
 // ============================================
 const FAV_KEY = 'favoriteTools';
 const favSection = document.getElementById('favSection');
@@ -710,7 +710,7 @@ function renderFavState() {
     });
 }
 
-// 渲染“我的收藏”区块
+// 渲染“我的收藏”区块（横向排布、自动换行）
 function renderFavSection() {
     if (!favSection || !favList) return;
     var fav = getFavTools();
@@ -721,122 +721,187 @@ function renderFavSection() {
     favSection.classList.add('visible');
     favList.innerHTML = '';
     fav.forEach(function(item) {
-        var div = document.createElement('div');
-        div.className = 'recent-item fav-item';
-
-        var link = document.createElement('a');
-        link.className = 'fav-link';
-        link.href = item.url;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        link.title = item.name;
-        link.innerHTML = '<span class="recent-item-icon">' + item.iconHtml + '</span><span class="recent-item-name">' + item.name + '</span>';
-        link.addEventListener('click', function() {
+        var a = document.createElement('a');
+        a.href = item.url;
+        a.className = 'recent-item';
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.title = item.name;
+        a.innerHTML = '<span class="recent-item-icon">' + item.iconHtml + '</span><span class="recent-item-name">' + item.name + '</span>';
+        a.addEventListener('click', function() {
             recordVisitData(item.name, item.url, item.iconHtml);
         });
-        div.appendChild(link);
-
-        // 拖拽手柄（视觉提示，非交互元素）
-        var grip = document.createElement('span');
-        grip.className = 'fav-grip';
-        grip.setAttribute('aria-hidden', 'true');
-        grip.innerHTML = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
-        div.appendChild(grip);
-
-        favList.appendChild(div);
+        favList.appendChild(a);
     });
 }
 
-// 拖拽排序（Pointer Events，鼠标与触摸通用；按布局方向自适应横/纵向拖动）
-let favDrag = null;
-let favJustDragged = false;
+// ============================================
+// 收藏/最近访问 管理弹窗（点击标题打开，↑↓ 排序 + 删除）
+// ============================================
+const favModalOverlay = document.getElementById('favModalOverlay');
+const favModalClose = document.getElementById('favModalClose');
+const favModalTitle = document.getElementById('favModalTitle');
+const favModalList = document.getElementById('favModalList');
+const favModalClear = document.getElementById('favModalClear');
+const favModalDone = document.getElementById('favModalDone');
+const favTitle = document.getElementById('favTitle');
+const recentTitle = document.getElementById('recentTitle');
+let manageMode = 'fav'; // 'fav' | 'recent'
 
-function initFavDrag() {
-    if (!favList) return;
+function getManageList() {
+    return manageMode === 'fav' ? getFavTools() : getRecentTools();
+}
 
-    favList.addEventListener('pointerdown', function(e) {
-        var item = e.target.closest('.fav-item');
-        if (!item) return;
-        favDrag = {
-            pointerId: e.pointerId,
-            item: item,
-            index: Array.prototype.indexOf.call(favList.children, item),
-            startX: e.clientX,
-            startY: e.clientY,
-            axis: '', // 'x' 横向 / 'y' 纵向，首次位移超过阈值时按占优方向判定
-            moved: false
-        };
-    });
-
-    favList.addEventListener('pointermove', function(e) {
-        if (!favDrag || e.pointerId !== favDrag.pointerId) return;
-        var dx = e.clientX - favDrag.startX;
-        var dy = e.clientY - favDrag.startY;
-        if (!favDrag.moved && Math.abs(dx) < 6 && Math.abs(dy) < 6) return; // 位移过小视为点击
-
-        if (!favDrag.moved) {
-            // 横向排布走 X 轴，纵向排布走 Y 轴
-            favDrag.axis = Math.abs(dx) >= Math.abs(dy) ? 'x' : 'y';
-            favDrag.moved = true;
-            try { favDrag.item.setPointerCapture(e.pointerId); } catch (err) { /* 忽略 */ }
-            favDrag.item.classList.add('dragging');
-            favDrag.item.style.zIndex = '3';
-        }
-        e.preventDefault();
-        var offset = favDrag.axis === 'x' ? dx : dy;
-        favDrag.item.style.transform = (favDrag.axis === 'x' ? 'translateX(' : 'translateY(') + offset + 'px)';
-    });
-
-    function finishDrag(e) {
-        if (!favDrag) return;
-        var drag = favDrag;
-        favDrag = null;
-        if (!drag.moved) return; // 未发生拖拽，按普通点击处理
-
-        // 计算落点：按拖动方向统计中点位于指针前方的其他条目数量
-        var items = Array.prototype.slice.call(favList.children);
-        var pointer = drag.axis === 'x' ? e.clientX : e.clientY;
-        var targetIndex = 0;
-        items.forEach(function(el) {
-            if (el === drag.item) return;
-            var rect = el.getBoundingClientRect();
-            var mid = drag.axis === 'x' ? rect.left + rect.width / 2 : rect.top + rect.height / 2;
-            if (pointer > mid) {
-                targetIndex++;
-            }
-        });
-
-        var fav = getFavTools();
-        var movedItem = fav.splice(drag.index, 1)[0];
-        fav.splice(targetIndex, 0, movedItem);
-        saveFavTools(fav);
-        favJustDragged = true;
-        renderFavSection();
+function saveManageList(list) {
+    if (manageMode === 'fav') {
+        saveFavTools(list);
+    } else {
+        saveRecentTools(list);
     }
-
-    favList.addEventListener('pointerup', finishDrag);
-
-    favList.addEventListener('pointercancel', function() {
-        if (!favDrag) return;
-        if (favDrag.moved) {
-            favDrag.item.classList.remove('dragging');
-            favDrag.item.style.transform = '';
-            favDrag.item.style.zIndex = '';
-        }
-        favDrag = null;
-    });
-
-    // 拖拽结束后抑制随之触发的 click，避免误打开链接
-    favList.addEventListener('click', function(e) {
-        if (favJustDragged) {
-            e.preventDefault();
-            e.stopPropagation();
-            favJustDragged = false;
-        }
-    }, true);
 }
 
-initFavDrag();
+// 管理操作后同步主界面对应区块
+function refreshManageSources() {
+    if (manageMode === 'fav') {
+        renderFavSection();
+        renderFavState();
+    } else {
+        renderRecentVisits();
+    }
+}
+
+function openManageModal(mode) {
+    manageMode = mode;
+    favModalTitle.textContent = mode === 'fav' ? '管理我的收藏' : '管理最近访问';
+    renderManageList();
+    favModalOverlay.classList.add('open');
+}
+
+function closeManageModal() {
+    favModalOverlay.classList.remove('open');
+}
+
+function renderManageList() {
+    var list = getManageList();
+    favModalList.innerHTML = '';
+    if (list.length === 0) {
+        var empty = document.createElement('div');
+        empty.className = 'fav-modal-empty';
+        empty.textContent = '暂无内容';
+        favModalList.appendChild(empty);
+        return;
+    }
+    list.forEach(function(item, index) {
+        var row = document.createElement('div');
+        row.className = 'fav-modal-item';
+
+        var icon = document.createElement('span');
+        icon.className = 'fav-modal-item-icon';
+        icon.innerHTML = item.iconHtml;
+        row.appendChild(icon);
+
+        var name = document.createElement('span');
+        name.className = 'fav-modal-item-name';
+        name.textContent = item.name;
+        name.title = item.name;
+        row.appendChild(name);
+
+        row.appendChild(makeManageBtn('↑', '上移', index === 0, function() {
+            moveManageItem(index, -1);
+        }, false));
+
+        row.appendChild(makeManageBtn('↓', '下移', index === list.length - 1, function() {
+            moveManageItem(index, 1);
+        }, false));
+
+        row.appendChild(makeManageBtn('×', '删除', false, function() {
+            deleteManageItem(index);
+        }, true));
+
+        favModalList.appendChild(row);
+    });
+}
+
+function makeManageBtn(text, tip, disabled, onClick, isDel) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'fav-modal-btn' + (isDel ? ' fav-modal-btn-del' : '');
+    btn.title = tip;
+    btn.setAttribute('aria-label', tip);
+    btn.textContent = text;
+    btn.disabled = disabled;
+    btn.addEventListener('click', onClick);
+    return btn;
+}
+
+function moveManageItem(index, delta) {
+    var list = getManageList();
+    var target = index + delta;
+    if (target < 0 || target >= list.length) return;
+    var item = list.splice(index, 1)[0];
+    list.splice(target, 0, item);
+    saveManageList(list);
+    renderManageList();
+    refreshManageSources();
+}
+
+function deleteManageItem(index) {
+    var list = getManageList();
+    list.splice(index, 1);
+    saveManageList(list);
+    renderManageList();
+    refreshManageSources();
+}
+
+if (favTitle) {
+    favTitle.addEventListener('click', function() { openManageModal('fav'); });
+    favTitle.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openManageModal('fav');
+        }
+    });
+}
+
+if (recentTitle) {
+    recentTitle.addEventListener('click', function() { openManageModal('recent'); });
+    recentTitle.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openManageModal('recent');
+        }
+    });
+}
+
+if (favModalClose) favModalClose.addEventListener('click', closeManageModal);
+if (favModalDone) favModalDone.addEventListener('click', closeManageModal);
+
+if (favModalOverlay) {
+    favModalOverlay.addEventListener('click', function(e) {
+        if (e.target === favModalOverlay) closeManageModal();
+    });
+}
+
+if (favModalClear) {
+    favModalClear.addEventListener('click', function() {
+        if (manageMode === 'fav') {
+            localStorage.removeItem(FAV_KEY);
+            renderFavSection();
+            renderFavState();
+        } else {
+            localStorage.removeItem(RECENT_KEY);
+            renderRecentVisits();
+        }
+        renderManageList();
+    });
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && favModalOverlay && favModalOverlay.classList.contains('open')) {
+        closeManageModal();
+    }
+});
+// ============================================
 
 // 卡片右上角收藏按钮（替代原“复制链接”按钮）
 function initFavButtons() {
