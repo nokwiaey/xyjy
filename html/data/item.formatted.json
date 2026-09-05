@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-09-01T11:15:19.216597",
+  "exportTime": "2026-09-05T10:18:21.581959",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -221,7 +221,7 @@
       "applyFormCode": "14239",
       "sample": "咽拭子",
       "isEmergency": 0,
-      "remark": "铜绿假单胞菌、大肠埃希菌、肺炎克雷伯菌、鲍曼不动杆菌核酸检测"
+      "remark": ""
     },
     {
       "itemCode": "JY010029",
@@ -2900,6 +2900,14 @@
       "itemName": "白细胞介素6",
       "applyFormCode": "14241",
       "sample": "全血",
+      "isEmergency": 0,
+      "remark": ""
+    },
+    {
+      "itemCode": "JY060069",
+      "itemName": "痰液常规",
+      "applyFormCode": "14241",
+      "sample": "痰",
       "isEmergency": 0,
       "remark": ""
     },
@@ -10246,6 +10254,18 @@
       ],
       "sum": 43.0
     },
+    "JY060069": {
+      "details": [
+        {
+          "detailCode": "250104018",
+          "detailName": "痰液常规检查",
+          "price": 4.5,
+          "count": 1.0,
+          "total": 4.5
+        }
+      ],
+      "sum": 4.5
+    },
     "JY070002": {
       "details": [
         {
@@ -14608,6 +14628,12 @@
         "chineseName": "白细胞介素6",
         "charge": 43.0,
         "hisId": "JY060068"
+      },
+      {
+        "chargeItemId": "LIS0895",
+        "chineseName": "痰液常规",
+        "charge": 4.5,
+        "hisId": "JY060069"
       },
       {
         "chargeItemId": "LIS0646",
@@ -30531,6 +30557,54 @@
       },
       {
         "groupId": "G031",
+        "chargeItemId": "LIS0895",
+        "testItemId": "8663",
+        "itemSort": "TY01"
+      },
+      {
+        "groupId": "G031",
+        "chargeItemId": "LIS0895",
+        "testItemId": "8664",
+        "itemSort": "TY02"
+      },
+      {
+        "groupId": "G031",
+        "chargeItemId": "LIS0895",
+        "testItemId": "5304",
+        "itemSort": "TY03"
+      },
+      {
+        "groupId": "G031",
+        "chargeItemId": "LIS0895",
+        "testItemId": "5305",
+        "itemSort": "TY04"
+      },
+      {
+        "groupId": "G031",
+        "chargeItemId": "LIS0895",
+        "testItemId": "5306",
+        "itemSort": "TY05"
+      },
+      {
+        "groupId": "G031",
+        "chargeItemId": "LIS0895",
+        "testItemId": "8665",
+        "itemSort": "TY06"
+      },
+      {
+        "groupId": "G031",
+        "chargeItemId": "LIS0895",
+        "testItemId": "8666",
+        "itemSort": "TY07"
+      },
+      {
+        "groupId": "G031",
+        "chargeItemId": "LIS0895",
+        "testItemId": "8667",
+        "itemSort": "TY08"
+      },
+      {
+        "groupId": "G031",
         "chargeItemId": "LIS02435",
         "testItemId": "5987",
         "itemSort": "V1001"
@@ -32411,7 +32485,7 @@
       },
       {
         "testItemId": "5306",
-        "testItemCode": "SP",
+        "testItemCode": "EC",
         "chineseName": "上皮细胞",
         "itemDes": null
       },
@@ -40261,6 +40335,36 @@
         "testItemId": "8662",
         "testItemCode": null,
         "chineseName": "RHC",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8663",
+        "testItemCode": "Color",
+        "chineseName": "颜色",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8664",
+        "testItemCode": "XZ",
+        "chineseName": "性状",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8665",
+        "testItemCode": "EOS",
+        "chineseName": "嗜酸性粒细胞",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8666",
+        "testItemCode": "EOS%",
+        "chineseName": "嗜酸性粒细胞比率",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8667",
+        "testItemCode": "PAM",
+        "chineseName": "肺泡巨噬细胞",
         "itemDes": null
       }
     ]
