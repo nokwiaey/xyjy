@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-09-05T10:18:21.581959",
+  "exportTime": "2026-09-21T11:38:30.508063",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -1406,14 +1406,6 @@
       "sample": "全血",
       "isEmergency": 0,
       "remark": "定量  干式荧光免疫法"
-    },
-    {
-      "itemCode": "JY040025",
-      "itemName": "抗核抗体谱定量",
-      "applyFormCode": "14242",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "定量  化学发光法"
     },
     {
       "itemCode": "JY040030",
@@ -6734,67 +6726,6 @@
         }
       ],
       "sum": 367.0
-    },
-    "JY040025": {
-      "details": [
-        {
-          "detailCode": "250402003",
-          "detailName": "抗核提取物抗体测定(抗ENA抗体)",
-          "price": 17.0,
-          "count": 7.0,
-          "total": 119.0
-        },
-        {
-          "detailCode": "250402009",
-          "detailName": "抗核糖体抗体测定",
-          "price": 21.0,
-          "count": 1.0,
-          "total": 21.0
-        },
-        {
-          "detailCode": "250402007a",
-          "detailName": "抗线粒体抗体分型（M2，M4，M9）",
-          "price": 77.0,
-          "count": 1.0,
-          "total": 77.0
-        },
-        {
-          "detailCode": "250402049",
-          "detailName": "抗组蛋白抗体(AHA)测定",
-          "price": 38.0,
-          "count": 1.0,
-          "total": 38.0
-        },
-        {
-          "detailCode": "250402057",
-          "detailName": "抗核小体抗体测定（AnuA）",
-          "price": 38.0,
-          "count": 1.0,
-          "total": 38.0
-        },
-        {
-          "detailCode": "250402036",
-          "detailName": "抗增殖细胞核抗原抗体（抗PCNA）测定",
-          "price": 13.0,
-          "count": 1.0,
-          "total": 13.0
-        },
-        {
-          "detailCode": "250402025",
-          "detailName": "抗硬皮病抗体测定",
-          "price": 26.0,
-          "count": 1.0,
-          "total": 26.0
-        },
-        {
-          "detailCode": "250402006",
-          "detailName": "抗双链DNA测定(抗dsDNA)",
-          "price": 21.0,
-          "count": 1.0,
-          "total": 21.0
-        }
-      ],
-      "sum": 353.0
     },
     "JY040026": {
       "details": [
@@ -40365,6 +40296,66 @@
         "testItemId": "8667",
         "testItemCode": "PAM",
         "chineseName": "肺泡巨噬细胞",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8668",
+        "testItemCode": null,
+        "chineseName": "CYP2D6*10(c.100 C>T)",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8669",
+        "testItemCode": null,
+        "chineseName": "ADRB1 (c. 1165 G>C)",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8670",
+        "testItemCode": null,
+        "chineseName": "CYP2C9*3(c.1075 A>C)",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8671",
+        "testItemCode": null,
+        "chineseName": "AGTR1(c.1166 A>C)",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8672",
+        "testItemCode": null,
+        "chineseName": "CYP2C9*3(c. 1075 A>C)",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8673",
+        "testItemCode": null,
+        "chineseName": "AGTR1(c.1166 A>C)",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8674",
+        "testItemCode": null,
+        "chineseName": "ACE(I/D)",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8675",
+        "testItemCode": null,
+        "chineseName": "CYP3A5*3(A6986G)",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8676",
+        "testItemCode": null,
+        "chineseName": "NPPA(T2238C)",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8677",
+        "testItemCode": null,
+        "chineseName": "利尿剂NPPA(T2238C)",
         "itemDes": null
       }
     ]
