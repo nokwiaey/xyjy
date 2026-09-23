@@ -79,19 +79,8 @@
         .side-head .title { color: #7fd6d2; }
     }
 
-    .icon-btn {
-        display: none;
-        border: 1px solid var(--border);
-        background: var(--item);
-        color: var(--text);
-        border-radius: 8px;
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
-        line-height: 1;
-        cursor: pointer;
-        flex: 0 0 auto;
-    }
+    /* 顶栏上的「排班表」按钮：仅移动端显示，桌面端列表常驻 */
+    .nav-toggle { display: none; }
 
     .side-list {
         flex: 1;
@@ -270,32 +259,85 @@
         word-break: break-all;
     }
 
-    /* ---------------- 抽屉遮罩（移动端） ---------------- */
+    /* ---------------- 抽屉（移动端） ---------------- */
     .scrim { display: none; }
+    .side-close { display: none; }
 
     @media (max-width: 768px) {
-        body { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); }
+        body {
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow: auto;
+        }
         .sidebar {
             position: fixed;
             top: 0;
             bottom: 0;
             left: 0;
-            width: min(78vw, 268px);
+            width: min(80vw, 280px);
             z-index: 30;
-            transform: translateX(-102%);
+            display: flex;
+            flex-direction: column;
+            transform: translateX(-104%);
             transition: transform 0.22s ease;
             box-shadow: var(--shadow);
+            will-change: transform;
         }
         body.nav-open .sidebar { transform: translateX(0); }
-        .icon-btn { display: block; }
         body.nav-open .scrim {
             display: block;
             position: fixed;
             inset: 0;
             z-index: 20;
-            background: rgba(0, 0, 0, 0.38);
+            background: rgba(0, 0, 0, 0.42);
         }
-        .v-bar { padding: 9px 12px; }
+        .side-head { padding: 10px 10px 9px; }
+        .side-head .title { font-size: 0.98rem; }
+        .side-close {
+            display: block;
+            flex: 0 0 auto;
+            border: 1px solid var(--border);
+            background: var(--item);
+            color: var(--text-light);
+            border-radius: 8px;
+            width: 28px;
+            height: 28px;
+            font-size: 13px;
+            line-height: 1;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        /* 预览区顶栏：左上角的「排班表」按钮 = 打开竖排列表 */
+        .viewer { flex: 1 1 auto; min-height: 74vh; min-height: 74dvh; }
+        .v-bar { padding: 8px 12px; gap: 8px; }
+        .nav-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex: 0 0 auto;
+            max-width: 48vw;
+            border: 1px solid var(--border);
+            background: var(--item);
+            color: var(--text);
+            border-radius: 9px;
+            padding: 7px 10px;
+            font-family: inherit;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .nav-toggle[aria-expanded="true"] { background: var(--item-hover); }
+        .nav-toggle .cur {
+            max-width: 30vw;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--brand);
+            font-weight: 600;
+        }
         .v-title { font-size: 0.84rem; }
         .v-actions .btn { padding: 6px 9px; font-size: 0.74rem; }
     }
@@ -303,10 +345,10 @@
 </head>
 <body>
 
-<aside class="sidebar">
+<aside class="sidebar" id="sidebar">
     <div class="side-head">
-        <button class="icon-btn" id="navToggle" type="button" aria-label="展开排班表列表">☰</button>
         <span class="title">检验科排班表</span>
+        <button class="side-close" id="sideClose" type="button" aria-label="收起排班表列表">✕</button>
     </div>
     <nav class="side-list" id="sideList" aria-label="排班表列表"></nav>
     <div class="side-note">
@@ -318,6 +360,10 @@
 
 <main class="viewer">
     <div class="v-bar">
+        <button class="nav-toggle" id="navToggle" type="button" aria-controls="sidebar" aria-expanded="false">
+            <span>☰ 排班表</span>
+            <span class="cur" id="curName"></span>
+        </button>
         <span class="v-title" id="vTitle">检验科排班表</span>
         <div class="v-actions">
             <a class="btn primary" id="openBtn" href="#" target="_blank" rel="noopener">新窗口打开</a>
@@ -345,7 +391,9 @@
 
     var sideList = document.getElementById('sideList');
     var navToggle = document.getElementById('navToggle');
+    var sideClose = document.getElementById('sideClose');
     var scrim = document.getElementById('scrim');
+    var curName = document.getElementById('curName');
     var vTitle = document.getElementById('vTitle');
     var frame = document.getElementById('pdfFrame');
     var fallback = document.getElementById('fallback');
@@ -451,6 +499,7 @@
 
         var fullName = entry.id.slice(0, 4) + '年' + entry.label;
         vTitle.textContent = fullName;
+        curName.textContent = entry.label;
         openBtn.href = url;
         downloadBtn.href = url;
         downloadBtn.setAttribute('download', fileName(entry.file));
@@ -518,12 +567,27 @@
 
     /* ---------------- 抽屉 ---------------- */
 
-    function openNav() { document.body.classList.add('nav-open'); }
-    function closeNav() { document.body.classList.remove('nav-open'); }
+    function openNav() {
+        document.body.classList.add('nav-open');
+        navToggle.setAttribute('aria-expanded', 'true');
+        var active = sideList.querySelector('.item.active');
+        if (active) active.scrollIntoView({ block: 'nearest' });
+        try { sideClose.focus({ preventScroll: true }); } catch (e) { /* 忽略 */ }
+    }
+
+    function closeNav() {
+        var wasOpen = document.body.classList.contains('nav-open');
+        document.body.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        if (wasOpen) {
+            try { navToggle.focus({ preventScroll: true }); } catch (e) { /* 忽略 */ }
+        }
+    }
 
     navToggle.addEventListener('click', function () {
         if (document.body.classList.contains('nav-open')) closeNav(); else openNav();
     });
+    sideClose.addEventListener('click', closeNav);
     scrim.addEventListener('click', closeNav);
 
     /* ---------------- 键盘 ---------------- */
