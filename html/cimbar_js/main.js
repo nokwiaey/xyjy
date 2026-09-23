@@ -325,7 +325,13 @@ var Main = function () {
     },
 
     setTitle: function (msg) {
-      document.title = "Cimbar: " + msg;
+      // 文档标题跟随界面语言（未加语言模块时退回原行为）
+      if (window.Lang) {
+        Lang.setFile(msg);
+      }
+      else {
+        document.title = "Cimbar: " + msg;
+      }
     }
   };
 }();

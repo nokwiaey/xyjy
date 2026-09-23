@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en" data-framework="javascript">
+<html lang="zh-CN" data-framework="javascript">
 
 <head>
-  <title>Cimbar Encoder</title>
+  <title>隔空传输 · Cimbar 编码器</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <link rel="manifest" href="pwa.json">
@@ -356,16 +356,50 @@
         color: #00ffff;
       }
     }
+
+    /* 语言开关：刻意保持朴素，不改动其它界面 */
+    #lang-switch {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 3;
+      pointer-events: auto;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    #lang-switch button {
+      font: 13px/1 sans-serif;
+      padding: 5px 9px;
+      border: 0;
+      background-color: rgba(0, 0, 0, 0.55);
+      color: #d0d0d0;
+      cursor: pointer;
+    }
+
+    #lang-switch button+button {
+      margin-left: 2px;
+    }
+
+    #lang-switch button[aria-pressed="true"] {
+      background-color: #3C3D82;
+      color: #ffffff;
+      font-weight: bold;
+    }
   </style>
 
   <div id="status"></div>
-  <div id="dragdrop" class="dragdrop" title="Drag and drop a file" onclick="Main.clickNav()">
+  <div id="lang-switch" role="group" aria-label="语言 / Language">
+    <button type="button" id="lang-zh" data-lang="zh" aria-pressed="true" onclick="Lang.setLang('zh')">简体中文</button>
+    <button type="button" id="lang-en" data-lang="en" aria-pressed="false" onclick="Lang.setLang('en')">English</button>
+  </div>
+
+  <div id="dragdrop" class="dragdrop" title="拖入文件即可开始传输" data-i18n-title="dropTitle" onclick="Main.clickNav()">
     <div class="drop-message">
-      <p class="msg-default">⌜ Tap to start! ⌟</p>
-      <p class="msg-error">⌜ Error! WebGL is not enabled :( ⌟</p>
-      <p class="msg-default msg-bottom">⚠️⚡ PHOTOSENSITIVITY WARNING!</p>
-      <p class="msg-default msg-long">Photosensitive epilepsy + flickering light = seizure!</p>
-      <p class="msg-default msg-long">Be safe! Have fun! ⚠️⚡</p>
+      <p class="msg-default" data-i18n="tap">⌜ 点击开始 ⌟</p>
+      <p class="msg-error" data-i18n="glError">⌜ 出错了：当前浏览器未启用 WebGL :( ⌟</p>
+      <p class="msg-default msg-bottom" data-i18n="warnTitle">⚠️⚡ 光敏性癫痫警告！</p>
+      <p class="msg-default msg-long" data-i18n="warnBody">闪烁的画面可能诱发光敏性癫痫发作，请务必注意安全。</p>
+      <p class="msg-default msg-long" data-i18n="warnFoot">请保持安全距离，祝使用愉快！⚠️⚡</p>
     </div>
     <canvas id="canvas" class="canvas"></canvas>
   </div>
@@ -381,30 +415,137 @@
       <span class="icon-bar"></span>
     </button>
     <div id="nav-content" tabindex="-1">
-      <span id="current-file">No file selected</span>
+      <span id="current-file" data-i18n="noFile">未选择文件</span>
       <ul>
-        <li><a class="attention" id="nav-find-file-link" href="javascript:void(0)" onclick="Main.clickFileInput()">Find
-            File</a></li>
+        <li><a class="attention" id="nav-find-file-link" href="javascript:void(0)" onclick="Main.clickFileInput()"
+            data-i18n="findFile">选择文件</a></li>
         <hr>
         <li class="modesel">
-          <h4>Mode</h4>
+          <h4 data-i18n="mode">模式</h4>
           <a class="mode-b" href="javascript:void(0)" onclick="Main.setMode('B')">B</a>
           <a class="mode-bm" href="javascript:void(0)" onclick="Main.setMode('Bm')">Bm</a>
           <a class="mode-bu" href="javascript:void(0)" onclick="Main.setMode('Bu')">Bu</a>
           <a class="mode-4c" href="javascript:void(0)" onclick="Main.setMode('4C')">4C</a>
         </li>
         <li>
-          <h4>Framerate</h4>
+          <h4 data-i18n="framerate">帧率</h4>
           <input type="range" class="range" min="5" max="20" step="5" value="15" oninput="Main.setFPS(this.value)"
             onchange="Main.setFPS(this.value)" />
         </li>
-        <li class="small"><a href="javascript:void(0)" onclick="Main.toggleFullscreen()">Fullscreen</a></li>
-        <li class="small"><a href="https://github.com/sz3/libcimbar">github</a></li>
-        <li class="small"><a href="https://github.com/sz3/cfc/releases/latest">android app</a></li>
+        <li class="small"><a href="javascript:void(0)" onclick="Main.toggleFullscreen()" data-i18n="fullscreen">全屏</a></li>
+        <li class="small"><a href="https://github.com/sz3/libcimbar" data-i18n="github">github</a></li>
+        <li class="small"><a href="https://github.com/sz3/cfc/releases/latest" data-i18n="androidApp">安卓 App</a></li>
       </ul>
     </div>
   </div>
 
+  <script type="text/javascript">
+    // 界面语言：默认简体中文，可在右上角切换，选择会记住（localStorage）
+    var Lang = function () {
+      var STORAGE_KEY = 'cimbar-lang';
+      var DEFAULT_LANG = 'zh';
+
+      var STRINGS = {
+        zh: {
+          docTitle: '隔空传输 · Cimbar 编码器',
+          tap: '⌜ 点击开始 ⌟',
+          glError: '⌜ 出错了：当前浏览器未启用 WebGL :( ⌟',
+          warnTitle: '⚠️⚡ 光敏性癫痫警告！',
+          warnBody: '闪烁的画面可能诱发光敏性癫痫发作，请务必注意安全。',
+          warnFoot: '请保持安全距离，祝使用愉快！⚠️⚡',
+          dropTitle: '拖入文件即可开始传输',
+          noFile: '未选择文件',
+          findFile: '选择文件',
+          mode: '模式',
+          framerate: '帧率',
+          fullscreen: '全屏',
+          github: 'github',
+          androidApp: '安卓 App'
+        },
+        en: {
+          docTitle: 'Cimbar Encoder',
+          tap: '⌜ Tap to start! ⌟',
+          glError: '⌜ Error! WebGL is not enabled :( ⌟',
+          warnTitle: '⚠️⚡ PHOTOSENSITIVITY WARNING!',
+          warnBody: 'Photosensitive epilepsy + flickering light = seizure!',
+          warnFoot: 'Be safe! Have fun! ⚠️⚡',
+          dropTitle: 'Drag and drop a file',
+          noFile: 'No file selected',
+          findFile: 'Find File',
+          mode: 'Mode',
+          framerate: 'Framerate',
+          fullscreen: 'Fullscreen',
+          github: 'github',
+          androidApp: 'android app'
+        }
+      };
+
+      var _lang = DEFAULT_LANG;
+      var _file = '';
+
+      function t(key) {
+        var table = STRINGS[_lang] || STRINGS[DEFAULT_LANG];
+        var val = table[key];
+        return val === undefined ? key : val;
+      }
+
+      function apply() {
+        document.documentElement.lang = _lang === 'zh' ? 'zh-CN' : 'en';
+
+        var nodes = document.querySelectorAll('[data-i18n]');
+        for (var i = 0; i < nodes.length; i++) {
+          // #current-file 由编码器填入文件名，没选文件时显示占位文案
+          if (nodes[i].id === 'current-file' && _file) {
+            nodes[i].textContent = _file;
+          } else {
+            nodes[i].textContent = t(nodes[i].getAttribute('data-i18n'));
+          }
+        }
+
+        var titled = document.querySelectorAll('[data-i18n-title]');
+        for (var j = 0; j < titled.length; j++) {
+          titled[j].setAttribute('title', t(titled[j].getAttribute('data-i18n-title')));
+        }
+
+        var buttons = document.querySelectorAll('#lang-switch button');
+        for (var k = 0; k < buttons.length; k++) {
+          buttons[k].setAttribute('aria-pressed', buttons[k].getAttribute('data-lang') === _lang ? 'true' : 'false');
+        }
+
+        document.title = t('docTitle') + (_file ? ' · ' + _file : '');
+      }
+
+      function setLang(next) {
+        _lang = next === 'en' ? 'en' : 'zh';
+        try {
+          localStorage.setItem(STORAGE_KEY, _lang);
+        } catch (e) { /* 隐私模式：忽略即可 */ }
+        apply();
+      }
+
+      // 读取上次选择的语言（首次访问默认简体中文）
+      try {
+        var saved = localStorage.getItem(STORAGE_KEY);
+        if (saved === 'en' || saved === 'zh') {
+          _lang = saved;
+        }
+      } catch (e) { /* ignore */ }
+
+      apply();
+
+      // 供页面内联 onclick 与 main.js 使用
+      window.Lang = {
+        t: t,
+        current: function () { return _lang; },
+        setLang: setLang,
+        apply: apply,
+        setFile: function (name) { _file = name || ''; apply(); },
+        clearFile: function () { _file = ''; apply(); }
+      };
+
+      return window.Lang;
+    }();
+  </script>
   <script src="send.js"></script>
   <script src="main.js"></script>
 
