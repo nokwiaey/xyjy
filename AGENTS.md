@@ -27,7 +27,7 @@ The `/html/` directory contains standalone tool pages (phone directory, lab test
 
 `generate_schedule_manifest.py` scans that directory and writes `html/jyk_schedule/data/schedule.json`, which lists every month and holiday of each year (missing files are marked `available: false` and render greyed out). **Adding a schedule is just dropping a PDF in and re-running the script** — the page itself defines no list.
 
-The PDF preview is rendered by a locally vendored PDF.js (`html/jyk_schedule/vendor/pdfjs/`) instead of a plain `<iframe>`, because Chrome for Android has no built-in PDF viewer and would render an embedded PDF as a blank/error frame. The viewer draws one page to a `<canvas>` with page/zoom controls. Don't hand-edit the vendored files; to upgrade, repack `pdfjs-dist` and re-extract `legacy/build/pdf.min.mjs` + `legacy/build/pdf.worker.min.mjs`.
+The preview is a plain `<iframe>` on desktop, where browsers ship a built-in PDF viewer. **On mobile the list replaces the preview entirely** (tapping a row opens its PDF in a new window / 系统阅读器): Chrome for Android has no built-in PDF viewer, so an embedded PDF renders as a blank/error frame. Mobile detection lives in the page JS (`detectMobile()` + `body.mode-mobile`), keyed off the UA plus a coarse-pointer/narrow-viewport check, so a shrunken desktop window still gets the embedded preview.
 
 ### Client-side features
 

@@ -79,8 +79,14 @@
         .side-head .title { color: #7fd6d2; }
     }
 
-    /* 顶栏上的「排班表」按钮：仅移动端显示，桌面端列表常驻 */
-    .nav-toggle { display: none; }
+    /* 列表项右侧的「打开」提示：仅移动端显示 */
+    .open-hint {
+        display: none;
+        flex: 0 0 auto;
+        font-size: 0.72rem;
+        color: var(--brand);
+        font-weight: 600;
+    }
 
     .side-list {
         flex: 1;
@@ -132,6 +138,17 @@
     }
     .item .ico { font-size: 0.9rem; flex: 0 0 auto; }
     .item .txt { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* 移动端整条是链接 */
+    .item > a.txt {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+        min-width: 0;
+        color: inherit;
+        text-decoration: none;
+    }
+    .item > a.txt .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .item .none { font-size: 0.7rem; color: var(--text-light); flex: 0 0 auto; }
     .item.active .none { color: rgba(255, 255, 255, 0.75); }
 
@@ -203,35 +220,6 @@
     }
     .v-actions { display: flex; gap: 8px; flex: 0 0 auto; }
 
-    /* PDF.js 查看器控制条 */
-    .v-tools { display: flex; align-items: center; gap: 4px; flex: 0 0 auto; }
-    .v-tools[hidden] { display: none; }
-    .v-tools .tool {
-        border: 1px solid var(--border);
-        background: var(--item);
-        color: var(--text);
-        border-radius: 7px;
-        min-width: 28px;
-        height: 28px;
-        padding: 0 7px;
-        font-size: 0.8rem;
-        line-height: 1;
-        font-family: inherit;
-        cursor: pointer;
-        transition: background 0.15s;
-    }
-    .v-tools .tool:hover:not(:disabled) { background: var(--item-hover); }
-    .v-tools .tool:disabled { opacity: 0.4; cursor: not-allowed; }
-    .v-tools .info {
-        font-size: 0.76rem;
-        color: var(--text-light);
-        padding: 0 5px;
-        white-space: nowrap;
-        font-variant-numeric: tabular-nums;
-    }
-    @media (prefers-color-scheme: dark) {
-        .v-tools .info { color: #a9bcc3; }
-    }
     .btn {
         display: inline-flex;
         align-items: center;
@@ -253,37 +241,20 @@
         border-color: transparent;
     }
 
-    .pdf-viewport {
+    .frame-wrap {
         flex: 1;
         min-height: 0;
         position: relative;
-        overflow: auto;
         background: #525659;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
     }
-    .pdf-page {
-        margin: 10px auto;
-        width: max-content;
-        background: #fff;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
-        line-height: 0;
-    }
-    .pdf-page canvas { display: block; }
-    .pdf-status {
+    .frame-wrap iframe {
         position: absolute;
         inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        text-align: center;
-        font-size: 0.85rem;
-        color: #f1f5f7;
-        background: rgba(60, 64, 66, 0.86);
-        pointer-events: none;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
     }
-    .pdf-status[hidden] { display: none; }
     .fallback {
         position: absolute;
         inset: 0;
@@ -306,90 +277,32 @@
         word-break: break-all;
     }
 
-    /* ---------------- 抽屉（移动端） ---------------- */
-    .scrim { display: none; }
-    .side-close { display: none; }
+    /* ---------------- 移动端：列表铺满页宽 ---------------- */
+    /* 移动端浏览器没有内置 PDF 插件，不做内嵌预览，只显示列表 */
+    body.mode-mobile {
+        grid-template-columns: minmax(0, 1fr);
+        height: auto;
+        min-height: 100vh;
+        min-height: 100dvh;
+        overflow: auto;
+    }
+    body.mode-mobile .viewer { display: none; }
+    body.mode-mobile .sidebar {
+        min-height: 100vh;
+        min-height: 100dvh;
+        border-right: 0;
+    }
+    body.mode-mobile .side-head { position: sticky; top: 0; z-index: 5; padding: 13px 14px; background: var(--card); }
+    body.mode-mobile .side-head .title { font-size: 1.02rem; }
+    body.mode-mobile .side-list { padding: 8px 10px; }
+    body.mode-mobile .year-head { padding: 10px 6px 5px; }
+    body.mode-mobile .item { padding: 11px 12px; font-size: 0.92rem; margin-bottom: 6px; }
+    body.mode-mobile .open-hint { display: inline-block; }
+    body.mode-mobile .side-note { padding: 12px 14px 18px; }
 
     @media (max-width: 768px) {
-        body {
-            display: flex;
-            flex-direction: column;
-            height: auto;
-            min-height: 100vh;
-            min-height: 100dvh;
-            overflow: auto;
-        }
-        .sidebar {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: min(80vw, 280px);
-            z-index: 30;
-            display: flex;
-            flex-direction: column;
-            transform: translateX(-104%);
-            transition: transform 0.22s ease;
-            box-shadow: var(--shadow);
-            will-change: transform;
-        }
-        body.nav-open .sidebar { transform: translateX(0); }
-        body.nav-open .scrim {
-            display: block;
-            position: fixed;
-            inset: 0;
-            z-index: 20;
-            background: rgba(0, 0, 0, 0.42);
-        }
-        .side-head { padding: 10px 10px 9px; }
-        .side-head .title { font-size: 0.98rem; }
-        .side-close {
-            display: block;
-            flex: 0 0 auto;
-            border: 1px solid var(--border);
-            background: var(--item);
-            color: var(--text-light);
-            border-radius: 8px;
-            width: 28px;
-            height: 28px;
-            font-size: 13px;
-            line-height: 1;
-            font-family: inherit;
-            cursor: pointer;
-        }
-
-        /* 预览区顶栏：左上角的「排班表」按钮 = 打开竖排列表 */
-        .viewer { flex: 1 1 auto; min-height: 74vh; min-height: 74dvh; }
-        .v-bar { padding: 8px 12px; gap: 8px; flex-wrap: wrap; row-gap: 8px; }
-        .v-title { flex: 1 1 100%; order: 2; font-size: 0.84rem; }
-        .v-tools { order: 3; flex: 0 0 auto; }
-        .v-actions { order: 1; margin-left: auto; }
-        .nav-toggle { order: 0; }
-        .nav-toggle {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            flex: 0 0 auto;
-            max-width: 48vw;
-            border: 1px solid var(--border);
-            background: var(--item);
-            color: var(--text);
-            border-radius: 9px;
-            padding: 7px 10px;
-            font-family: inherit;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-        .nav-toggle[aria-expanded="true"] { background: var(--item-hover); }
-        .nav-toggle .cur {
-            max-width: 30vw;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            color: var(--brand);
-            font-weight: 600;
-        }
-        .v-actions .btn { padding: 6px 9px; font-size: 0.74rem; }
+        body { grid-template-columns: minmax(0, 1fr); }
+        body.mode-mobile { grid-template-columns: minmax(0, 1fr); }
     }
 </style>
 </head>
@@ -398,7 +311,6 @@
 <aside class="sidebar" id="sidebar">
     <div class="side-head">
         <span class="title">检验科排班表</span>
-        <button class="side-close" id="sideClose" type="button" aria-label="收起排班表列表">✕</button>
     </div>
     <nav class="side-list" id="sideList" aria-label="排班表列表"></nav>
     <div class="side-note">
@@ -406,32 +318,16 @@
     </div>
 </aside>
 
-<div class="scrim" id="scrim"></div>
-
 <main class="viewer">
     <div class="v-bar">
-        <button class="nav-toggle" id="navToggle" type="button" aria-controls="sidebar" aria-expanded="false">
-            <span>☰ 排班表</span>
-            <span class="cur" id="curName"></span>
-        </button>
+        <a class="btn primary" id="openBtn" href="#" target="_blank" rel="noopener">在新窗口打开</a>
         <span class="v-title" id="vTitle">检验科排班表</span>
-        <div class="v-tools" id="vTools" hidden>
-            <button class="tool" id="prevPageBtn" type="button" title="上一页" disabled>‹</button>
-            <span class="info" id="pageInfo">– / –</span>
-            <button class="tool" id="nextPageBtn" type="button" title="下一页" disabled>›</button>
-            <button class="tool" id="zoomOutBtn" type="button" title="缩小">−</button>
-            <span class="info" id="zoomInfo">100%</span>
-            <button class="tool" id="zoomInBtn" type="button" title="放大">＋</button>
-            <button class="tool" id="fitBtn" type="button" title="适应宽度">适宽</button>
-        </div>
         <div class="v-actions">
-            <a class="btn primary" id="openBtn" href="#" target="_blank" rel="noopener">新窗口打开</a>
             <a class="btn" id="downloadBtn" href="#" download>下载</a>
         </div>
     </div>
-    <div class="pdf-viewport" id="pdfViewport">
-        <div class="pdf-page"><canvas id="pdfCanvas"></canvas></div>
-        <div class="pdf-status" id="pdfStatus" hidden></div>
+    <div class="frame-wrap">
+        <iframe id="pdfFrame" title="排班表 PDF 预览"></iframe>
         <div class="fallback" id="fallback">
             <div class="big">📄</div>
             <p id="fallbackText">这个 PDF 暂时无法在页面内预览，请点击下方按钮打开。</p>
@@ -439,194 +335,6 @@
         </div>
     </div>
 </main>
-
-<script type="module">
-/* ---------------- PDF 渲染（PDF.js，Android Chrome 等无内置 PDF 插件的浏览器也能看） ---------------- */
-var PDFJS_BASE = 'vendor/pdfjs/';
-var pdfjsLib = null;
-var pdfjsReady = null;
-var pdfDoc = null;
-var pdfUrl = '';
-var pageNum = 1;
-var scale = 1;
-var autoFit = true;
-var renderToken = 0;
-var pdfToken = 0;
-
-var canvas = document.getElementById('pdfCanvas');
-var viewportEl = document.getElementById('pdfViewport');
-var statusEl = document.getElementById('pdfStatus');
-var vTools = document.getElementById('vTools');
-var prevPageBtn = document.getElementById('prevPageBtn');
-var nextPageBtn = document.getElementById('nextPageBtn');
-var zoomInBtn = document.getElementById('zoomInBtn');
-var zoomOutBtn = document.getElementById('zoomOutBtn');
-var fitBtn = document.getElementById('fitBtn');
-var pageInfo = document.getElementById('pageInfo');
-var zoomInfo = document.getElementById('zoomInfo');
-
-function loadPdfJs() {
-    if (!pdfjsReady) {
-        pdfjsReady = import(PDFJS_BASE + 'pdf.min.mjs').then(function (mod) {
-            pdfjsLib = mod;
-            mod.GlobalWorkerOptions.workerSrc = PDFJS_BASE + 'pdf.worker.min.mjs';
-            return mod;
-        });
-    }
-    return pdfjsReady;
-}
-
-function setStatus(text) {
-    if (text) {
-        statusEl.textContent = text;
-        statusEl.hidden = false;
-    } else {
-        statusEl.hidden = true;
-    }
-}
-
-function updateToolbar() {
-    var total = pdfDoc ? pdfDoc.numPages : 0;
-    pageInfo.textContent = total ? (pageNum + ' / ' + total) : '– / –';
-    zoomInfo.textContent = Math.round(scale * 100) + '%';
-    prevPageBtn.disabled = !pdfDoc || pageNum <= 1;
-    nextPageBtn.disabled = !pdfDoc || pageNum >= total;
-    zoomInBtn.disabled = !pdfDoc || scale >= 4;
-    zoomOutBtn.disabled = !pdfDoc || scale <= 0.4;
-    fitBtn.disabled = !pdfDoc;
-    vTools.hidden = !pdfDoc;
-}
-
-function fitScale(page, viewport) {
-    var padding = 20;
-    var avail = viewportEl.clientWidth - padding;
-    if (avail <= 60) avail = 320;
-    var base = page.getViewport({ scale: 1 });
-    return Math.min(4, Math.max(0.15, avail / base.width));
-}
-
-function renderCurrentPage() {
-    if (!pdfDoc) return;
-    var token = ++renderToken;
-
-    pdfDoc.getPage(pageNum).then(function (page) {
-        if (token !== renderToken) return;
-        if (autoFit) scale = fitScale(page, null);
-
-        var viewport = page.getViewport({ scale: scale });
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
-        var maxDim = 4096;
-        dpr = Math.max(0.5, Math.min(dpr, maxDim / viewport.width, maxDim / viewport.height));
-
-        canvas.width = Math.floor(viewport.width * dpr);
-        canvas.height = Math.floor(viewport.height * dpr);
-        canvas.style.width = Math.floor(viewport.width) + 'px';
-        canvas.style.height = Math.floor(viewport.height) + 'px';
-
-        var task = page.render({
-            canvasContext: canvas.getContext('2d'),
-            viewport: viewport,
-            transform: dpr !== 1 ? [dpr, 0, 0, dpr, 0, 0] : null
-        });
-
-        return task.promise.then(function () {
-            if (token !== renderToken) return;
-            setStatus('');
-            updateToolbar();
-        });
-    }).catch(function (err) {
-        if (token !== renderToken) return;
-        if (err && err.name === 'RenderingCancelledException') return;
-        showViewerError(err);
-    });
-}
-
-function openDocument(url, entry) {
-    var token = ++pdfToken;
-    pageNum = 1;
-    autoFit = true;
-    scale = 1;
-
-    if (pdfDoc && pdfUrl === url) {
-        renderCurrentPage();
-        return;
-    }
-
-    if (pdfDoc) {
-        try { pdfDoc.destroy(); } catch (e) { /* 忽略 */ }
-        pdfDoc = null;
-    }
-    pdfUrl = url;
-    updateToolbar();
-    setStatus('正在加载 PDF…');
-
-    loadPdfJs().then(function (mod) {
-        return mod.getDocument({ url: url });
-    }).then(function (doc) {
-        if (token !== pdfToken) {
-            try { doc.destroy(); } catch (e) { /* 忽略 */ }
-            return;
-        }
-        pdfDoc = doc;
-        updateToolbar();
-        renderCurrentPage();
-    }).catch(function (err) {
-        if (token !== pdfToken) return;
-        showViewerError(err);
-    });
-}
-
-function showViewerError(err) {
-    pdfDoc = null;
-    updateToolbar();
-    setStatus('');
-    document.dispatchEvent(new CustomEvent('schedule:openFailed', { detail: err }));
-}
-
-function goToPage(n) {
-    if (!pdfDoc) return;
-    n = Math.min(Math.max(1, n), pdfDoc.numPages);
-    if (n === pageNum) return;
-    pageNum = n;
-    updateToolbar();
-    renderCurrentPage();
-    viewportEl.scrollTop = 0;
-}
-
-function setScale(next, fit) {
-    autoFit = !!fit;
-    scale = Math.min(4, Math.max(0.4, next));
-    renderCurrentPage();
-}
-
-prevPageBtn.addEventListener('click', function () { goToPage(pageNum - 1); });
-nextPageBtn.addEventListener('click', function () { goToPage(pageNum + 1); });
-zoomInBtn.addEventListener('click', function () { setScale(scale * 1.25, false); });
-zoomOutBtn.addEventListener('click', function () { setScale(scale / 1.25, false); });
-fitBtn.addEventListener('click', function () { setScale(1, true); });
-
-var resizeTimer = null;
-window.addEventListener('resize', function () {
-    if (resizeTimer) clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () {
-        if (pdfDoc) renderCurrentPage();
-    }, 160);
-});
-
-/* 选中排班表时打开对应 PDF；懒渲染，页面上没有选中任何 PDF 时不会加载查看器 */
-var pendingOpen = null;
-var viewerReady = false;
-document.addEventListener('schedule:open', function (e) {
-    if (!viewerReady) { pendingOpen = e.detail.url; return; }
-    openDocument(e.detail.url);
-});
-viewerReady = true;
-if (pendingOpen) {
-    var first = pendingOpen;
-    pendingOpen = null;
-    openDocument(first);
-}
-</script>
 
 <script>
 (function () {
@@ -637,13 +345,10 @@ if (pendingOpen) {
     var ITEM_ICON = { month: '📄', holiday: '🎉' };
 
     var sideList = document.getElementById('sideList');
-    var navToggle = document.getElementById('navToggle');
-    var sideClose = document.getElementById('sideClose');
-    var scrim = document.getElementById('scrim');
-    var curName = document.getElementById('curName');
     var vTitle = document.getElementById('vTitle');
     var openBtn = document.getElementById('openBtn');
     var downloadBtn = document.getElementById('downloadBtn');
+    var frame = document.getElementById('pdfFrame');
     var fallback = document.getElementById('fallback');
     var fallbackText = document.getElementById('fallbackText');
     var fallbackBtn = document.getElementById('fallbackBtn');
@@ -651,6 +356,22 @@ if (pendingOpen) {
     var entries = [];     // 全部选项（含不可用），按清单顺序（已按日期排序）
     var usable = [];      // 可用选项的下标
     var current = -1;
+
+    // 移动端（Android Chrome 等）没有内置 PDF 插件，页面内嵌 iframe 看不到内容，
+    // 因此移动端只用列表，点击条目在新窗口/系统阅读器中打开。
+    function detectMobile() {
+        var ua = navigator.userAgent || '';
+        var uaMobile = /Android|iPhone|iPad|iPod|Windows Phone|HarmonyOS|Mobile|Silk/i.test(ua);
+        var coarse = false;
+        try {
+            coarse = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+        } catch (e) { /* 老浏览器忽略 */ }
+        // 窄屏但支持鼠标（桌面窗口缩小）仍按桌面处理
+        return uaMobile || (coarse && Math.min(window.innerWidth, window.innerHeight) < 620);
+    }
+
+    var isMobile = detectMobile();
+    if (isMobile) document.body.classList.add('mode-mobile');
 
     /* ---------------- 工具 ---------------- */
 
@@ -696,32 +417,67 @@ if (pendingOpen) {
                 entries.push(entry);
                 if (entry.available) usable.push(index);
 
-                var btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'item' + (entry.available ? '' : ' missing');
-                btn.dataset.index = String(index);
-                if (!entry.available) {
-                    btn.disabled = true;
-                    btn.title = entry.label + '：暂无排班表文件';
-                } else {
-                    btn.title = yearInfo.year + '年' + entry.label;
-                }
-                btn.innerHTML = '<span class="ico">' + (ITEM_ICON[entry.kind] || '📄') + '</span>' +
-                    '<span class="txt"></span>' +
-                    (entry.available ? '' : '<span class="none">暂无</span>');
-                btn.querySelector('.txt').textContent = entry.label;
+                // 移动端用 div + <a>（整条就是「在新窗口打开」链接）；桌面端用 button 做选中
+                var node = document.createElement(isMobile && entry.available ? 'div' : 'button');
+                node.className = 'item' + (entry.available ? '' : ' missing');
+                node.dataset.index = String(index);
+                node.title = entry.available ? (yearInfo.year + '年' + entry.label) : (entry.label + '：暂无排班表文件');
 
-                if (entry.available) {
-                    btn.addEventListener('click', function () { select(index, true); });
+                var icon = document.createElement('span');
+                icon.className = 'ico';
+                icon.textContent = ITEM_ICON[entry.kind] || '📄';
+
+                function labelSpan(cls, text) {
+                    var span = document.createElement('span');
+                    span.className = cls;
+                    span.textContent = text;
+                    return span;
                 }
-                frag.appendChild(btn);
+
+                if (!entry.available) {
+                    // 灰显：不可点
+                    node.type = 'button';
+                    node.disabled = true;
+                    node.appendChild(icon);
+                    node.appendChild(labelSpan('txt', entry.label));
+                    node.appendChild(labelSpan('none', '暂无'));
+                } else if (isMobile) {
+                    // 整条 = 在新窗口打开该 PDF 的链接
+                    var link = document.createElement('a');
+                    link.className = 'txt';
+                    link.target = '_blank';
+                    link.rel = 'noopener';
+                    link.href = encodePath(entry.file);
+                    link.appendChild(icon);
+                    link.appendChild(labelSpan('label', entry.label));
+                    link.addEventListener('click', function () { markActive(index); });
+                    node.appendChild(link);
+                    node.appendChild(labelSpan('open-hint', '打开 ↗'));
+                } else {
+                    // 桌面端：点击切换到内嵌预览
+                    node.type = 'button';
+                    node.appendChild(icon);
+                    node.appendChild(labelSpan('txt', entry.label));
+                    node.addEventListener('click', function () { select(index, true); });
+                }
+                frag.appendChild(node);
             });
         });
 
         sideList.appendChild(frag);
     }
 
-    /* ---------------- 选中与预览 ---------------- */
+    /* ---------------- 选中（桌面：内嵌预览；移动端：只记高亮） ---------------- */
+
+    function markActive(index) {
+        var nodes = sideList.querySelectorAll('.item');
+        for (var i = 0; i < nodes.length; i++) {
+            var on = Number(nodes[i].dataset.index) === index;
+            nodes[i].classList.toggle('active', on);
+            nodes[i].setAttribute('aria-current', on ? 'true' : 'false');
+            if (on) nodes[i].scrollIntoView({ block: 'nearest' });
+        }
+    }
 
     function select(index, updateHash) {
         if (index < 0 || index >= entries.length) return;
@@ -730,29 +486,19 @@ if (pendingOpen) {
 
         current = index;
         var url = encodePath(entry.file);
-
-        var nodes = sideList.querySelectorAll('.item');
-        for (var i = 0; i < nodes.length; i++) {
-            var on = Number(nodes[i].dataset.index) === index;
-            nodes[i].classList.toggle('active', on);
-            nodes[i].setAttribute('aria-current', on ? 'true' : 'false');
-            if (on) {
-                nodes[i].scrollIntoView({ block: 'nearest' });
-                if (window.innerWidth <= 768) closeNav();
-            }
-        }
+        markActive(index);
 
         var fullName = entry.id.slice(0, 4) + '年' + entry.label;
         vTitle.textContent = fullName;
-        curName.textContent = entry.label;
         openBtn.href = url;
         downloadBtn.href = url;
         downloadBtn.setAttribute('download', fileName(entry.file));
         fallbackBtn.href = url;
         fallback.style.display = 'none';
 
-        // 交给 PDF.js 查看器渲染（移动端 Chrome 没有内置 PDF 插件，iframe 看不到内容）
-        document.dispatchEvent(new CustomEvent('schedule:open', { detail: { url: url } }));
+        // 桌面端浏览器自带 PDF 插件，直接内嵌预览
+        var target = url + '#view=FitH';
+        if (frame.getAttribute('src') !== target) frame.setAttribute('src', target);
 
         writeStored(entry.id);
         if (updateHash) {
@@ -810,37 +556,12 @@ if (pendingOpen) {
         return usable.length ? usable[usable.length - 1] : -1;
     }
 
-    /* ---------------- 抽屉 ---------------- */
-
-    function openNav() {
-        document.body.classList.add('nav-open');
-        navToggle.setAttribute('aria-expanded', 'true');
-        var active = sideList.querySelector('.item.active');
-        if (active) active.scrollIntoView({ block: 'nearest' });
-        try { sideClose.focus({ preventScroll: true }); } catch (e) { /* 忽略 */ }
-    }
-
-    function closeNav() {
-        var wasOpen = document.body.classList.contains('nav-open');
-        document.body.classList.remove('nav-open');
-        navToggle.setAttribute('aria-expanded', 'false');
-        if (wasOpen) {
-            try { navToggle.focus({ preventScroll: true }); } catch (e) { /* 忽略 */ }
-        }
-    }
-
-    navToggle.addEventListener('click', function () {
-        if (document.body.classList.contains('nav-open')) closeNav(); else openNav();
-    });
-    sideClose.addEventListener('click', closeNav);
-    scrim.addEventListener('click', closeNav);
-
     /* ---------------- 键盘 ---------------- */
 
     document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') { closeNav(); return; }
         var tag = e.target && e.target.tagName;
         if (tag && /^(INPUT|TEXTAREA|SELECT)$/.test(tag)) return;
+        if (isMobile) return;
         if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
         else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
     });
@@ -895,19 +616,7 @@ if (pendingOpen) {
             .catch(showLoadError);
     }
 
-    /* ---------------- PDF 渲染失败时降级 ---------------- */
-
-    window.__scheduleViewerFailed = function (err) {
-        if (current < 0) return;
-        var name = entries[current] ? entries[current].label : '排班表';
-        fallbackText.textContent = '「' + name + '」无法在页面内渲染' +
-            (err && err.message ? '（' + err.message + '）' : '') + '，请点击下方按钮打开或下载。';
-        fallback.style.display = 'flex';
-    };
-
-    document.addEventListener('schedule:openFailed', function (e) {
-        window.__scheduleViewerFailed(e.detail);
-    });
+    /* ---------------- 启动 ---------------- */
 
     load();
 })();
