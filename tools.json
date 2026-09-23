@@ -492,6 +492,22 @@
       "tags": [
         "文档处理"
       ]
+    },
+    {
+      "title": "隔空传输",
+      "url": "https://cimbar.org/",
+      "desc": "隔空传输文件",
+      "icon": "https://cimbar.org/favicon.ico",
+      "color": "green",
+      "tags": [
+        "文档处理"
+      ],
+      "relatedLinks": [
+        {
+          "name": "cimbar_js.html",
+          "url": "html/cimbar_js.html"
+        }
+      ]
     }
   ]
 }
