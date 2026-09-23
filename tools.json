@@ -116,12 +116,16 @@
       ],
       "relatedLinks": [
         {
-          "name": "2026年08月排班表.pdf",
-          "url": "html/data/2026-08-schedule.pdf"
-        },
-        {
           "name": "2026年中秋节排班表.pdf",
           "url": "html/data/2026-ZQ-schedule.pdf"
+        },
+        {
+          "name": "2026年国庆节排班表.pdf",
+          "url": "html/data/2026-GQ-schedule.pdf"
+        },
+        {
+          "name": "2026年10月排班表.pdf",
+          "url": "html/data/2026-10-schedule.pdf"
         }
       ]
     },
