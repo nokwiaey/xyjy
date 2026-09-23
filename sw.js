@@ -1,5 +1,5 @@
 // Service Worker - 离线缓存
-const CACHE_NAME = 'xyjy-tools-v7';
+const CACHE_NAME = 'xyjy-tools-v8';
 
 // 需要预缓存的静态资源
 const PRECACHE_URLS = [
@@ -9,6 +9,7 @@ const PRECACHE_URLS = [
     './html/phone-directory.html',
     './html/lab-test-query.html',
     './html/jyk_schedule/index.html',
+    './html/jyk_schedule/data/schedule.json',
     './html/data/item.json'
 ];
 

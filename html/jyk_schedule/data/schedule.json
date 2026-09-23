@@ -1,0 +1,363 @@
+{
+  "generatedAt": "2026-09-23T17:24:26",
+  "holidays": {
+    "YD": {
+      "label": "元旦节",
+      "month": 1
+    },
+    "CJ": {
+      "label": "春节",
+      "month": 2
+    },
+    "QM": {
+      "label": "清明节",
+      "month": 4
+    },
+    "WY": {
+      "label": "五一节",
+      "month": 5
+    },
+    "DW": {
+      "label": "端午节",
+      "month": 6
+    },
+    "ZQ": {
+      "label": "中秋节",
+      "month": 9
+    },
+    "GQ": {
+      "label": "国庆节",
+      "month": 10
+    }
+  },
+  "years": [
+    {
+      "year": 2026,
+      "entries": [
+        {
+          "id": "2026-01",
+          "kind": "month",
+          "month": 1,
+          "label": "1月",
+          "file": "data/2026-01-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2026-YD",
+          "kind": "holiday",
+          "code": "YD",
+          "month": 1,
+          "label": "元旦节",
+          "file": "data/2026-YD-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2026-02",
+          "kind": "month",
+          "month": 2,
+          "label": "2月",
+          "file": "data/2026-02-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2026-CJ",
+          "kind": "holiday",
+          "code": "CJ",
+          "month": 2,
+          "label": "春节",
+          "file": "data/2026-CJ-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2026-03",
+          "kind": "month",
+          "month": 3,
+          "label": "3月",
+          "file": "data/2026-03-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2026-04",
+          "kind": "month",
+          "month": 4,
+          "label": "4月",
+          "file": "data/2026-04-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2026-QM",
+          "kind": "holiday",
+          "code": "QM",
+          "month": 4,
+          "label": "清明节",
+          "file": "data/2026-QM-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2026-05",
+          "kind": "month",
+          "month": 5,
+          "label": "5月",
+          "file": "data/2026-05-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2026-WY",
+          "kind": "holiday",
+          "code": "WY",
+          "month": 5,
+          "label": "五一节",
+          "file": "data/2026-WY-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2026-06",
+          "kind": "month",
+          "month": 6,
+          "label": "6月",
+          "file": "data/2026-06-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2026-DW",
+          "kind": "holiday",
+          "code": "DW",
+          "month": 6,
+          "label": "端午节",
+          "file": "data/2026-DW-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2026-07",
+          "kind": "month",
+          "month": 7,
+          "label": "7月",
+          "file": "data/2026-07-schedule.pdf",
+          "available": true
+        },
+        {
+          "id": "2026-08",
+          "kind": "month",
+          "month": 8,
+          "label": "8月",
+          "file": "data/2026-08-schedule.pdf",
+          "available": true
+        },
+        {
+          "id": "2026-09",
+          "kind": "month",
+          "month": 9,
+          "label": "9月",
+          "file": "data/2026-09-schedule.pdf",
+          "available": true
+        },
+        {
+          "id": "2026-ZQ",
+          "kind": "holiday",
+          "code": "ZQ",
+          "month": 9,
+          "label": "中秋节",
+          "file": "data/2026-ZQ-schedule.pdf",
+          "available": true
+        },
+        {
+          "id": "2026-10",
+          "kind": "month",
+          "month": 10,
+          "label": "10月",
+          "file": "data/2026-10-schedule.pdf",
+          "available": true
+        },
+        {
+          "id": "2026-GQ",
+          "kind": "holiday",
+          "code": "GQ",
+          "month": 10,
+          "label": "国庆节",
+          "file": "data/2026-GQ-schedule.pdf",
+          "available": true
+        },
+        {
+          "id": "2026-11",
+          "kind": "month",
+          "month": 11,
+          "label": "11月",
+          "file": "data/2026-11-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2026-12",
+          "kind": "month",
+          "month": 12,
+          "label": "12月",
+          "file": "data/2026-12-schedule.pdf",
+          "available": false
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "entries": [
+        {
+          "id": "2025-01",
+          "kind": "month",
+          "month": 1,
+          "label": "1月",
+          "file": "data/2025-01-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-YD",
+          "kind": "holiday",
+          "code": "YD",
+          "month": 1,
+          "label": "元旦节",
+          "file": "data/2025-YD-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-02",
+          "kind": "month",
+          "month": 2,
+          "label": "2月",
+          "file": "data/2025-02-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-CJ",
+          "kind": "holiday",
+          "code": "CJ",
+          "month": 2,
+          "label": "春节",
+          "file": "data/2025-CJ-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-03",
+          "kind": "month",
+          "month": 3,
+          "label": "3月",
+          "file": "data/2025-03-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-04",
+          "kind": "month",
+          "month": 4,
+          "label": "4月",
+          "file": "data/2025-04-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-QM",
+          "kind": "holiday",
+          "code": "QM",
+          "month": 4,
+          "label": "清明节",
+          "file": "data/2025-QM-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-05",
+          "kind": "month",
+          "month": 5,
+          "label": "5月",
+          "file": "data/2025-05-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-WY",
+          "kind": "holiday",
+          "code": "WY",
+          "month": 5,
+          "label": "五一节",
+          "file": "data/2025-WY-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-06",
+          "kind": "month",
+          "month": 6,
+          "label": "6月",
+          "file": "data/2025-06-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-DW",
+          "kind": "holiday",
+          "code": "DW",
+          "month": 6,
+          "label": "端午节",
+          "file": "data/2025-DW-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-07",
+          "kind": "month",
+          "month": 7,
+          "label": "7月",
+          "file": "data/2025-07-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-08",
+          "kind": "month",
+          "month": 8,
+          "label": "8月",
+          "file": "data/2025-08-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-09",
+          "kind": "month",
+          "month": 9,
+          "label": "9月",
+          "file": "data/2025-09-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-ZQ",
+          "kind": "holiday",
+          "code": "ZQ",
+          "month": 9,
+          "label": "中秋节",
+          "file": "data/2025-ZQ-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-10",
+          "kind": "month",
+          "month": 10,
+          "label": "10月",
+          "file": "data/2025-10-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-GQ",
+          "kind": "holiday",
+          "code": "GQ",
+          "month": 10,
+          "label": "国庆节",
+          "file": "data/2025-GQ-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-11",
+          "kind": "month",
+          "month": 11,
+          "label": "11月",
+          "file": "data/2025-11-schedule.pdf",
+          "available": false
+        },
+        {
+          "id": "2025-12",
+          "kind": "month",
+          "month": 12,
+          "label": "12月",
+          "file": "data/2025-12-schedule.pdf",
+          "available": false
+        }
+      ]
+    }
+  ]
+}

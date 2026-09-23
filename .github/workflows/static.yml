@@ -37,11 +37,13 @@ jobs:
           python-version: '3.12'
       - name: Generate index.html
         run: python generate_nav.py
-      - name: Commit updated index.html
+      - name: Generate schedule manifest
+        run: python generate_schedule_manifest.py
+      - name: Commit generated files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'chore: auto-generate index.html from tools.json'
-          file_pattern: 'index.html'
+          commit_message: 'chore: auto-generate index.html and schedule manifest'
+          file_pattern: 'index.html html/jyk_schedule/data/schedule.json'
           add_options: ''
       - name: Setup Pages
         uses: actions/configure-pages@v5

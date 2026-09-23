@@ -18,6 +18,15 @@ script.js  ──┘
 
 The `/html/` directory contains standalone tool pages (phone directory, lab test query, weekend scheduler, eGFR calculator). Some tools link to external sites. `/html/data/` holds JSON data files consumed by those tool pages.
 
+### Schedule page (`html/jyk_schedule/`)
+
+`html/jyk_schedule/index.html` is a file-driven PDF navigator: a vertical list on the left, an embedded PDF preview on the right. Schedule PDFs live in `html/jyk_schedule/data/` and follow a naming convention:
+
+- monthly: `YYYY-MM-schedule.pdf` (e.g. `2026-09-schedule.pdf`)
+- holiday: `YYYY-CODE-schedule.pdf`, where CODE is one of `YD` 元旦节, `CJ` 春节, `QM` 清明节, `WY` 五一节, `DW` 端午节, `ZQ` 中秋节, `GQ` 国庆节 (Chinese names and common aliases are also accepted)
+
+`generate_schedule_manifest.py` scans that directory and writes `html/jyk_schedule/data/schedule.json`, which lists every month and holiday of each year (missing files are marked `available: false` and render greyed out). **Adding a schedule is just dropping a PDF in and re-running the script** — the page itself defines no list.
+
 ### Client-side features
 
 The page includes: dark/light theme toggle, search with keyboard navigation (Ctrl+K, arrow keys), tag-based filtering, recently visited tools (localStorage), copy-link buttons on cards, QR code modal, WeChat sharing integration, site-switcher menu for multi-mirror deployment, and Vercount visitor statistics.
@@ -30,12 +39,14 @@ The page includes: dark/light theme toggle, search with keyboard navigation (Ctr
 - **Adding a tool**: edit `tools.json` → run `generate_nav.py` to preview locally
 - **Editing styles**: edit `style.css` → run `generate_nav.py`
 - **Editing JS behavior**: edit `script.js` → run `generate_nav.py`
+- **Regenerate the schedule manifest**: `python generate_schedule_manifest.py` — scans `html/jyk_schedule/data/*.pdf`, writes `html/jyk_schedule/data/schedule.json`
+- **Adding a schedule**: drop the PDF into `html/jyk_schedule/data/` → run `generate_schedule_manifest.py`
 
 ## CI/CD
 
 GitHub Actions (`.github/workflows/static.yml`) triggers on push to `main`:
-1. Runs `python generate_nav.py`
-2. Commits the regenerated `index.html` back to the repo
+1. Runs `python generate_nav.py` and `python generate_schedule_manifest.py`
+2. Commits the regenerated `index.html` and `html/jyk_schedule/data/schedule.json` back to the repo
 3. Deploys the entire repo to GitHub Pages
 
 Cloudflare Pages is also configured via `wrangler.jsonc` (deploys the entire repo as static assets).
@@ -50,6 +61,7 @@ The same page is deployed to multiple mirrors (configured in `tools.json` → `s
 |------|------|
 | `tools.json` | Data: tool list + tag definitions + site mirror URLs |
 | `generate_nav.py` | Template engine: reads JSON + CSS + JS, outputs self-contained `index.html` |
+| `generate_schedule_manifest.py` | Scans `html/jyk_schedule/data/*.pdf`, writes `data/schedule.json` for the schedule page |
 | `style.css` | Stylesheet, inlined into `index.html` at build time |
 | `script.js` | Client-side JS (search, tags, theme, QR, recent visits, WeChat, etc.), inlined at build time |
 | `index.html` | Generated output, committed for direct viewing |
