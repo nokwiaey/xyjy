@@ -41,7 +41,7 @@ HOLIDAYS = {
     'YD': ('元旦节', 1, ['YUAN', 'YUANDAN', 'XNY', 'XINNIAN', 'NEWYEAR']),
     'CJ': ('春节', 2, ['CHUNJIE', 'SJ', 'SPRING']),
     'QM': ('清明节', 4, ['QINGMING']),
-    'WY': ('五一节', 5, ['LD', 'WUYI', 'LAODONG', 'MAYDAY']),
+    'LD': ('劳动节', 5, ['WY', 'WUYI', 'LAODONG', 'MAYDAY', '五一']),
     'DW': ('端午节', 6, ['DWF', 'DUANWU']),
     'ZQ': ('中秋节', 9, ['ZX', 'ZHONGQIU', 'MIDDLEAUTUMN']),
     'GQ': ('国庆节', 10, ['GUOQING', 'NATIONAL']),

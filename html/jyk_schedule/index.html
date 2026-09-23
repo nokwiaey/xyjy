@@ -202,6 +202,36 @@
         text-overflow: ellipsis;
     }
     .v-actions { display: flex; gap: 8px; flex: 0 0 auto; }
+
+    /* PDF.js 查看器控制条 */
+    .v-tools { display: flex; align-items: center; gap: 4px; flex: 0 0 auto; }
+    .v-tools[hidden] { display: none; }
+    .v-tools .tool {
+        border: 1px solid var(--border);
+        background: var(--item);
+        color: var(--text);
+        border-radius: 7px;
+        min-width: 28px;
+        height: 28px;
+        padding: 0 7px;
+        font-size: 0.8rem;
+        line-height: 1;
+        font-family: inherit;
+        cursor: pointer;
+        transition: background 0.15s;
+    }
+    .v-tools .tool:hover:not(:disabled) { background: var(--item-hover); }
+    .v-tools .tool:disabled { opacity: 0.4; cursor: not-allowed; }
+    .v-tools .info {
+        font-size: 0.76rem;
+        color: var(--text-light);
+        padding: 0 5px;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+    }
+    @media (prefers-color-scheme: dark) {
+        .v-tools .info { color: #a9bcc3; }
+    }
     .btn {
         display: inline-flex;
         align-items: center;
@@ -223,20 +253,37 @@
         border-color: transparent;
     }
 
-    .frame-wrap {
+    .pdf-viewport {
         flex: 1;
         min-height: 0;
         position: relative;
+        overflow: auto;
         background: #525659;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
     }
-    .frame-wrap iframe {
+    .pdf-page {
+        margin: 10px auto;
+        width: max-content;
+        background: #fff;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+        line-height: 0;
+    }
+    .pdf-page canvas { display: block; }
+    .pdf-status {
         position: absolute;
         inset: 0;
-        width: 100%;
-        height: 100%;
-        border: 0;
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        text-align: center;
+        font-size: 0.85rem;
+        color: #f1f5f7;
+        background: rgba(60, 64, 66, 0.86);
+        pointer-events: none;
     }
+    .pdf-status[hidden] { display: none; }
     .fallback {
         position: absolute;
         inset: 0;
@@ -313,7 +360,11 @@
 
         /* 预览区顶栏：左上角的「排班表」按钮 = 打开竖排列表 */
         .viewer { flex: 1 1 auto; min-height: 74vh; min-height: 74dvh; }
-        .v-bar { padding: 8px 12px; gap: 8px; }
+        .v-bar { padding: 8px 12px; gap: 8px; flex-wrap: wrap; row-gap: 8px; }
+        .v-title { flex: 1 1 100%; order: 2; font-size: 0.84rem; }
+        .v-tools { order: 3; flex: 0 0 auto; }
+        .v-actions { order: 1; margin-left: auto; }
+        .nav-toggle { order: 0; }
         .nav-toggle {
             display: inline-flex;
             align-items: center;
@@ -338,7 +389,6 @@
             color: var(--brand);
             font-weight: 600;
         }
-        .v-title { font-size: 0.84rem; }
         .v-actions .btn { padding: 6px 9px; font-size: 0.74rem; }
     }
 </style>
@@ -365,21 +415,218 @@
             <span class="cur" id="curName"></span>
         </button>
         <span class="v-title" id="vTitle">检验科排班表</span>
+        <div class="v-tools" id="vTools" hidden>
+            <button class="tool" id="prevPageBtn" type="button" title="上一页" disabled>‹</button>
+            <span class="info" id="pageInfo">– / –</span>
+            <button class="tool" id="nextPageBtn" type="button" title="下一页" disabled>›</button>
+            <button class="tool" id="zoomOutBtn" type="button" title="缩小">−</button>
+            <span class="info" id="zoomInfo">100%</span>
+            <button class="tool" id="zoomInBtn" type="button" title="放大">＋</button>
+            <button class="tool" id="fitBtn" type="button" title="适应宽度">适宽</button>
+        </div>
         <div class="v-actions">
             <a class="btn primary" id="openBtn" href="#" target="_blank" rel="noopener">新窗口打开</a>
             <a class="btn" id="downloadBtn" href="#" download>下载</a>
         </div>
     </div>
-    <div class="frame-wrap">
-        <iframe id="pdfFrame" title="排班表 PDF 预览"></iframe>
+    <div class="pdf-viewport" id="pdfViewport">
+        <div class="pdf-page"><canvas id="pdfCanvas"></canvas></div>
+        <div class="pdf-status" id="pdfStatus" hidden></div>
         <div class="fallback" id="fallback">
             <div class="big">📄</div>
-            <p id="fallbackText">当前环境无法内嵌预览 PDF，请点击下方按钮在新窗口打开。</p>
+            <p id="fallbackText">这个 PDF 暂时无法在页面内预览，请点击下方按钮打开。</p>
             <a class="btn primary" id="fallbackBtn" href="#" target="_blank" rel="noopener">新窗口打开 PDF</a>
-            <p class="hintline">或在本目录下运行 <code>python -m http.server</code> 后通过 http:// 访问本页</p>
         </div>
     </div>
 </main>
+
+<script type="module">
+/* ---------------- PDF 渲染（PDF.js，Android Chrome 等无内置 PDF 插件的浏览器也能看） ---------------- */
+var PDFJS_BASE = 'vendor/pdfjs/';
+var pdfjsLib = null;
+var pdfjsReady = null;
+var pdfDoc = null;
+var pdfUrl = '';
+var pageNum = 1;
+var scale = 1;
+var autoFit = true;
+var renderToken = 0;
+var pdfToken = 0;
+
+var canvas = document.getElementById('pdfCanvas');
+var viewportEl = document.getElementById('pdfViewport');
+var statusEl = document.getElementById('pdfStatus');
+var vTools = document.getElementById('vTools');
+var prevPageBtn = document.getElementById('prevPageBtn');
+var nextPageBtn = document.getElementById('nextPageBtn');
+var zoomInBtn = document.getElementById('zoomInBtn');
+var zoomOutBtn = document.getElementById('zoomOutBtn');
+var fitBtn = document.getElementById('fitBtn');
+var pageInfo = document.getElementById('pageInfo');
+var zoomInfo = document.getElementById('zoomInfo');
+
+function loadPdfJs() {
+    if (!pdfjsReady) {
+        pdfjsReady = import(PDFJS_BASE + 'pdf.min.mjs').then(function (mod) {
+            pdfjsLib = mod;
+            mod.GlobalWorkerOptions.workerSrc = PDFJS_BASE + 'pdf.worker.min.mjs';
+            return mod;
+        });
+    }
+    return pdfjsReady;
+}
+
+function setStatus(text) {
+    if (text) {
+        statusEl.textContent = text;
+        statusEl.hidden = false;
+    } else {
+        statusEl.hidden = true;
+    }
+}
+
+function updateToolbar() {
+    var total = pdfDoc ? pdfDoc.numPages : 0;
+    pageInfo.textContent = total ? (pageNum + ' / ' + total) : '– / –';
+    zoomInfo.textContent = Math.round(scale * 100) + '%';
+    prevPageBtn.disabled = !pdfDoc || pageNum <= 1;
+    nextPageBtn.disabled = !pdfDoc || pageNum >= total;
+    zoomInBtn.disabled = !pdfDoc || scale >= 4;
+    zoomOutBtn.disabled = !pdfDoc || scale <= 0.4;
+    fitBtn.disabled = !pdfDoc;
+    vTools.hidden = !pdfDoc;
+}
+
+function fitScale(page, viewport) {
+    var padding = 20;
+    var avail = viewportEl.clientWidth - padding;
+    if (avail <= 60) avail = 320;
+    var base = page.getViewport({ scale: 1 });
+    return Math.min(4, Math.max(0.15, avail / base.width));
+}
+
+function renderCurrentPage() {
+    if (!pdfDoc) return;
+    var token = ++renderToken;
+
+    pdfDoc.getPage(pageNum).then(function (page) {
+        if (token !== renderToken) return;
+        if (autoFit) scale = fitScale(page, null);
+
+        var viewport = page.getViewport({ scale: scale });
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var maxDim = 4096;
+        dpr = Math.max(0.5, Math.min(dpr, maxDim / viewport.width, maxDim / viewport.height));
+
+        canvas.width = Math.floor(viewport.width * dpr);
+        canvas.height = Math.floor(viewport.height * dpr);
+        canvas.style.width = Math.floor(viewport.width) + 'px';
+        canvas.style.height = Math.floor(viewport.height) + 'px';
+
+        var task = page.render({
+            canvasContext: canvas.getContext('2d'),
+            viewport: viewport,
+            transform: dpr !== 1 ? [dpr, 0, 0, dpr, 0, 0] : null
+        });
+
+        return task.promise.then(function () {
+            if (token !== renderToken) return;
+            setStatus('');
+            updateToolbar();
+        });
+    }).catch(function (err) {
+        if (token !== renderToken) return;
+        if (err && err.name === 'RenderingCancelledException') return;
+        showViewerError(err);
+    });
+}
+
+function openDocument(url, entry) {
+    var token = ++pdfToken;
+    pageNum = 1;
+    autoFit = true;
+    scale = 1;
+
+    if (pdfDoc && pdfUrl === url) {
+        renderCurrentPage();
+        return;
+    }
+
+    if (pdfDoc) {
+        try { pdfDoc.destroy(); } catch (e) { /* 忽略 */ }
+        pdfDoc = null;
+    }
+    pdfUrl = url;
+    updateToolbar();
+    setStatus('正在加载 PDF…');
+
+    loadPdfJs().then(function (mod) {
+        return mod.getDocument({ url: url });
+    }).then(function (doc) {
+        if (token !== pdfToken) {
+            try { doc.destroy(); } catch (e) { /* 忽略 */ }
+            return;
+        }
+        pdfDoc = doc;
+        updateToolbar();
+        renderCurrentPage();
+    }).catch(function (err) {
+        if (token !== pdfToken) return;
+        showViewerError(err);
+    });
+}
+
+function showViewerError(err) {
+    pdfDoc = null;
+    updateToolbar();
+    setStatus('');
+    document.dispatchEvent(new CustomEvent('schedule:openFailed', { detail: err }));
+}
+
+function goToPage(n) {
+    if (!pdfDoc) return;
+    n = Math.min(Math.max(1, n), pdfDoc.numPages);
+    if (n === pageNum) return;
+    pageNum = n;
+    updateToolbar();
+    renderCurrentPage();
+    viewportEl.scrollTop = 0;
+}
+
+function setScale(next, fit) {
+    autoFit = !!fit;
+    scale = Math.min(4, Math.max(0.4, next));
+    renderCurrentPage();
+}
+
+prevPageBtn.addEventListener('click', function () { goToPage(pageNum - 1); });
+nextPageBtn.addEventListener('click', function () { goToPage(pageNum + 1); });
+zoomInBtn.addEventListener('click', function () { setScale(scale * 1.25, false); });
+zoomOutBtn.addEventListener('click', function () { setScale(scale / 1.25, false); });
+fitBtn.addEventListener('click', function () { setScale(1, true); });
+
+var resizeTimer = null;
+window.addEventListener('resize', function () {
+    if (resizeTimer) clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+        if (pdfDoc) renderCurrentPage();
+    }, 160);
+});
+
+/* 选中排班表时打开对应 PDF；懒渲染，页面上没有选中任何 PDF 时不会加载查看器 */
+var pendingOpen = null;
+var viewerReady = false;
+document.addEventListener('schedule:open', function (e) {
+    if (!viewerReady) { pendingOpen = e.detail.url; return; }
+    openDocument(e.detail.url);
+});
+viewerReady = true;
+if (pendingOpen) {
+    var first = pendingOpen;
+    pendingOpen = null;
+    openDocument(first);
+}
+</script>
 
 <script>
 (function () {
@@ -395,17 +642,15 @@
     var scrim = document.getElementById('scrim');
     var curName = document.getElementById('curName');
     var vTitle = document.getElementById('vTitle');
-    var frame = document.getElementById('pdfFrame');
-    var fallback = document.getElementById('fallback');
-    var fallbackText = document.getElementById('fallbackText');
     var openBtn = document.getElementById('openBtn');
     var downloadBtn = document.getElementById('downloadBtn');
+    var fallback = document.getElementById('fallback');
+    var fallbackText = document.getElementById('fallbackText');
     var fallbackBtn = document.getElementById('fallbackBtn');
 
     var entries = [];     // 全部选项（含不可用），按清单顺序（已按日期排序）
     var usable = [];      // 可用选项的下标
     var current = -1;
-    var isFileProtocol = location.protocol === 'file:';
 
     /* ---------------- 工具 ---------------- */
 
@@ -506,8 +751,8 @@
         fallbackBtn.href = url;
         fallback.style.display = 'none';
 
-        var target = url + '#view=FitH';
-        if (frame.getAttribute('src') !== target) frame.setAttribute('src', target);
+        // 交给 PDF.js 查看器渲染（移动端 Chrome 没有内置 PDF 插件，iframe 看不到内容）
+        document.dispatchEvent(new CustomEvent('schedule:open', { detail: { url: url } }));
 
         writeStored(entry.id);
         if (updateHash) {
@@ -596,8 +841,8 @@
         if (e.key === 'Escape') { closeNav(); return; }
         var tag = e.target && e.target.tagName;
         if (tag && /^(INPUT|TEXTAREA|SELECT)$/.test(tag)) return;
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); step(-1); }
-        else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); step(1); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
     });
 
     window.addEventListener('hashchange', function () {
@@ -615,7 +860,6 @@
         if (!usable.length) {
             current = -1;
             vTitle.textContent = '暂无排班表';
-            frame.removeAttribute('src');
             openBtn.removeAttribute('href');
             downloadBtn.removeAttribute('href');
             fallbackBtn.removeAttribute('href');
@@ -626,23 +870,18 @@
 
         var start = pickInitial();
         select(start >= 0 ? start : usable[0], true);
-        if (isFileProtocol) showFileHint();
-    }
-
-    function showFileHint() {
-        fallbackText.innerHTML = '当前以本地文件方式打开，浏览器通常不允许内嵌预览 PDF。' +
-            '请点击下方按钮在新窗口打开，或在本目录下运行 <code>python -m http.server</code> 后通过 http:// 访问。';
-        fallback.style.display = 'flex';
     }
 
     function showLoadError(err) {
+        var detail = (err && err.message) ? err.message : '未知错误';
         var box = stateBox('<b>清单加载失败</b>' +
-            '没读到 <code>' + MANIFEST_URL + '</code>，详情：' + (err && err.message ? err.message : '未知错误') + '<br>' +
-            '请先运行 <code>python generate_schedule_manifest.py</code> 生成清单。' +
+            '没读到 <code>' + MANIFEST_URL + '</code>：' + detail + '<br>' +
+            '请先运行 <code>python generate_schedule_manifest.py</code> 生成清单；' +
+            '若以本地文件方式打开（file://），请改用 <code>python -m http.server</code> 后通过 http:// 访问。' +
             '<br><button class="retry" type="button">重试</button>');
         box.querySelector('.retry').addEventListener('click', load);
         vTitle.textContent = '排班表清单未加载';
-        fallbackText.textContent = '排班表清单加载失败，请先生成 data/schedule.json。';
+        fallbackText.textContent = '排班表清单加载失败，请先生成 data/schedule.json，或通过 http:// 访问本页。';
         fallback.style.display = 'flex';
     }
 
@@ -655,6 +894,20 @@
             .then(applyManifest)
             .catch(showLoadError);
     }
+
+    /* ---------------- PDF 渲染失败时降级 ---------------- */
+
+    window.__scheduleViewerFailed = function (err) {
+        if (current < 0) return;
+        var name = entries[current] ? entries[current].label : '排班表';
+        fallbackText.textContent = '「' + name + '」无法在页面内渲染' +
+            (err && err.message ? '（' + err.message + '）' : '') + '，请点击下方按钮打开或下载。';
+        fallback.style.display = 'flex';
+    };
+
+    document.addEventListener('schedule:openFailed', function (e) {
+        window.__scheduleViewerFailed(e.detail);
+    });
 
     load();
 })();

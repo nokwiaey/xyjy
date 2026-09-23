@@ -23,9 +23,11 @@ The `/html/` directory contains standalone tool pages (phone directory, lab test
 `html/jyk_schedule/index.html` is a file-driven PDF navigator: a vertical list on the left, an embedded PDF preview on the right. Schedule PDFs live in `html/jyk_schedule/data/` and follow a naming convention:
 
 - monthly: `YYYY-MM-schedule.pdf` (e.g. `2026-09-schedule.pdf`)
-- holiday: `YYYY-CODE-schedule.pdf`, where CODE is one of `YD` 元旦节, `CJ` 春节, `QM` 清明节, `WY` 五一节, `DW` 端午节, `ZQ` 中秋节, `GQ` 国庆节 (Chinese names and common aliases are also accepted)
+- holiday: `YYYY-CODE-schedule.pdf`, where CODE is one of `YD` 元旦节, `CJ` 春节, `QM` 清明节, `LD` 劳动节, `DW` 端午节, `ZQ` 中秋节, `GQ` 国庆节 (Chinese names and common aliases are also accepted, e.g. `2026-劳动节.pdf`)
 
 `generate_schedule_manifest.py` scans that directory and writes `html/jyk_schedule/data/schedule.json`, which lists every month and holiday of each year (missing files are marked `available: false` and render greyed out). **Adding a schedule is just dropping a PDF in and re-running the script** — the page itself defines no list.
+
+The PDF preview is rendered by a locally vendored PDF.js (`html/jyk_schedule/vendor/pdfjs/`) instead of a plain `<iframe>`, because Chrome for Android has no built-in PDF viewer and would render an embedded PDF as a blank/error frame. The viewer draws one page to a `<canvas>` with page/zoom controls. Don't hand-edit the vendored files; to upgrade, repack `pdfjs-dist` and re-extract `legacy/build/pdf.min.mjs` + `legacy/build/pdf.worker.min.mjs`.
 
 ### Client-side features
 
