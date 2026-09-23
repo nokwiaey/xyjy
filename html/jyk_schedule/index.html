@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>检验科排班表 - 星元检验工具箱</title>
+<meta name="description" content="榆林市星元医院临床检验中心排班表在线查看与下载，含各月份及节假日排班。">
+<meta property="og:title" content="检验科排班表" />
+<meta property="og:description" content="榆林市星元医院临床检验中心排班表在线查看与下载" />
+<meta property="og:type" content="website" />
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --brand: #159895;
+        --brand-dark: #1a5f7a;
+        --bg: #f1f5f7;
+        --card: #ffffff;
+        --text: #1f3b45;
+        --text-light: #6b8089;
+        --border: #e2e9ec;
+        --chip: #eef4f6;
+        --chip-hover: #dfecef;
+        --shadow: 0 8px 24px rgba(21, 95, 122, 0.12);
+        --radius: 14px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg: #101b20;
+            --card: #16262c;
+            --text: #e6eef1;
+            --text-light: #93a8b0;
+            --border: #24363d;
+            --chip: #1d323a;
+            --chip-hover: #264049;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+    }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ---------- 顶部标题 ---------- */
+    .page-header {
+        background: linear-gradient(135deg, #1a5f7a 0%, #159895 100%);
+        color: #fff;
+        padding: 22px 20px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+    .page-header::after {
+        content: "📅";
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 74px;
+        opacity: 0.14;
+        pointer-events: none;
+        line-height: 1;
+    }
+    .page-header .inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+    .page-header h1 { font-size: 1.35rem; font-weight: 700; letter-spacing: 0.5px; }
+    .page-header p { font-size: 0.85rem; opacity: 0.85; margin-top: 5px; }
+
+    /* ---------- 主体 ---------- */
+    main {
+        flex: 1;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    /* ---------- 排班表选择 ---------- */
+    .picker {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 14px;
+    }
+    .picker-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    .picker-head .label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        color: var(--text-light);
+    }
+    .picker-head .nav-btns { display: flex; gap: 8px; }
+    .nav-btn {
+        border: 1px solid var(--border);
+        background: var(--chip);
+        color: var(--text);
+        border-radius: 9px;
+        padding: 6px 12px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: background 0.18s, transform 0.12s;
+        line-height: 1.2;
+    }
+    .nav-btn:hover { background: var(--chip-hover); }
+    .nav-btn:active { transform: scale(0.97); }
+    .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .chips {
+        display: flex;
+        gap: 9px;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        scrollbar-width: thin;
+        -webkit-overflow-scrolling: touch;
+    }
+    .chips::-webkit-scrollbar { height: 6px; }
+    .chips::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    .chip {
+        flex: 0 0 auto;
+        border: 1px solid var(--border);
+        background: var(--chip);
+        color: var(--text);
+        border-radius: 11px;
+        padding: 9px 15px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.18s;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        white-space: nowrap;
+    }
+    .chip:hover { background: var(--chip-hover); }
+    .chip .dot {
+        width: 7px; height: 7px; border-radius: 50%;
+        background: var(--brand);
+        flex: 0 0 auto;
+    }
+    .chip.holiday .dot { background: #e76f51; }
+    .chip.active {
+        background: linear-gradient(135deg, #1a5f7a, #159895);
+        border-color: transparent;
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(21, 152, 149, 0.35);
+    }
+    .chip.active .dot { background: #ffe08a; }
+
+    /* ---------- PDF 查看区 ---------- */
+    .viewer-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    .viewer-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 14px;
+        border-bottom: 1px solid var(--border);
+        flex-wrap: wrap;
+    }
+    .viewer-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-right: auto;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
+    .viewer-title .tag {
+        font-size: 0.7rem;
+        font-weight: 500;
+        padding: 2px 8px;
+        border-radius: 20px;
+        background: var(--chip);
+        color: var(--text-light);
+        border: 1px solid var(--border);
+    }
+    .viewer-title .tag.holiday { background: rgba(231,111,81,0.12); color: #e76f51; border-color: rgba(231,111,81,0.3); }
+    .viewer-title .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .actions { display: flex; align-items: center; gap: 8px; }
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        border: 1px solid var(--border);
+        background: var(--chip);
+        color: var(--text);
+        border-radius: 9px;
+        padding: 7px 12px;
+        font-size: 0.82rem;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background 0.18s, transform 0.12s;
+        white-space: nowrap;
+    }
+    .btn:hover { background: var(--chip-hover); }
+    .btn:active { transform: scale(0.97); }
+    .btn.primary {
+        background: linear-gradient(135deg, #1a5f7a, #159895);
+        color: #fff;
+        border-color: transparent;
+    }
+
+    .frame-wrap {
+        flex: 1;
+        position: relative;
+        background: #525659;
+        min-height: 60vh;
+    }
+    .frame-wrap iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+    }
+    .fallback {
+        position: absolute;
+        inset: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        text-align: center;
+        padding: 24px;
+        background: var(--card);
+        color: var(--text);
+    }
+    .fallback .big { font-size: 46px; }
+    .fallback p { font-size: 0.9rem; color: var(--text-light); max-width: 340px; line-height: 1.6; }
+
+    .hint {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 10px 14px;
+        border-top: 1px solid var(--border);
+        font-size: 0.8rem;
+        color: var(--text-light);
+        line-height: 1.6;
+    }
+
+    /* ---------- 折叠列表（下载） ---------- */
+    .list-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+    }
+    .list-card summary {
+        cursor: pointer;
+        padding: 13px 16px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .list-card summary::-webkit-details-marker { display: none; }
+    .list-card summary::after { content: "▾"; color: var(--text-light); font-size: 0.8rem; }
+    .list-card[open] summary::after { content: "▴"; }
+    .list-body {
+        border-top: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 10px;
+        padding: 14px;
+    }
+    .list-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 13px;
+        border: 1px solid var(--border);
+        border-radius: 11px;
+        background: var(--chip);
+        text-decoration: none;
+        color: var(--text);
+        transition: background 0.18s, border-color 0.18s;
+        font-size: 0.88rem;
+    }
+    .list-item:hover { background: var(--chip-hover); border-color: var(--brand); }
+    .list-item .icon { font-size: 1.1rem; }
+    .list-item .meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .list-item .meta small { color: var(--text-light); font-size: 0.74rem; }
+
+    /* ---------- 底部 ---------- */
+    footer {
+        text-align: center;
+        padding: 18px 16px 26px;
+        font-size: 0.78rem;
+        color: var(--text-light);
+        line-height: 1.7;
+    }
+    footer a { color: var(--brand); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ---------- 移动端 ---------- */
+    @media (max-width: 640px) {
+        .page-header { padding: 18px 16px 16px; }
+        .page-header h1 { font-size: 1.15rem; }
+        .page-header::after { font-size: 56px; }
+        main { padding: 12px; gap: 12px; }
+        .frame-wrap { min-height: 65vh; }
+        .viewer-title { font-size: 0.88rem; width: 100%; margin-right: 0; }
+        .actions { width: 100%; }
+        .actions .btn { flex: 1; justify-content: center; }
+        .viewer-bar { padding: 10px 12px; gap: 8px; }
+    }
+
+    @media print {
+        .picker, .actions, .hint, .list-card, footer, .page-header::after { display: none !important; }
+        .frame-wrap { min-height: 500px; }
+    }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+    <div class="inner">
+        <h1>检验科排班表</h1>
+        <p>榆林市星元医院临床检验中心 · 在线查看与下载</p>
+    </div>
+</header>
+
+<main>
+    <!-- 选择排班表 -->
+    <section class="picker">
+        <div class="picker-head">
+            <span class="label">选择排班表</span>
+            <div class="nav-btns">
+                <button class="nav-btn" id="prevBtn" type="button" title="上一个（←）">← 上一张</button>
+                <button class="nav-btn" id="nextBtn" type="button" title="下一个（→）">下一张 →</button>
+            </div>
+        </div>
+        <div class="chips" id="chips" role="tablist" aria-label="排班表列表"></div>
+    </section>
+
+    <!-- PDF 查看器 -->
+    <section class="viewer-card">
+        <div class="viewer-bar">
+            <div class="viewer-title">
+                <span class="name" id="viewerName">排班表</span>
+                <span class="tag" id="viewerTag">月度</span>
+            </div>
+            <div class="actions">
+                <a class="btn primary" id="openBtn" href="#" target="_blank" rel="noopener">在新窗口打开</a>
+                <a class="btn" id="downloadBtn" href="#" download>下载 PDF</a>
+                <button class="btn" id="copyBtn" type="button">复制链接</button>
+            </div>
+        </div>
+        <div class="frame-wrap" id="frameWrap">
+            <iframe id="pdfFrame" title="排班表 PDF 预览"></iframe>
+            <div class="fallback" id="fallback">
+                <div class="big">📄</div>
+                <p>当前环境无法内嵌预览 PDF 文件（例如直接以本地文件方式打开页面，或浏览器禁用了内置 PDF 阅读器）。</p>
+                <a class="btn primary" id="fallbackBtn" href="#" target="_blank" rel="noopener">在新窗口打开 PDF</a>
+            </div>
+        </div>
+        <div class="hint">
+            <span>💡</span>
+            <span>手机端可在查看器内双指缩放、上下滑动浏览，也可点击「在新窗口打开」使用系统阅读器查看；键盘 <b>←</b> / <b>→</b> 可快速切换排班表。</span>
+        </div>
+    </section>
+
+    <!-- 全部文件 -->
+    <details class="list-card" id="listCard">
+        <summary>全部排班表文件<span id="listCount"></span></summary>
+        <div class="list-body" id="listBody"></div>
+    </details>
+</main>
+
+<footer>
+    <div>数据来源：临床检验中心原始排班表 PDF，如与纸质/正式发布版本不一致，请以正式版本为准。</div>
+    <div style="margin-top:6px;"><a href="../index.html">← 返回星元检验工具箱</a></div>
+</footer>
+
+<script>
+(function () {
+    'use strict';
+
+    /* ===== 排班表清单：新增文件时在此处加一行即可 ===== */
+    var SCHEDULES = [
+        { id: '2026-10', name: '2026年10月排班表', short: '10月', file: 'data/2026-10-schedule.pdf' },
+        { id: '2026-ZQ', name: '2026年中秋节排班表', short: '中秋节', file: 'data/2026-ZQ-schedule.pdf', holiday: true },
+        { id: '2026-GQ', name: '2026年国庆节排班表', short: '国庆节', file: 'data/2026-GQ-schedule.pdf', holiday: true },
+        { id: '2026-09', name: '2026年09月排班表', short: '09月', file: 'data/2026-09-schedule.pdf' },
+        { id: '2026-08', name: '2026年08月排班表', short: '08月', file: 'data/2026-08-schedule.pdf' },
+        { id: '2026-07', name: '2026年07月排班表', short: '07月', file: 'data/2026-07-schedule.pdf' }
+    ];
+
+    var STORAGE_KEY = 'jyk-schedule-last';
+
+    var chipsEl = document.getElementById('chips');
+    var listBody = document.getElementById('listBody');
+    var listCount = document.getElementById('listCount');
+    var frame = document.getElementById('pdfFrame');
+    var fallback = document.getElementById('fallback');
+    var viewerName = document.getElementById('viewerName');
+    var viewerTag = document.getElementById('viewerTag');
+    var openBtn = document.getElementById('openBtn');
+    var downloadBtn = document.getElementById('downloadBtn');
+    var fallbackBtn = document.getElementById('fallbackBtn');
+    var copyBtn = document.getElementById('copyBtn');
+    var prevBtn = document.getElementById('prevBtn');
+    var nextBtn = document.getElementById('nextBtn');
+    var listCard = document.getElementById('listCard');
+
+    var current = 0;
+    var isFileProtocol = location.protocol === 'file:';
+
+    /* ---------- 工具函数 ---------- */
+    function encodePath(p) {
+        return p.split('/').map(encodeURIComponent).join('/');
+    }
+
+    function indexOfId(id) {
+        for (var i = 0; i < SCHEDULES.length; i++) {
+            if (SCHEDULES[i].id === id) return i;
+        }
+        return -1;
+    }
+
+    function readStored() {
+        try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
+    }
+
+    function writeStored(id) {
+        try { localStorage.setItem(STORAGE_KEY, id); } catch (e) { /* 忽略隐私模式等异常 */ }
+    }
+
+    /* ---------- 构建列表 ---------- */
+    function buildChips() {
+        var frag = document.createDocumentFragment();
+        SCHEDULES.forEach(function (item, i) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'chip' + (item.holiday ? ' holiday' : '');
+            btn.setAttribute('role', 'tab');
+            btn.dataset.index = String(i);
+            btn.innerHTML = '<span class="dot"></span>' + item.short;
+            btn.title = item.name;
+            btn.addEventListener('click', function () { select(i, true); });
+            frag.appendChild(btn);
+        });
+        chipsEl.appendChild(frag);
+    }
+
+    function buildList() {
+        var frag = document.createDocumentFragment();
+        SCHEDULES.forEach(function (item) {
+            var a = document.createElement('a');
+            a.className = 'list-item';
+            a.href = encodePath(item.file);
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.innerHTML = '<span class="icon">' + (item.holiday ? '🎉' : '📄') + '</span>' +
+                '<span class="meta"><span>' + item.name + '</span>' +
+                '<small>' + item.file.split('/').pop() + (item.holiday ? ' · 节假日' : ' · 月度') + '</small></span>';
+            frag.appendChild(a);
+        });
+        listBody.appendChild(frag);
+        listCount.textContent = '（' + SCHEDULES.length + ' 个）';
+    }
+
+    /* ---------- 选择排班表 ---------- */
+    function select(index, pushHash) {
+        if (index < 0 || index >= SCHEDULES.length) return;
+        current = index;
+        var item = SCHEDULES[index];
+        var url = encodePath(item.file);
+
+        // 更新标签状态
+        var chips = chipsEl.querySelectorAll('.chip');
+        for (var i = 0; i < chips.length; i++) {
+            var on = i === index;
+            chips[i].classList.toggle('active', on);
+            chips[i].setAttribute('aria-selected', on ? 'true' : 'false');
+        }
+        var activeChip = chips[index];
+        if (activeChip && activeChip.scrollIntoView) {
+            activeChip.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+        }
+
+        // 更新标题与按钮
+        viewerName.textContent = item.name;
+        viewerTag.textContent = item.holiday ? '节假日' : '月度';
+        viewerTag.className = 'tag' + (item.holiday ? ' holiday' : '');
+        openBtn.href = url;
+        downloadBtn.href = url;
+        downloadBtn.setAttribute('download', item.file.split('/').pop());
+        fallbackBtn.href = url;
+
+        // 加载 PDF（仅替换 hash 中的 page 参数，避免重复刷新）
+        var target = url + '#view=FitH';
+        if (frame.getAttribute('src') !== target) {
+            frame.setAttribute('src', target);
+        }
+        fallback.style.display = 'none';
+
+        // 按钮可用性
+        prevBtn.disabled = index === 0;
+        nextBtn.disabled = index === SCHEDULES.length - 1;
+
+        // 记忆 / 地址栏
+        writeStored(item.id);
+        if (pushHash) {
+            var hash = '#' + item.id;
+            if (location.hash !== hash) {
+                try { history.replaceState(null, '', hash); } catch (e) { location.hash = item.id; }
+            }
+        }
+        document.title = item.name + ' - 检验科排班表';
+    }
+
+    function step(delta) {
+        select(current + delta, true);
+    }
+
+    /* ---------- 内嵌预览失败时的降级 ---------- */
+    function checkFrame() {
+        // 本地 file:// 打开时，部分浏览器不允许 iframe 加载 PDF
+        if (isFileProtocol) {
+            fallback.style.display = 'flex';
+        }
+    }
+
+    /* ---------- 复制链接 ---------- */
+    function copyLink() {
+        var item = SCHEDULES[current];
+        var link = location.href.split('#')[0] + '#' + item.id;
+        var done = function () {
+            var old = copyBtn.textContent;
+            copyBtn.textContent = '✓ 已复制';
+            setTimeout(function () { copyBtn.textContent = old; }, 1600);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(link).then(done, function () { legacyCopy(link, done); });
+        } else {
+            legacyCopy(link, done);
+        }
+    }
+
+    function legacyCopy(text, done) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.top = '-1000px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { /* 忽略 */ }
+        document.body.removeChild(ta);
+    }
+
+    /* ---------- 初始定位 ---------- */
+    function initialIndex() {
+        var hash = decodeURIComponent((location.hash || '').replace(/^#/, ''));
+        var byHash = indexOfId(hash);
+        if (byHash >= 0) return byHash;
+        var stored = readStored();
+        var byStored = indexOfId(stored);
+        if (byStored >= 0) return byStored;
+        // 默认显示当月（有当月排班表时），否则第一张
+        var now = new Date();
+        var key = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2);
+        var byMonth = indexOfId(key);
+        return byMonth >= 0 ? byMonth : 0;
+    }
+
+    /* ---------- 事件绑定 ---------- */
+    prevBtn.addEventListener('click', function () { step(-1); });
+    nextBtn.addEventListener('click', function () { step(1); });
+    copyBtn.addEventListener('click', copyLink);
+
+    document.addEventListener('keydown', function (e) {
+        if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+        if (e.key === 'ArrowLeft') { step(-1); }
+        else if (e.key === 'ArrowRight') { step(1); }
+    });
+
+    window.addEventListener('hashchange', function () {
+        var id = decodeURIComponent((location.hash || '').replace(/^#/, ''));
+        var i = indexOfId(id);
+        if (i >= 0 && i !== current) select(i, false);
+    });
+
+    /* ---------- 启动 ---------- */
+    buildChips();
+    buildList();
+    select(initialIndex(), true);
+    checkFrame();
+})();
+</script>
+</body>
+</html>

@@ -105,8 +105,8 @@
     },
     {
       "title": "检验科排班表",
-      "url": "html/data/2026-09-schedule.pdf",
-      "desc": "2026年09月排班表.pdf",
+      "url": "html/jyk_schedule/index.html",
+      "desc": "各月份及节假日排班表在线查看与下载",
       "icon": "📅",
       "color": "green",
       "tags": [
@@ -116,16 +116,28 @@
       ],
       "relatedLinks": [
         {
+          "name": "2026年10月排班表.pdf",
+          "url": "html/jyk_schedule/data/2026-10-schedule.pdf"
+        },
+        {
+          "name": "2026年09月排班表.pdf",
+          "url": "html/jyk_schedule/data/2026-09-schedule.pdf"
+        },
+        {
+          "name": "2026年08月排班表.pdf",
+          "url": "html/jyk_schedule/data/2026-08-schedule.pdf"
+        },
+        {
+          "name": "2026年07月排班表.pdf",
+          "url": "html/jyk_schedule/data/2026-07-schedule.pdf"
+        },
+        {
           "name": "2026年中秋节排班表.pdf",
-          "url": "html/data/2026-ZQ-schedule.pdf"
+          "url": "html/jyk_schedule/data/2026-ZQ-schedule.pdf"
         },
         {
           "name": "2026年国庆节排班表.pdf",
-          "url": "html/data/2026-GQ-schedule.pdf"
-        },
-        {
-          "name": "2026年10月排班表.pdf",
-          "url": "html/data/2026-10-schedule.pdf"
+          "url": "html/jyk_schedule/data/2026-GQ-schedule.pdf"
         }
       ]
     },
