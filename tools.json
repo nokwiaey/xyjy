@@ -495,7 +495,7 @@
     },
     {
       "title": "隔空传输",
-      "url": "https://cimbar.org/",
+      "url": "html/cimbar_js/index.html",
       "desc": "隔空传输文件",
       "icon": "https://cimbar.org/favicon.ico",
       "color": "green",
@@ -504,8 +504,12 @@
       ],
       "relatedLinks": [
         {
-          "name": "cimbar",
-          "url": "html/cimbar_js/index.html"
+          "name": "cimbar.org",
+          "url": "https://cimbar.org"
+        },
+        {
+          "name": "cimbar.org/recv",
+          "url": "https://cimbar.org/recv.html"
         }
       ]
     }
