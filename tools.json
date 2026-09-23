@@ -364,6 +364,16 @@
       ]
     },
     {
+      "title": "节日送礼规划器",
+      "url": "html/gift-plan.html",
+      "desc": "两步搞定节日送礼：设置家庭与礼物，表格搭配分配、自动核算金额",
+      "icon": "🎁",
+      "color": "red",
+      "tags": [
+        "生活服务"
+      ]
+    },
+    {
       "title": "公交查询",
       "url": "html/bus.html",
       "desc": "公交实时信息查询",

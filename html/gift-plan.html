@@ -1,0 +1,2737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f9f5f0">
+<meta name="color-scheme" content="light">
+<title>节日送礼 · 两步规划器</title>
+<style>
+    :root {
+        --ink: #3e2e1f;
+        --ink-2: #4f3e2e;
+        --ink-3: #8e7a66;
+        --muted: #a08d78;
+        --muted-2: #b9a48e;
+        --line: #efe5da;
+        --line-2: #e2d4c4;
+        --paper: #ffffff;
+        --bg: #f9f5f0;
+        --bg-2: #faf7f3;
+        --bg-3: #f3ede6;
+        --accent: #b3926c;
+        --accent-2: #9e6d3e;
+        --gold: #ffd9a3;
+        --shadow-sm: 0 2px 6px rgba(0, 0, 0, .03);
+        --shadow-md: 0 8px 20px rgba(0, 0, 0, .03), 0 2px 6px rgba(0, 0, 0, .05);
+        --radius-lg: 24px;
+    }
+
+    * {
+        box-sizing: border-box;
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        margin: 0;
+        padding: 0;
+        -webkit-tap-highlight-color: transparent;
+    }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+        background: var(--bg);
+        padding: 24px 16px calc(40px + env(safe-area-inset-bottom));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--ink);
+        /* 拖拽时避免误选文字 */
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    /* 输入框始终允许选择 */
+    input, textarea, [contenteditable] { -webkit-user-select: text; user-select: text; }
+    .app { max-width: 1500px; width: 100%; }
+
+    /* ============ 头部 ============ */
+    .page-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+    }
+    h1 {
+        font-size: clamp(1.35rem, 1rem + 1.6vw, 2rem);
+        font-weight: 600;
+        color: var(--ink);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        letter-spacing: -.5px;
+    }
+    .head-tools { display: flex; gap: 8px; align-items: center; }
+    .history-group { display: flex; gap: 4px; }
+    .subhead {
+        color: #7a6856;
+        margin-bottom: 24px;
+        font-size: clamp(.86rem, .82rem + .2vw, .98rem);
+        border-left: 4px solid #d9b382;
+        padding: 8px 16px;
+        background: #fff8f0;
+        border-radius: 0 12px 12px 0;
+        line-height: 1.55;
+    }
+    .subhead kbd {
+        font-family: inherit;
+        background: #fff;
+        border: 1px solid var(--line-2);
+        border-bottom-width: 2px;
+        border-radius: 6px;
+        padding: 1px 6px;
+        font-size: .82em;
+        color: var(--ink-2);
+    }
+
+    /* ============ 步骤指示器 ============ */
+    .steps { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+    .step-badge {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 22px;
+        border-radius: 100px;
+        background: #fff;
+        border: 1px solid var(--line-2);
+        color: var(--ink-3);
+        font-weight: 500;
+        transition: .2s;
+    }
+    .step-badge .num {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: #e9dfd5;
+        color: #5f4a34;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: .85rem;
+        font-weight: 700;
+    }
+    .step-badge.active {
+        background: var(--ink-2);
+        border-color: var(--ink-2);
+        color: #fefcf8;
+        box-shadow: 0 6px 16px rgba(79, 62, 46, .25);
+    }
+    .step-badge.active .num { background: var(--gold); color: var(--ink); }
+
+    /* ============ 通用面板 ============ */
+    .panel {
+        background: var(--paper);
+        border-radius: var(--radius-lg);
+        padding: 22px 24px;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--line);
+        margin-bottom: 24px;
+    }
+    .panel.is-compact { padding: 16px 20px; }
+    .panel-title {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    .panel-title .hint {
+        font-size: .82rem;
+        font-weight: 400;
+        color: var(--muted);
+        margin-left: 8px;
+    }
+    .panel-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+    }
+    .panel-actions.tight { gap: 8px; margin-bottom: 0; }
+
+    /* ============ 按钮 ============ */
+    .btn {
+        background: #ffffff;
+        border: 1px solid #d9c7b0;
+        border-radius: 100px;
+        padding: 9px 18px;
+        font-size: .9rem;
+        font-weight: 500;
+        color: var(--ink-2);
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        cursor: pointer;
+        transition: background .15s, border-color .15s, transform .1s;
+        box-shadow: var(--shadow-sm);
+        touch-action: manipulation;
+        line-height: 1.2;
+    }
+    .btn svg { width: 16px; height: 16px; flex: none; }
+    .btn .lbl-short { display: none; }
+    .btn:hover { background: #f0e7de; border-color: #bfa98e; }
+    .btn:active { transform: scale(.97); }
+    .btn:focus-visible { outline: 3px solid rgba(179, 146, 108, .45); outline-offset: 2px; }
+    .btn-primary {
+        background: var(--ink-2);
+        border-color: var(--ink-2);
+        color: #fefcf8;
+        box-shadow: 0 4px 12px rgba(79, 62, 46, .2);
+    }
+    .btn-primary:hover { background: var(--ink); border-color: var(--ink); }
+    .btn:disabled { opacity: .38; pointer-events: none; }
+    .btn-icon-only { padding: 9px 11px; }
+    .btn-row-end { display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap; }
+
+    /* ============ 第一步：行 ============ */
+    .setup-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        background: var(--bg-2);
+        padding: 10px 14px;
+        border-radius: 18px;
+        border: 1px solid #f0e6dc;
+        margin-bottom: 10px;
+        transition: background .15s;
+    }
+    .setup-row:hover { background: #f6efe8; }
+    .setup-row.dragging { opacity: .45; border-style: dashed; border-color: var(--accent); }
+    /* 插入指示线：拖到行的上半 → 插到该行之前；下半 → 之后 */
+    .setup-row.drop-before { box-shadow: 0 -3px 0 -1px var(--accent); }
+    .setup-row.drop-after { box-shadow: 0 3px 0 -1px var(--accent); }
+    /* 图标拖拽把手：唯一可拖区域 */
+    .drag-handle {
+        cursor: grab;
+        color: var(--muted-2);
+        font-size: 1.25rem;
+        line-height: 1;
+        padding: 8px 6px;
+        margin: -4px 0;
+        border: none;
+        background: transparent;
+        border-radius: 10px;
+        opacity: .75;
+        touch-action: none; /* 触屏拖拽把手时不要触发页面滚动 */
+        display: inline-flex;
+        align-items: center;
+        flex: none;
+    }
+    .drag-handle:hover { background: #e9dfd5; color: #7a6856; opacity: 1; }
+    .drag-handle:active, .drag-handle.is-grabbing { cursor: grabbing; opacity: 1; }
+    .drag-handle:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    .row-index { font-weight: 600; color: var(--accent-2); min-width: 26px; flex: none; }
+    .input-sm {
+        border: 1px solid var(--line-2);
+        border-radius: 40px;
+        padding: 9px 14px;
+        font-size: .95rem;
+        background: #ffffff;
+        color: var(--ink);
+        min-width: 0;
+    }
+    .input-sm:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(179, 146, 108, .15);
+    }
+    .input-name { flex: 2 1 160px; min-width: 120px; }
+    .input-qty { width: 84px; text-align: center; }
+    .input-price { width: 118px; text-align: right; }
+    .price-wrap { position: relative; display: inline-flex; }
+    .price-wrap::before {
+        content: "¥";
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9e8b78;
+        font-size: .9rem;
+        pointer-events: none;
+    }
+    .price-wrap input { padding-left: 29px; }
+    .row-actions { display: flex; gap: 4px; margin-left: auto; }
+    .icon-btn {
+        background: transparent;
+        border: none;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        color: #7a6856;
+        cursor: pointer;
+        transition: background .1s;
+        touch-action: manipulation;
+        flex: none;
+    }
+    .icon-btn svg { width: 15px; height: 15px; }
+    .icon-btn:hover { background: var(--line-2); color: #2f2419; }
+    .icon-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    .icon-btn:disabled { opacity: .25; pointer-events: none; }
+    .add-row-btn {
+        background: var(--bg-3);
+        border: 1px dashed var(--accent);
+        color: #5f4a34;
+        border-radius: 40px;
+        padding: 9px 22px;
+        font-size: .9rem;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        transition: background .1s;
+        margin-top: 4px;
+        touch-action: manipulation;
+    }
+    .add-row-btn:hover { background: #e9dfd5; border-color: #9e7d5a; }
+    .add-row-btn:focus-visible { outline: 3px solid rgba(179, 146, 108, .45); outline-offset: 2px; }
+    .empty-hint { color: var(--muted-2); padding: 12px 0; font-size: .9rem; }
+
+    /* ============ 第二步：表格 ============ */
+    .match-table-wrap {
+        overflow: auto;
+        max-height: min(70vh, 760px);
+        margin-top: 16px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: #fff;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+    .match-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        min-width: 560px;
+        font-size: .9rem;
+    }
+    .match-table th, .match-table td {
+        border-bottom: 1px solid #f0e6dc;
+        border-right: 1px solid #f0e6dc;
+        padding: 10px 12px;
+        vertical-align: middle;
+    }
+    .match-table thead th {
+        background: var(--bg-2);
+        color: var(--ink-2);
+        font-weight: 600;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        white-space: nowrap;
+        border-bottom: 1px solid var(--line-2);
+    }
+    .match-table thead th.family-col {
+        background: var(--bg-3);
+        text-align: left;
+        min-width: 120px;
+        position: sticky;
+        left: 0;
+        z-index: 7;
+        box-shadow: 2px 0 0 rgba(0, 0, 0, .03);
+    }
+    .match-table tbody td.family-cell {
+        background: var(--bg-2);
+        font-weight: 600;
+        color: #2f2419;
+        position: sticky;
+        left: 0;
+        z-index: 4;
+        white-space: nowrap;
+        min-width: 120px;
+        box-shadow: 2px 0 0 rgba(0, 0, 0, .03);
+    }
+    .match-table tbody tr:last-child td { border-bottom: none; }
+    .match-table th:last-child, .match-table td:last-child { border-right: none; }
+    .match-table tbody tr:hover td { background: #fdfaf7; }
+    .match-table tbody tr:hover td.family-cell { background: var(--bg-3); }
+    .family-sub { display: block; font-weight: 400; font-size: .75rem; color: var(--accent-2); }
+    .family-pos { font-size: .68rem; color: var(--muted); font-weight: 400; }
+
+    /* 表格内礼物单元格 */
+    .gift-cell {
+        text-align: center;
+        cursor: pointer;
+        transition: background .1s, box-shadow .1s;
+        min-width: 92px;
+        height: 66px;
+        position: relative;
+    }
+    .gift-cell:hover { background: #fcf8f3; }
+    .gift-cell:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+    /* 拖拽来源 / 落点高亮 */
+    .gift-cell.dragging { opacity: .4; }
+    .gift-cell.drop-target {
+        background: #f0e7de;
+        box-shadow: inset 0 0 0 2px var(--accent);
+    }
+    .gift-cell.drop-target.no-room {
+        background: #f7ecec;
+        box-shadow: inset 0 0 0 2px #c8786f;
+        cursor: not-allowed;
+    }
+    .gift-cell .gift-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #e9dfd5;
+        color: var(--ink-2);
+        font-weight: 700;
+        font-size: .85rem;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        margin: 0 auto;
+    }
+    .gift-cell .gift-count.has-gift { background: var(--gold); color: var(--ink); }
+    .gift-cell .gift-label {
+        display: block;
+        font-size: .72rem;
+        color: var(--muted);
+        margin-top: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .gift-cell .cell-actions {
+        display: flex;
+        justify-content: center;
+        gap: 2px;
+        margin-top: 2px;
+    }
+    .gift-cell .cell-actions button {
+        background: transparent;
+        border: none;
+        min-width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        font-size: .8rem;
+        color: #7a6856;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        touch-action: manipulation;
+    }
+    .gift-cell .cell-actions button svg { width: 12px; height: 12px; }
+    .gift-cell .cell-actions button:hover { background: var(--line-2); color: #2f2419; }
+    .gift-cell .cell-actions button:disabled { opacity: .2; pointer-events: none; }
+
+    /* 表头礼物信息 */
+    .gift-header { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .gift-header .gift-name {
+        font-weight: 600;
+        color: #2f2419;
+        font-size: .88rem;
+        max-width: 110px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .gift-header .gift-meta { font-size: .7rem; color: var(--muted); }
+    .gift-header .gift-remain { font-size: .7rem; color: var(--accent-2); font-weight: 600; }
+    .gift-header .gift-remain.done { color: #8ba382; }
+
+    /* ============ 礼物池 ============ */
+    .pool-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pool-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 10px 12px;
+        cursor: grab;
+        transition: border-color .1s, box-shadow .1s, outline-color .1s;
+        /* 长按拿起拖拽（见下方 .pool-item * 的 touch-action 说明） */
+        min-width: 170px;
+        flex: 0 0 auto;
+        outline: 2px solid transparent;
+        outline-offset: 1px;
+    }
+    .pool-item:hover { border-color: #d9b382; box-shadow: 0 2px 8px rgba(0, 0, 0, .04); }
+    .pool-item:focus-visible { outline-color: var(--accent); }
+    .pool-item.selected { outline-color: var(--accent); border-color: var(--accent); background: #fffdf9; }
+    .pool-item.dragging { opacity: .4; border-style: dashed; border-color: var(--accent); }
+    .pool-item .grip { color: var(--muted-2); font-size: 1.2rem; line-height: 1; flex: none; }
+    .pool-item .gift-info { flex: 1; min-width: 0; }
+    /* 长按礼物项即可拖拽：整块（含子元素）都交给指针手势。
+       注意 touch-action 不继承，必须用 * 覆盖子元素，否则手指按在子元素上
+       会被浏览器判定为页面滚动并发出 pointercancel，拖拽直接失败。
+       列表外的区域仍可正常上下滚动页面。 */
+    .pool-item,
+    .pool-item * { touch-action: none; }
+    .pool-item .gift-info .name {
+        font-weight: 500;
+        color: #2f2419;
+        font-size: .95rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .pool-item .gift-info .meta { font-size: .78rem; color: var(--muted); margin-top: 2px; }
+    .pool-item .gift-price-tag {
+        font-size: .82rem;
+        font-weight: 600;
+        color: var(--accent-2);
+        white-space: nowrap;
+        text-align: right;
+        line-height: 1.25;
+    }
+    .pool-item .gift-price-tag small { display: block; font-weight: 400; color: var(--muted); font-size: .68rem; }
+    .pool-empty { text-align: center; padding: 22px 12px; color: var(--muted-2); font-size: .9rem; }
+    .mobile-only { display: none; }
+
+    /* ============ 移动端卡片模式 ============ */
+    .family-cards { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+    .family-card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+    }
+    .family-card.is-drop-target { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(179, 146, 108, .35); }
+    .family-card-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 12px 14px;
+        background: var(--bg-2);
+        border-bottom: 1px solid var(--line);
+    }
+    .family-card-head .fc-name { font-weight: 600; color: #2f2419; }
+    .family-card-head .fc-sub { font-size: .8rem; color: var(--accent-2); font-weight: 600; }
+    .card-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 14px; }
+    .card-chip {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: var(--bg-3);
+        border-radius: 40px;
+        padding: 4px 6px 4px 12px;
+        font-size: .84rem;
+        color: #2f2419;
+        border: 1px solid #e6dbcd;
+    }
+    .card-chip .chip-name { max-width: 34vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-chip .chip-count { font-weight: 700; color: var(--accent-2); }
+    .card-chip button {
+        border: none;
+        background: #fff;
+        color: #7a6856;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        font-size: 1rem;
+        line-height: 1;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .card-chip button:disabled { opacity: .3; }
+    .card-chip button:active { background: var(--line-2); }
+    .card-empty { padding: 12px 14px; color: var(--muted-2); font-size: .85rem; }
+    .card-add-row { display: flex; gap: 8px; padding: 0 14px 12px; }
+    .card-add-row select {
+        flex: 1;
+        min-width: 0;
+        border: 1px solid var(--line-2);
+        border-radius: 40px;
+        padding: 9px 12px;
+        font-size: .88rem;
+        background: #fff;
+        color: var(--ink);
+    }
+    .card-add-row button {
+        border: 1px solid var(--ink-2);
+        background: var(--ink-2);
+        color: #fefcf8;
+        border-radius: 40px;
+        padding: 9px 18px;
+        font-size: .88rem;
+        font-weight: 500;
+        cursor: pointer;
+        touch-action: manipulation;
+    }
+    .card-add-row button:disabled { opacity: .4; }
+
+    /* ============ 统计栏 ============ */
+    .summary-bar {
+        background: var(--ink);
+        color: #fefcf8;
+        border-radius: 28px;
+        padding: 16px 24px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        box-shadow: 0 12px 28px rgba(62, 46, 31, .3);
+        margin-top: 24px;
+    }
+    .total-label { font-size: 1.05rem; opacity: .9; letter-spacing: .5px; }
+    .total-amount {
+        font-size: clamp(1.4rem, 1.1rem + 1.4vw, 2rem);
+        font-weight: 700;
+        color: var(--gold);
+        margin-left: 10px;
+    }
+    .summary-meta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .summary-chip { font-size: .88rem; background: #5f4a34; padding: 8px 16px; border-radius: 40px; }
+    .summary-chip.warn { background: #7a4a3a; color: #ffe6d5; }
+
+    /* ============ 拖拽浮层 ============ */
+    .drag-ghost {
+        position: fixed;
+        z-index: 9999;
+        pointer-events: none;
+        transform: translate(-50%, -50%) scale(1.04);
+        opacity: .95;
+        left: -9999px;
+        top: -9999px;
+        box-shadow: 0 10px 26px rgba(62, 46, 31, .3);
+        max-width: 240px;
+    }
+    .drag-ghost.pill {
+        background: var(--ink-2);
+        color: #fefcf8;
+        border-radius: 100px;
+        padding: 8px 16px;
+        font-size: .86rem;
+        font-weight: 500;
+        white-space: nowrap;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+    .drag-ghost.pill b { color: var(--gold); }
+    /* 拖拽进行中：全局禁止选中，避免误选 */
+    body.is-dragging { cursor: grabbing; }
+
+    /* ============ Toast / 对话框 ============ */
+    .toast-host {
+        position: fixed;
+        left: 50%;
+        bottom: calc(20px + env(safe-area-inset-bottom));
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+        z-index: 10000;
+        width: max-content;
+        max-width: min(92vw, 460px);
+        pointer-events: none;
+    }
+    .toast {
+        background: #3e2e1f;
+        color: #fefcf8;
+        padding: 11px 18px;
+        border-radius: 100px;
+        font-size: .88rem;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, .25);
+        animation: toast-in .22s ease;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        max-width: 100%;
+    }
+    .toast.ok { background: #40573c; }
+    .toast.err { background: #7a3b34; }
+    .toast.out { animation: toast-out .2s ease forwards; }
+    @keyframes toast-in { from { opacity: 0; transform: translateY(12px) scale(.96); } }
+    @keyframes toast-out { to { opacity: 0; transform: translateY(8px) scale(.97); } }
+
+    .dialog-mask {
+        position: fixed;
+        inset: 0;
+        background: rgba(48, 36, 25, .42);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        z-index: 10001;
+        animation: toast-in .16s ease;
+    }
+    .dialog {
+        background: #fff;
+        border-radius: 22px;
+        padding: 22px 22px 18px;
+        max-width: 380px;
+        width: 100%;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, .28);
+    }
+    .dialog h3 { font-size: 1.05rem; color: var(--ink); margin-bottom: 10px; }
+    .dialog p { font-size: .9rem; color: #5f4a34; line-height: 1.55; margin-bottom: 18px; white-space: pre-line; }
+    .dialog-actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+
+    .sr-only {
+        position: absolute;
+        width: 1px; height: 1px;
+        padding: 0; margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
+    }
+    .hidden { display: none !important; }
+
+    /* ============ 响应式 ============ */
+    @media (max-width: 720px) {
+        body { padding: 16px 12px calc(32px + env(safe-area-inset-bottom)); }
+        .panel { padding: 16px 14px; border-radius: 20px; }
+        .panel.is-compact { padding: 14px; }
+        .panel-title { font-size: 1.02rem; }
+        .panel-title .hint { margin-left: 0; flex-basis: 100%; }
+        .subhead { margin-bottom: 18px; }
+        .steps { margin-bottom: 18px; gap: 8px; }
+        .step-badge { padding: 8px 16px; font-size: .92rem; }
+
+        /* 触屏点击目标加大 */
+        .icon-btn { width: 42px; height: 42px; }
+        .icon-btn svg { width: 18px; height: 18px; }
+        .gift-cell .cell-actions button { min-width: 38px; height: 38px; font-size: .95rem; border-radius: 12px; background: #f4ede5; }
+        .gift-cell .cell-actions button svg { width: 15px; height: 15px; }
+        .gift-cell .cell-actions { gap: 6px; margin-top: 4px; }
+        .input-sm { padding: 11px 14px; font-size: 1rem; }
+        .input-qty { width: 76px; }
+        .setup-row { padding: 12px; gap: 8px; }
+        .drag-handle { padding: 10px 8px; font-size: 1.35rem; }
+        .btn { padding: 10px 16px; }
+        .btn .lbl-full { display: none; }
+        .btn .lbl-short { display: inline; }
+        .summary-bar { border-radius: 22px; padding: 14px 18px; }
+        .summary-chip { font-size: .82rem; padding: 7px 13px; }
+        /* 表格仍是横滑，但让首列与表头更醒目 */
+        .match-table { min-width: 520px; }
+        .desktop-only { display: none !important; }
+        .mobile-only { display: block; }
+        .pool-list { flex-direction: column; }
+        .pool-item { min-width: 0; width: 100%; }
+    }
+
+    @media (min-width: 721px) {
+        .family-cards { display: none; }
+    }
+
+    @media print {
+        body { background: #fff; padding: 0; }
+        .steps, .panel-actions, .head-tools, .add-row-btn, .subhead, .toast-host { display: none !important; }
+        .panel { box-shadow: none; border-color: #ddd; break-inside: avoid; }
+        .match-table-wrap { max-height: none; overflow: visible; }
+    }
+</style>
+</head>
+<body>
+<div class="app">
+    <div class="page-head">
+        <h1>🎁 节日送礼 · 两步规划器</h1>
+        <div class="head-tools">
+            <div class="history-group">
+                <button class="btn btn-icon-only" id="undoBtn" disabled title="撤销 (Ctrl+Z)" aria-label="撤销">
+                    <span data-ico="undo"></span>
+                </button>
+                <button class="btn btn-icon-only" id="redoBtn" disabled title="重做 (Ctrl+Shift+Z)" aria-label="重做">
+                    <span data-ico="redo"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="subhead">
+        第一步设置家庭与礼物基础信息，第二步以表格形式搭配分配（支持数量拆分与自动合并）。
+        数据仅保存在本机浏览器，可随时 <b>导出 JSON</b> 备份；撤销请按 <kbd>Ctrl</kbd>+<kbd>Z</kbd>。
+    </div>
+
+    <!-- 步骤指示器 -->
+    <div class="steps">
+        <div class="step-badge active" id="step1Badge">
+            <span class="num">1</span> 基础设置
+        </div>
+        <div class="step-badge" id="step2Badge">
+            <span class="num">2</span> 搭配分配
+        </div>
+    </div>
+
+    <!-- ========== 第一步：基础设置 ========== -->
+    <div id="step1Panel">
+        <div class="panel">
+            <div class="panel-title">
+                🏠 家庭（称呼）
+                <span class="hint">拖拽左侧 ⋮⋮ 图标调整顺序（键盘 Alt+↑/↓ 亦可），设置后第二步不可修改</span>
+            </div>
+            <div id="familySetupList"></div>
+            <button class="add-row-btn" id="addFamilySetupBtn">＋ 添加家庭</button>
+        </div>
+
+        <div class="panel">
+            <div class="panel-title">
+                🎁 礼物清单
+                <span class="hint">设置礼物的名称、数量、价格（基础数据，第二步不可修改）</span>
+            </div>
+            <div id="giftSetupList"></div>
+            <button class="add-row-btn" id="addGiftSetupBtn">＋ 添加礼物</button>
+        </div>
+
+        <div class="btn-row-end">
+            <button class="btn" id="resetStep1Btn">↺ 重置基础数据</button>
+            <button class="btn" id="importJsonStep1Btn">📂 导入 JSON</button>
+            <button class="btn btn-primary" id="toStep2Btn">
+                进入第二步 · 搭配分配 →
+            </button>
+        </div>
+    </div>
+
+    <!-- ========== 第二步：搭配分配 ========== -->
+    <div id="step2Panel" class="hidden">
+        <div class="panel is-compact">
+            <div class="panel-title" style="margin-bottom: 8px;">
+                🧩 搭配分配
+                <span class="hint desktop-only">点选礼物后点格子分配一件；把单元格里的礼物拖到别家即可移动一件；礼物池里的礼物按住拖到目标格也能分配</span>
+                <span class="hint mobile-only" style="display:none;">点选下方礼物后点「＋」，或用卡片里的下拉框快速添加</span>
+            </div>
+            <div class="panel-actions">
+                <button class="btn" id="backToStep1Btn">← 返回修改</button>
+                <button class="btn" id="autoAssignBtn" title="每种礼物按家庭顺序各分一件，直到分完">✨ 一键各分一件</button>
+                <button class="btn" id="resetMatchBtn">↺ 重置分配</button>
+                <button class="btn btn-primary" id="exportCsvBtn"><span data-ico="download"></span>导出 CSV</button>
+                <button class="btn btn-primary" id="exportImgBtn"><span data-ico="image"></span>导出图片</button>
+                <button class="btn btn-primary" id="exportJsonBtn"><span data-ico="save"></span><span class="lbl-full">导出 JSON</span><span class="lbl-short">JSON</span></button>
+                <button class="btn" id="importJsonBtn"><span data-ico="folder"></span>导入 JSON</button>
+                <button class="btn" id="clearDraftBtn">🗑️ 清空草稿</button>
+            </div>
+        </div>
+
+        <!-- 礼物池 -->
+        <div class="panel is-compact">
+            <div class="panel-title" style="margin-bottom: 12px; font-size: 1rem;">
+                📦 未分配的礼物
+                <span class="hint" id="poolCount">0 件剩余</span>
+            </div>
+            <div id="poolList" class="pool-list"></div>
+        </div>
+
+        <!-- 表格分配区（桌面） -->
+        <div class="match-table-wrap desktop-only" id="tableWrap">
+            <table class="match-table" id="matchTable">
+                <thead id="matchTableHead"></thead>
+                <tbody id="matchTableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- 卡片分配区（移动端） -->
+        <div class="family-cards" id="familyCards"></div>
+
+        <!-- 总统计 -->
+        <div class="summary-bar">
+            <div>
+                <span class="total-label">总金额</span>
+                <span class="total-amount" id="totalAmount">¥ 0</span>
+            </div>
+            <div class="summary-meta">
+                <div class="summary-chip" id="familyCountChip">共 0 家</div>
+                <div class="summary-chip" id="giftCountChip">已分配 0 / 0 件</div>
+                <div class="summary-chip warn hidden" id="unassignedChip">未分配 0 件</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 隐藏的文件输入 -->
+<input type="file" id="importJsonInput" accept=".json,application/json" class="hidden">
+
+<div class="toast-host" id="toastHost" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+    'use strict';
+
+    /* ==================================================================
+     * 0. 常量与小工具
+     * ================================================================== */
+    var STORAGE_KEY = 'giftPlan.draft.v1';
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+
+    var ICONS = {
+        undo: 'M3 8h9a5 5 0 0 1 0 10H8M3 8l4-4M3 8l4 4',
+        redo: 'M21 8h-9a5 5 0 0 0 0 10h4M21 8l-4-4M21 8l-4 4',
+        trash: 'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5',
+        plus: 'M12 5v14M5 12h14',
+        minus: 'M5 12h14',
+        x: 'M6 6l12 12M18 6L6 18',
+        download: 'M12 3v12M7 11l5 5 5-5M4 20h16',
+        image: 'M4 5h16v14H4zM4 15l4-4 4 4 3-3 5 5',
+        save: 'M5 4h11l3 3v13H5zM8 4v5h7V4M8 13h8v7H8z',
+        folder: 'M3 6h6l2 2h10v11H3z'
+    };
+
+    function makeIcon(name) {
+        var svg = document.createElementNS(SVG_NS, 'svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('stroke-width', '1.8');
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+        svg.setAttribute('aria-hidden', 'true');
+        var path = document.createElementNS(SVG_NS, 'path');
+        path.setAttribute('d', ICONS[name] || '');
+        svg.appendChild(path);
+        return svg;
+    }
+
+    function escapeHtml(unsafe) {
+        if (unsafe === undefined || unsafe === null) return '';
+        return String(unsafe)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+    function clampNum(v, min, max, fallback) {
+        var n = typeof v === 'number' ? v : parseFloat(v);
+        if (!isFinite(n)) return fallback;
+        if (n < min) return min;
+        if (max != null && n > max) return max;
+        return n;
+    }
+    function clampInt(v, min, max, fallback) {
+        var n = typeof v === 'number' ? Math.trunc(v) : parseInt(v, 10);
+        if (!isFinite(n)) return fallback;
+        if (n < min) return min;
+        if (max != null && n > max) return max;
+        return n;
+    }
+    function formatMoney(amount) {
+        var n = Number(amount) || 0;
+        var s = Math.abs(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return (n < 0 ? '-¥ ' : '¥ ') + s;
+    }
+    /* 本地日期，避免 toISOString() 的 UTC 偏移导致文件名日期差一天 */
+    function localDateStamp(withTime) {
+        var d = new Date();
+        var p = function (n) { return String(n).padStart(2, '0'); };
+        var base = d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+        if (!withTime) return base;
+        return base + '_' + p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds());
+    }
+    function debounce(fn, wait) {
+        var t = null;
+        return function () {
+            var args = arguments, self = this;
+            clearTimeout(t);
+            t = setTimeout(function () { fn.apply(self, args); }, wait);
+        };
+    }
+
+    /* ==================================================================
+     * 1. 状态
+     * ================================================================== */
+    var families = [];
+    var gifts = [];
+    var assignments = {};
+    var nextFamilyId = 1;
+    var nextGiftId = 1;
+    var selectedGiftId = null;
+    var isMobile = false;
+
+    var DOM = {
+        step1Badge: document.getElementById('step1Badge'),
+        step2Badge: document.getElementById('step2Badge'),
+        step1Panel: document.getElementById('step1Panel'),
+        step2Panel: document.getElementById('step2Panel'),
+        familySetupList: document.getElementById('familySetupList'),
+        giftSetupList: document.getElementById('giftSetupList'),
+        poolList: document.getElementById('poolList'),
+        poolCount: document.getElementById('poolCount'),
+        matchTableHead: document.getElementById('matchTableHead'),
+        matchTableBody: document.getElementById('matchTableBody'),
+        familyCards: document.getElementById('familyCards'),
+        totalAmount: document.getElementById('totalAmount'),
+        familyCountChip: document.getElementById('familyCountChip'),
+        giftCountChip: document.getElementById('giftCountChip'),
+        unassignedChip: document.getElementById('unassignedChip'),
+        importJsonInput: document.getElementById('importJsonInput'),
+        toastHost: document.getElementById('toastHost'),
+        undoBtn: document.getElementById('undoBtn'),
+        redoBtn: document.getElementById('redoBtn')
+    };
+
+    /* ==================================================================
+     * 2. Toast / 对话框（替代阻塞式 alert / confirm）
+     * ================================================================== */
+    function toast(message, type, ms) {
+        var el = document.createElement('div');
+        el.className = 'toast' + (type ? ' ' + type : '');
+        el.textContent = message;
+        DOM.toastHost.appendChild(el);
+        var life = ms || (type === 'err' ? 3600 : 2200);
+        setTimeout(function () {
+            el.classList.add('out');
+            setTimeout(function () { el.remove(); }, 220);
+        }, life);
+    }
+
+    var dialogOpen = false;
+    function showDialog(opts) {
+        return new Promise(function (resolve) {
+            if (dialogOpen) { resolve(false); return; }
+            dialogOpen = true;
+            var lastFocus = document.activeElement;
+
+            var mask = document.createElement('div');
+            mask.className = 'dialog-mask';
+            var box = document.createElement('div');
+            box.className = 'dialog';
+            box.setAttribute('role', 'dialog');
+            box.setAttribute('aria-modal', 'true');
+
+            var h = document.createElement('h3');
+            h.textContent = opts.title || '请确认';
+            var p = document.createElement('p');
+            p.textContent = opts.message || '';
+            var actions = document.createElement('div');
+            actions.className = 'dialog-actions';
+
+            function close(val) {
+                dialogOpen = false;
+                document.removeEventListener('keydown', onKey, true);
+                mask.remove();
+                if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} }
+                resolve(val);
+            }
+            function onKey(e) {
+                if (e.key === 'Escape') { e.stopPropagation(); close(false); }
+                else if (e.key === 'Enter') { e.stopPropagation(); close(true); }
+                else if (e.key === 'Tab') {
+                    var focusables = box.querySelectorAll('button');
+                    if (!focusables.length) return;
+                    var first = focusables[0], last = focusables[focusables.length - 1];
+                    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+                }
+            }
+
+            (opts.buttons || []).forEach(function (b, i) {
+                var btn = document.createElement('button');
+                btn.className = 'btn' + (b.primary ? ' btn-primary' : '');
+                btn.type = 'button';
+                btn.textContent = b.label;
+                btn.addEventListener('click', function () { close(b.value !== undefined ? b.value : true); });
+                actions.appendChild(btn);
+                if ((b.primary && i === 0) || (!opts.buttons.some(function (x) { return x.primary; }) && i === 0)) {
+                    setTimeout(function () { btn.focus(); }, 30);
+                }
+            });
+
+            box.appendChild(h);
+            box.appendChild(p);
+            box.appendChild(actions);
+            mask.appendChild(box);
+            mask.addEventListener('mousedown', function (e) { if (e.target === mask) close(false); });
+            document.addEventListener('keydown', onKey, true);
+            document.body.appendChild(mask);
+        });
+    }
+    function confirmDialog(title, message, confirmLabel) {
+        return showDialog({
+            title: title,
+            message: message,
+            buttons: [
+                { label: confirmLabel || '确定', primary: true, value: true },
+                { label: '取消', value: false }
+            ]
+        });
+    }
+
+    /* ==================================================================
+     * 3. 数据访问
+     * ================================================================== */
+    function getGiftById(id) { return gifts.find(function (g) { return g.id === id; }); }
+    function getFamilyById(id) { return families.find(function (f) { return f.id === id; }); }
+    function giftUnitPrice(gift) { return Number(gift && gift.price) || 0; }
+    function giftTotal(gift) { return (Number(gift && gift.qty) || 0) * giftUnitPrice(gift); }
+    function getAssignedCount(giftId) {
+        var total = 0;
+        for (var fid in assignments) {
+            if (assignments[fid] && assignments[fid][giftId]) total += assignments[fid][giftId];
+        }
+        return total;
+    }
+    function getRemainingCount(giftId) {
+        var gift = getGiftById(giftId);
+        if (!gift) return 0;
+        return (gift.qty || 0) - getAssignedCount(giftId);
+    }
+    function getFamilyGiftCount(familyId, giftId) {
+        return (assignments[familyId] && assignments[familyId][giftId]) || 0;
+    }
+    function ensureAssignment(familyId) {
+        if (!assignments[familyId]) assignments[familyId] = {};
+    }
+    function familySubtotal(familyId) {
+        var sum = 0;
+        var famAssign = assignments[familyId] || {};
+        for (var gid in famAssign) {
+            var gift = getGiftById(Number(gid));
+            if (gift) sum += famAssign[gid] * giftUnitPrice(gift);
+        }
+        return sum;
+    }
+    function grandTotal() {
+        var sum = 0;
+        families.forEach(function (f) { sum += familySubtotal(f.id); });
+        return sum;
+    }
+    function totalRemainingUnits() {
+        return gifts.reduce(function (s, g) { return s + Math.max(0, getRemainingCount(g.id)); }, 0);
+    }
+
+    /* ==================================================================
+     * 4. 撤销 / 重做
+     * ================================================================== */
+    var history = { past: [], future: [], lastPush: 0, limit: 60 };
+
+    function snapshot() {
+        return JSON.stringify({ families: families, gifts: gifts, assignments: assignments });
+    }
+    function recordHistory(options) {
+        var coalesce = options && options.coalesce;
+        var now = Date.now();
+        // 连续同类高频操作（如连点 +1）合并为一条历史
+        if (coalesce && now - history.lastPush < 700 && history.past.length) {
+            history.lastPush = now;
+            return;
+        }
+        history.past.push(snapshot());
+        if (history.past.length > history.limit) history.past.shift();
+        history.future.length = 0;
+        history.lastPush = now;
+        updateHistoryButtons();
+    }
+    function applySnapshot(str) {
+        var data = JSON.parse(str);
+        families = data.families;
+        gifts = data.gifts;
+        assignments = data.assignments;
+        selectedGiftId = null;
+        pruneState();
+    }
+    function undo() {
+        if (!history.past.length) { toast('没有可撤销的操作'); return; }
+        history.future.push(snapshot());
+        applySnapshot(history.past.pop());
+        history.lastPush = 0;
+        renderAll();
+        saveDraft();
+        updateHistoryButtons();
+        toast('已撤销');
+    }
+    function redo() {
+        if (!history.future.length) { toast('没有可重做的操作'); return; }
+        history.past.push(snapshot());
+        applySnapshot(history.future.pop());
+        history.lastPush = 0;
+        renderAll();
+        saveDraft();
+        updateHistoryButtons();
+        toast('已重做');
+    }
+    function updateHistoryButtons() {
+        DOM.undoBtn.disabled = history.past.length === 0;
+        DOM.redoBtn.disabled = history.future.length === 0;
+    }
+
+    /* ==================================================================
+     * 5. 数据清理 / 归一化
+     * ================================================================== */
+    function pruneState() {
+        var validFamily = new Set(families.map(function (f) { return f.id; }));
+        var validGift = new Set(gifts.map(function (g) { return g.id; }));
+        Object.keys(assignments).forEach(function (fid) {
+            if (!validFamily.has(Number(fid))) { delete assignments[fid]; return; }
+            Object.keys(assignments[fid]).forEach(function (gid) {
+                var n = Number(gid);
+                if (!validGift.has(n) || !(assignments[fid][gid] > 0)) delete assignments[fid][gid];
+            });
+        });
+        families.forEach(function (f) { ensureAssignment(f.id); });
+        // 若分配总数超过礼物数量（例如把数量改小了），按家庭顺序裁剪
+        gifts.forEach(function (g) {
+            var over = getAssignedCount(g.id) - g.qty;
+            if (over <= 0) return;
+            for (var i = families.length - 1; i >= 0 && over > 0; i--) {
+                var fid = families[i].id;
+                var cur = getFamilyGiftCount(fid, g.id);
+                if (cur <= 0) continue;
+                var cut = Math.min(cur, over);
+                var left = cur - cut;
+                if (left > 0) assignments[fid][g.id] = left;
+                else delete assignments[fid][g.id];
+                over -= cut;
+            }
+        });
+    }
+
+    function normalizeGift(raw, fallbackId) {
+        return {
+            id: clampInt(raw && raw.id, 1, null, fallbackId),
+            name: String((raw && raw.name) || '').trim().slice(0, 40) || '未命名礼物',
+            qty: clampInt(raw && raw.qty, 1, 999, 1),
+            price: clampNum(raw && raw.price, 0, 1e7, 0)
+        };
+    }
+    function normalizeFamily(raw, fallbackId) {
+        return {
+            id: clampInt(raw && raw.id, 1, null, fallbackId),
+            name: String((raw && raw.name) || '').trim().slice(0, 40) || '未命名家庭'
+        };
+    }
+    /* 校验并归一化导入数据，返回 {ok, error, families, gifts, assignments} */
+    function sanitizeImport(data) {
+        if (!data || typeof data !== 'object') return { ok: false, error: '文件内容不是合法的 JSON 对象' };
+        if (!Array.isArray(data.families) || !Array.isArray(data.gifts)) {
+            return { ok: false, error: '缺少 families 或 gifts 字段' };
+        }
+        if (!data.families.length || !data.gifts.length) {
+            return { ok: false, error: 'families 与 gifts 都不能为空' };
+        }
+        if (data.families.length > 200 || data.gifts.length > 200) {
+            return { ok: false, error: '家庭或礼物数量过多（上限 200）' };
+        }
+
+        var usedFamilyIds = new Set();
+        var newFamilies = data.families.map(function (raw, i) {
+            var f = normalizeFamily(raw, i + 1);
+            while (usedFamilyIds.has(f.id)) f.id += 1;
+            usedFamilyIds.add(f.id);
+            return f;
+        });
+        var usedGiftIds = new Set();
+        var newGifts = data.gifts.map(function (raw, i) {
+            var g = normalizeGift(raw, i + 1);
+            while (usedGiftIds.has(g.id)) g.id += 1;
+            usedGiftIds.add(g.id);
+            return g;
+        });
+
+        var newAssignments = {};
+        newFamilies.forEach(function (f) { newAssignments[f.id] = {}; });
+        var rawAssign = (data.assignments && typeof data.assignments === 'object') ? data.assignments : {};
+        // 兼容旧的字符串键
+        var idMap = {};
+        newFamilies.forEach(function (f, i) { idMap[String((data.families[i] || {}).id)] = f.id; });
+        var giftIdMap = {};
+        newGifts.forEach(function (g, i) { giftIdMap[String((data.gifts[i] || {}).id)] = g.id; });
+
+        Object.keys(rawAssign).forEach(function (k) {
+            var fid = idMap[k] !== undefined ? idMap[k] : Number(k);
+            if (newAssignments[fid] === undefined) return;
+            var src = rawAssign[k];
+            if (!src || typeof src !== 'object') return;
+            Object.keys(src).forEach(function (gk) {
+                var gid = giftIdMap[gk] !== undefined ? giftIdMap[gk] : Number(gk);
+                var gift = newGifts.find(function (x) { return x.id === gid; });
+                if (!gift) return;
+                var count = clampInt(src[gk], 1, gift.qty, 0);
+                if (count > 0) newAssignments[fid][gid] = count;
+            });
+        });
+
+        var dropped = Math.max(0, (Array.isArray(data.families) ? data.families.length : 0) - newFamilies.length);
+        return { ok: true, families: newFamilies, gifts: newGifts, assignments: newAssignments, dropped: dropped };
+    }
+
+    /* ==================================================================
+     * 6. 草稿持久化
+     * ================================================================== */
+    var saveDraft = debounce(function () {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                v: 1,
+                savedAt: Date.now(),
+                families: families,
+                gifts: gifts,
+                assignments: assignments,
+                nextFamilyId: nextFamilyId,
+                nextGiftId: nextGiftId
+            }));
+        } catch (err) {
+            /* 隐私模式或超配额：静默降级 */
+            console.warn('草稿保存失败', err);
+        }
+    }, 350);
+
+    function loadDraft() {
+        try {
+            var raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return null;
+            var data = JSON.parse(raw);
+            var result = sanitizeImport(data);
+            if (!result.ok) return null;
+            // 空草稿（用户主动清空后）不恢复，避免重开页面得到一张白纸
+            if (!result.families.length || !result.gifts.length) return null;
+            return {
+                families: result.families,
+                gifts: result.gifts,
+                assignments: result.assignments,
+                savedAt: data.savedAt || 0,
+                nextFamilyId: clampInt(data.nextFamilyId, 1, null, result.families.length + 1),
+                nextGiftId: clampInt(data.nextGiftId, 1, null, result.gifts.length + 1)
+            };
+        } catch (err) {
+            console.warn('草稿读取失败', err);
+            return null;
+        }
+    }
+
+    function applyDraft(draft) {
+        families = draft.families;
+        gifts = draft.gifts;
+        assignments = draft.assignments;
+        nextFamilyId = Math.max(draft.nextFamilyId, families.reduce(function (m, f) { return Math.max(m, f.id); }, 0) + 1);
+        nextGiftId = Math.max(draft.nextGiftId, gifts.reduce(function (m, g) { return Math.max(m, g.id); }, 0) + 1);
+        pruneState();
+    }
+
+    /* ==================================================================
+     * 7. 渲染：第一步
+     * ================================================================== */
+    function renderSetup() {
+        if (families.length === 0) {
+            DOM.familySetupList.innerHTML = '<div class="empty-hint">还没有家庭，点击下方按钮添加</div>';
+        } else {
+            DOM.familySetupList.innerHTML = families.map(function (f, idx) {
+                return '' +
+                    '<div class="setup-row" data-family-id="' + f.id + '">' +
+                        '<button class="drag-handle" type="button" draggable="true" data-role="family-handle" data-family-id="' + f.id + '" ' +
+                            'aria-label="拖拽或按 Alt 加方向键调整第 ' + (idx + 1) + ' 个家庭的顺序" title="按住拖拽调整顺序（Alt+↑/↓）">⋮⋮</button>' +
+                        '<span class="row-index">' + (idx + 1) + '.</span>' +
+                        '<input class="input-sm input-name" type="text" value="' + escapeHtml(f.name) + '" placeholder="称呼（如：大姨）" ' +
+                            'aria-label="第 ' + (idx + 1) + ' 个家庭的称呼" data-family-id="' + f.id + '" data-field="familyName">' +
+                        '<div class="row-actions">' +
+                            '<button class="icon-btn remove-family-setup" type="button" data-family-id="' + f.id + '" title="删除该家庭" aria-label="删除该家庭">✕</button>' +
+                        '</div>' +
+                    '</div>';
+            }).join('');
+        }
+
+        if (gifts.length === 0) {
+            DOM.giftSetupList.innerHTML = '<div class="empty-hint">还没有礼物，点击下方按钮添加</div>';
+        } else {
+            DOM.giftSetupList.innerHTML = gifts.map(function (g, idx) {
+                return '' +
+                    '<div class="setup-row" data-gift-id="' + g.id + '">' +
+                        '<button class="drag-handle" type="button" draggable="true" data-role="gift-handle" data-gift-id="' + g.id + '" ' +
+                            'aria-label="拖拽或按 Alt 加方向键调整第 ' + (idx + 1) + ' 个礼物的顺序" title="按住拖拽调整顺序（Alt+↑/↓）">⋮⋮</button>' +
+                        '<span class="row-index">' + (idx + 1) + '.</span>' +
+                        '<input class="input-sm input-name" type="text" value="' + escapeHtml(g.name) + '" placeholder="礼物名称" ' +
+                            'aria-label="第 ' + (idx + 1) + ' 个礼物的名称" data-gift-id="' + g.id + '" data-field="giftName">' +
+                        '<input class="input-sm input-qty" type="number" min="1" max="999" inputmode="numeric" value="' + g.qty + '" ' +
+                            'aria-label="' + escapeHtml(g.name) + '的数量" data-gift-id="' + g.id + '" data-field="giftQty" placeholder="数量">' +
+                        '<div class="price-wrap">' +
+                            '<input class="input-sm input-price" type="number" min="0" step="0.01" inputmode="decimal" value="' + g.price + '" ' +
+                                'aria-label="' + escapeHtml(g.name) + '的单价" data-gift-id="' + g.id + '" data-field="giftPrice" placeholder="单价">' +
+                        '</div>' +
+                        '<div class="row-actions">' +
+                            '<button class="icon-btn remove-gift-setup" type="button" data-gift-id="' + g.id + '" title="删除该礼物" aria-label="删除该礼物">✕</button>' +
+                        '</div>' +
+                    '</div>';
+            }).join('');
+        }
+        bindSetupEvents();
+    }
+
+    function updateFamilyName(fid, value) {
+        var fam = getFamilyById(fid);
+        if (fam) fam.name = value;
+        saveDraft();
+    }
+    function updateGiftField(gid, field, value) {
+        var gift = getGiftById(gid);
+        if (!gift) return;
+        if (field === 'giftName') {
+            gift.name = value;
+        } else if (field === 'giftQty') {
+            // 允许输入框暂时为空，失焦时再归一化，避免边打字边被改写
+            if (value === '') return;
+            gift.qty = clampInt(value, 1, 999, gift.qty);
+        } else if (field === 'giftPrice') {
+            if (value === '') return;
+            gift.price = clampNum(value, 0, 1e7, gift.price);
+        }
+        saveDraft();
+    }
+
+    function bindSetupEvents() {
+        // 文本 / 数字输入（用 input 事件实时同步，渲染只在失焦时做，避免光标跳动）
+        DOM.familySetupList.querySelectorAll('input[data-field="familyName"]').forEach(function (inp) {
+            inp.addEventListener('input', function (e) {
+                updateFamilyName(Number(e.target.dataset.familyId), e.target.value);
+            });
+            inp.addEventListener('change', function (e) {
+                var fam = getFamilyById(Number(e.target.dataset.familyId));
+                if (fam) e.target.value = fam.name;
+            });
+        });
+        DOM.giftSetupList.querySelectorAll('input[data-field]').forEach(function (inp) {
+            inp.addEventListener('input', function (e) {
+                var d = e.target.dataset;
+                updateGiftField(Number(d.giftId), d.field, e.target.value);
+            });
+            inp.addEventListener('change', function (e) {
+                var d = e.target.dataset;
+                var gift = getGiftById(Number(d.giftId));
+                if (!gift) return;
+                if (d.field === 'giftName') e.target.value = gift.name;
+                if (d.field === 'giftQty') e.target.value = gift.qty;
+                if (d.field === 'giftPrice') e.target.value = gift.price;
+            });
+            // 失焦时把数量归位，并同步分配（数量被改小时自动裁剪）
+            inp.addEventListener('blur', function (e) {
+                var d = e.target.dataset;
+                if (d.field !== 'giftQty' && d.field !== 'giftPrice') return;
+                var gift = getGiftById(Number(d.giftId));
+                if (!gift) return;
+                var before = getAssignedCount(gift.id);
+                pruneState();
+                e.target.value = d.field === 'giftQty' ? gift.qty : gift.price;
+                if (getAssignedCount(gift.id) !== before) {
+                    toast('数量减少，超出部分已按家庭顺序退回', 'err');
+                }
+                saveDraft();
+            });
+        });
+
+        DOM.familySetupList.querySelectorAll('.remove-family-setup').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                var fid = Number(e.currentTarget.dataset.familyId);
+                var fam = getFamilyById(fid);
+                confirmDialog('删除家庭', '确定删除「' + ((fam && fam.name) || '未命名') + '」吗？\n其分配记录会一并移除（可撤销）。', '删除')
+                    .then(function (ok) {
+                        if (!ok) return;
+                        recordHistory();
+                        families = families.filter(function (f) { return f.id !== fid; });
+                        delete assignments[fid];
+                        renderSetup();
+                        saveDraft();
+                        toast('已删除家庭', 'ok');
+                    });
+            });
+        });
+        DOM.giftSetupList.querySelectorAll('.remove-gift-setup').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                var gid = Number(e.currentTarget.dataset.giftId);
+                var gift = getGiftById(gid);
+                confirmDialog('删除礼物', '确定删除「' + ((gift && gift.name) || '未命名') + '」吗？\n其分配记录会一并移除（可撤销）。', '删除')
+                    .then(function (ok) {
+                        if (!ok) return;
+                        recordHistory();
+                        gifts = gifts.filter(function (g) { return g.id !== gid; });
+                        Object.keys(assignments).forEach(function (fid) {
+                            if (assignments[fid]) delete assignments[fid][gid];
+                        });
+                        renderSetup();
+                        saveDraft();
+                        toast('已删除礼物', 'ok');
+                    });
+            });
+        });
+
+        setupRowReorder('family');
+        setupRowReorder('gift');
+    }
+
+    /* ---- 第一步排序：只有 ⋮⋮ 可拖（鼠标走 HTML5 DnD，触屏走 Pointer 兜底） ---- */
+    function setupRowReorder(kind) {
+        var isFamily = kind === 'family';
+        var list = isFamily ? DOM.familySetupList : DOM.giftSetupList;
+        var array = isFamily ? families : gifts;
+        var rowSel = '.setup-row[data-' + kind + '-id]';
+        var handleSel = '[data-role="' + kind + '-handle"]';
+
+        function idOf(row) {
+            return Number(row.dataset[isFamily ? 'familyId' : 'giftId']);
+        }
+        function handleOf(row) { return row.querySelector(handleSel); }
+        function clearDropMarks() {
+            list.querySelectorAll('.drop-before, .drop-after').forEach(function (el) {
+                el.classList.remove('drop-before', 'drop-after');
+            });
+        }
+        /* 用指针位置判断插到目标行之前还是之后，并处理删除后索引位移 */
+        function moveTo(sourceId, targetId, insertAfter) {
+            var srcIdx = array.findIndex(function (x) { return x.id === sourceId; });
+            var tgtIdx = array.findIndex(function (x) { return x.id === targetId; });
+            if (srcIdx === -1 || tgtIdx === -1 || srcIdx === tgtIdx) return false;
+            var moved = array.splice(srcIdx, 1)[0];
+            var insertIdx = tgtIdx + (insertAfter ? 1 : 0);
+            if (srcIdx < insertIdx) insertIdx -= 1; // 删除源项后目标索引左移
+            if (insertIdx === srcIdx) { array.splice(srcIdx, 0, moved); return false; } // 位置未变化
+            array.splice(insertIdx, 0, moved);
+            return true;
+        }
+        function finishMove(sourceId, targetId, insertAfter) {
+            if (!moveTo(sourceId, targetId, insertAfter)) return;
+            recordHistory();
+            renderSetup();
+            saveDraft();
+            var moved = isFamily ? getFamilyById(sourceId) : getGiftById(sourceId);
+            toast('已移动「' + ((moved && moved.name) || '') + '」', 'ok', 1400);
+            // 保持键盘焦点跟着把手走
+            var newRow = list.querySelector(rowSel + '[data-' + kind + '-id="' + sourceId + '"]');
+            if (newRow) {
+                var h = handleOf(newRow);
+                if (h && document.activeElement && document.activeElement.dataset.role === kind + '-handle') h.focus();
+            }
+        }
+
+        list.querySelectorAll(rowSel).forEach(function (row) {
+            var handle = handleOf(row);
+            if (!handle) return;
+
+            // 显式禁止输入框/按钮自身被拖动
+            row.querySelectorAll('input, button').forEach(function (el) {
+                if (el !== handle) el.setAttribute('draggable', 'false');
+            });
+
+            var srcId = null;
+            var pointerDrag = null;
+
+            /* ---------- 桌面：HTML5 DnD，仅从把手开始 ---------- */
+            handle.addEventListener('dragstart', function (e) {
+                srcId = idOf(row);
+                e.dataTransfer.setData('text/plain', kind + '-' + srcId);
+                e.dataTransfer.effectAllowed = 'move';
+                row.classList.add('dragging');
+                handle.classList.add('is-grabbing');
+                document.body.classList.add('is-dragging');
+            });
+            handle.addEventListener('dragend', function () {
+                row.classList.remove('dragging');
+                handle.classList.remove('is-grabbing');
+                document.body.classList.remove('is-dragging');
+                clearDropMarks();
+                srcId = null;
+            });
+            function markByPointer(e) {
+                if (srcId === null) return;
+                var rect = row.getBoundingClientRect();
+                var after = (e.clientY - rect.top) > rect.height / 2;
+                clearDropMarks();
+                row.classList.add(after ? 'drop-after' : 'drop-before');
+            }
+            row.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                markByPointer(e);
+            });
+            row.addEventListener('drop', function (e) {
+                e.preventDefault();
+                var id = Number((e.dataTransfer.getData('text/plain') || '').replace(kind + '-', ''));
+                var rect = row.getBoundingClientRect();
+                var after = (e.clientY - rect.top) > rect.height / 2;
+                clearDropMarks();
+                if (!isNaN(id)) finishMove(id, idOf(row), after);
+            });
+
+            /* ---------- 触屏：Pointer Events（HTML5 DnD 在移动端不生效） ---------- */
+            handle.addEventListener('pointerdown', function (e) {
+                if (e.pointerType === 'mouse') return; // 鼠标交给上面的 DnD
+                pointerDrag = { id: idOf(row), active: false, pointerId: e.pointerId, startX: e.clientX, startY: e.clientY };
+                document.body.classList.add('is-dragging');
+                handle.classList.add('is-grabbing');
+                row.classList.add('dragging');
+                try { handle.setPointerCapture(e.pointerId); } catch (err) {}
+            });
+            handle.addEventListener('pointermove', function (e) {
+                if (!pointerDrag || e.pointerId !== pointerDrag.pointerId) return;
+                e.preventDefault();
+                pointerDrag.active = true;
+                var rows = Array.prototype.slice.call(list.querySelectorAll(rowSel));
+                var hit = null, after = false;
+                rows.forEach(function (r) {
+                    if (hit) return;
+                    var rect = r.getBoundingClientRect();
+                    // 横向放宽命中范围（手指会偏）
+                    if (e.clientY >= rect.top - 6 && e.clientY <= rect.bottom + 6) {
+                        hit = r;
+                        after = (e.clientY - rect.top) > rect.height / 2;
+                    }
+                });
+                clearDropMarks();
+                if (hit && idOf(hit) !== pointerDrag.id) hit.classList.add(after ? 'drop-after' : 'drop-before');
+                // 手指靠近列表上下边缘时自动滚动
+                var listRect = list.getBoundingClientRect();
+                if (e.clientY < listRect.top + 40) window.scrollBy(0, -8);
+                else if (e.clientY > listRect.bottom - 40) window.scrollBy(0, 8);
+            });
+            function endPointerDrag(e) {
+                if (!pointerDrag || (e && e.pointerId !== pointerDrag.pointerId)) return;
+                var drag = pointerDrag;
+                pointerDrag = null;
+                document.body.classList.remove('is-dragging');
+                handle.classList.remove('is-grabbing');
+                row.classList.remove('dragging');
+                var rows = Array.prototype.slice.call(list.querySelectorAll(rowSel));
+                var marked = null;
+                rows.forEach(function (r) {
+                    if (r.classList.contains('drop-before') || r.classList.contains('drop-after')) {
+                        marked = { row: r, after: r.classList.contains('drop-after') };
+                    }
+                });
+                clearDropMarks();
+                if (drag.active && marked) finishMove(drag.id, idOf(marked.row), marked.after);
+            }
+            handle.addEventListener('pointerup', endPointerDrag);
+            handle.addEventListener('pointercancel', endPointerDrag);
+
+            /* ---------- 键盘：Alt + ↑/↓ 换位，Delete 删除 ---------- */
+            handle.addEventListener('keydown', function (e) {
+                var id = idOf(row);
+                var idx = array.findIndex(function (x) { return x.id === id; });
+                if (idx === -1) return;
+                if (e.altKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
+                    e.preventDefault();
+                    var dir = e.key === 'ArrowUp' ? -1 : 1;
+                    var to = idx + dir;
+                    if (to < 0 || to >= array.length) { toast('已经在' + (dir < 0 ? '最前' : '最后') + '了'); return; }
+                    var moved = array.splice(idx, 1)[0];
+                    array.splice(to, 0, moved);
+                    recordHistory();
+                    renderSetup();
+                    saveDraft();
+                    var newRow = list.querySelector(rowSel + '[data-' + kind + '-id="' + id + '"]');
+                    if (newRow) { var h = handleOf(newRow); if (h) h.focus(); }
+                }
+            });
+        });
+    }
+
+    /* ==================================================================
+     * 8. 渲染：第二步
+     * ================================================================== */
+    /* 重新渲染会替换 DOM，先记下焦点位置，渲染后还原 —— 否则键盘连续操作会断 */
+    function captureFocus() {
+        var el = document.activeElement;
+        if (!el || !el.dataset) return null;
+        if (el.classList && el.classList.contains('gift-cell')) {
+            return { kind: 'cell', familyId: el.dataset.familyId, giftId: el.dataset.giftId };
+        }
+        if (el.classList && el.classList.contains('pool-item')) {
+            return { kind: 'pool', giftId: el.dataset.giftId };
+        }
+        return null;
+    }
+    function restoreFocus(token) {
+        if (!token) return;
+        var el = null;
+        if (token.kind === 'cell') {
+            el = DOM.matchTableBody.querySelector(
+                '.gift-cell[data-family-id="' + token.familyId + '"][data-gift-id="' + token.giftId + '"]');
+        } else {
+            el = DOM.poolList.querySelector('.pool-item[data-gift-id="' + token.giftId + '"]');
+        }
+        if (el) el.focus();
+    }
+
+    function renderMatch() {
+        var focusToken = captureFocus();
+        if (isMobile) renderFamilyCards();
+
+        var poolItems = [];
+        gifts.forEach(function (g) {
+            var remain = getRemainingCount(g.id);
+            if (remain > 0) poolItems.push({ gift: g, remain: remain });
+        });
+        var totalRemain = poolItems.reduce(function (s, it) { return s + it.remain; }, 0);
+        DOM.poolCount.textContent = totalRemain + ' 件剩余';
+
+        if (poolItems.length === 0) {
+            DOM.poolList.innerHTML = '<div class="pool-empty" style="width:100%;">🎉 所有礼物都已分配</div>';
+        } else {
+            DOM.poolList.innerHTML = poolItems.map(function (it) {
+                var gift = it.gift;
+                var selected = selectedGiftId === gift.id;
+                return '' +
+                    '<div class="pool-item' + (selected ? ' selected' : '') + '" data-gift-id="' + gift.id + '" tabindex="0" role="button" ' +
+                        'aria-pressed="' + (selected ? 'true' : 'false') + '" ' +
+                        'aria-label="' + escapeHtml(gift.name) + '，剩余 ' + it.remain + ' 件，单价 ' + formatMoney(giftUnitPrice(gift)) + '。按回车选中，按住拖动可直接分配">' +
+                        '<span class="grip" aria-hidden="true">⋮⋮</span>' +
+                        '<div class="gift-info">' +
+                            '<div class="name">' + escapeHtml(gift.name) + '</div>' +
+                            '<div class="meta">剩余 ' + it.remain + ' 件 · 单价 ' + formatMoney(giftUnitPrice(gift)) + '</div>' +
+                        '</div>' +
+                        '<div class="gift-price-tag">' + formatMoney(it.remain * giftUnitPrice(gift)) + '<small>剩余价值</small></div>' +
+                    '</div>';
+            }).join('');
+        }
+
+        if (families.length === 0 || gifts.length === 0) {
+            DOM.matchTableHead.innerHTML = '';
+            DOM.matchTableBody.innerHTML = '<tr><td style="text-align:center; padding:40px; color:#b9a48e;">请先在第一步添加家庭和礼物</td></tr>';
+        } else {
+            var headHtml = '<tr><th class="family-col" scope="col">家庭</th>';
+            gifts.forEach(function (g) {
+                var remain = getRemainingCount(g.id);
+                var done = remain === 0;
+                headHtml += '<th scope="col">' +
+                    '<div class="gift-header">' +
+                        '<span class="gift-name" title="' + escapeHtml(g.name) + '">' + escapeHtml(g.name) + '</span>' +
+                        '<span class="gift-meta">' + formatMoney(giftUnitPrice(g)) + ' × ' + g.qty + '</span>' +
+                        '<span class="gift-remain' + (done ? ' done' : '') + '">' + (done ? '✓ 已分完' : '剩 ' + remain + ' 件') + '</span>' +
+                    '</div></th>';
+            });
+            headHtml += '</tr>';
+            DOM.matchTableHead.innerHTML = headHtml;
+
+            var bodyHtml = '';
+            families.forEach(function (f, fIdx) {
+                bodyHtml += '<tr data-family-id="' + f.id + '">';
+                bodyHtml += '<td class="family-cell">' + escapeHtml(f.name || '未命名') +
+                    '<span class="family-pos">第 ' + (fIdx + 1) + ' 位</span>' +
+                    '<span class="family-sub">小计 ' + formatMoney(familySubtotal(f.id)) + '</span></td>';
+                gifts.forEach(function (g) {
+                    var count = getFamilyGiftCount(f.id, g.id);
+                    var totalPrice = count * giftUnitPrice(g);
+                    var remain = getRemainingCount(g.id);
+                    var label = escapeHtml(g.name) + '：' + (count > 0 ? '已有 ' + count + ' 件' : '未分配');
+                    bodyHtml += '<td class="gift-cell" data-family-id="' + f.id + '" data-gift-id="' + g.id + '" ' +
+                        'tabindex="0" role="button" aria-label="' + label + '">' +
+                        '<div class="gift-count' + (count > 0 ? ' has-gift' : '') + '">' + count + '</div>' +
+                        '<span class="gift-label"' + (count > 0 ? '' : ' style="color:#d9c7b0;"') + '>' +
+                            (count > 0 ? formatMoney(totalPrice) : '—') + '</span>' +
+                        '<div class="cell-actions">' +
+                            (count > 0
+                                ? '<button class="cell-remove-one" type="button" data-family-id="' + f.id + '" data-gift-id="' + g.id + '" title="移除一件" aria-label="从' + escapeHtml(f.name) + '移除一件' + escapeHtml(g.name) + '">−1</button>'
+                                : '') +
+                            '<button class="cell-add-one" type="button" data-family-id="' + f.id + '" data-gift-id="' + g.id + '" title="添加一件" aria-label="给' + escapeHtml(f.name) + '添加一件' + escapeHtml(g.name) + '"' +
+                                (remain <= 0 ? ' disabled' : '') + '>+1</button>' +
+                            (count > 0
+                                ? '<button class="cell-remove-all" type="button" data-family-id="' + f.id + '" data-gift-id="' + g.id + '" title="全部移除" aria-label="移除' + escapeHtml(f.name) + '的全部' + escapeHtml(g.name) + '">✕</button>'
+                                : '') +
+                        '</div>' +
+                    '</td>';
+                });
+                bodyHtml += '</tr>';
+            });
+            DOM.matchTableBody.innerHTML = bodyHtml;
+        }
+
+        updateMatchStats();
+        bindMatchEvents();
+        restoreFocus(focusToken);
+    }
+
+    /* ---- 移动端卡片模式 ---- */
+    function renderFamilyCards() {
+        if (families.length === 0 || gifts.length === 0) {
+            DOM.familyCards.innerHTML = '<div class="pool-empty">请先在第一步添加家庭和礼物</div>';
+            return;
+        }
+        var optionsHtml = gifts.map(function (g) {
+            var remain = getRemainingCount(g.id);
+            return '<option value="' + g.id + '"' + (remain <= 0 ? ' disabled' : '') + '>' +
+                escapeHtml(g.name) + (remain > 0 ? '（剩 ' + remain + '）' : '（已分完）') + '</option>';
+        }).join('');
+
+        DOM.familyCards.innerHTML = families.map(function (f) {
+            var chips = gifts.filter(function (g) { return getFamilyGiftCount(f.id, g.id) > 0; });
+            var chipsHtml = chips.length
+                ? chips.map(function (g) {
+                    var count = getFamilyGiftCount(f.id, g.id);
+                    var remain = getRemainingCount(g.id);
+                    return '<span class="card-chip">' +
+                        '<span class="chip-name">' + escapeHtml(g.name) + '</span>' +
+                        '<span class="chip-count">×' + count + '</span>' +
+                        '<button type="button" class="chip-minus" data-family-id="' + f.id + '" data-gift-id="' + g.id + '" ' +
+                            'aria-label="' + escapeHtml(f.name) + '的' + escapeHtml(g.name) + '减少一件">−</button>' +
+                        '<button type="button" class="chip-plus" data-family-id="' + f.id + '" data-gift-id="' + g.id + '" ' +
+                            (remain <= 0 ? 'disabled ' : '') +
+                            'aria-label="' + escapeHtml(f.name) + '的' + escapeHtml(g.name) + '增加一件">＋</button>' +
+                    '</span>';
+                }).join('')
+                : '<div class="card-empty">还没有分配礼物</div>';
+
+            var anyRemain = totalRemainingUnits() > 0;
+        // 所有礼物都分完时，下拉框没有可选项，按钮也应一并禁用
+        var selectable = gifts.some(function (g) { return getRemainingCount(g.id) > 0; });
+            return '<div class="family-card" data-family-id="' + f.id + '">' +
+                '<div class="family-card-head">' +
+                    '<span class="fc-name">' + escapeHtml(f.name || '未命名') + '</span>' +
+                    '<span class="fc-sub">' + formatMoney(familySubtotal(f.id)) + '</span>' +
+                '</div>' +
+                '<div class="card-chips">' + chipsHtml + '</div>' +
+                '<div class="card-add-row">' +
+                    '<select class="card-gift-select" data-family-id="' + f.id + '" aria-label="选择要添加给' + escapeHtml(f.name) + '的礼物">' +
+                        optionsHtml +
+                    '</select>' +
+                    '<button type="button" class="card-add-btn" data-family-id="' + f.id + '"' +
+                        (anyRemain && selectable ? '' : ' disabled') + '>添加</button>' +
+                '</div>' +
+            '</div>';
+        }).join('');
+    }
+
+    function updateMatchStats() {
+        DOM.totalAmount.textContent = formatMoney(grandTotal());
+        DOM.familyCountChip.textContent = '共 ' + families.length + ' 家';
+        var totalGifts = gifts.reduce(function (s, g) { return s + (g.qty || 0); }, 0);
+        var assignedCount = gifts.reduce(function (s, g) { return s + getAssignedCount(g.id); }, 0);
+        DOM.giftCountChip.textContent = '已分配 ' + assignedCount + ' / ' + totalGifts + ' 件';
+        var remainUnits = totalRemainingUnits();
+        DOM.unassignedChip.textContent = '未分配 ' + remainUnits + ' 件 · ' +
+            formatMoney(gifts.reduce(function (s, g) { return s + Math.max(0, getRemainingCount(g.id)) * giftUnitPrice(g); }, 0));
+        DOM.unassignedChip.classList.toggle('hidden', remainUnits === 0);
+    }
+
+    /* ==================================================================
+     * 9. 分配操作
+     * ================================================================== */
+    function addGiftToFamily(giftId, familyId, options) {
+        var silent = options && options.silent;
+        var gift = getGiftById(giftId);
+        if (!gift) return false;
+        if (getRemainingCount(giftId) <= 0) {
+            if (!silent) toast('「' + gift.name + '」已经分完了', 'err');
+            return false;
+        }
+        recordHistory({ coalesce: true });
+        ensureAssignment(familyId);
+        assignments[familyId][giftId] = (assignments[familyId][giftId] || 0) + 1;
+        if (!silent) saveDraft();
+        return true;
+    }
+    function removeGiftFromFamily(giftId, familyId) {
+        var current = getFamilyGiftCount(familyId, giftId);
+        if (current <= 0) return false;
+        recordHistory({ coalesce: true });
+        if (current === 1) delete assignments[familyId][giftId];
+        else assignments[familyId][giftId] = current - 1;
+        return true;
+    }
+    function removeAllGiftFromFamily(giftId, familyId) {
+        if (getFamilyGiftCount(familyId, giftId) <= 0) return;
+        recordHistory();
+        if (assignments[familyId]) delete assignments[familyId][giftId];
+    }
+
+    /* 一键：每种礼物在家庭间轮转均分，每轮每家一件，分完为止 */
+    function autoAssignOneEach() {
+        if (families.length === 0 || gifts.length === 0) return;
+        recordHistory();
+        var added = 0;
+        gifts.forEach(function (g) {
+            var n = families.length;
+            var total = g.qty || 0;
+            var base = Math.floor(total / n);
+            var extra = total % n;
+            if (base === 0 && extra === 0) return;
+            families.forEach(function (f, i) {
+                // 余数从第一个家庭起依次多分一件，保证公平且不超发
+                var want = base + (i < extra ? 1 : 0);
+                if (want <= 0) return;
+                ensureAssignment(f.id);
+                var already = getFamilyGiftCount(f.id, g.id);
+                // 已有更多的不再补，避免重复点击越分越多
+                if (already >= want) return;
+                var give = want - already;
+                assignments[f.id][g.id] = already + give;
+                added += give;
+            });
+        });
+        saveDraft();
+        renderMatch();
+        toast(added > 0 ? '已自动分配 ' + added + ' 件' : '没有可分配的礼物', added > 0 ? 'ok' : 'err');
+    }
+
+    /* ==================================================================
+     * 10. 第二步事件绑定（含统一的指针拖拽）
+     * ================================================================== */
+    var drag = {
+        active: false,
+        kind: null,          // 'pool' | 'table'
+        giftId: null,
+        fromFamilyId: null,
+        sourceEl: null,
+        ghost: null,
+        target: null,
+        pointerId: null,
+        lastClientX: 0,
+        lastClientY: 0
+    };
+    var suppressClickUntil = 0;
+    var LONG_PRESS_MS = 150;   // 表格单元格：需长按区分「点击分配」与「拖动一件」
+    var POOL_HOLD_MS = 90;     // 礼物项：本身即把手，只需极短延时区分轻点选中
+    var MOVE_TOLERANCE = 8;
+
+    function pointerDistance(a, x, y) {
+        return Math.abs(x - a.clientX) + Math.abs(y - a.clientY);
+    }
+
+    /* 开始拖拽：创建跟随指针的浮层，并锁定触摸滚动 */
+    function startDrag(kind, giftId, fromFamilyId, sourceEl, e) {
+        var gift = getGiftById(giftId);
+        if (!gift) return;
+        drag.active = true;
+        drag.kind = kind;
+        drag.giftId = giftId;
+        drag.fromFamilyId = fromFamilyId;
+        drag.sourceEl = sourceEl;
+        drag.pointerId = e.pointerId;
+
+        var ghost = document.createElement('div');
+        ghost.className = 'drag-ghost pill';
+        if (kind === 'table') {
+            var fam = getFamilyById(fromFamilyId);
+            ghost.innerHTML = '移动 <b>' + escapeHtml(gift.name) + '</b> · 来自 ' + escapeHtml((fam && fam.name) || '') + ' <b>1</b> 件';
+        } else {
+            ghost.innerHTML = '分配 <b>' + escapeHtml(gift.name) + '</b> <b>1</b> 件';
+        }
+        document.body.appendChild(ghost);
+        drag.ghost = ghost;
+        positionGhost(e.clientX, e.clientY);
+
+        sourceEl.classList.add('dragging');
+        document.body.classList.add('is-dragging');
+        if (sourceEl.setPointerCapture) {
+            try { sourceEl.setPointerCapture(e.pointerId); } catch (err) {}
+        }
+        // 触屏拖拽期间阻止滚动
+        document.addEventListener('touchmove', blockTouchScroll, { passive: false });
+    }
+    function blockTouchScroll(e) { if (drag.active) e.preventDefault(); }
+
+    function positionGhost(x, y) {
+        if (!drag.ghost) return;
+        drag.ghost.style.left = x + 'px';
+        drag.ghost.style.top = y + 'px';
+    }
+
+    function dropTargetFromPoint(x, y, selector) {
+        var el = document.elementFromPoint(x, y);
+        if (!el) return null;
+        return el.closest ? el.closest(selector) : null;
+    }
+
+    function clearDropTargets() {
+        document.querySelectorAll('.drop-target, .no-room, .is-drop-target').forEach(function (el) {
+            el.classList.remove('drop-target', 'no-room', 'is-drop-target');
+        });
+        drag.target = null;
+    }
+
+    /* 指针移动时高亮当前落点 */
+    function updateDropHighlight(x, y) {
+        clearDropTargets();
+        if (isMobile) {
+            var card = dropTargetFromPoint(x, y, '.family-card');
+            if (card) {
+                card.classList.add('is-drop-target');
+                drag.target = { type: 'card', familyId: Number(card.dataset.familyId) };
+            }
+            return;
+        }
+        var cell = dropTargetFromPoint(x, y, '.gift-cell');
+        if (!cell) return;
+        var giftId = Number(cell.dataset.giftId);
+        var familyId = Number(cell.dataset.familyId);
+        // 池子礼物只能落到同名礼物的列；表格礼物只能在同列内移动
+        var valid = giftId === drag.giftId &&
+            (drag.kind === 'pool' || familyId !== drag.fromFamilyId);
+        if (!valid) {
+            drag.target = null;
+            return;
+        }
+        if (getRemainingCount(giftId) <= 0 && drag.kind === 'pool') {
+            cell.classList.add('no-room');
+        } else {
+            cell.classList.add('drop-target');
+        }
+        drag.target = { type: 'cell', familyId: familyId, giftId: giftId };
+    }
+
+    function endDrag(commit, x, y) {
+        if (!drag.active) return;
+        var d = drag;
+        drag.active = false;
+        document.removeEventListener('touchmove', blockTouchScroll, { passive: false });
+        document.body.classList.remove('is-dragging');
+        if (d.sourceEl) d.sourceEl.classList.remove('dragging');
+        if (d.ghost) d.ghost.remove();
+        drag.ghost = null;
+
+        var target = d.target;
+        clearDropTargets();
+
+        if (commit && target) {
+            if (isMobile && target.type === 'card') {
+                if (addGiftToFamily(d.giftId, target.familyId)) {
+                    if (d.kind === 'table' && d.fromFamilyId) removeGiftFromFamily(d.giftId, d.fromFamilyId);
+                    saveDraft();
+                    renderMatch();
+                    toast('已分配 1 件', 'ok', 1400);
+                }
+            } else if (!isMobile && target.type === 'cell') {
+                if (d.kind === 'pool') {
+                    if (addGiftToFamily(d.giftId, target.familyId)) {
+                        saveDraft();
+                        renderMatch();
+                        toast('已分配 1 件', 'ok', 1400);
+                    }
+                } else if (d.fromFamilyId && d.fromFamilyId !== target.familyId) {
+                    // 先在目标处加一件，成功后再从来源扣一件，避免中途失败丢数据
+                    if (addGiftToFamily(d.giftId, target.familyId)) {
+                        removeGiftFromFamily(d.giftId, d.fromFamilyId);
+                        saveDraft();
+                        renderMatch();
+                        toast('已移动 1 件', 'ok', 1400);
+                    }
+                }
+            }
+        }
+        // 拖拽结束后短时间内屏蔽 click，防止"拖完又加一件"
+        suppressClickUntil = Date.now() + 350;
+        if (d.pointerId != null && d.sourceEl && d.sourceEl.releasePointerCapture) {
+            try { d.sourceEl.releasePointerCapture(d.pointerId); } catch (err) {}
+        }
+        updateHistoryButtons();
+    }
+
+    function bindMatchEvents() {
+        /* ---------- 礼物池：点选 / 键盘 / 指针拖拽 ---------- */
+        DOM.poolList.querySelectorAll('.pool-item').forEach(function (el) {
+            var giftId = Number(el.dataset.giftId);
+            var longPressTimer = null;
+            var moved = false;
+            var start = null;
+
+            function selectThis() {
+                if (selectedGiftId === giftId) {
+                    selectedGiftId = null;
+                } else {
+                    selectedGiftId = giftId;
+                    var gift = getGiftById(giftId);
+                    toast('已选中「' + ((gift && gift.name) || '') + '」，点击格子即可分配', 'ok', 1600);
+                }
+                refreshPoolSelection();
+            }
+
+            el.addEventListener('click', function () {
+                if (Date.now() < suppressClickUntil) return;
+                selectThis();
+            });
+            el.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectThis(); }
+            });
+
+            el.addEventListener('pointerdown', function (e) {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                start = { clientX: e.clientX, clientY: e.clientY, pointerId: e.pointerId };
+                moved = false;
+                clearTimeout(longPressTimer);
+                // 礼物项本身就是抓取把手：按住即进入拖拽，无需长按。
+                // 长按在真实操作里很容易被手指的自然抖动打断（浏览器会判定为滚动意图），
+                // 因此这里只用极短延时区分"轻点选中"与"按住拖动"。
+                longPressTimer = setTimeout(function () {
+                    if (!start || moved) return;
+                    var g = getGiftById(giftId);
+                    if (!g) return;
+                    startDrag('pool', giftId, null, el, { pointerId: start.pointerId, clientX: start.clientX, clientY: start.clientY });
+                    if (navigator.vibrate) { try { navigator.vibrate(12); } catch (err) {} }
+                }, e.pointerType === 'mouse' ? 0 : POOL_HOLD_MS);
+            });
+            el.addEventListener('pointermove', function (e) {
+                if (!start || e.pointerId !== start.pointerId) return;
+                if (!drag.active && pointerDistance(start, e.clientX, e.clientY) > MOVE_TOLERANCE) {
+                    // 手指/指针一动就立刻接管：若继续等长按计时器，浏览器会先把这次手势
+                    // 判定为页面滚动（发出 pointercancel），拖拽就"拿不起来"了
+                    moved = true;
+                    clearTimeout(longPressTimer);
+                    startDrag('pool', giftId, null, el, {
+                        pointerId: e.pointerId, clientX: e.clientX, clientY: e.clientY
+                    });
+                }
+                if (drag.active && drag.pointerId === e.pointerId) {
+                    e.preventDefault();
+                    drag.lastClientX = e.clientX;
+                    drag.lastClientY = e.clientY;
+                    positionGhost(e.clientX, e.clientY);
+                    updateDropHighlight(e.clientX, e.clientY);
+                }
+            });
+            el.addEventListener('pointerup', function (e) {
+                clearTimeout(longPressTimer);
+                if (!start || e.pointerId !== start.pointerId) return;
+                var wasDrag = drag.active && drag.pointerId === e.pointerId;
+                start = null;
+                if (wasDrag) endDrag(true, e.clientX, e.clientY);
+            });
+            el.addEventListener('pointercancel', function (e) {
+                clearTimeout(longPressTimer);
+                start = null;
+                if (drag.active && drag.pointerId === e.pointerId) endDrag(false);
+            });
+            // 触屏长按时不要弹出系统菜单
+            el.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+        });
+
+        /* ---------- 表格单元格：点击分配 / 键盘 / 指针拖拽 ---------- */
+        DOM.matchTableBody.querySelectorAll('.gift-cell').forEach(function (cell) {
+            var familyId = Number(cell.dataset.familyId);
+            var giftId = Number(cell.dataset.giftId);
+            var count = getFamilyGiftCount(familyId, giftId);
+            var longPressTimer = null;
+            var start = null;
+            var moved = false;
+
+            cell.addEventListener('click', function (e) {
+                if (e.target.closest('button')) return;
+                if (Date.now() < suppressClickUntil) return;
+                if (selectedGiftId !== null && selectedGiftId === giftId) {
+                    if (addGiftToFamily(giftId, familyId)) {
+                        if (getRemainingCount(giftId) <= 0) selectedGiftId = null;
+                        saveDraft();
+                        renderMatch();
+                    }
+                } else if (selectedGiftId !== null) {
+                    toast('只能分配到对应礼物的列，请先选中该列礼物的卡片', 'err');
+                }
+            });
+
+            cell.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ' || e.key === '+' || e.key === '=') {
+                    e.preventDefault();
+                    if (addGiftToFamily(giftId, familyId)) { saveDraft(); renderMatch(); }
+                } else if (e.key === '-' || e.key === '_' || e.key === 'Backspace' || e.key === 'Delete') {
+                    e.preventDefault();
+                    if (removeGiftFromFamily(giftId, familyId)) { saveDraft(); renderMatch(); }
+                } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    var allCells = Array.prototype.slice.call(DOM.matchTableBody.querySelectorAll('.gift-cell'));
+                    var i = allCells.indexOf(cell);
+                    var next = allCells[i + (e.key === 'ArrowRight' ? 1 : -1)];
+                    if (next) next.focus();
+                } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    var cells = Array.prototype.slice.call(DOM.matchTableBody.querySelectorAll('.gift-cell[data-gift-id="' + giftId + '"]'));
+                    var j = cells.indexOf(cell);
+                    var target = cells[j + (e.key === 'ArrowDown' ? 1 : -1)];
+                    if (target) target.focus();
+                }
+            });
+
+            if (count > 0) {
+                cell.addEventListener('pointerdown', function (e) {
+                    if (e.pointerType === 'mouse' && e.button !== 0) return;
+                    if (e.target.closest('button')) return;
+                    start = { clientX: e.clientX, clientY: e.clientY, pointerId: e.pointerId };
+                    moved = false;
+                    clearTimeout(longPressTimer);
+                    longPressTimer = setTimeout(function () {
+                        if (!start || moved) return;
+                        startDrag('table', giftId, familyId, cell, { pointerId: start.pointerId, clientX: start.clientX, clientY: start.clientY });
+                        if (navigator.vibrate) { try { navigator.vibrate(12); } catch (err) {} }
+                    }, e.pointerType === 'mouse' ? 0 : LONG_PRESS_MS);
+                });
+                cell.addEventListener('pointermove', function (e) {
+                    if (!start || e.pointerId !== start.pointerId) return;
+                    if (!drag.active && pointerDistance(start, e.clientX, e.clientY) > MOVE_TOLERANCE) {
+                        // 同礼物池：指针一动就接管，避免被浏览器判成滚动而取消
+                        moved = true;
+                        clearTimeout(longPressTimer);
+                        startDrag('table', giftId, familyId, cell, {
+                            pointerId: e.pointerId, clientX: e.clientX, clientY: e.clientY
+                        });
+                    }
+                    if (drag.active && drag.pointerId === e.pointerId) {
+                        e.preventDefault();
+                        drag.lastClientX = e.clientX;
+                        drag.lastClientY = e.clientY;
+                        positionGhost(e.clientX, e.clientY);
+                        updateDropHighlight(e.clientX, e.clientY);
+                    }
+                });
+                cell.addEventListener('pointerup', function (e) {
+                    clearTimeout(longPressTimer);
+                    if (!start || e.pointerId !== start.pointerId) return;
+                    var wasDrag = drag.active && drag.pointerId === e.pointerId;
+                    start = null;
+                    if (wasDrag) endDrag(true, e.clientX, e.clientY);
+                });
+                cell.addEventListener('pointercancel', function (e) {
+                    clearTimeout(longPressTimer);
+                    start = null;
+                    if (drag.active && drag.pointerId === e.pointerId) endDrag(false);
+                });
+                cell.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+            }
+        });
+
+        /* 单元格按钮 */
+        DOM.matchTableBody.querySelectorAll('.cell-add-one').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                if (addGiftToFamily(Number(btn.dataset.giftId), Number(btn.dataset.familyId))) {
+                    saveDraft(); renderMatch();
+                }
+            });
+        });
+        DOM.matchTableBody.querySelectorAll('.cell-remove-one').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                if (removeGiftFromFamily(Number(btn.dataset.giftId), Number(btn.dataset.familyId))) {
+                    saveDraft(); renderMatch();
+                }
+            });
+        });
+        DOM.matchTableBody.querySelectorAll('.cell-remove-all').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                removeAllGiftFromFamily(Number(btn.dataset.giftId), Number(btn.dataset.familyId));
+                saveDraft(); renderMatch();
+            });
+        });
+
+        /* ---------- 卡片模式事件 ---------- */
+        DOM.familyCards.querySelectorAll('.card-add-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var familyId = Number(btn.dataset.familyId);
+                var card = btn.closest('.family-card');
+                var select = card && card.querySelector('.card-gift-select');
+                if (!select) return;
+                var giftId = Number(select.value);
+                if (addGiftToFamily(giftId, familyId)) {
+                    saveDraft();
+                    renderMatch();
+                }
+            });
+        });
+        DOM.familyCards.querySelectorAll('.chip-minus').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                if (removeGiftFromFamily(Number(btn.dataset.giftId), Number(btn.dataset.familyId))) {
+                    saveDraft(); renderMatch();
+                }
+            });
+        });
+        DOM.familyCards.querySelectorAll('.chip-plus').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                if (addGiftToFamily(Number(btn.dataset.giftId), Number(btn.dataset.familyId))) {
+                    saveDraft(); renderMatch();
+                }
+            });
+        });
+
+        /* ---------- 触屏：把卡片当作落点（按住礼物池中的礼物拖到某张卡片） ---------- */
+        DOM.familyCards.querySelectorAll('.family-card').forEach(function (card) {
+            card.addEventListener('pointermove', function (e) {
+                if (!drag.active || drag.pointerId !== e.pointerId) return;
+                e.preventDefault();
+                drag.lastClientX = e.clientX;
+                drag.lastClientY = e.clientY;
+                positionGhost(e.clientX, e.clientY);
+                updateDropHighlight(e.clientX, e.clientY);
+            });
+        });
+    }
+
+    function refreshPoolSelection() {
+        DOM.poolList.querySelectorAll('.pool-item').forEach(function (p) {
+            var on = Number(p.dataset.giftId) === selectedGiftId;
+            p.classList.toggle('selected', on);
+            p.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+    }
+
+    /* ==================================================================
+     * 11. 步骤切换 / 重置
+     * ================================================================== */
+    function renderAll() {
+        renderSetup();
+        if (!DOM.step2Panel.classList.contains('hidden')) renderMatch();
+    }
+
+    function goToStep1() {
+        DOM.step1Panel.classList.remove('hidden');
+        DOM.step2Panel.classList.add('hidden');
+        DOM.step1Badge.classList.add('active');
+        DOM.step2Badge.classList.remove('active');
+        selectedGiftId = null;
+        renderSetup();
+    }
+
+    function goToStep2() {
+        if (families.length === 0) { toast('请至少添加一个家庭', 'err'); return; }
+        if (gifts.length === 0) { toast('请至少添加一个礼物', 'err'); return; }
+        // 静默补齐空名称，避免表头出现无法辨认的「未命名」
+        var unnamedF = 0, unnamedG = 0;
+        families.forEach(function (f) { if (!f.name.trim()) { f.name = '家庭' + (++unnamedF); } });
+        gifts.forEach(function (g) { if (!g.name.trim()) { g.name = '礼物' + (++unnamedG); } });
+        if (unnamedF || unnamedG) toast('已为未命名的项目自动命名', 'ok');
+        saveDraft();
+
+        pruneState();
+        DOM.step1Panel.classList.add('hidden');
+        DOM.step2Panel.classList.remove('hidden');
+        DOM.step1Badge.classList.remove('active');
+        DOM.step2Badge.classList.add('active');
+        selectedGiftId = null;
+        renderMatch();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetStep1() {
+        confirmDialog('重置基础数据', '将清空所有家庭、礼物与分配记录。\n此操作可以用 Ctrl+Z 撤销。', '重置')
+            .then(function (ok) {
+                if (!ok) return;
+                recordHistory();
+                families = [];
+                gifts = [];
+                assignments = {};
+                nextFamilyId = 1;
+                nextGiftId = 1;
+                selectedGiftId = null;
+                history.future.length = 0;
+                renderSetup();
+                saveDraft();
+                toast('已重置基础数据', 'ok');
+            });
+    }
+
+    function resetMatch() {
+        confirmDialog('重置分配', '所有礼物将回到礼物池。\n此操作可以用 Ctrl+Z 撤销。', '重置')
+            .then(function (ok) {
+                if (!ok) return;
+                recordHistory();
+                assignments = {};
+                families.forEach(function (f) { assignments[f.id] = {}; });
+                selectedGiftId = null;
+                renderMatch();
+                saveDraft();
+                toast('已重置分配', 'ok');
+            });
+    }
+
+    /* ==================================================================
+     * 12. 导出 / 导入
+     * ================================================================== */
+    function download(blob, filename) {
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    }
+
+    function exportCSV() {
+        if (families.length === 0 || gifts.length === 0) { toast('没有可导出的数据', 'err'); return; }
+        function csvCell(val) {
+            var s = String(val == null ? '' : val);
+            if (/[",\n]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+            return s;
+        }
+        var header = ['家庭'];
+        gifts.forEach(function (g) { header.push(g.name + '(' + formatMoney(giftUnitPrice(g)) + '×' + g.qty + ')'); });
+        header.push('小计');
+        var rows = [header];
+        families.forEach(function (f) {
+            var row = [f.name || '未命名'];
+            gifts.forEach(function (g) {
+                var count = getFamilyGiftCount(f.id, g.id);
+                row.push(count > 0 ? count + '件 / ' + formatMoney(count * giftUnitPrice(g)) : '0');
+            });
+            row.push(formatMoney(familySubtotal(f.id)));
+            rows.push(row);
+        });
+        var unassignedRow = ['未分配'];
+        var unassignedTotal = 0;
+        gifts.forEach(function (g) {
+            var remain = getRemainingCount(g.id);
+            unassignedRow.push(remain > 0 ? remain + '件' : '0');
+            unassignedTotal += remain * giftUnitPrice(g);
+        });
+        unassignedRow.push(formatMoney(unassignedTotal));
+        rows.push(unassignedRow);
+        var totalRow = ['总计'];
+        gifts.forEach(function (g) { totalRow.push(getAssignedCount(g.id) + '/' + g.qty + '件'); });
+        totalRow.push(formatMoney(grandTotal()));
+        rows.push(totalRow);
+
+        var csvContent = '\uFEFF' + rows.map(function (r) { return r.map(csvCell).join(','); }).join('\r\n');
+        download(new Blob([csvContent], { type: 'text/csv;charset=utf-8;' }), '节日送礼清单_' + localDateStamp() + '.csv');
+        toast('CSV 已导出', 'ok');
+    }
+
+    function exportImage() {
+        if (families.length === 0 || gifts.length === 0) { toast('没有可导出的数据', 'err'); return; }
+        // 按数据量自适应缩放，避免礼物很多时画布超出浏览器上限而导出空白
+        var colCount = gifts.length;
+        var scale = colCount > 24 ? 0.6 : colCount > 14 ? 0.8 : 1;
+        var dpr = Math.min(window.devicePixelRatio || 2, 2) * (colCount > 20 ? 0.8 : 1);
+
+        var padding = 24 * scale;
+        var familyColWidth = 150 * scale;
+        var giftColWidth = 150 * scale;
+        var rowHeight = 58 * scale;
+        var headerRowHeight = 66 * scale;
+        var titleHeight = 58 * scale;
+        var tableWidth = familyColWidth + colCount * giftColWidth;
+        var tableHeight = headerRowHeight + families.length * rowHeight;
+        var statsHeight = 60 * scale;
+        var totalWidth = tableWidth + padding * 2;
+        var totalHeight = titleHeight + tableHeight + statsHeight + 40 * scale + padding * 2;
+
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.round(totalWidth * dpr);
+        canvas.height = Math.round(totalHeight * dpr);
+        var ctx = canvas.getContext('2d');
+        if (!ctx) { toast('当前浏览器不支持导出图片', 'err'); return; }
+        ctx.scale(dpr, dpr);
+
+        var FONT = 'system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif';
+        function setFont(weight, size) { ctx.font = weight + ' ' + (size * scale).toFixed(1) + 'px ' + FONT; }
+
+        ctx.fillStyle = '#f9f5f0';
+        ctx.fillRect(0, 0, totalWidth, totalHeight);
+        // 标题用纯文字，避免无 emoji 字体时渲染成方块
+        ctx.fillStyle = '#3e2e1f';
+        setFont('bold', 22);
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('节日送礼清单', padding, padding + titleHeight / 2);
+        ctx.fillStyle = '#a08d78';
+        setFont('normal', 12);
+        ctx.fillText('导出时间 ' + localDateStamp(true).replace('_', ' '), padding + ctx.measureText('节日送礼清单').width + 90, padding + titleHeight / 2);
+
+        var startX = padding;
+        var startY = padding + titleHeight;
+
+        // 表头
+        ctx.fillStyle = '#faf7f3';
+        ctx.fillRect(startX, startY, tableWidth, headerRowHeight);
+        ctx.fillStyle = '#f3ede6';
+        ctx.fillRect(startX, startY, familyColWidth, headerRowHeight);
+        ctx.fillStyle = '#4f3e2e';
+        setFont('bold', 14);
+        ctx.textAlign = 'center';
+        ctx.fillText('家庭', startX + familyColWidth / 2, startY + headerRowHeight / 2);
+
+        gifts.forEach(function (g, i) {
+            var x = startX + familyColWidth + i * giftColWidth;
+            var cx = x + giftColWidth / 2;
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#4f3e2e';
+            setFont('bold', 13);
+            ctx.fillText(ellipsize(ctx, g.name, giftColWidth - 16 * scale), cx, startY + 20 * scale);
+            ctx.fillStyle = '#a08d78';
+            setFont('normal', 11);
+            ctx.fillText(formatMoney(giftUnitPrice(g)) + ' × ' + g.qty, cx, startY + 38 * scale);
+            var remain = getRemainingCount(g.id);
+            ctx.fillStyle = remain === 0 ? '#8ba382' : '#9e6d3e';
+            setFont('bold', 11);
+            ctx.fillText(remain === 0 ? '已分完' : '剩 ' + remain + ' 件', cx, startY + 53 * scale);
+        });
+
+        function ellipsize(context, text, maxWidth) {
+            var t = String(text);
+            if (context.measureText(t).width <= maxWidth) return t;
+            while (t.length > 1 && context.measureText(t + '…').width > maxWidth) t = t.slice(0, -1);
+            return t + '…';
+        }
+
+        // 数据行
+        families.forEach(function (f, rowIdx) {
+            var y = startY + headerRowHeight + rowIdx * rowHeight;
+            ctx.fillStyle = rowIdx % 2 === 0 ? '#ffffff' : '#fdfaf7';
+            ctx.fillRect(startX, y, tableWidth, rowHeight);
+            ctx.fillStyle = '#faf7f3';
+            ctx.fillRect(startX, y, familyColWidth, rowHeight);
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#2f2419';
+            setFont('bold', 14);
+            ctx.fillText(ellipsize(ctx, f.name || '未命名', familyColWidth - 24 * scale), startX + 12 * scale, y + rowHeight / 2 - 9 * scale);
+            ctx.fillStyle = '#9e6d3e';
+            setFont('normal', 12);
+            ctx.fillText('小计 ' + formatMoney(familySubtotal(f.id)), startX + 12 * scale, y + rowHeight / 2 + 12 * scale);
+
+            gifts.forEach(function (g, colIdx) {
+                var x = startX + familyColWidth + colIdx * giftColWidth;
+                var count = getFamilyGiftCount(f.id, g.id);
+                ctx.textAlign = 'center';
+                if (count > 0) {
+                    var cx = x + giftColWidth / 2;
+                    var cy = y + rowHeight / 2 - 6 * scale;
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, 15 * scale, 0, Math.PI * 2);
+                    ctx.fillStyle = '#ffd9a3';
+                    ctx.fill();
+                    ctx.fillStyle = '#3e2e1f';
+                    setFont('bold', 14);
+                    ctx.fillText(String(count), cx, cy + 1);
+                    ctx.fillStyle = '#9e6d3e';
+                    setFont('normal', 11);
+                    ctx.fillText(formatMoney(count * giftUnitPrice(g)), cx, y + rowHeight / 2 + 18 * scale);
+                } else {
+                    ctx.fillStyle = '#d9c7b0';
+                    setFont('normal', 16);
+                    ctx.fillText('—', x + giftColWidth / 2, y + rowHeight / 2 + 2);
+                }
+            });
+        });
+
+        // 网格线
+        ctx.strokeStyle = '#f0e6dc';
+        ctx.lineWidth = 1;
+        var tableBottom = startY + headerRowHeight + families.length * rowHeight;
+        for (var i = 0; i <= families.length; i++) {
+            var yy = startY + headerRowHeight + i * rowHeight;
+            ctx.beginPath(); ctx.moveTo(startX, yy); ctx.lineTo(startX + tableWidth, yy); ctx.stroke();
+        }
+        ctx.beginPath(); ctx.moveTo(startX, startY); ctx.lineTo(startX + tableWidth, startY); ctx.stroke();
+        for (var c = 0; c <= colCount + 1; c++) {
+            var xx = startX + (c === 0 ? 0 : c === 1 ? familyColWidth : familyColWidth + (c - 1) * giftColWidth);
+            ctx.beginPath(); ctx.moveTo(xx, startY); ctx.lineTo(xx, tableBottom); ctx.stroke();
+        }
+
+        // 统计条
+        var statsY = tableBottom + 24 * scale;
+        var totalGifts = gifts.reduce(function (s, g) { return s + (g.qty || 0); }, 0);
+        var assignedCount = gifts.reduce(function (s, g) { return s + getAssignedCount(g.id); }, 0);
+        var unassignedUnits = totalRemainingUnits();
+        ctx.fillStyle = '#3e2e1f';
+        ctx.fillRect(startX, statsY, tableWidth, statsHeight);
+        ctx.fillStyle = '#ffd9a3';
+        setFont('bold', 20);
+        ctx.textAlign = 'left';
+        ctx.fillText('总金额：' + formatMoney(grandTotal()), startX + 20 * scale, statsY + statsHeight / 2);
+        ctx.fillStyle = '#fefcf8';
+        setFont('normal', 13);
+        ctx.textAlign = 'right';
+        ctx.fillText('共 ' + families.length + ' 家 · 已分配 ' + assignedCount + '/' + totalGifts + ' 件 · 未分配 ' + unassignedUnits + ' 件',
+            startX + tableWidth - 20 * scale, statsY + statsHeight / 2);
+
+        canvas.toBlob(function (blob) {
+            if (!blob) { toast('图片生成失败，请改用导出 CSV', 'err'); return; }
+            download(blob, '节日送礼清单_' + localDateStamp() + '.png');
+            toast('图片已导出', 'ok');
+        }, 'image/png');
+    }
+
+    function exportJSON() {
+        var data = {
+            version: 1,
+            exportedAt: new Date().toISOString(),
+            families: families,
+            gifts: gifts,
+            assignments: assignments
+        };
+        download(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8;' }),
+            '节日送礼数据_' + localDateStamp(true) + '.json');
+        toast('JSON 已导出', 'ok');
+    }
+
+    function importJSON(file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var result;
+            try {
+                result = sanitizeImport(JSON.parse(e.target.result));
+            } catch (err) {
+                console.error(err);
+                toast('导入失败：不是合法的 JSON 文件', 'err');
+                return;
+            }
+            if (!result.ok) { toast('导入失败：' + result.error, 'err', 4200); return; }
+
+            confirmDialog('导入数据',
+                '将用文件中的 ' + result.families.length + ' 个家庭、' + result.gifts.length + ' 件礼物覆盖当前数据。\n此操作可以用 Ctrl+Z 撤销。',
+                '覆盖导入'
+            ).then(function (ok) {
+                if (!ok) return;
+                recordHistory();
+                families = result.families;
+                gifts = result.gifts;
+                assignments = result.assignments;
+                nextFamilyId = families.reduce(function (m, f) { return Math.max(m, f.id); }, 0) + 1;
+                nextGiftId = gifts.reduce(function (m, g) { return Math.max(m, g.id); }, 0) + 1;
+                selectedGiftId = null;
+                pruneState();
+                renderAll();
+                saveDraft();
+                toast('导入成功：' + families.length + ' 家 / ' + gifts.length + ' 件礼物', 'ok');
+            });
+        };
+        reader.onerror = function () { toast('文件读取失败', 'err'); };
+        reader.readAsText(file);
+    }
+
+    async function clearDraft() {
+        var ok = await confirmDialog('清空草稿', '将删除本机保存的草稿并恢复示例数据。\n已导出的文件不受影响。', '清空并重置');
+        if (!ok) return;
+        try { localStorage.removeItem(STORAGE_KEY); } catch (err) {}
+        recordHistory();
+        initDemo(true);
+        toast('草稿已清空', 'ok');
+    }
+
+    /* ==================================================================
+     * 13. 示例数据与启动
+     * ================================================================== */
+    function initDemo(skipHistory) {
+        families = [
+            { id: 1, name: '爸爸妈妈' },
+            { id: 2, name: '爷爷奶奶' },
+            { id: 3, name: '大姨' },
+            { id: 4, name: '二舅' }
+        ];
+        gifts = [
+            { id: 1, name: '茶叶礼盒', qty: 2, price: 680 },
+            { id: 2, name: '按摩仪', qty: 1, price: 359 },
+            { id: 3, name: '保健品', qty: 4, price: 199 },
+            { id: 4, name: '保暖内衣', qty: 3, price: 128 },
+            { id: 5, name: '水果礼盒', qty: 2, price: 188 },
+            { id: 6, name: '白酒', qty: 2, price: 450 },
+            { id: 7, name: '香烟', qty: 4, price: 260 }
+        ];
+        nextFamilyId = families.length + 1;
+        nextGiftId = gifts.length + 1;
+        assignments = {};
+        families.forEach(function (f) { assignments[f.id] = {}; });
+        selectedGiftId = null;
+        if (!skipHistory) { history.past.length = 0; history.future.length = 0; }
+        updateHistoryButtons();
+        renderSetup();
+        saveDraft();
+    }
+
+    function bindGlobalEvents() {
+        document.getElementById('addFamilySetupBtn').addEventListener('click', function () {
+            recordHistory();
+            families.push({ id: nextFamilyId++, name: '新家庭' });
+            renderSetup();
+            saveDraft();
+            var rows = DOM.familySetupList.querySelectorAll('.setup-row');
+            var last = rows[rows.length - 1];
+            if (last) {
+                var inp = last.querySelector('input');
+                if (inp) { inp.focus(); inp.select(); }
+            }
+        });
+        document.getElementById('addGiftSetupBtn').addEventListener('click', function () {
+            recordHistory();
+            gifts.push({ id: nextGiftId++, name: '新礼物', qty: 1, price: 0 });
+            renderSetup();
+            saveDraft();
+            var rows = DOM.giftSetupList.querySelectorAll('.setup-row');
+            var last = rows[rows.length - 1];
+            if (last) {
+                var inp = last.querySelector('input');
+                if (inp) { inp.focus(); inp.select(); }
+            }
+        });
+        document.getElementById('resetStep1Btn').addEventListener('click', resetStep1);
+        document.getElementById('toStep2Btn').addEventListener('click', goToStep2);
+        document.getElementById('backToStep1Btn').addEventListener('click', goToStep1);
+        document.getElementById('resetMatchBtn').addEventListener('click', resetMatch);
+        document.getElementById('autoAssignBtn').addEventListener('click', autoAssignOneEach);
+        document.getElementById('exportCsvBtn').addEventListener('click', exportCSV);
+        document.getElementById('exportImgBtn').addEventListener('click', exportImage);
+        document.getElementById('exportJsonBtn').addEventListener('click', exportJSON);
+        document.getElementById('clearDraftBtn').addEventListener('click', clearDraft);
+        document.getElementById('undoBtn').addEventListener('click', undo);
+        document.getElementById('redoBtn').addEventListener('click', redo);
+
+        var importBtns = [document.getElementById('importJsonBtn'), document.getElementById('importJsonStep1Btn')];
+        importBtns.forEach(function (b) { b.addEventListener('click', function () { DOM.importJsonInput.click(); }); });
+        DOM.importJsonInput.addEventListener('change', function (e) {
+            var file = e.target.files && e.target.files[0];
+            if (file) importJSON(file);
+            e.target.value = '';
+        });
+
+        document.addEventListener('keydown', function (e) {
+            var mod = e.ctrlKey || e.metaKey;
+            if (mod && (e.key === 'z' || e.key === 'Z')) {
+                e.preventDefault();
+                if (e.shiftKey) redo(); else undo();
+            } else if (mod && (e.key === 'y' || e.key === 'Y')) {
+                e.preventDefault();
+                redo();
+            }
+        });
+
+        // 离开页面前确保草稿写入
+        window.addEventListener('beforeunload', function () {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                    v: 1, savedAt: Date.now(), families: families, gifts: gifts,
+                    assignments: assignments, nextFamilyId: nextFamilyId, nextGiftId: nextGiftId
+                }));
+            } catch (err) {}
+        });
+        window.addEventListener('pagehide', function () { saveDraft(); });
+    }
+
+    function setupResponsive() {
+        var mq = window.matchMedia('(max-width: 720px), (pointer: coarse) and (max-width: 900px)');
+        function apply() {
+            var next = mq.matches;
+            if (next === isMobile) return;
+            isMobile = next;
+            if (!DOM.step2Panel.classList.contains('hidden')) renderMatch();
+        }
+        isMobile = mq.matches;
+        if (mq.addEventListener) mq.addEventListener('change', apply);
+        else if (mq.addListener) mq.addListener(apply);
+    }
+
+    /* 渲染图标 */
+    document.querySelectorAll('[data-ico]').forEach(function (el) {
+        el.appendChild(makeIcon(el.dataset.ico));
+    });
+
+    setupResponsive();
+    bindGlobalEvents();
+
+    // 启动：优先恢复本机草稿，否则载入示例
+    var draft = loadDraft();
+    if (draft) {
+        applyDraft(draft);
+        renderSetup();
+        updateHistoryButtons();
+        var when = draft.savedAt ? new Date(draft.savedAt) : null;
+        var whenText = when && !isNaN(when.getTime())
+            ? (when.getMonth() + 1) + '月' + when.getDate() + '日 ' + String(when.getHours()).padStart(2, '0') + ':' + String(when.getMinutes()).padStart(2, '0')
+            : '上次';
+        toast('已恢复 ' + whenText + ' 的草稿（' + families.length + ' 家 / ' + gifts.length + ' 件礼物）', 'ok', 3200);
+    } else {
+        initDemo();
+    }
+})();
+</script>
+</body>
+</html>
