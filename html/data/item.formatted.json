@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-09-21T11:38:30.508063",
+  "exportTime": "2026-09-24T10:35:12.177245",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -160,42 +160,10 @@
       "remark": ""
     },
     {
-      "itemCode": "JY010021",
-      "itemName": "25种DNA病原微生物以及13种RNA病原微生物宏基因组检测",
-      "applyFormCode": "14239",
-      "sample": "全血,尿液,脑脊液,腹水,胸水,痰,肺及支气管灌洗液,肛拭子,鼻拭子,支气管肺泡灌洗液",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
-      "itemCode": "JY010022",
-      "itemName": "9种病原微生物靶向基因组检测",
-      "applyFormCode": "14239",
-      "sample": "全血,尿液,脑脊液,腹水,胸水,痰,肺及支气管灌洗液,肛拭子,鼻拭子,支气管肺泡灌洗液",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
-      "itemCode": "JY010023",
-      "itemName": "25种病原微生物宏基因组检测",
-      "applyFormCode": "14239",
-      "sample": "全血,尿液,脑脊液,腹水,胸水,痰,肺及支气管灌洗液,肛拭子,鼻拭子,支气管肺泡灌洗液",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
       "itemCode": "JY010024",
       "itemName": "诺如病毒核酸检测",
       "applyFormCode": "14239",
       "sample": "粪便",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
-      "itemCode": "JY010025",
-      "itemName": "16种血流感染病原微生物菌属以及耐药基因核酸联合检测",
-      "applyFormCode": "14239",
-      "sample": "全血",
       "isEmergency": 0,
       "remark": ""
     },
@@ -1187,9 +1155,9 @@
       "itemCode": "JY030012",
       "itemName": "内毒素鲎定量试验",
       "applyFormCode": "14247",
-      "sample": "全血,透析用水,透析液",
+      "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": ""
     },
     {
       "itemCode": "JY030014",
@@ -2800,38 +2768,6 @@
       "remark": null
     },
     {
-      "itemCode": "JY060056",
-      "itemName": "凝血酶抗凝血酶复合物",
-      "applyFormCode": "14241",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null
-    },
-    {
-      "itemCode": "JY060057",
-      "itemName": "纤溶酶-抗纤溶酶复合物",
-      "applyFormCode": "14241",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null
-    },
-    {
-      "itemCode": "JY060058",
-      "itemName": "凝血酶调节蛋白",
-      "applyFormCode": "14241",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null
-    },
-    {
-      "itemCode": "JY060059",
-      "itemName": "组织型纤溶酶原激活剂-抑制剂复合物",
-      "applyFormCode": "14241",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null
-    },
-    {
       "itemCode": "JY060060",
       "itemName": "精液常规+精子运动轨迹分析",
       "applyFormCode": "14241",
@@ -3960,42 +3896,6 @@
       ],
       "sum": 3000.0
     },
-    "JY010021": {
-      "details": [
-        {
-          "detailCode": "270700003",
-          "detailName": "脱氧核糖核酸（DNA）测序",
-          "price": 150.0,
-          "count": 38.0,
-          "total": 5700.0
-        }
-      ],
-      "sum": 5700.0
-    },
-    "JY010022": {
-      "details": [
-        {
-          "detailCode": "270700003",
-          "detailName": "脱氧核糖核酸（DNA）测序",
-          "price": 150.0,
-          "count": 9.0,
-          "total": 1350.0
-        }
-      ],
-      "sum": 1350.0
-    },
-    "JY010023": {
-      "details": [
-        {
-          "detailCode": "270700003",
-          "detailName": "脱氧核糖核酸（DNA）测序",
-          "price": 150.0,
-          "count": 25.0,
-          "total": 3750.0
-        }
-      ],
-      "sum": 3750.0
-    },
     "JY010024": {
       "details": [
         {
@@ -4007,18 +3907,6 @@
         }
       ],
       "sum": 61.0
-    },
-    "JY010025": {
-      "details": [
-        {
-          "detailCode": "250403065a",
-          "detailName": "各类病原体DNA定量检测",
-          "price": 85.0,
-          "count": 16.0,
-          "total": 1360.0
-        }
-      ],
-      "sum": 1360.0
     },
     "JY010026": {
       "details": [
@@ -10034,54 +9922,6 @@
       ],
       "sum": 100.0
     },
-    "JY060056": {
-      "details": [
-        {
-          "detailCode": "250203049a",
-          "detailName": "凝血酶抗凝血酶III复合物测定（TAT)",
-          "price": 150.0,
-          "count": 1.0,
-          "total": 150.0
-        }
-      ],
-      "sum": 150.0
-    },
-    "JY060057": {
-      "details": [
-        {
-          "detailCode": "250203064a",
-          "detailName": "血浆纤溶酶-抗纤溶酶III复合物测定（PAP)",
-          "price": 150.0,
-          "count": 1.0,
-          "total": 150.0
-        }
-      ],
-      "sum": 150.0
-    },
-    "JY060058": {
-      "details": [
-        {
-          "detailCode": "250203061a",
-          "detailName": "血浆凝血酶调节蛋白活性检测(TMA)",
-          "price": 150.0,
-          "count": 1.0,
-          "total": 150.0
-        }
-      ],
-      "sum": 150.0
-    },
-    "JY060059": {
-      "details": [
-        {
-          "detailCode": "250203058a",
-          "detailName": "组织型纤溶酶原激活剂-抑制剂I复合体检测",
-          "price": 150.0,
-          "count": 1.0,
-          "total": 150.0
-        }
-      ],
-      "sum": 150.0
-    },
     "JY060060": {
       "details": [
         {
@@ -14481,6 +14321,12 @@
         "chineseName": "粪便钙卫蛋白检测",
         "charge": 100.0,
         "hisId": "JY060053"
+      },
+      {
+        "chargeItemId": "LIS0897",
+        "chineseName": "粪便转铁蛋白",
+        "charge": 100.0,
+        "hisId": "JY060054"
       },
       {
         "chargeItemId": "LIS0264",
@@ -21317,6 +21163,12 @@
         "chargeItemId": "LIS0266",
         "testItemId": "8199",
         "itemSort": "Z8199"
+      },
+      {
+        "groupId": "G002",
+        "chargeItemId": "LIS0897",
+        "testItemId": "8678",
+        "itemSort": "Z8678"
       },
       {
         "groupId": "G003",
@@ -37511,7 +37363,7 @@
       {
         "testItemId": "8199",
         "testItemCode": "Cal",
-        "chineseName": "粪便钙卫蛋白检测",
+        "chineseName": "粪便钙卫蛋白",
         "itemDes": null
       },
       {
@@ -40356,6 +40208,12 @@
         "testItemId": "8677",
         "testItemCode": null,
         "chineseName": "利尿剂NPPA(T2238C)",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8678",
+        "testItemCode": "TRF",
+        "chineseName": "粪便转铁蛋白",
         "itemDes": null
       }
     ]
