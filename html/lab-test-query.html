@@ -963,12 +963,317 @@ body {
   }
 }
 
+/* ===== 数据更新与变更记录弹窗 ===== */
+.info-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 300;
+  display: none;
+}
+
+.info-mask.show {
+  display: block;
+}
+
+.info-modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(760px, calc(100vw - 24px));
+  max-height: 82vh;
+  max-height: min(82dvh, 760px);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  z-index: 301;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.info-modal.show {
+  display: flex;
+}
+
+.info-modal-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.info-modal-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.info-modal-close {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: #999;
+  font-size: 16px;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.info-modal-close:hover {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.info-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.info-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+}
+
+.info-fact {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.8;
+}
+
+.info-fact b {
+  color: #333;
+  font-weight: 600;
+}
+
+.info-note {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #fff7e6;
+  border: 1px solid #ffe0a3;
+  color: #ad6800;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.info-section-title {
+  margin: 16px 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.info-empty {
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+  padding: 28px 0;
+  line-height: 1.8;
+}
+
+.change-record {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.change-record > summary {
+  cursor: pointer;
+  padding: 10px 12px;
+  background: #fafafa;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  font-size: 13px;
+  color: #333;
+  list-style: none;
+}
+
+.change-record > summary::-webkit-details-marker {
+  display: none;
+}
+
+.change-record[open] > summary {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cr-caret {
+  font-size: 10px;
+  color: #999;
+  transition: transform 0.2s;
+}
+
+.change-record[open] .cr-caret {
+  transform: rotate(90deg);
+}
+
+.cr-time {
+  font-weight: 600;
+}
+
+.cr-stats {
+  color: #1677ff;
+}
+
+.cr-stats.cr-none {
+  color: #999;
+}
+
+.cr-extra {
+  color: #999;
+  font-size: 12px;
+}
+
+.cr-detected {
+  color: #bbb;
+  font-size: 12px;
+  margin-left: auto;
+}
+
+.change-record .cr-body {
+  padding: 10px 12px;
+}
+
+.change-group {
+  margin-bottom: 12px;
+}
+
+.change-group:last-child {
+  margin-bottom: 0;
+}
+
+.change-group-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.cg-count {
+  color: #bbb;
+  font-weight: 400;
+}
+
+.change-item {
+  border-left: 3px solid #d9d9d9;
+  background: #fafafa;
+  border-radius: 0 8px 8px 0;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+}
+
+.change-item:last-child {
+  margin-bottom: 0;
+}
+
+.change-item.level-add {
+  border-left-color: #52c41a;
+}
+
+.change-item.level-remove {
+  border-left-color: #ff4d4f;
+}
+
+.change-item.level-update {
+  border-left-color: #1677ff;
+}
+
+.ci-head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.ci-badge {
+  flex-shrink: 0;
+  font-size: 11px;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.level-add .ci-badge {
+  background: rgba(82, 196, 26, 0.12);
+  color: #389e0d;
+}
+
+.level-remove .ci-badge {
+  background: rgba(255, 77, 79, 0.12);
+  color: #cf1322;
+}
+
+.level-update .ci-badge {
+  background: rgba(22, 119, 255, 0.12);
+  color: #0958d9;
+}
+
+.ci-title {
+  font-weight: 600;
+  color: #333;
+  word-break: break-all;
+}
+
+.ci-fields {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ci-field {
+  font-size: 12px;
+  color: #555;
+  line-height: 1.7;
+  word-break: break-all;
+}
+
+.cf-label {
+  color: #999;
+  margin-right: 6px;
+}
+
+.cf-label::after {
+  content: '：';
+}
+
+.cf-from {
+  color: #cf1322;
+}
+
+.cf-to {
+  color: #389e0d;
+}
+
+.cf-arrow {
+  margin: 0 6px;
+  color: #bbb;
+}
+
+.cf-value {
+  color: #333;
+}
+
   </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="header-title" id="headerTitle" title="点击查看数据更新时间">检验项目查询</div>
+  <div class="header-title" id="headerTitle" title="点击查看数据更新时间与变更记录">检验项目查询</div>
   <input
     id="searchInput"
     class="search-input"
@@ -1099,6 +1404,16 @@ body {
 
 <div class="mask" id="mask"></div>
 <div class="drawer" id="drawer"></div>
+
+<!-- 数据更新与变更记录弹窗 -->
+<div class="info-mask" id="infoMask"></div>
+<div class="info-modal" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+  <div class="info-modal-header">
+    <span class="info-modal-title" id="infoModalTitle">数据更新与变更记录</span>
+    <button class="info-modal-close" id="infoModalClose" type="button" title="关闭" aria-label="关闭">✕</button>
+  </div>
+  <div class="info-modal-body" id="infoModalBody"></div>
+</div>
 
 <!-- 加载动画 -->
 <div class="loading-overlay" id="loadingOverlay">
@@ -1251,23 +1566,9 @@ function bindSearch() {
     });
   }
 
-  // 绑定标题点击显示更新时间
+  // 绑定标题点击显示更新时间和变更记录
   if (headerTitle) {
-    headerTitle.addEventListener('click', () => {
-      if (DATA.exportTime) {
-        const date = new Date(DATA.exportTime);
-        const formattedTime = date.toLocaleString('zh-CN', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit'
-        });
-        alert(`更新时间：${formattedTime}`);
-      } else {
-        alert('暂无更新时间信息');
-      }
-    });
+    headerTitle.addEventListener('click', openInfoModal);
   }
 
   // 绑定高级搜索面板
@@ -2704,6 +3005,260 @@ if (document.readyState === 'loading') {
 // ============================================
 
 // ============================================
+// 数据更新与变更记录弹窗
+// 说明：变更记录由仓库根目录的 generate_item_changes.py 对比 item.json 前后
+// 两次导出生成，写入 data/item-changes.json。item.json 目前由内网手工导出，
+// 因此记录中的时间只是“导出 / 检测”时间，并非项目实际发生变更的时间。
+// ============================================
+const CHANGES_URL = 'data/item-changes.json';
+const DEFAULT_CHANGE_CATEGORIES = [
+  { key: 'item', label: 'HIS 项目' },
+  { key: 'price', label: '收费价格' },
+  { key: 'lis', label: 'LIS 分析项目' },
+  { key: 'form', label: '申请单' }
+];
+const CHANGE_LEVEL_TEXT = { add: '新增', remove: '删除', update: '修改' };
+
+let changesData = null;      // 变更记录文件内容
+let changesLoaded = false;   // 是否已成功加载
+let changesLoading = false;  // 是否正在加载
+let changesError = '';       // 加载失败信息
+
+function escapeHtml(value) {
+  return String(value === null || value === undefined ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// 兼容 "2026-09-24T10:49:50.794837" 与 "2026-09-24 10:49:50" 两种格式
+function formatDateTimeText(value) {
+  if (!value) return '未知';
+  const raw = String(value).trim();
+  const date = new Date(raw.indexOf('T') > -1 ? raw : raw.replace(' ', 'T'));
+  if (isNaN(date.getTime())) return raw;
+  return date.toLocaleString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
+function openInfoModal() {
+  const mask = document.getElementById('infoMask');
+  const modal = document.getElementById('infoModal');
+  if (!mask || !modal) return;
+
+  mask.classList.add('show');
+  modal.classList.add('show');
+  renderInfoModal();
+  loadChangesData();
+}
+
+function closeInfoModal() {
+  const mask = document.getElementById('infoMask');
+  const modal = document.getElementById('infoModal');
+  if (mask) mask.classList.remove('show');
+  if (modal) modal.classList.remove('show');
+}
+
+function initChangeModal() {
+  const mask = document.getElementById('infoMask');
+  const closeBtn = document.getElementById('infoModalClose');
+  if (mask) mask.addEventListener('click', closeInfoModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeInfoModal);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeInfoModal();
+  });
+}
+
+function loadChangesData() {
+  if (changesLoaded || changesLoading) return;
+  changesLoading = true;
+  renderInfoModal();
+
+  fetchChangesData()
+    .then(data => {
+      changesData = data;
+      changesLoaded = true;
+      changesError = '';
+    })
+    .catch(err => {
+      changesError = (err && err.message) ? err.message : '未知错误';
+    })
+    .then(() => {
+      changesLoading = false;
+      renderInfoModal();
+    });
+}
+
+// 先带时间戳请求，绕过 Service Worker / HTTP 缓存拿到最新记录；
+// 失败（例如离线）时回退到普通请求，由 Service Worker 缓存兜底。
+function fetchChangesData() {
+  const sep = CHANGES_URL.indexOf('?') > -1 ? '&' : '?';
+  return fetch(CHANGES_URL + sep + '_t=' + Date.now(), { cache: 'no-store' })
+    .then(res => {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    })
+    .then(data => {
+      cleanupTempCacheEntries(CHANGES_URL);
+      return data;
+    })
+    .catch(() =>
+      fetch(CHANGES_URL).then(res => {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+    );
+}
+
+function renderInfoModal() {
+  const body = document.getElementById('infoModalBody');
+  if (!body) return;
+
+  const exportTime = (DATA && DATA.exportTime) ? DATA.exportTime : '';
+  let html = '<div class="info-facts">';
+  html += `<div class="info-fact">当前数据导出时间：<b>${escapeHtml(formatDateTimeText(exportTime))}</b></div>`;
+
+  if (changesLoaded && changesData) {
+    html += `<div class="info-fact">最近检测时间：<b>${escapeHtml(formatDateTimeText(changesData.lastCheckedAt))}</b></div>`;
+    const records = changesData.records || [];
+    html += `<div class="info-fact">变更记录：<b>${records.length} 条</b></div>`;
+    if (changesData.lastChangeAt) {
+      html += `<div class="info-fact">最近一次检测到变更：<b>${escapeHtml(formatDateTimeText(changesData.lastChangeAt))}</b></div>`;
+    }
+  }
+
+  html += '</div>';
+  html += '<div class="info-note">⚠️ 以上均为 <b>导出 / 检测时间</b>，不是项目实际发生变更的时间。'
+        + 'item.json 由内网导出，每条记录表示该次导出相对上一次导出新发现的变化，'
+        + '实际变更可能发生在更早的时间。</div>';
+
+  if (changesLoading && !changesLoaded) {
+    html += '<div class="info-empty">正在加载变更记录…</div>';
+  } else if (changesError) {
+    html += `<div class="info-empty">变更记录加载失败：${escapeHtml(changesError)}</div>`;
+  } else if (!changesData || !(changesData.records || []).length) {
+    html += '<div class="info-empty">暂无变更记录<br>（每次导出后对比上一次导出，有变化时才会记录）</div>';
+  } else {
+    html += '<div class="info-section-title">变更记录（最新在前）</div>';
+    changesData.records.forEach((record, index) => {
+      html += renderChangeRecord(record, index === 0);
+    });
+  }
+
+  body.innerHTML = html;
+}
+
+function renderChangeRecord(record, open) {
+  const stats = record.stats || {};
+  const total = stats.total || 0;
+  const changes = record.changes || [];
+
+  let summary = '<span class="cr-caret">▶</span>';
+  summary += `<span class="cr-time">${escapeHtml(formatDateTimeText(record.exportTime))} 导出</span>`;
+
+  if (record.baseline) {
+    summary += '<span class="cr-stats cr-none">已建立基线</span>';
+  } else if (total) {
+    summary += `<span class="cr-stats">${total} 项变更</span>`;
+    const bits = [];
+    if (stats.add) bits.push(`新增 ${stats.add}`);
+    if (stats.remove) bits.push(`删除 ${stats.remove}`);
+    if (stats.update) bits.push(`修改 ${stats.update}`);
+    if (bits.length) summary += `<span class="cr-extra">${escapeHtml(bits.join(' · '))}</span>`;
+  } else {
+    summary += '<span class="cr-stats cr-none">无变化</span>';
+  }
+  summary += `<span class="cr-detected">记录于 ${escapeHtml(formatDateTimeText(record.recordedAt))}</span>`;
+
+  let body = '';
+  if (record.baseline) {
+    body = '<div class="info-empty" style="padding:12px 0;">首次运行，建立了对比基线，此前的历史差异无法追溯。</div>';
+  } else if (!changes.length) {
+    body = '<div class="info-empty" style="padding:12px 0;">本次导出与上一次相比没有变化。</div>';
+  } else {
+    body = renderChangeGroups(changes);
+  }
+
+  return `<details class="change-record"${open ? ' open' : ''}>`
+       + `<summary>${summary}</summary>`
+       + `<div class="cr-body">${body}</div>`
+       + '</details>';
+}
+
+function renderChangeGroups(changes) {
+  const grouped = {};
+  changes.forEach(change => {
+    const key = change.category || 'other';
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(change);
+  });
+
+  const categories = (changesData && changesData.categories && changesData.categories.length)
+    ? changesData.categories.slice()
+    : DEFAULT_CHANGE_CATEGORIES.slice();
+  const known = {};
+  categories.forEach(cat => { known[cat.key] = true; });
+  Object.keys(grouped).forEach(key => {
+    if (!known[key]) categories.push({ key: key, label: key });
+  });
+
+  let html = '';
+  categories.forEach(cat => {
+    const list = grouped[cat.key];
+    if (!list || !list.length) return;
+    html += `<div class="change-group"><div class="change-group-title">${escapeHtml(cat.label)}`
+          + `<span class="cg-count"> · ${list.length}</span></div>`;
+    list.forEach(change => { html += renderChangeItem(change); });
+    html += '</div>';
+  });
+  return html;
+}
+
+function renderChangeItem(change) {
+  const level = CHANGE_LEVEL_TEXT[change.level] ? change.level : 'update';
+  let html = `<div class="change-item level-${level}">`;
+  html += '<div class="ci-head">'
+        + `<span class="ci-badge">${escapeHtml(CHANGE_LEVEL_TEXT[level])}</span>`
+        + `<span class="ci-title">${escapeHtml(change.title)}</span>`
+        + '</div>';
+
+  const fields = change.fields || [];
+  if (fields.length) {
+    html += '<div class="ci-fields">';
+    fields.forEach(field => {
+      const isDiff = field.from !== undefined || field.to !== undefined;
+      const oldText = field.from ? escapeHtml(field.from) : '（空）';
+      const newText = field.to ? escapeHtml(field.to) : '（空）';
+      html += '<div class="ci-field">'
+            + `<span class="cf-label">${escapeHtml(field.label)}</span>`;
+      if (isDiff) {
+        html += `<span class="cf-from">${oldText}</span>`
+              + '<span class="cf-arrow">→</span>'
+              + `<span class="cf-to">${newText}</span>`;
+      } else {
+        html += `<span class="cf-value">${field.value ? escapeHtml(field.value) : '（空）'}</span>`;
+      }
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+// 页面加载后绑定弹窗关闭事件
+initChangeModal();
+// ============================================
+
+// ============================================
 // 数据更新检测
 // 说明：由于 sw.js 采用缓存优先策略，页面可能一直展示缓存中的旧数据。
 // 本功能在数据加载完成后，后台请求服务器上的最新数据（URL 追加时间戳，
@@ -2773,7 +3328,7 @@ async function checkForUpdates() {
   } finally {
     updateCheckInFlight = false;
     // 清理带时间戳的临时缓存条目（SW 会把检查请求的响应也写入缓存）
-    cleanupTempCacheEntries();
+    cleanupTempCacheEntries(DATA_URLS[0]);
   }
 }
 
@@ -2792,10 +3347,10 @@ async function updateCanonicalCache(relativeUrl, freshResponse) {
 }
 
 // 清理带时间戳的临时缓存条目，避免缓存无限增长
-async function cleanupTempCacheEntries() {
+async function cleanupTempCacheEntries(relativeUrl) {
   if (!('caches' in window)) return;
   try {
-    const canonicalUrl = new URL(DATA_URLS[0], location.href).href;
+    const canonicalUrl = new URL(relativeUrl, location.href).href;
     const names = await caches.keys();
     for (const name of names) {
       const cache = await caches.open(name);

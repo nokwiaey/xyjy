@@ -29,6 +29,16 @@ The `/html/` directory contains standalone tool pages (phone directory, lab test
 
 The preview is a plain `<iframe>` on desktop, where browsers ship a built-in PDF viewer. **On mobile the list replaces the preview entirely** (tapping a row opens its PDF in a new window / 系统阅读器): Chrome for Android has no built-in PDF viewer, so an embedded PDF renders as a blank/error frame. Mobile detection lives in the page JS (`detectMobile()` + `body.mode-mobile`), keyed off the UA plus a coarse-pointer/narrow-viewport check, so a shrunken desktop window still gets the embedded preview.
 
+### Lab test item change log (`html/data/item-changes.json`)
+
+`html/data/item.json` (HIS 项目 / 收费价格 / LIS 关联) is re-exported by hand from the intranet from time to time, so the site cannot know when a project actually changed. `generate_item_changes.py` diffs the current export against the previous one (`html/data/item-snapshot.json`) and appends a change record to `html/data/item-changes.json`, which `html/lab-test-query.html` renders in the modal opened by clicking the header title ("点击查看数据更新与变更记录").
+
+- Detected: HIS 项目增删改、收费明细与价格变化、LIS 检验分组 / 分析项目 / 收费项目 / 关联关系变化、申请单变化
+- 项目整体新增或删除时，其价格信息并入该条目，不再重复记一条价格变更
+- No changes → no record is appended (only `lastCheckedAt` / `lastExportTime` in the file are refreshed); the very first run writes a baseline record instead
+- Each record stores `recordedAt` (script run time) and `exportTime` (export file time). **Neither is when the project changed** — a change is only known to fall between `prevExportTime` and `exportTime`, and the page says so explicitly
+- Future plan: run this script on a schedule inside the intranet so every export is recorded as it happens
+
 ### Client-side features
 
 The page includes: dark/light theme toggle, search with keyboard navigation (Ctrl+K, arrow keys), tag-based filtering, recently visited tools (localStorage), copy-link buttons on cards, QR code modal, WeChat sharing integration, site-switcher menu for multi-mirror deployment, and Vercount visitor statistics.
@@ -43,12 +53,14 @@ The page includes: dark/light theme toggle, search with keyboard navigation (Ctr
 - **Editing JS behavior**: edit `script.js` → run `generate_nav.py`
 - **Regenerate the schedule manifest**: `python generate_schedule_manifest.py` — scans `html/jyk_schedule/data/*.pdf`, writes `html/jyk_schedule/data/schedule.json`
 - **Adding a schedule**: drop the PDF into `html/jyk_schedule/data/` → run `generate_schedule_manifest.py`
+- **Regenerate the item change log**: `python generate_item_changes.py` — diffs `html/data/item.json` against `html/data/item-snapshot.json`, appends a record to `html/data/item-changes.json`. Useful flags: `--init` (rebuild the baseline only), `--dry-run` (print the diff, write nothing), `--max-records N`
+- **After a manual `item.json` export**: run `python generate_item_changes.py` (CI also runs it on every push, so committing a new export is enough)
 
 ## CI/CD
 
 GitHub Actions (`.github/workflows/static.yml`) triggers on push to `main`:
-1. Runs `python generate_nav.py` and `python generate_schedule_manifest.py`
-2. Commits the regenerated `index.html` and `html/jyk_schedule/data/schedule.json` back to the repo
+1. Runs `python generate_nav.py`, `python generate_schedule_manifest.py` and `python generate_item_changes.py`
+2. Commits the regenerated `index.html`, `html/jyk_schedule/data/schedule.json`, `html/data/item-changes.json` and `html/data/item-snapshot.json` back to the repo
 3. Deploys the entire repo to GitHub Pages
 
 Cloudflare Pages is also configured via `wrangler.jsonc` (deploys the entire repo as static assets).
@@ -64,6 +76,9 @@ The same page is deployed to multiple mirrors (configured in `tools.json` → `s
 | `tools.json` | Data: tool list + tag definitions + site mirror URLs |
 | `generate_nav.py` | Template engine: reads JSON + CSS + JS, outputs self-contained `index.html` |
 | `generate_schedule_manifest.py` | Scans `html/jyk_schedule/data/*.pdf`, writes `data/schedule.json` for the schedule page |
+| `generate_item_changes.py` | Diffs `html/data/item.json` exports, appends to `html/data/item-changes.json` and refreshes `html/data/item-snapshot.json` |
+| `html/data/item-changes.json` | Generated change log rendered by the lab test query page (header-title modal) |
+| `html/data/item-snapshot.json` | Baseline snapshot of the last diffed `item.json` — build input, not used by the page |
 | `style.css` | Stylesheet, inlined into `index.html` at build time |
 | `script.js` | Client-side JS (search, tags, theme, QR, recent visits, WeChat, etc.), inlined at build time |
 | `index.html` | Generated output, committed for direct viewing |

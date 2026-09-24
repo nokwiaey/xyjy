@@ -1,0 +1,49 @@
+{
+ "schema": 1,
+ "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测/记录时间，exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
+ "generatedAt": "2026-09-24 11:05:44",
+ "lastCheckedAt": "2026-09-24 11:05:44",
+ "lastExportTime": "2026-09-24T10:49:50.794837",
+ "lastChangeAt": null,
+ "recordCount": 1,
+ "categories": [
+  {
+   "key": "item",
+   "label": "HIS 项目"
+  },
+  {
+   "key": "price",
+   "label": "收费价格"
+  },
+  {
+   "key": "lis",
+   "label": "LIS 分析项目"
+  },
+  {
+   "key": "form",
+   "label": "申请单"
+  }
+ ],
+ "records": [
+  {
+   "id": "20260924-110544",
+   "recordedAt": "2026-09-24 11:05:44",
+   "exportTime": "2026-09-24T10:49:50.794837",
+   "prevExportTime": "",
+   "version": "2.1.0",
+   "prevVersion": "",
+   "baseline": true,
+   "stats": {
+    "total": 0,
+    "add": 0,
+    "remove": 0,
+    "update": 0,
+    "item": 0,
+    "price": 0,
+    "lis": 0,
+    "form": 0
+   },
+   "changes": []
+  }
+ ]
+}

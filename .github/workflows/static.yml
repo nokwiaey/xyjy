@@ -39,11 +39,13 @@ jobs:
         run: python generate_nav.py
       - name: Generate schedule manifest
         run: python generate_schedule_manifest.py
+      - name: Generate item change log
+        run: python generate_item_changes.py
       - name: Commit generated files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'chore: auto-generate index.html and schedule manifest'
-          file_pattern: 'index.html html/jyk_schedule/data/schedule.json'
+          commit_message: 'chore: auto-generate index.html, schedule manifest and item change log'
+          file_pattern: 'index.html html/jyk_schedule/data/schedule.json html/data/item-changes.json html/data/item-snapshot.json'
           add_options: ''
       - name: Setup Pages
         uses: actions/configure-pages@v5
