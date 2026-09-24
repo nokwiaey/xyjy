@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-09-24T10:49:50.794837",
+  "exportTime": "2026-09-24T11:28:33.142407",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -272,30 +272,6 @@
       "remark": null
     },
     {
-      "itemCode": "JY020019",
-      "itemName": "24小时尿电解质",
-      "applyFormCode": "14243",
-      "sample": "尿液",
-      "isEmergency": 0,
-      "remark": null
-    },
-    {
-      "itemCode": "JY020020",
-      "itemName": "高血压3项",
-      "applyFormCode": "14243",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
-      "itemCode": "JY020021",
-      "itemName": "胸痛中心检测项目",
-      "applyFormCode": "14243",
-      "sample": "全血",
-      "isEmergency": 1,
-      "remark": null
-    },
-    {
       "itemCode": "JY020024",
       "itemName": "降钙素原（生化室）",
       "applyFormCode": "14243",
@@ -328,14 +304,6 @@
       "remark": ""
     },
     {
-      "itemCode": "JY020030",
-      "itemName": "尿肌酐、微量白蛋白检测",
-      "applyFormCode": "14243",
-      "sample": "尿液",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
       "itemCode": "JY020031",
       "itemName": "N端-B型钠尿肽前体",
       "applyFormCode": "14243",
@@ -348,14 +316,6 @@
       "itemName": "脑脊液生化",
       "applyFormCode": "14243",
       "sample": "脑脊液",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
-      "itemCode": "JY020033",
-      "itemName": "胸腹水生化",
-      "applyFormCode": "14243",
-      "sample": "腹水",
       "isEmergency": 0,
       "remark": ""
     },
@@ -462,14 +422,6 @@
       "sample": "全血",
       "isEmergency": 0,
       "remark": null
-    },
-    {
-      "itemCode": "JY020049",
-      "itemName": "风湿常规",
-      "applyFormCode": "14243",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": ""
     },
     {
       "itemCode": "JY020053",
@@ -1264,22 +1216,6 @@
       "remark": ""
     },
     {
-      "itemCode": "JY040001",
-      "itemName": "肺炎抗体血清学检测",
-      "applyFormCode": "14242",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "定量  化学发光法"
-    },
-    {
-      "itemCode": "JY040004",
-      "itemName": "艾丙梅三项（定性）",
-      "applyFormCode": "14242",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "定性   酶联免疫法  筛查试验"
-    },
-    {
       "itemCode": "JY040005",
       "itemName": "过敏原系列",
       "applyFormCode": "14242",
@@ -1336,14 +1272,6 @@
       "remark": "定量  化学发光法"
     },
     {
-      "itemCode": "JY040015",
-      "itemName": "单纯疱疹4项",
-      "applyFormCode": "14242",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "定量  化学发光法"
-    },
-    {
       "itemCode": "JY040018",
       "itemName": "血播四项定量测定",
       "applyFormCode": "14242",
@@ -1366,22 +1294,6 @@
       "sample": "全血",
       "isEmergency": 0,
       "remark": "半定量  试管凝集法"
-    },
-    {
-      "itemCode": "JY040023",
-      "itemName": "胃功能4项",
-      "applyFormCode": "14242",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "定量  干式荧光免疫法"
-    },
-    {
-      "itemCode": "JY040030",
-      "itemName": "血管炎谱3项",
-      "applyFormCode": "14242",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "定量  化学发光法"
     },
     {
       "itemCode": "JY040031",
@@ -1862,22 +1774,6 @@
       "sample": "全血",
       "isEmergency": 0,
       "remark": "定性   酶联免疫法"
-    },
-    {
-      "itemCode": "JY040108",
-      "itemName": "艾丙梅三项定量（快速）",
-      "applyFormCode": "14242",
-      "sample": "全血",
-      "isEmergency": 1,
-      "remark": "定量   快速  化学发光法  筛查试验"
-    },
-    {
-      "itemCode": "JY040111",
-      "itemName": "心磷脂抗体分型",
-      "applyFormCode": "14242",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "定量  化学发光法"
     },
     {
       "itemCode": "JY040114",
@@ -2468,14 +2364,6 @@
       "itemName": "血清人绒毛膜促性腺激素测定（最大值）",
       "applyFormCode": "14330",
       "sample": "全血",
-      "isEmergency": 0,
-      "remark": ""
-    },
-    {
-      "itemCode": "JY050087",
-      "itemName": "骨代谢标志物5项",
-      "applyFormCode": "14330",
-      "sample": "全血,腹水,胸水",
       "isEmergency": 0,
       "remark": ""
     },
@@ -4182,91 +4070,6 @@
       ],
       "sum": 30.0
     },
-    "JY020019": {
-      "details": [
-        {
-          "detailCode": "250304001",
-          "detailName": "钾测定",
-          "price": 4.5,
-          "count": 1.0,
-          "total": 4.5
-        },
-        {
-          "detailCode": "250304002",
-          "detailName": "钠测定",
-          "price": 4.5,
-          "count": 1.0,
-          "total": 4.5
-        },
-        {
-          "detailCode": "250304003",
-          "detailName": "氯测定",
-          "price": 4.5,
-          "count": 1.0,
-          "total": 4.5
-        },
-        {
-          "detailCode": "250304004",
-          "detailName": "钙测定",
-          "price": 4.5,
-          "count": 1.0,
-          "total": 4.5
-        }
-      ],
-      "sum": 18.0
-    },
-    "JY020020": {
-      "details": [
-        {
-          "detailCode": "250310026",
-          "detailName": "血浆肾素活性测定",
-          "price": 30.0,
-          "count": 1.0,
-          "total": 30.0
-        },
-        {
-          "detailCode": "250310023",
-          "detailName": "醛固酮测定",
-          "price": 21.0,
-          "count": 1.0,
-          "total": 21.0
-        },
-        {
-          "detailCode": "250310018",
-          "detailName": "血浆皮质醇测定",
-          "price": 18.0,
-          "count": 1.0,
-          "total": 18.0
-        }
-      ],
-      "sum": 69.0
-    },
-    "JY020021": {
-      "details": [
-        {
-          "detailCode": "250306003",
-          "detailName": "血清肌酸激酶－MB同工酶质量测定",
-          "price": 30.0,
-          "count": 1.0,
-          "total": 30.0
-        },
-        {
-          "detailCode": "250306009",
-          "detailName": "血清肌钙蛋白I测定",
-          "price": 115.0,
-          "count": 1.0,
-          "total": 115.0
-        },
-        {
-          "detailCode": "250306010",
-          "detailName": "血清肌红蛋白测定",
-          "price": 45.0,
-          "count": 1.0,
-          "total": 45.0
-        }
-      ],
-      "sum": 190.0
-    },
     "JY020022": {
       "details": [
         {
@@ -4341,25 +4144,6 @@
       ],
       "sum": 17.0
     },
-    "JY020030": {
-      "details": [
-        {
-          "detailCode": "250307002a",
-          "detailName": "肌酐测定",
-          "price": 8.0,
-          "count": 1.0,
-          "total": 8.0
-        },
-        {
-          "detailCode": "250307006",
-          "detailName": "尿微量白蛋白测定",
-          "price": 17.0,
-          "count": 1.0,
-          "total": 17.0
-        }
-      ],
-      "sum": 25.0
-    },
     "JY020031": {
       "details": [
         {
@@ -4418,53 +4202,6 @@
         }
       ],
       "sum": 56.0
-    },
-    "JY020033": {
-      "details": [
-        {
-          "detailCode": "250302001a",
-          "detailName": "葡萄糖测定",
-          "price": 4.5,
-          "count": 1.0,
-          "total": 4.5
-        },
-        {
-          "detailCode": "250306005",
-          "detailName": "乳酸脱氢酶测定",
-          "price": 5.0,
-          "count": 1.0,
-          "total": 5.0
-        },
-        {
-          "detailCode": "250308004",
-          "detailName": "淀粉酶测定",
-          "price": 13.0,
-          "count": 1.0,
-          "total": 13.0
-        },
-        {
-          "detailCode": "250301014",
-          "detailName": "β2微球蛋白测定",
-          "price": 20.0,
-          "count": 1.0,
-          "total": 20.0
-        },
-        {
-          "detailCode": "250305023",
-          "detailName": "腺苷脱氨酶测定",
-          "price": 10.0,
-          "count": 1.0,
-          "total": 10.0
-        },
-        {
-          "detailCode": "250301017b",
-          "detailName": "超敏C反应蛋白测定",
-          "price": 17.0,
-          "count": 1.0,
-          "total": 17.0
-        }
-      ],
-      "sum": 69.5
     },
     "JY020034": {
       "details": [
@@ -4635,25 +4372,6 @@
       "sum": 26.0
     },
     "JY020048": {
-      "details": [
-        {
-          "detailCode": "250402035a",
-          "detailName": "类风湿因子(RF)测定",
-          "price": 26.0,
-          "count": 1.0,
-          "total": 26.0
-        },
-        {
-          "detailCode": "250403043a",
-          "detailName": "抗链球菌溶血素O定量测定(ASO)",
-          "price": 26.0,
-          "count": 1.0,
-          "total": 26.0
-        }
-      ],
-      "sum": 52.0
-    },
-    "JY020049": {
       "details": [
         {
           "detailCode": "250402035a",
@@ -6155,51 +5873,6 @@
       ],
       "sum": 38.0
     },
-    "JY040001": {
-      "details": [
-        {
-          "detailCode": "250403050",
-          "detailName": "肺炎支原体血清学试验",
-          "price": 25.0,
-          "count": 2.0,
-          "total": 50.0
-        },
-        {
-          "detailCode": "250403076",
-          "detailName": "肺炎衣原体抗体检测",
-          "price": 30.0,
-          "count": 1.0,
-          "total": 30.0
-        }
-      ],
-      "sum": 80.0
-    },
-    "JY040004": {
-      "details": [
-        {
-          "detailCode": "250403019",
-          "detailName": "人免疫缺陷病毒抗体测定(Anti-HIV)",
-          "price": 20.0,
-          "count": 1.0,
-          "total": 20.0
-        },
-        {
-          "detailCode": "250403053",
-          "detailName": "梅毒螺旋体特异抗体测定",
-          "price": 20.0,
-          "count": 1.0,
-          "total": 20.0
-        },
-        {
-          "detailCode": "250403014",
-          "detailName": "丙型肝炎抗体测定(Anti-HCV)",
-          "price": 20.0,
-          "count": 1.0,
-          "total": 20.0
-        }
-      ],
-      "sum": 60.0
-    },
     "JY040005": {
       "details": [
         {
@@ -6476,18 +6149,6 @@
       ],
       "sum": 340.0
     },
-    "JY040015": {
-      "details": [
-        {
-          "detailCode": "250403023",
-          "detailName": "单纯疱疹病毒抗体测定",
-          "price": 26.0,
-          "count": 4.0,
-          "total": 104.0
-        }
-      ],
-      "sum": 104.0
-    },
     "JY040018": {
       "details": [
         {
@@ -6563,32 +6224,6 @@
         }
       ],
       "sum": 10.0
-    },
-    "JY040023": {
-      "details": [
-        {
-          "detailCode": "250310044a",
-          "detailName": "胃泌素-17检测",
-          "price": 85.0,
-          "count": 1.0,
-          "total": 85.0
-        },
-        {
-          "detailCode": "250404022",
-          "detailName": "胃蛋白酶原Ⅰ",
-          "price": 51.0,
-          "count": 1.0,
-          "total": 51.0
-        },
-        {
-          "detailCode": "250404023",
-          "detailName": "胃蛋白酶原Ⅱ",
-          "price": 51.0,
-          "count": 1.0,
-          "total": 51.0
-        }
-      ],
-      "sum": 187.0
     },
     "JY040024": {
       "details": [
@@ -6705,25 +6340,6 @@
         }
       ],
       "sum": 43.0
-    },
-    "JY040030": {
-      "details": [
-        {
-          "detailCode": "250402005",
-          "detailName": "抗中性粒细胞胞浆抗体测定（ANCA）",
-          "price": 20.0,
-          "count": 2.0,
-          "total": 40.0
-        },
-        {
-          "detailCode": "250402019",
-          "detailName": "抗肾小球基底膜抗体测定",
-          "price": 35.0,
-          "count": 1.0,
-          "total": 35.0
-        }
-      ],
-      "sum": 75.0
     },
     "JY040031": {
       "details": [
@@ -7767,44 +7383,6 @@
         }
       ],
       "sum": 21.0
-    },
-    "JY040108": {
-      "details": [
-        {
-          "detailCode": "250403084",
-          "detailName": "人免疫缺陷病毒（HIV）抗原抗体联合检测",
-          "price": 90.0,
-          "count": 1.0,
-          "total": 90.0
-        },
-        {
-          "detailCode": "250403053a",
-          "detailName": "梅毒螺旋体特异抗体测定",
-          "price": 50.0,
-          "count": 1.0,
-          "total": 50.0
-        },
-        {
-          "detailCode": "250403014a",
-          "detailName": "丙型肝炎抗体测定(Anti-HCV)",
-          "price": 60.0,
-          "count": 1.0,
-          "total": 60.0
-        }
-      ],
-      "sum": 200.0
-    },
-    "JY040111": {
-      "details": [
-        {
-          "detailCode": "250402016",
-          "detailName": "抗心磷脂抗体测定(ACA)",
-          "price": 26.0,
-          "count": 3.0,
-          "total": 78.0
-        }
-      ],
-      "sum": 78.0
     },
     "JY040114": {
       "details": [
@@ -8962,46 +8540,6 @@
         }
       ],
       "sum": 34.0
-    },
-    "JY050087": {
-      "details": [
-        {
-          "detailCode": "250310009",
-          "detailName": "甲状旁腺激素测定",
-          "price": 70.0,
-          "count": 1.0,
-          "total": 70.0
-        },
-        {
-          "detailCode": "250309004a",
-          "detailName": "血清维生素定量测定",
-          "price": 77.0,
-          "count": 1.0,
-          "total": 77.0
-        },
-        {
-          "detailCode": "250305033",
-          "detailName": "总Ⅰ型胶原氨基端延长肽(Total-P1NP)测定",
-          "price": 160.0,
-          "count": 1.0,
-          "total": 160.0
-        },
-        {
-          "detailCode": "250311005",
-          "detailName": "血清N-端骨钙素测定",
-          "price": 77.0,
-          "count": 1.0,
-          "total": 77.0
-        },
-        {
-          "detailCode": "250311006",
-          "detailName": "血清β-胶原降解产物测定",
-          "price": 75.0,
-          "count": 1.0,
-          "total": 75.0
-        }
-      ],
-      "sum": 459.0
     },
     "JY060001": {
       "details": [
