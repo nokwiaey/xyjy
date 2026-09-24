@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-09-24T10:35:12.177245",
+  "exportTime": "2026-09-24T10:49:50.794837",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -2766,6 +2766,14 @@
       "sample": "粪便",
       "isEmergency": 0,
       "remark": null
+    },
+    {
+      "itemCode": "JY060054",
+      "itemName": "粪便转铁蛋白",
+      "applyFormCode": "14241",
+      "sample": "粪便",
+      "isEmergency": 0,
+      "remark": ""
     },
     {
       "itemCode": "JY060060",
@@ -9922,6 +9930,18 @@
       ],
       "sum": 100.0
     },
+    "JY060054": {
+      "details": [
+        {
+          "detailCode": "250301007",
+          "detailName": "转铁蛋白测定",
+          "price": 21.0,
+          "count": 1.0,
+          "total": 21.0
+        }
+      ],
+      "sum": 21.0
+    },
     "JY060060": {
       "details": [
         {
@@ -14325,7 +14345,7 @@
       {
         "chargeItemId": "LIS0897",
         "chineseName": "粪便转铁蛋白",
-        "charge": 100.0,
+        "charge": 21.0,
         "hisId": "JY060054"
       },
       {
