@@ -1,11 +1,11 @@
 {
  "schema": 1,
  "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
- "generatedAt": "2026-09-24 11:38:16",
- "lastCheckedAt": "2026-09-24 11:38:16",
- "lastExportTime": "2026-09-24T11:28:33.142407",
- "lastChangeAt": "2026-09-24 11:29:14",
- "recordCount": 3,
+ "generatedAt": "2026-09-24 14:56:32",
+ "lastCheckedAt": "2026-09-24 14:56:32",
+ "lastExportTime": "2026-09-24T14:55:21.675811",
+ "lastChangeAt": "2026-09-24 14:56:32",
+ "recordCount": 4,
  "categories": [
   {
    "key": "item",
@@ -25,6 +25,114 @@
   }
  ],
  "records": [
+  {
+   "id": "20260924-145632",
+   "recordedAt": "2026-09-24 14:56:32",
+   "exportTime": "2026-09-24T14:55:21.675811",
+   "prevExportTime": "2026-09-24T11:28:33.142407",
+   "version": "2.1.0",
+   "prevVersion": "2.1.0",
+   "stats": {
+    "total": 2,
+    "add": 0,
+    "remove": 2,
+    "update": 0,
+    "item": 2,
+    "price": 0,
+    "lis": 0,
+    "form": 0
+   },
+   "changes": [
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY020002 电解质常规",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY020002"
+      },
+      {
+       "label": "项目名称",
+       "value": "电解质常规"
+      },
+      {
+       "label": "申请单",
+       "value": "14243 生化室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "是"
+      },
+      {
+       "label": "收费合计",
+       "value": "13.5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250304001 钾测定｜单价 4.5｜数量 1｜金额 4.5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250304002 钠测定｜单价 4.5｜数量 1｜金额 4.5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250304003 氯测定｜单价 4.5｜数量 1｜金额 4.5"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY020138 肾功常规",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY020138"
+      },
+      {
+       "label": "项目名称",
+       "value": "肾功常规"
+      },
+      {
+       "label": "申请单",
+       "value": "14243 生化室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "是"
+      },
+      {
+       "label": "收费合计",
+       "value": "21"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307001a 尿素测定｜单价 8｜数量 1｜金额 8"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307002a 肌酐测定｜单价 8｜数量 1｜金额 8"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307005 血清尿酸测定｜单价 5｜数量 1｜金额 5"
+      }
+     ]
+    }
+   ]
+  },
   {
    "id": "20260924-112914",
    "recordedAt": "2026-09-24 11:29:14",
