@@ -3014,7 +3014,7 @@ const CHANGES_URL = 'data/item-changes.json';
 const DEFAULT_CHANGE_CATEGORIES = [
   { key: 'item', label: 'HIS 项目' },
   { key: 'price', label: '收费价格' },
-  { key: 'lis', label: 'LIS 分析项目' },
+  { key: 'lis', label: 'LIS项目' },
   { key: 'form', label: '申请单' }
 ];
 const CHANGE_LEVEL_TEXT = { add: '新增', remove: '删除', update: '修改' };
@@ -3126,17 +3126,12 @@ function renderInfoModal() {
   html += `<div class="info-fact">当前数据导出时间：<b>${escapeHtml(formatDateTimeText(exportTime))}</b></div>`;
 
   if (changesLoaded && changesData) {
-    html += `<div class="info-fact">最近检测时间：<b>${escapeHtml(formatDateTimeText(changesData.lastCheckedAt))}</b></div>`;
     const records = changesData.records || [];
     html += `<div class="info-fact">变更记录：<b>${records.length} 条</b></div>`;
-    if (changesData.lastChangeAt) {
-      html += `<div class="info-fact">最近一次检测到变更：<b>${escapeHtml(formatDateTimeText(changesData.lastChangeAt))}</b></div>`;
-    }
   }
 
   html += '</div>';
-  html += '<div class="info-note">⚠️ 以上均为 <b>导出 / 记录时间</b>，不是项目实际发生变更的时间。'
-        + 'item.json 由内网导出，每条记录表示该次导出相对上一次导出新发现的变化，'
+  html += '<div class="info-note">⚠️ 以上均为 <b>导出 / 记录时间</b>，不是项目实际发生变更的时间，'
         + '实际变更可能发生在更早的时间。</div>';
 
   if (changesLoading && !changesLoaded) {
@@ -3146,7 +3141,7 @@ function renderInfoModal() {
   } else if (!changesData || !(changesData.records || []).length) {
     html += '<div class="info-empty">暂无变更记录<br>（每次导出后对比上一次导出，有变化时才会记录）</div>';
   } else {
-    html += '<div class="info-section-title">变更记录（最新在前）</div>';
+    html += '<div class="info-section-title">变更记录</div>';
     changesData.records.forEach((record, index) => {
       html += renderChangeRecord(record, index === 0);
     });

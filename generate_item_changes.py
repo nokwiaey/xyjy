@@ -43,7 +43,7 @@ DEFAULT_MAX_RECORDS = 200
 CATEGORIES = [
     ("item", "HIS 项目"),
     ("price", "收费价格"),
-    ("lis", "LIS 分析项目"),
+    ("lis", "LIS项目"),
     ("form", "申请单"),
 ]
 
@@ -271,7 +271,7 @@ def item_label(state, item_code):
                 return "%s %s" % (code, detail["name"])
     if item:
         return code
-    return "%s（项目列表中已无此编码）" % code
+    return "%s（HIS中暂无对应在用项目）" % code
 
 
 def form_label(state, form_code):
@@ -523,27 +523,85 @@ def test_item_label(state, test_item_id):
     return "%s（%s）" % (body, test_item_id)
 
 
+def group_names(state, group_ids):
+    names = []
+    for group_id in group_ids:
+        entry = state["lisGroups"].get(group_id)
+        names.append("%s %s" % (group_id, entry["name"]) if entry and entry["name"]
+                     else group_id)
+    return "、".join(names) if names else "（未分组）"
+
+
+def links_by_charge(state):
+    """chargeItemId -> {testItemId: [groupId, ...]}，即每个诊疗项目关联的分析项目。"""
+    result = {}
+    for entry in state["lisLinks"].values():
+        result.setdefault(entry["chargeItemId"], {})[entry["testItemId"]] = entry["groups"]
+    return result
+
+
+def links_by_test_item(state):
+    """testItemId -> [chargeItemId, ...]，即每个分析项目被哪些诊疗项目引用。"""
+    result = {}
+    for entry in state["lisLinks"].values():
+        result.setdefault(entry["testItemId"], set()).add(entry["chargeItemId"])
+    return result
+
+
+def charge_item_label(state, charge_item_id):
+    entry = state["lisChargeItems"].get(charge_item_id)
+    if entry and entry["name"]:
+        return "%s %s" % (charge_item_id, entry["name"])
+    if entry:
+        return charge_item_id
+    return "%s（不在诊疗项目表中）" % charge_item_id
+
+
+def charge_refs_text(state, test_item_id, refs, limit=5):
+    """列出引用了某分析项目的诊疗项目，供“分析项目自身变化”的条目做上下文。"""
+    charge_ids = sorted(refs.get(test_item_id, set()))
+    if not charge_ids:
+        return ""
+    names = [charge_item_label(state, charge_id) for charge_id in charge_ids[:limit]]
+    if len(charge_ids) > limit:
+        names.append("等 %d 个" % len(charge_ids))
+    return "、".join(names)
+
+
 def diff_lis_test_items(prev, cur):
+    """分析项目（testItems）自身的变化。
+
+    已挂到诊疗项目下的分析项目，其新增/取消由所属诊疗项目条目记录（见
+    diff_lis_charge_items），这里只补两类：名称/代号/互认标识的变化，以及
+    没有挂任何诊疗项目的孤立分析项目的增删。
+    """
     changes = []
     old, new = prev["lisTestItems"], cur["lisTestItems"]
+    old_refs = links_by_test_item(prev)
+    new_refs = links_by_test_item(cur)
+
+    def base_fields(entry, test_item_id, state, refs):
+        return [
+            field_value("分析项目ID", test_item_id),
+            field_value("代号", entry["code"]),
+            field_value("名称", entry["name"]),
+            field_value("互认标识", entry["des"]),
+            field_value("关联诊疗项目", charge_refs_text(state, test_item_id, refs) or "（无）"),
+        ]
 
     for test_item_id in sorted(set(new) - set(old)):
-        entry = new[test_item_id]
+        if new_refs.get(test_item_id):
+            continue  # 已随所属诊疗项目一并记录
         changes.append(make_change(
             "lis_test_added", "lis", "add", test_item_label(cur, test_item_id),
-            [field_value("分析项目ID", test_item_id),
-             field_value("代号", entry["code"]),
-             field_value("名称", entry["name"]),
-             field_value("互认标识", entry["des"])]))
+            base_fields(new[test_item_id], test_item_id, cur, new_refs)))
 
     for test_item_id in sorted(set(old) - set(new)):
-        entry = old[test_item_id]
+        if old_refs.get(test_item_id):
+            continue  # 已随所属诊疗项目一并记录
         changes.append(make_change(
             "lis_test_removed", "lis", "remove", test_item_label(prev, test_item_id),
-            [field_value("分析项目ID", test_item_id),
-             field_value("代号", entry["code"]),
-             field_value("名称", entry["name"]),
-             field_value("互认标识", entry["des"])]))
+            base_fields(old[test_item_id], test_item_id, prev, old_refs)))
 
     for test_item_id in sorted(set(old) & set(new)):
         before, after = old[test_item_id], new[test_item_id]
@@ -555,6 +613,9 @@ def diff_lis_test_items(prev, cur):
         if before["des"] != after["des"]:
             fields.append(field_change("互认标识", before["des"], after["des"]))
         if fields:
+            refs = charge_refs_text(cur, test_item_id, new_refs)
+            if refs:
+                fields.append(field_value("关联诊疗项目", refs))
             changes.append(make_change(
                 "lis_test_modified", "lis", "update",
                 test_item_label(cur, test_item_id), fields))
@@ -563,114 +624,92 @@ def diff_lis_test_items(prev, cur):
 
 
 def diff_lis_charge_items(prev, cur):
+    """以“诊疗项目”为单位汇总 LIS 变化。
+
+    诊疗项目 ↔ 分析项目 是一对多（和 HIS 项目 ↔ 收费明细 一样），所以关联分析
+    项目作为诊疗项目条目的明细一起展示，不单独另记一条；诊疗项目下没有关联分析
+    项目时，该明细为空（（无））。
+    """
     changes = []
     old, new = prev["lisChargeItems"], cur["lisChargeItems"]
+    old_links, new_links = links_by_charge(prev), links_by_charge(cur)
+    charge_ids = sorted(set(old) | set(new) | set(old_links) | set(new_links))
 
-    def label(state, charge_item_id):
+    def attr_fields(state, charge_item_id, level):
+        """诊疗项目自身的属性：新增/删除时按值展示。"""
         entry = state["lisChargeItems"].get(charge_item_id)
-        name = entry["name"] if entry else ""
-        return "%s %s" % (charge_item_id, name) if name else charge_item_id
+        if not entry:
+            return [field_value("诊疗项目名称", "（不在诊疗项目表中）")]
+        return [
+            field_value("诊疗项目名称", entry["name"]),
+            field_value("对应 HIS 项目",
+                        item_label(state, entry["his"]) if entry["his"]
+                        else "（HIS中暂无对应在用项目）"),
+        ]
 
-    for charge_item_id in sorted(set(new) - set(old)):
-        entry = new[charge_item_id]
-        changes.append(make_change(
-            "lis_charge_added", "lis", "add", label(cur, charge_item_id),
-            [field_value("收费项目ID", charge_item_id),
-             field_value("收费项目名称", entry["name"]),
-             field_value("对应 HIS 项目", item_label(cur, entry["his"]) if entry["his"] else "")]))
+    def link_label(state, test_item_id, group_ids):
+        return "%s（分组：%s）" % (test_item_label(state, test_item_id),
+                                   group_names(state, group_ids))
 
-    for charge_item_id in sorted(set(old) - set(new)):
-        entry = old[charge_item_id]
-        changes.append(make_change(
-            "lis_charge_removed", "lis", "remove", label(prev, charge_item_id),
-            [field_value("收费项目ID", charge_item_id),
-             field_value("收费项目名称", entry["name"]),
-             field_value("对应 HIS 项目", item_label(prev, entry["his"]) if entry["his"] else "")]))
+    def all_link_fields(state, charge_item_id):
+        links = links_by_charge(state).get(charge_item_id, {})
+        if not links:
+            return [field_value("关联分析项目", "（无）")]
+        return [field_value("关联分析项目", link_label(state, test_item_id, links[test_item_id]))
+                for test_item_id in sorted(links)]
 
-    for charge_item_id in sorted(set(old) & set(new)):
-        before, after = old[charge_item_id], new[charge_item_id]
+    def link_diff_fields(charge_item_id):
+        before, after = old_links.get(charge_item_id, {}), new_links.get(charge_item_id, {})
         fields = []
-        if before["name"] != after["name"]:
-            fields.append(field_change("收费项目名称", before["name"], after["name"]))
-        if before["his"] != after["his"]:
-            fields.append(field_change(
-                "对应 HIS 项目",
-                item_label(prev, before["his"]) if before["his"] else "",
-                item_label(cur, after["his"]) if after["his"] else ""))
-        if fields:
+        for test_item_id in sorted(set(after) - set(before)):
+            fields.append(field_value("新增关联分析项目",
+                                      link_label(cur, test_item_id, after[test_item_id])))
+        for test_item_id in sorted(set(before) - set(after)):
+            fields.append(field_value("取消关联分析项目",
+                                      link_label(prev, test_item_id, before[test_item_id])))
+        for test_item_id in sorted(set(before) & set(after)):
+            if before[test_item_id] != after[test_item_id]:
+                fields.append(field_value(
+                    "关联分组调整",
+                    "%s：%s → %s" % (test_item_label(cur, test_item_id),
+                                     group_names(prev, before[test_item_id]),
+                                     group_names(cur, after[test_item_id]))))
+        return fields
+
+    for charge_item_id in charge_ids:
+        had_before = (charge_item_id in old) or bool(old_links.get(charge_item_id))
+        has_now = (charge_item_id in new) or bool(new_links.get(charge_item_id))
+
+        if not had_before and has_now:
             changes.append(make_change(
-                "lis_charge_modified", "lis", "update",
-                label(cur, charge_item_id), fields))
-
-    return changes
-
-
-def diff_lis_links(prev, cur):
-    """比对 LIS 关联关系（收费项目 ↔ 分析项目 ↔ 检验分组），按收费项目汇总。"""
-    changes = []
-    old, new = prev["lisLinks"], cur["lisLinks"]
-
-    def group_names(state, group_ids):
-        names = []
-        for group_id in group_ids:
-            entry = state["lisGroups"].get(group_id)
-            names.append("%s %s" % (group_id, entry["name"]) if entry and entry["name"]
-                         else group_id)
-        return "、".join(names) if names else "（未分组）"
-
-    def link_label(state, entry):
-        return "%s（分组：%s）" % (test_item_label(state, entry["testItemId"]),
-                                   group_names(state, entry["groups"]))
-
-    def owner_title(state, charge_item_id):
-        entry = state["lisChargeItems"].get(charge_item_id)
-        if entry and entry["his"]:
-            return item_label(state, entry["his"])
-        if entry:
-            return "收费项目 %s %s（未关联 HIS 项目）" % (charge_item_id, entry["name"])
-        return "收费项目 %s（未匹配到收费项目表）" % charge_item_id
-
-    added_keys = sorted(set(new) - set(old))
-    removed_keys = sorted(set(old) - set(new))
-    common_keys = sorted(set(old) & set(new))
-
-    buckets = {}  # charge_item_id -> {"add": [...], "remove": [...], "update": [...]}
-
-    for key in added_keys:
-        entry = new[key]
-        buckets.setdefault(entry["chargeItemId"], {"add": [], "remove": [], "update": []})
-        buckets[entry["chargeItemId"]]["add"].append(link_label(cur, entry))
-
-    for key in removed_keys:
-        entry = old[key]
-        buckets.setdefault(entry["chargeItemId"], {"add": [], "remove": [], "update": []})
-        buckets[entry["chargeItemId"]]["remove"].append(link_label(prev, entry))
-
-    for key in common_keys:
-        before, after = old[key], new[key]
-        if before["groups"] != after["groups"]:
-            buckets.setdefault(after["chargeItemId"], {"add": [], "remove": [], "update": []})
-            buckets[after["chargeItemId"]]["update"].append(
-                "%s：%s → %s" % (test_item_label(cur, after["testItemId"]),
-                                 group_names(prev, before["groups"]),
-                                 group_names(cur, after["groups"])))
-
-    for charge_item_id in sorted(buckets):
-        bucket = buckets[charge_item_id]
-        title = owner_title(cur if charge_item_id in cur["lisChargeItems"] else prev,
-                            charge_item_id)
-        if bucket["add"]:
+                "lis_charge_added", "lis", "add", charge_item_label(cur, charge_item_id),
+                [field_value("诊疗项目ID", charge_item_id)]
+                + attr_fields(cur, charge_item_id, "add")
+                + all_link_fields(cur, charge_item_id)))
+        elif had_before and not has_now:
             changes.append(make_change(
-                "lis_link_added", "lis", "add", title,
-                [field_value("新增关联分析项目", value) for value in bucket["add"]]))
-        if bucket["remove"]:
-            changes.append(make_change(
-                "lis_link_removed", "lis", "remove", title,
-                [field_value("取消关联分析项目", value) for value in bucket["remove"]]))
-        if bucket["update"]:
-            changes.append(make_change(
-                "lis_link_modified", "lis", "update", title,
-                [field_value("关联分组调整", value) for value in bucket["update"]]))
+                "lis_charge_removed", "lis", "remove", charge_item_label(prev, charge_item_id),
+                [field_value("诊疗项目ID", charge_item_id)]
+                + attr_fields(prev, charge_item_id, "remove")
+                + all_link_fields(prev, charge_item_id)))
+        else:
+            fields = []
+            before, after = old.get(charge_item_id), new.get(charge_item_id)
+            if before and after:
+                if before["name"] != after["name"]:
+                    fields.append(field_change("诊疗项目名称", before["name"], after["name"]))
+                if before["his"] != after["his"]:
+                    fields.append(field_change(
+                        "对应 HIS 项目",
+                        item_label(prev, before["his"]) if before["his"]
+                        else "（HIS中暂无对应在用项目）",
+                        item_label(cur, after["his"]) if after["his"]
+                        else "（HIS中暂无对应在用项目）"))
+            fields += link_diff_fields(charge_item_id)
+            if fields:
+                changes.append(make_change(
+                    "lis_charge_modified", "lis", "update",
+                    charge_item_label(cur, charge_item_id), fields))
 
     return changes
 
@@ -681,9 +720,8 @@ def diff_states(prev, cur):
     changes += item_changes
     changes += diff_prices(prev, cur, skip_codes=wholesale_codes)
     changes += diff_lis_groups(prev, cur)
-    changes += diff_lis_test_items(prev, cur)
     changes += diff_lis_charge_items(prev, cur)
-    changes += diff_lis_links(prev, cur)
+    changes += diff_lis_test_items(prev, cur)
     changes += diff_apply_forms(prev, cur)
     return changes
 

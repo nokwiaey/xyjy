@@ -33,8 +33,9 @@ The preview is a plain `<iframe>` on desktop, where browsers ship a built-in PDF
 
 `html/data/item.json` (HIS 项目 / 收费价格 / LIS 关联) is re-exported by hand from the intranet from time to time, so the site cannot know when a project actually changed. `generate_item_changes.py` diffs the current export against the previous one (`html/data/item-snapshot.json`) and appends a change record to `html/data/item-changes.json`, which `html/lab-test-query.html` renders in the modal opened by clicking the header title ("点击查看数据更新与变更记录").
 
-- Detected: HIS 项目增删改、收费明细与价格变化、LIS 检验分组 / 分析项目 / 收费项目 / 关联关系变化、申请单变化
+- Detected: HIS 项目增删改、收费明细与价格变化、LIS 检验分组 / 诊疗项目 / 分析项目、申请单变化
 - 项目整体新增或删除时，其价格信息并入该条目，不再重复记一条价格变更
+- LIS 以**诊疗项目**为单位记录：关联的分析项目作为该条目的明细一起展示（诊疗项目 ↔ 分析项目是一对多，与 HIS 项目 ↔ 收费明细同理），没有关联分析项目时明细为「（无）」。只有分析项目自身属性（名称 / 代号 / 互认标识）的变化、以及未挂任何诊疗项目的孤立分析项目增删，才单独成条
 - No changes → no record is appended (only `lastCheckedAt` / `lastExportTime` in the file are refreshed); the very first run writes a baseline record instead
 - Each record stores `recordedAt` (script run time; git commit time for backfilled records) and `exportTime` (export file time). **Neither is when the project changed** — a change is only known to fall between `prevExportTime` and `exportTime`, and the page says so explicitly
 - `python generate_item_changes.py --backfill-git YYYY-MM-DD` rebuilds records from the git history of `item.json`, covering exports that happened before the script existed

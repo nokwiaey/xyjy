@@ -1,11 +1,11 @@
 {
  "schema": 1,
  "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
- "generatedAt": "2026-09-24 11:38:16",
- "lastCheckedAt": "2026-09-24 11:38:16",
- "lastExportTime": "2026-09-24T11:28:33.142407",
- "lastChangeAt": "2026-09-24 11:29:14",
- "recordCount": 3,
+ "generatedAt": "2026-09-24 15:25:26",
+ "lastCheckedAt": "2026-09-24 15:25:26",
+ "lastExportTime": "2026-09-24T14:55:21.675811",
+ "lastChangeAt": "2026-09-24 14:56:16",
+ "recordCount": 4,
  "categories": [
   {
    "key": "item",
@@ -17,7 +17,7 @@
   },
   {
    "key": "lis",
-   "label": "LIS 分析项目"
+   "label": "LIS项目"
   },
   {
    "key": "form",
@@ -25,6 +25,117 @@
   }
  ],
  "records": [
+  {
+   "id": "20260924-145616",
+   "recordedAt": "2026-09-24 14:56:16",
+   "exportTime": "2026-09-24T14:55:21.675811",
+   "prevExportTime": "2026-09-24T11:28:33.142407",
+   "version": "2.1.0",
+   "prevVersion": "2.1.0",
+   "stats": {
+    "total": 2,
+    "add": 0,
+    "remove": 2,
+    "update": 0,
+    "item": 2,
+    "price": 0,
+    "lis": 0,
+    "form": 0
+   },
+   "changes": [
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY020002 电解质常规",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY020002"
+      },
+      {
+       "label": "项目名称",
+       "value": "电解质常规"
+      },
+      {
+       "label": "申请单",
+       "value": "14243 生化室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "是"
+      },
+      {
+       "label": "收费合计",
+       "value": "13.5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250304001 钾测定｜单价 4.5｜数量 1｜金额 4.5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250304002 钠测定｜单价 4.5｜数量 1｜金额 4.5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250304003 氯测定｜单价 4.5｜数量 1｜金额 4.5"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY020138 肾功常规",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY020138"
+      },
+      {
+       "label": "项目名称",
+       "value": "肾功常规"
+      },
+      {
+       "label": "申请单",
+       "value": "14243 生化室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "是"
+      },
+      {
+       "label": "收费合计",
+       "value": "21"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307001a 尿素测定｜单价 8｜数量 1｜金额 8"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307002a 肌酐测定｜单价 8｜数量 1｜金额 8"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307005 血清尿酸测定｜单价 5｜数量 1｜金额 5"
+      }
+     ]
+    }
+   ],
+   "source": "git",
+   "gitCommit": "09361479",
+   "gitSubject": "更新项目"
+  },
   {
    "id": "20260924-112914",
    "recordedAt": "2026-09-24 11:29:14",
@@ -751,13 +862,13 @@
    "version": "2.1.0",
    "prevVersion": "2.1.0",
    "stats": {
-    "total": 13,
-    "add": 3,
+    "total": 11,
+    "add": 1,
     "remove": 8,
     "update": 2,
     "item": 9,
     "price": 0,
-    "lis": 4,
+    "lis": 2,
     "form": 0
    },
    "changes": [
@@ -1063,26 +1174,26 @@
      ]
     },
     {
-     "kind": "lis_test_added",
+     "kind": "lis_charge_added",
      "category": "lis",
      "level": "add",
-     "title": "TRF 粪便转铁蛋白（8678）",
+     "title": "LIS0897 粪便转铁蛋白",
      "fields": [
       {
-       "label": "分析项目ID",
-       "value": "8678"
+       "label": "诊疗项目ID",
+       "value": "LIS0897"
       },
       {
-       "label": "代号",
-       "value": "TRF"
-      },
-      {
-       "label": "名称",
+       "label": "诊疗项目名称",
        "value": "粪便转铁蛋白"
       },
       {
-       "label": "互认标识",
-       "value": ""
+       "label": "对应 HIS 项目",
+       "value": "JY060054（HIS中暂无对应在用项目）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "TRF 粪便转铁蛋白（8678）（分组：G002 临检体液室）"
       }
      ]
     },
@@ -1096,38 +1207,10 @@
        "label": "名称",
        "from": "粪便钙卫蛋白检测",
        "to": "粪便钙卫蛋白"
-      }
-     ]
-    },
-    {
-     "kind": "lis_charge_added",
-     "category": "lis",
-     "level": "add",
-     "title": "LIS0897 粪便转铁蛋白",
-     "fields": [
-      {
-       "label": "收费项目ID",
-       "value": "LIS0897"
       },
       {
-       "label": "收费项目名称",
-       "value": "粪便转铁蛋白"
-      },
-      {
-       "label": "对应 HIS 项目",
-       "value": "JY060054（项目列表中已无此编码）"
-      }
-     ]
-    },
-    {
-     "kind": "lis_link_added",
-     "category": "lis",
-     "level": "add",
-     "title": "JY060054（项目列表中已无此编码）",
-     "fields": [
-      {
-       "label": "新增关联分析项目",
-       "value": "TRF 粪便转铁蛋白（8678）（分组：G002 临检体液室）"
+       "label": "关联诊疗项目",
+       "value": "LIS0266 粪便钙卫蛋白检测"
       }
      ]
     }
