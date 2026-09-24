@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-09-24T11:28:33.142407",
+  "exportTime": "2026-09-24T14:55:21.675811",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -197,14 +197,6 @@
       "applyFormCode": "14239",
       "sample": "血浆",
       "isEmergency": 0,
-      "remark": ""
-    },
-    {
-      "itemCode": "JY020002",
-      "itemName": "电解质常规",
-      "applyFormCode": "14243",
-      "sample": "全血",
-      "isEmergency": 1,
       "remark": ""
     },
     {
@@ -1053,14 +1045,6 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
-    },
-    {
-      "itemCode": "JY020138",
-      "itemName": "肾功常规",
-      "applyFormCode": "14243",
-      "sample": "全血",
-      "isEmergency": 1,
       "remark": ""
     },
     {
@@ -3859,32 +3843,6 @@
       ],
       "sum": 204.0
     },
-    "JY020002": {
-      "details": [
-        {
-          "detailCode": "250304001",
-          "detailName": "钾测定",
-          "price": 4.5,
-          "count": 1.0,
-          "total": 4.5
-        },
-        {
-          "detailCode": "250304002",
-          "detailName": "钠测定",
-          "price": 4.5,
-          "count": 1.0,
-          "total": 4.5
-        },
-        {
-          "detailCode": "250304003",
-          "detailName": "氯测定",
-          "price": 4.5,
-          "count": 1.0,
-          "total": 4.5
-        }
-      ],
-      "sum": 13.5
-    },
     "JY020006": {
       "details": [
         {
@@ -5508,32 +5466,6 @@
         }
       ],
       "sum": 41.0
-    },
-    "JY020138": {
-      "details": [
-        {
-          "detailCode": "250307001a",
-          "detailName": "尿素测定",
-          "price": 8.0,
-          "count": 1.0,
-          "total": 8.0
-        },
-        {
-          "detailCode": "250307002a",
-          "detailName": "肌酐测定",
-          "price": 8.0,
-          "count": 1.0,
-          "total": 8.0
-        },
-        {
-          "detailCode": "250307005",
-          "detailName": "血清尿酸测定",
-          "price": 5.0,
-          "count": 1.0,
-          "total": 5.0
-        }
-      ],
-      "sum": 21.0
     },
     "JY030001": {
       "details": [
