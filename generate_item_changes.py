@@ -8,6 +8,7 @@
     python generate_item_changes.py --init       # 只重建基线（不产生变更记录）
     python generate_item_changes.py --dry-run    # 只打印差异，不写文件
     python generate_item_changes.py --max-records 50
+    python generate_item_changes.py --backfill-git 2026-09-24   # 用 git 历史补齐历史记录
 
 产出::
 
@@ -18,12 +19,16 @@
 ``recordedAt``（脚本运行时间）和 ``exportTime``（导出文件生成时间）**都不是**
 项目实际发生变更的时间。两者只能界定变更发生在 ``prevExportTime`` 与
 ``exportTime`` 之间，页面上必须如实说明这一点。
+
+时间统一按 ``--tz-offset``（默认 +8，北京时间）记录，避免 CI 在 UTC 上跑出来的
+时间比本地少 8 小时。``--backfill-git`` 补齐的记录，``recordedAt`` 取 git 提交时间。
 """
 
 import argparse
 import json
+import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -44,7 +49,8 @@ CATEGORIES = [
 
 CHANGES_NOTE = (
     "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。"
-    "recordedAt 为脚本检测/记录时间，exportTime 为 item.json 的导出时间；"
+    "recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），"
+    "exportTime 为 item.json 的导出时间；"
     "两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。"
 )
 
@@ -744,6 +750,178 @@ def print_changes(record):
                 log("      %s：%s" % (field["label"], field["value"]))
 
 
+# --------------------------------------------------------------------------
+# 用 git 历史补齐变更记录
+# --------------------------------------------------------------------------
+def git_stdout(args, cwd):
+    result = subprocess.run(["git"] + args, cwd=str(cwd), capture_output=True)
+    if result.returncode != 0:
+        message = result.stderr.decode("utf-8", "replace").strip()
+        raise RuntimeError(message or "git 命令执行失败：git %s" % " ".join(args))
+    return result.stdout
+
+
+def parse_git_date(value, tz):
+    """解析 `git log --format=%cI` 的提交时间并换算到目标时区。"""
+    raw = text(value).replace("Z", "+00:00")
+    try:
+        parsed = datetime.fromisoformat(raw)
+    except ValueError:
+        return datetime.now(tz)
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(tz)
+
+
+def collect_git_commits(repo_dir, rel_path):
+    """按时间正序返回该文件的所有提交（sha / 提交时间 / 主题）。"""
+    fmt = "%H%x1f%cI%x1f%s%x1e"
+    raw = git_stdout(["log", "--reverse", "--format=" + fmt, "--", rel_path], repo_dir)
+    commits = []
+    for chunk in raw.decode("utf-8", "replace").split("\x1e"):
+        chunk = chunk.strip()
+        if not chunk:
+            continue
+        parts = chunk.split("\x1f")
+        if len(parts) < 3:
+            continue
+        commits.append({"sha": parts[0], "date": parts[1], "subject": parts[2]})
+    return commits
+
+
+def build_payload(records, now, last_export_time):
+    last_change_at = None
+    for item in records:
+        if item.get("stats", {}).get("total"):
+            last_change_at = item.get("recordedAt")
+            break
+    return {
+        "schema": SCHEMA_VERSION,
+        "note": CHANGES_NOTE,
+        "generatedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
+        "lastCheckedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
+        "lastExportTime": last_export_time,
+        "lastChangeAt": last_change_at,
+        "recordCount": len(records),
+        "categories": [{"key": key, "label": label} for key, label in CATEGORIES],
+        "records": records,
+    }
+
+
+def read_existing_records(path):
+    if not path.exists():
+        return []
+    try:
+        payload = read_json(path)
+    except (ValueError, OSError):
+        return []
+    records = payload.get("records")
+    return records if isinstance(records, list) else []
+
+
+def run_backfill(args, now, tz):
+    """用 git 历史里 item.json 的历次提交重建变更记录。"""
+    if not args.data.exists():
+        log("找不到数据文件：%s" % args.data)
+        return 1
+
+    try:
+        since = datetime.strptime(args.backfill_git, "%Y-%m-%d").replace(tzinfo=tz)
+    except ValueError:
+        log("日期格式应为 YYYY-MM-DD：%s" % args.backfill_git)
+        return 1
+
+    repo_dir = BASE_DIR
+    try:
+        rel_path = args.data.resolve().relative_to(repo_dir.resolve()).as_posix()
+    except ValueError:
+        log("数据文件不在脚本所在仓库内，无法使用 git 历史：%s" % args.data)
+        return 1
+
+    try:
+        commits = collect_git_commits(repo_dir, rel_path)
+    except RuntimeError as exc:
+        log("读取 git 历史失败：%s" % exc)
+        return 1
+
+    start = None
+    for index, commit in enumerate(commits):
+        if parse_git_date(commit["date"], tz).date() >= since.date():
+            start = index
+            break
+    if start is None:
+        log("git 历史中没有 %s（含）之后针对 %s 的提交。" % (args.backfill_git, rel_path))
+        return 0
+
+    log("用 git 历史补齐 %s 起的变更记录，共 %d 次提交。" % (args.backfill_git, len(commits) - start))
+
+    states = {}
+
+    def state_of(sha):
+        if sha not in states:
+            raw = git_stdout(["show", "%s:%s" % (sha, rel_path)], repo_dir)
+            states[sha] = build_state(json.loads(raw.decode("utf-8")))
+        return states[sha]
+
+    prev_state = state_of(commits[start - 1]["sha"]) if start > 0 else None
+    backfilled = []
+
+    for commit in commits[start:]:
+        cur_state = state_of(commit["sha"])
+        commit_time = parse_git_date(commit["date"], tz)
+        changes = diff_states(prev_state, cur_state) if prev_state else []
+        record = (build_record(prev_state, cur_state, changes, commit_time)
+                  if prev_state else build_baseline_record(cur_state, commit_time))
+        record["id"] = commit_time.strftime("%Y%m%d-%H%M%S")
+        record["source"] = "git"
+        record["gitCommit"] = commit["sha"][:8]
+        record["gitSubject"] = commit["subject"]
+        backfilled.append(record)
+        log("  %s  导出 %s  →  %d 项变更  %s"
+            % (commit_time.strftime("%Y-%m-%d %H:%M"),
+               text(cur_state["exportTime"])[:19] or "未知",
+               record["stats"]["total"], commit["subject"]))
+        prev_state = cur_state
+
+    # 工作区里的 item.json 若比 git 里最新的一次提交还新（例如刚导出还没提交），一并记录
+    file_state = build_state(read_json(args.data))
+    if backfilled and backfilled[-1]["exportTime"] != file_state["exportTime"]:
+        changes = diff_states(prev_state, file_state)
+        if changes:
+            record = build_record(prev_state, file_state, changes, now)
+            record["id"] = now.strftime("%Y%m%d-%H%M%S")
+            backfilled.append(record)
+            log("  当前 item.json（导出时间 %s）另有 %d 项变更，一并记录。"
+                % (text(file_state["exportTime"])[:19], len(changes)))
+        prev_state = file_state
+
+    records = sorted(
+        backfilled + [r for r in read_existing_records(args.changes)
+                      if not r.get("baseline")
+                      and r.get("exportTime") not in {item["exportTime"] for item in backfilled}],
+        key=lambda item: item.get("exportTime") or "",
+        reverse=True,
+    )
+    if args.max_records > 0:
+        records = records[:args.max_records]
+
+    if args.dry_run:
+        log("（--dry-run：未写入任何文件，以下为补齐后的记录顺序）")
+        for item in records:
+            log("  %s  导出 %s  %d 项变更"
+                % (item.get("recordedAt"), text(item.get("exportTime"))[:19],
+                   item.get("stats", {}).get("total", 0)))
+        return 0
+
+    write_json(args.snapshot, file_state, compact=True)
+    log("已更新基线快照：%s" % args.snapshot)
+
+    payload = build_payload(records, now, file_state["exportTime"])
+    write_json(args.changes, payload)
+    log("已写入变更记录：%s（共 %d 条记录）" % (args.changes, len(records)))
+    return 0
+
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(
         description="对比 item.json 前后两次导出，生成变更记录")
@@ -759,12 +937,20 @@ def parse_args(argv=None):
                         help="只重建基线，不产生变更记录")
     parser.add_argument("--dry-run", action="store_true",
                         help="只打印差异，不写入任何文件")
+    parser.add_argument("--tz-offset", type=float, default=8.0,
+                        help="记录时间使用的时区偏移（小时，默认 8 即北京时间）")
+    parser.add_argument("--backfill-git", metavar="YYYY-MM-DD", default=None,
+                        help="用 git 历史补齐该日期（含）之后的变更记录")
     return parser.parse_args(argv)
 
 
 def main(argv=None):
     args = parse_args(argv)
-    now = datetime.now()
+    tz = timezone(timedelta(hours=args.tz_offset))
+    now = datetime.now(tz)
+
+    if args.backfill_git:
+        return run_backfill(args, now, tz)
 
     if not args.data.exists():
         log("找不到数据文件：%s" % args.data)
@@ -812,13 +998,7 @@ def main(argv=None):
         log("（--init：仅重建基线，未写入变更记录）")
         return 0
 
-    payload = {}
-    if args.changes.exists():
-        try:
-            payload = read_json(args.changes)
-        except (ValueError, OSError):
-            payload = {}
-    records = payload.get("records") if isinstance(payload.get("records"), list) else []
+    records = read_existing_records(args.changes)
 
     # 只有真正检测到变化（或首次建立基线）时才追加记录；
     # 新导出但内容没变时只刷新“最近检测时间”，不产生空记录。
@@ -828,23 +1008,7 @@ def main(argv=None):
     if args.max_records > 0:
         records = records[:args.max_records]
 
-    last_change_at = None
-    for item in records:
-        if item.get("stats", {}).get("total"):
-            last_change_at = item.get("recordedAt")
-            break
-
-    payload = {
-        "schema": SCHEMA_VERSION,
-        "note": CHANGES_NOTE,
-        "generatedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
-        "lastCheckedAt": record["recordedAt"],
-        "lastExportTime": cur_state["exportTime"],
-        "lastChangeAt": last_change_at,
-        "recordCount": len(records),
-        "categories": [{"key": key, "label": label} for key, label in CATEGORIES],
-        "records": records,
-    }
+    payload = build_payload(records, now, cur_state["exportTime"])
     write_json(args.changes, payload)
     log("已写入变更记录：%s（共 %d 条记录）" % (args.changes, len(records)))
     return 0

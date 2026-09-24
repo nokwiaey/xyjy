@@ -36,7 +36,8 @@ The preview is a plain `<iframe>` on desktop, where browsers ship a built-in PDF
 - Detected: HIS 项目增删改、收费明细与价格变化、LIS 检验分组 / 分析项目 / 收费项目 / 关联关系变化、申请单变化
 - 项目整体新增或删除时，其价格信息并入该条目，不再重复记一条价格变更
 - No changes → no record is appended (only `lastCheckedAt` / `lastExportTime` in the file are refreshed); the very first run writes a baseline record instead
-- Each record stores `recordedAt` (script run time) and `exportTime` (export file time). **Neither is when the project changed** — a change is only known to fall between `prevExportTime` and `exportTime`, and the page says so explicitly
+- Each record stores `recordedAt` (script run time; git commit time for backfilled records) and `exportTime` (export file time). **Neither is when the project changed** — a change is only known to fall between `prevExportTime` and `exportTime`, and the page says so explicitly
+- `python generate_item_changes.py --backfill-git YYYY-MM-DD` rebuilds records from the git history of `item.json`, covering exports that happened before the script existed
 - Future plan: run this script on a schedule inside the intranet so every export is recorded as it happens
 
 ### Client-side features
@@ -54,7 +55,9 @@ The page includes: dark/light theme toggle, search with keyboard navigation (Ctr
 - **Regenerate the schedule manifest**: `python generate_schedule_manifest.py` — scans `html/jyk_schedule/data/*.pdf`, writes `html/jyk_schedule/data/schedule.json`
 - **Adding a schedule**: drop the PDF into `html/jyk_schedule/data/` → run `generate_schedule_manifest.py`
 - **Regenerate the item change log**: `python generate_item_changes.py` — diffs `html/data/item.json` against `html/data/item-snapshot.json`, appends a record to `html/data/item-changes.json`. Useful flags: `--init` (rebuild the baseline only), `--dry-run` (print the diff, write nothing), `--max-records N`
+- **Backfill history from git**: `python generate_item_changes.py --backfill-git 2026-09-24` — rebuilds records from every commit of `item.json` on/after that date (commit time becomes `recordedAt`, records are marked `source: git` and the page labels them 提交于). Records already present for the same `exportTime` are replaced; `--dry-run` previews the result
 - **After a manual `item.json` export**: run `python generate_item_changes.py` (CI also runs it on every push, so committing a new export is enough)
+- Times are recorded in `--tz-offset` (default `+8`, Beijing) so a UTC CI runner does not shift them
 
 ## CI/CD
 

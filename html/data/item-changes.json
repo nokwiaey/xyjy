@@ -1,11 +1,11 @@
 {
  "schema": 1,
- "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测/记录时间，exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
- "generatedAt": "2026-09-24 03:29:32",
- "lastCheckedAt": "2026-09-24 03:29:32",
+ "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
+ "generatedAt": "2026-09-24 11:38:16",
+ "lastCheckedAt": "2026-09-24 11:38:16",
  "lastExportTime": "2026-09-24T11:28:33.142407",
- "lastChangeAt": "2026-09-24 03:29:32",
- "recordCount": 2,
+ "lastChangeAt": "2026-09-24 11:29:14",
+ "recordCount": 3,
  "categories": [
   {
    "key": "item",
@@ -26,8 +26,8 @@
  ],
  "records": [
   {
-   "id": "20260924-032932",
-   "recordedAt": "2026-09-24 03:29:32",
+   "id": "20260924-112914",
+   "recordedAt": "2026-09-24 11:29:14",
    "exportTime": "2026-09-24T11:28:33.142407",
    "prevExportTime": "2026-09-24T10:49:50.794837",
    "version": "2.1.0",
@@ -679,27 +679,462 @@
       }
      ]
     }
-   ]
+   ],
+   "source": "git",
+   "gitCommit": "ce2370ca",
+   "gitSubject": "更新项目"
   },
   {
-   "id": "20260924-110544",
-   "recordedAt": "2026-09-24 11:05:44",
+   "id": "20260924-105034",
+   "recordedAt": "2026-09-24 10:50:34",
    "exportTime": "2026-09-24T10:49:50.794837",
-   "prevExportTime": "",
+   "prevExportTime": "2026-09-24T10:35:12.177245",
    "version": "2.1.0",
-   "prevVersion": "",
-   "baseline": true,
+   "prevVersion": "2.1.0",
    "stats": {
-    "total": 0,
-    "add": 0,
+    "total": 1,
+    "add": 1,
     "remove": 0,
     "update": 0,
-    "item": 0,
+    "item": 1,
     "price": 0,
     "lis": 0,
     "form": 0
    },
-   "changes": []
+   "changes": [
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY060054 粪便转铁蛋白",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY060054"
+      },
+      {
+       "label": "项目名称",
+       "value": "粪便转铁蛋白"
+      },
+      {
+       "label": "申请单",
+       "value": "14241 临检室"
+      },
+      {
+       "label": "标本类型",
+       "value": "粪便"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "21"
+      },
+      {
+       "label": "收费明细",
+       "value": "250301007 转铁蛋白测定｜单价 21｜数量 1｜金额 21"
+      }
+     ]
+    }
+   ],
+   "source": "git",
+   "gitCommit": "cab8f06b",
+   "gitSubject": "更新项目：启用JY060054 粪便转铁蛋白"
+  },
+  {
+   "id": "20260924-103819",
+   "recordedAt": "2026-09-24 10:38:19",
+   "exportTime": "2026-09-24T10:35:12.177245",
+   "prevExportTime": "2026-09-21T11:38:30.508063",
+   "version": "2.1.0",
+   "prevVersion": "2.1.0",
+   "stats": {
+    "total": 13,
+    "add": 3,
+    "remove": 8,
+    "update": 2,
+    "item": 9,
+    "price": 0,
+    "lis": 4,
+    "form": 0
+   },
+   "changes": [
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY010021 25种DNA病原微生物以及13种RNA病原微生物宏基因组检测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY010021"
+      },
+      {
+       "label": "项目名称",
+       "value": "25种DNA病原微生物以及13种RNA病原微生物宏基因组检测"
+      },
+      {
+       "label": "申请单",
+       "value": "14239 分子生物室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血,尿液,脑脊液,腹水,胸水,痰,肺及支气管灌洗液,肛拭子,鼻拭子,支气管肺泡灌洗液"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "5700"
+      },
+      {
+       "label": "收费明细",
+       "value": "270700003 脱氧核糖核酸（DNA）测序｜单价 150｜数量 38｜金额 5700"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY010022 9种病原微生物靶向基因组检测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY010022"
+      },
+      {
+       "label": "项目名称",
+       "value": "9种病原微生物靶向基因组检测"
+      },
+      {
+       "label": "申请单",
+       "value": "14239 分子生物室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血,尿液,脑脊液,腹水,胸水,痰,肺及支气管灌洗液,肛拭子,鼻拭子,支气管肺泡灌洗液"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "1350"
+      },
+      {
+       "label": "收费明细",
+       "value": "270700003 脱氧核糖核酸（DNA）测序｜单价 150｜数量 9｜金额 1350"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY010023 25种病原微生物宏基因组检测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY010023"
+      },
+      {
+       "label": "项目名称",
+       "value": "25种病原微生物宏基因组检测"
+      },
+      {
+       "label": "申请单",
+       "value": "14239 分子生物室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血,尿液,脑脊液,腹水,胸水,痰,肺及支气管灌洗液,肛拭子,鼻拭子,支气管肺泡灌洗液"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "3750"
+      },
+      {
+       "label": "收费明细",
+       "value": "270700003 脱氧核糖核酸（DNA）测序｜单价 150｜数量 25｜金额 3750"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY010025 16种血流感染病原微生物菌属以及耐药基因核酸联合检测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY010025"
+      },
+      {
+       "label": "项目名称",
+       "value": "16种血流感染病原微生物菌属以及耐药基因核酸联合检测"
+      },
+      {
+       "label": "申请单",
+       "value": "14239 分子生物室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "1360"
+      },
+      {
+       "label": "收费明细",
+       "value": "250403065a 各类病原体DNA定量检测｜单价 85｜数量 16｜金额 1360"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY060056 凝血酶抗凝血酶复合物",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY060056"
+      },
+      {
+       "label": "项目名称",
+       "value": "凝血酶抗凝血酶复合物"
+      },
+      {
+       "label": "申请单",
+       "value": "14241 临检室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "150"
+      },
+      {
+       "label": "收费明细",
+       "value": "250203049a 凝血酶抗凝血酶III复合物测定（TAT)｜单价 150｜数量 1｜金额 150"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY060057 纤溶酶-抗纤溶酶复合物",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY060057"
+      },
+      {
+       "label": "项目名称",
+       "value": "纤溶酶-抗纤溶酶复合物"
+      },
+      {
+       "label": "申请单",
+       "value": "14241 临检室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "150"
+      },
+      {
+       "label": "收费明细",
+       "value": "250203064a 血浆纤溶酶-抗纤溶酶III复合物测定（PAP)｜单价 150｜数量 1｜金额 150"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY060058 凝血酶调节蛋白",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY060058"
+      },
+      {
+       "label": "项目名称",
+       "value": "凝血酶调节蛋白"
+      },
+      {
+       "label": "申请单",
+       "value": "14241 临检室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "150"
+      },
+      {
+       "label": "收费明细",
+       "value": "250203061a 血浆凝血酶调节蛋白活性检测(TMA)｜单价 150｜数量 1｜金额 150"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY060059 组织型纤溶酶原激活剂-抑制剂复合物",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY060059"
+      },
+      {
+       "label": "项目名称",
+       "value": "组织型纤溶酶原激活剂-抑制剂复合物"
+      },
+      {
+       "label": "申请单",
+       "value": "14241 临检室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "150"
+      },
+      {
+       "label": "收费明细",
+       "value": "250203058a 组织型纤溶酶原激活剂-抑制剂I复合体检测｜单价 150｜数量 1｜金额 150"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY030012 内毒素鲎定量试验",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,透析用水,透析液",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "lis_test_added",
+     "category": "lis",
+     "level": "add",
+     "title": "TRF 粪便转铁蛋白（8678）",
+     "fields": [
+      {
+       "label": "分析项目ID",
+       "value": "8678"
+      },
+      {
+       "label": "代号",
+       "value": "TRF"
+      },
+      {
+       "label": "名称",
+       "value": "粪便转铁蛋白"
+      },
+      {
+       "label": "互认标识",
+       "value": ""
+      }
+     ]
+    },
+    {
+     "kind": "lis_test_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "Cal 粪便钙卫蛋白（8199）",
+     "fields": [
+      {
+       "label": "名称",
+       "from": "粪便钙卫蛋白检测",
+       "to": "粪便钙卫蛋白"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_added",
+     "category": "lis",
+     "level": "add",
+     "title": "LIS0897 粪便转铁蛋白",
+     "fields": [
+      {
+       "label": "收费项目ID",
+       "value": "LIS0897"
+      },
+      {
+       "label": "收费项目名称",
+       "value": "粪便转铁蛋白"
+      },
+      {
+       "label": "对应 HIS 项目",
+       "value": "JY060054（项目列表中已无此编码）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_link_added",
+     "category": "lis",
+     "level": "add",
+     "title": "JY060054（项目列表中已无此编码）",
+     "fields": [
+      {
+       "label": "新增关联分析项目",
+       "value": "TRF 粪便转铁蛋白（8678）（分组：G002 临检体液室）"
+      }
+     ]
+    }
+   ],
+   "source": "git",
+   "gitCommit": "2e0a97b4",
+   "gitSubject": "更新项目"
   }
  ]
 }

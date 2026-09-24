@@ -3135,7 +3135,7 @@ function renderInfoModal() {
   }
 
   html += '</div>';
-  html += '<div class="info-note">⚠️ 以上均为 <b>导出 / 检测时间</b>，不是项目实际发生变更的时间。'
+  html += '<div class="info-note">⚠️ 以上均为 <b>导出 / 记录时间</b>，不是项目实际发生变更的时间。'
         + 'item.json 由内网导出，每条记录表示该次导出相对上一次导出新发现的变化，'
         + '实际变更可能发生在更早的时间。</div>';
 
@@ -3175,7 +3175,9 @@ function renderChangeRecord(record, open) {
   } else {
     summary += '<span class="cr-stats cr-none">无变化</span>';
   }
-  summary += `<span class="cr-detected">记录于 ${escapeHtml(formatDateTimeText(record.recordedAt))}</span>`;
+  // 补录的记录以 git 提交时间为准，措辞上区分开
+  const recordedLabel = record.source === 'git' ? '提交于' : '记录于';
+  summary += `<span class="cr-detected">${recordedLabel} ${escapeHtml(formatDateTimeText(record.recordedAt))}</span>`;
 
   let body = '';
   if (record.baseline) {
