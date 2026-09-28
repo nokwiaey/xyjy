@@ -1,11 +1,11 @@
 {
  "schema": 1,
  "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
- "generatedAt": "2026-09-24 15:25:26",
- "lastCheckedAt": "2026-09-24 15:25:26",
- "lastExportTime": "2026-09-24T14:55:21.675811",
- "lastChangeAt": "2026-09-24 14:56:16",
- "recordCount": 4,
+ "generatedAt": "2026-09-28 14:56:24",
+ "lastCheckedAt": "2026-09-28 14:56:24",
+ "lastExportTime": "2026-09-28T14:54:21.809090",
+ "lastChangeAt": "2026-09-28 14:56:24",
+ "recordCount": 5,
  "categories": [
   {
    "key": "item",
@@ -25,6 +25,66 @@
   }
  ],
  "records": [
+  {
+   "id": "20260928-145624",
+   "recordedAt": "2026-09-28 14:56:24",
+   "exportTime": "2026-09-28T14:54:21.809090",
+   "prevExportTime": "2026-09-24T14:55:21.675811",
+   "version": "2.1.0",
+   "prevVersion": "2.1.0",
+   "stats": {
+    "total": 1,
+    "add": 0,
+    "remove": 1,
+    "update": 0,
+    "item": 1,
+    "price": 0,
+    "lis": 0,
+    "form": 0
+   },
+   "changes": [
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY060015 纤溶功能（2项）",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY060015"
+      },
+      {
+       "label": "项目名称",
+       "value": "纤溶功能（2项）"
+      },
+      {
+       "label": "申请单",
+       "value": "14241 临检室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "是"
+      },
+      {
+       "label": "收费合计",
+       "value": "86"
+      },
+      {
+       "label": "收费明细",
+       "value": "250203065 纤维蛋白(原)降解产物测定(FDP)｜单价 26｜数量 1｜金额 26"
+      },
+      {
+       "label": "收费明细",
+       "value": "250203066a 血浆D-二聚体定量检测｜单价 60｜数量 1｜金额 60"
+      }
+     ]
+    }
+   ]
+  },
   {
    "id": "20260924-145616",
    "recordedAt": "2026-09-24 14:56:16",
