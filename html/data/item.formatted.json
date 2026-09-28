@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-09-24T14:55:21.675811",
+  "exportTime": "2026-09-28T14:54:21.809090",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -2450,14 +2450,6 @@
     {
       "itemCode": "JY060014",
       "itemName": "凝血功能（4项）",
-      "applyFormCode": "14241",
-      "sample": "全血",
-      "isEmergency": 1,
-      "remark": null
-    },
-    {
-      "itemCode": "JY060015",
-      "itemName": "纤溶功能（2项）",
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 1,
@@ -8677,25 +8669,6 @@
         }
       ],
       "sum": 42.0
-    },
-    "JY060015": {
-      "details": [
-        {
-          "detailCode": "250203065",
-          "detailName": "纤维蛋白(原)降解产物测定(FDP)",
-          "price": 26.0,
-          "count": 1.0,
-          "total": 26.0
-        },
-        {
-          "detailCode": "250203066a",
-          "detailName": "血浆D-二聚体定量检测",
-          "price": 60.0,
-          "count": 1.0,
-          "total": 60.0
-        }
-      ],
-      "sum": 86.0
     },
     "JY060016": {
       "details": [
