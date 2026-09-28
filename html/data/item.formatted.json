@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-09-28T14:54:21.809090",
+  "exportTime": "2026-09-28T16:21:39.399232",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -1048,6 +1048,14 @@
       "remark": ""
     },
     {
+      "itemCode": "JY020139",
+      "itemName": "血清人绒毛膜促性腺激素(β-HCG)（生化室）",
+      "applyFormCode": "14243",
+      "sample": "全血",
+      "isEmergency": 1,
+      "remark": ""
+    },
+    {
       "itemCode": "JY030001",
       "itemName": "结核感染T细胞检测",
       "applyFormCode": "14247",
@@ -2065,7 +2073,7 @@
     },
     {
       "itemCode": "JY050033",
-      "itemName": "血清人绒毛膜促性腺激素（β-HCG）",
+      "itemName": "血清人绒毛膜促性腺激素（β-HCG）（电化学室）",
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 1,
@@ -5458,6 +5466,18 @@
         }
       ],
       "sum": 41.0
+    },
+    "JY020139": {
+      "details": [
+        {
+          "detailCode": "250310038a",
+          "detailName": "血清人绒毛膜促性腺激素测定",
+          "price": 34.0,
+          "count": 1.0,
+          "total": 34.0
+        }
+      ],
+      "sum": 34.0
     },
     "JY030001": {
       "details": [
@@ -12064,6 +12084,12 @@
         "hisId": "JY020138"
       },
       {
+        "chargeItemId": "LIS0898",
+        "chineseName": "血清人绒毛膜促性腺激素(β-HCG)（生化室）",
+        "charge": 34.0,
+        "hisId": "JY020139"
+      },
+      {
         "chargeItemId": "LIS02798",
         "chineseName": "结核感染T细胞检测",
         "charge": 425.0,
@@ -13151,7 +13177,7 @@
       },
       {
         "chargeItemId": "LIS01043",
-        "chineseName": "血清人绒毛膜促性腺激素测定（β-HCG）",
+        "chineseName": "血清人绒毛膜促性腺激素(β-HCG)（电化学室）",
         "charge": 34.0,
         "hisId": "JY050033"
       },
@@ -18109,7 +18135,7 @@
       },
       {
         "groupId": "G001",
-        "chargeItemId": "LIS01043",
+        "chargeItemId": "LIS0898",
         "testItemId": "5616",
         "itemSort": "Z5616"
       },
