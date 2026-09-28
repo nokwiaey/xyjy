@@ -1,11 +1,11 @@
 {
  "schema": 1,
  "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
- "generatedAt": "2026-09-28 14:56:24",
- "lastCheckedAt": "2026-09-28 14:56:24",
- "lastExportTime": "2026-09-28T14:54:21.809090",
- "lastChangeAt": "2026-09-28 14:56:24",
- "recordCount": 5,
+ "generatedAt": "2026-09-28 16:23:20",
+ "lastCheckedAt": "2026-09-28 16:23:20",
+ "lastExportTime": "2026-09-28T16:21:39.399232",
+ "lastChangeAt": "2026-09-28 16:23:20",
+ "recordCount": 6,
  "categories": [
   {
    "key": "item",
@@ -25,6 +25,116 @@
   }
  ],
  "records": [
+  {
+   "id": "20260928-162320",
+   "recordedAt": "2026-09-28 16:23:20",
+   "exportTime": "2026-09-28T16:21:39.399232",
+   "prevExportTime": "2026-09-28T14:54:21.809090",
+   "version": "2.1.0",
+   "prevVersion": "2.1.0",
+   "stats": {
+    "total": 4,
+    "add": 2,
+    "remove": 0,
+    "update": 2,
+    "item": 2,
+    "price": 0,
+    "lis": 2,
+    "form": 0
+   },
+   "changes": [
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY020139 血清人绒毛膜促性腺激素(β-HCG)（生化室）",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY020139"
+      },
+      {
+       "label": "项目名称",
+       "value": "血清人绒毛膜促性腺激素(β-HCG)（生化室）"
+      },
+      {
+       "label": "申请单",
+       "value": "14243 生化室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "是"
+      },
+      {
+       "label": "收费合计",
+       "value": "34"
+      },
+      {
+       "label": "收费明细",
+       "value": "250310038a 血清人绒毛膜促性腺激素测定｜单价 34｜数量 1｜金额 34"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050033 血清人绒毛膜促性腺激素（β-HCG）（电化学室）（血清人绒毛膜促性腺激素（β-HCG））",
+     "fields": [
+      {
+       "label": "项目名称",
+       "from": "血清人绒毛膜促性腺激素（β-HCG）",
+       "to": "血清人绒毛膜促性腺激素（β-HCG）（电化学室）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS01043 血清人绒毛膜促性腺激素(β-HCG)（电化学室）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "血清人绒毛膜促性腺激素测定（β-HCG）",
+       "to": "血清人绒毛膜促性腺激素(β-HCG)（电化学室）"
+      },
+      {
+       "label": "关联分组调整",
+       "value": "β-HCG 绒毛膜促性腺激素β（5616）：G001 生化室、G005 电化学室 → G005 电化学室"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_added",
+     "category": "lis",
+     "level": "add",
+     "title": "LIS0898 血清人绒毛膜促性腺激素(β-HCG)（生化室）",
+     "fields": [
+      {
+       "label": "诊疗项目ID",
+       "value": "LIS0898"
+      },
+      {
+       "label": "诊疗项目名称",
+       "value": "血清人绒毛膜促性腺激素(β-HCG)（生化室）"
+      },
+      {
+       "label": "对应 HIS 项目",
+       "value": "JY020139 血清人绒毛膜促性腺激素(β-HCG)（生化室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "β-HCG 绒毛膜促性腺激素β（5616）（分组：G001 生化室）"
+      }
+     ]
+    }
+   ]
+  },
   {
    "id": "20260928-145624",
    "recordedAt": "2026-09-28 14:56:24",
