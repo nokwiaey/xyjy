@@ -1,11 +1,11 @@
 {
  "schema": 1,
  "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
- "generatedAt": "2026-09-28 16:23:20",
- "lastCheckedAt": "2026-09-28 16:23:20",
- "lastExportTime": "2026-09-28T16:21:39.399232",
- "lastChangeAt": "2026-09-28 16:23:20",
- "recordCount": 6,
+ "generatedAt": "2026-10-09 09:21:12",
+ "lastCheckedAt": "2026-10-09 09:21:12",
+ "lastExportTime": "2026-10-09T09:20:06.887362",
+ "lastChangeAt": "2026-10-09 09:21:12",
+ "recordCount": 7,
  "categories": [
   {
    "key": "item",
@@ -25,6 +25,166 @@
   }
  ],
  "records": [
+  {
+   "id": "20261009-092112",
+   "recordedAt": "2026-10-09 09:21:12",
+   "exportTime": "2026-10-09T09:20:06.887362",
+   "prevExportTime": "2026-09-28T16:21:39.399232",
+   "version": "2.1.0",
+   "prevVersion": "2.1.0",
+   "stats": {
+    "total": 9,
+    "add": 0,
+    "remove": 1,
+    "update": 8,
+    "item": 9,
+    "price": 0,
+    "lis": 0,
+    "form": 0
+   },
+   "changes": [
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070139 安非他酮血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070139"
+      },
+      {
+       "label": "项目名称",
+       "value": "安非他酮血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY020029 C反应蛋白（生化室）",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,脑脊液,腹水,胸水",
+       "to": "全血,脑脊液"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY020034 β2微球蛋白",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,脑脊液,腹水,胸水",
+       "to": "全血,脑脊液"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY020062 总蛋白",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,胸水",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY020069 碱性磷酸酶",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,胸水",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY020075 腺苷脱氨酶",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,胸水",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY020077 乳酸脱氢酶",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,脑脊液,腹水,胸水",
+       "to": "全血,脑脊液"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY020078 葡萄糖",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,脑脊液,腹水,胸水",
+       "to": "全血,脑脊液"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050033 血清人绒毛膜促性腺激素（β-HCG）（电化学室）",
+     "fields": [
+      {
+       "label": "急诊项目",
+       "from": "是",
+       "to": "否"
+      }
+     ]
+    }
+   ]
+  },
   {
    "id": "20260928-162320",
    "recordedAt": "2026-09-28 16:23:20",
