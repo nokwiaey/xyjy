@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "exportTime": "2026-10-09T09:20:06.887362",
+  "exportTime": "2026-10-09T15:17:14.918456",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -6340,14 +6340,14 @@
     "JY040036": {
       "details": [
         {
-          "detailCode": "250403084",
-          "detailName": "人免疫缺陷病毒（HIV）抗原抗体联合检测",
-          "price": 90.0,
+          "detailCode": "250403019a",
+          "detailName": "人免疫缺陷病毒抗体测定(Anti-HIV)",
+          "price": 50.0,
           "count": 1.0,
-          "total": 90.0
+          "total": 50.0
         }
       ],
-      "sum": 90.0
+      "sum": 50.0
     },
     "JY040037": {
       "details": [
