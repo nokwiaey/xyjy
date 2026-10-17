@@ -2566,27 +2566,39 @@ function matchKeyword(item) {
   }
 }
 
-// 排序号取值：纯数字按数值比较（1 < 2 < 10），缺失或非数字的排在最后
+// 排序号取值：Excel 里排序号为空的单元格，导出中可能是空串、null 或 0。
+// Excel 排序时空白单元格总是排在最后，这里保持一致（空 → 最大整数，排末尾）。
 function getSortNoValue(item) {
   const raw = item ? item.sortNo : undefined;
   if (raw === null || raw === undefined || raw === '') {
     return Number.MAX_SAFE_INTEGER;
   }
   const num = Number(raw);
-  return Number.isFinite(num) ? num : Number.MAX_SAFE_INTEGER;
+  if (!Number.isFinite(num) || num === 0) {
+    return Number.MAX_SAFE_INTEGER;
+  }
+  return num;
 }
 
-// 申请单内部诊疗项目排序：排序号升序；排序号相同时按项目名称兜底（与 HIS 的顺序一致）
+// 项目名称比较：按 Excel/中文系统默认的拼音排序，忽略大小写与首尾空格
+const sortNameCollator = new Intl.Collator('zh-Hans-CN', { sensitivity: 'base' });
+
+// 申请单内部诊疗项目排序：
+// 1) 排序号升序（排序号为空的排最后）
+// 2) 排序号相同时按项目名称（Excel 风格的中文排序，与 HIS 一致）
+// 3) 名称也完全相同时按编码兜底，保证渲染顺序稳定
 function compareBySortNo(a, b) {
   const diff = getSortNoValue(a) - getSortNoValue(b);
   if (diff !== 0) {
     return diff;
   }
-  const nameDiff = String(a.itemName || '').localeCompare(String(b.itemName || ''), 'zh-Hans-CN');
+  const nameDiff = sortNameCollator.compare(
+    String(a.itemName || '').trim(),
+    String(b.itemName || '').trim()
+  );
   if (nameDiff !== 0) {
     return nameDiff;
   }
-  // 名称也完全相同时按编码兜底，保证渲染顺序稳定
   return String(a.itemCode || '').localeCompare(String(b.itemCode || ''));
 }
 
