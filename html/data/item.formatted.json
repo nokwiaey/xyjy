@@ -1,6 +1,6 @@
 {
-  "version": "2.1.0",
-  "exportTime": "2026-10-09T15:17:14.918456",
+  "version": "2.2.0",
+  "exportTime": "2026-10-16T16:43:43.058153",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -45,7 +45,9 @@
       "applyFormCode": "14239",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 10001
     },
     {
       "itemCode": "JY010002",
@@ -53,7 +55,9 @@
       "applyFormCode": "14239",
       "sample": "全血,尿液,脑脊液,腹水,胸水,痰,肺及支气管灌洗液,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 10002
     },
     {
       "itemCode": "JY010003",
@@ -61,7 +65,9 @@
       "applyFormCode": "14239",
       "sample": "分泌物",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 10003
     },
     {
       "itemCode": "JY010004",
@@ -69,7 +75,9 @@
       "applyFormCode": "14239",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 10004
     },
     {
       "itemCode": "JY010005",
@@ -77,7 +85,9 @@
       "applyFormCode": "14239",
       "sample": "痰,咽拭子,肺及支气管灌洗液,鼻拭子,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 10005
     },
     {
       "itemCode": "JY010006",
@@ -85,7 +95,9 @@
       "applyFormCode": "14239",
       "sample": "咽拭子,鼻拭子",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "线上开单",
+      "sortNo": 10006
     },
     {
       "itemCode": "JY010007",
@@ -93,7 +105,9 @@
       "applyFormCode": "14239",
       "sample": "痰,肺及支气管灌洗液,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 10007
     },
     {
       "itemCode": "JY010008",
@@ -101,7 +115,9 @@
       "applyFormCode": "14239",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 10008
     },
     {
       "itemCode": "JY010009",
@@ -109,7 +125,9 @@
       "applyFormCode": "14239",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 10001
     },
     {
       "itemCode": "JY010011",
@@ -117,7 +135,9 @@
       "applyFormCode": "14239",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 10001
     },
     {
       "itemCode": "JY010012",
@@ -125,7 +145,9 @@
       "applyFormCode": "14239",
       "sample": "咽拭子,鼻拭子",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 10001
     },
     {
       "itemCode": "JY010013",
@@ -133,7 +155,9 @@
       "applyFormCode": "14239",
       "sample": "全血,尿液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 10001
     },
     {
       "itemCode": "JY010015",
@@ -141,7 +165,9 @@
       "applyFormCode": "14239",
       "sample": "直肠/阴道混合拭子",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 10001
     },
     {
       "itemCode": "JY010016",
@@ -149,7 +175,9 @@
       "applyFormCode": "14239",
       "sample": "粪便,咽拭子,疱疹液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 10001
     },
     {
       "itemCode": "JY010017",
@@ -157,7 +185,9 @@
       "applyFormCode": "14239",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 10001
     },
     {
       "itemCode": "JY010024",
@@ -165,7 +195,9 @@
       "applyFormCode": "14239",
       "sample": "粪便",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70063
     },
     {
       "itemCode": "JY010026",
@@ -173,7 +205,9 @@
       "applyFormCode": "14239",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "铜绿假单胞菌、大肠埃希菌、肺炎克雷伯菌、鲍曼不动杆菌核酸检测"
+      "remark": "铜绿假单胞菌、大肠埃希菌、肺炎克雷伯菌、鲍曼不动杆菌核酸检测",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY010027",
@@ -181,7 +215,9 @@
       "applyFormCode": "14239",
       "sample": "痰",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY010028",
@@ -189,7 +225,9 @@
       "applyFormCode": "14239",
       "sample": "咽拭子",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY010029",
@@ -197,7 +235,9 @@
       "applyFormCode": "14239",
       "sample": "血浆",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70061
     },
     {
       "itemCode": "JY020006",
@@ -205,7 +245,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝功类/GGL",
+      "sortNo": 102
     },
     {
       "itemCode": "JY020010",
@@ -213,7 +255,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "血脂类/XZL",
+      "sortNo": 301
     },
     {
       "itemCode": "JY020013",
@@ -221,7 +265,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "糖代谢/TDX",
+      "sortNo": 1201
     },
     {
       "itemCode": "JY020014",
@@ -229,7 +275,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "糖代谢/TDX",
+      "sortNo": 1202
     },
     {
       "itemCode": "JY020015",
@@ -237,7 +285,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "糖代谢/TDX",
+      "sortNo": 1203
     },
     {
       "itemCode": "JY020016",
@@ -245,7 +295,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "糖代谢/TDX",
+      "sortNo": 1204
     },
     {
       "itemCode": "JY020017",
@@ -253,7 +305,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "糖代谢/TDX",
+      "sortNo": 1205
     },
     {
       "itemCode": "JY020018",
@@ -261,7 +315,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "糖代谢/TDX",
+      "sortNo": 1206
     },
     {
       "itemCode": "JY020024",
@@ -269,7 +325,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "感染类/GRL",
+      "sortNo": 704
     },
     {
       "itemCode": "JY020027",
@@ -277,7 +335,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "高血压系列/GXYXL",
+      "sortNo": 1103
     },
     {
       "itemCode": "JY020028",
@@ -285,7 +345,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "高血压系列/GXYXL",
+      "sortNo": 1104
     },
     {
       "itemCode": "JY020029",
@@ -293,7 +355,9 @@
       "applyFormCode": "14243",
       "sample": "全血,脑脊液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "感染类,风湿系列/GRL,FSXL",
+      "sortNo": 703
     },
     {
       "itemCode": "JY020031",
@@ -301,7 +365,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "心肌系列/XJXL",
+      "sortNo": 506
     },
     {
       "itemCode": "JY020032",
@@ -309,7 +375,9 @@
       "applyFormCode": "14243",
       "sample": "脑脊液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 9901
     },
     {
       "itemCode": "JY020034",
@@ -317,7 +385,9 @@
       "applyFormCode": "14243",
       "sample": "全血,脑脊液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肾功类/SGL",
+      "sortNo": 208
     },
     {
       "itemCode": "JY020035",
@@ -325,7 +395,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "肝功类/GGL",
+      "sortNo": 119
     },
     {
       "itemCode": "JY020036",
@@ -333,7 +405,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝功类/GGL",
+      "sortNo": 111
     },
     {
       "itemCode": "JY020037",
@@ -341,7 +415,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "心肌系列/XJXL",
+      "sortNo": 507
     },
     {
       "itemCode": "JY020039",
@@ -349,7 +425,9 @@
       "applyFormCode": "14243",
       "sample": "尿液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肾功类,尿液项目/SGL,NYXM",
+      "sortNo": 1003
     },
     {
       "itemCode": "JY020040",
@@ -357,7 +435,9 @@
       "applyFormCode": "14243",
       "sample": "全血,尿液,腹水,胸水",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "胰腺系列/YXXL",
+      "sortNo": 901
     },
     {
       "itemCode": "JY020041",
@@ -365,7 +445,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "胰腺系列/YXXL",
+      "sortNo": 902
     },
     {
       "itemCode": "JY020042",
@@ -373,7 +455,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "胰腺系列/YXXL",
+      "sortNo": 903
     },
     {
       "itemCode": "JY020043",
@@ -381,7 +465,9 @@
       "applyFormCode": "14243",
       "sample": "尿液",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "胰腺系列,尿液项目/YXXL,NYXM",
+      "sortNo": 1001
     },
     {
       "itemCode": "JY020044",
@@ -389,7 +475,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "肝功类/GGL",
+      "sortNo": 120
     },
     {
       "itemCode": "JY020045",
@@ -397,7 +485,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "心肌系列/XJXL",
+      "sortNo": 504
     },
     {
       "itemCode": "JY020046",
@@ -405,7 +495,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "风湿系列/FSXL",
+      "sortNo": 702
     },
     {
       "itemCode": "JY020047",
@@ -413,7 +505,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "风湿系列/FSXL",
+      "sortNo": 701
     },
     {
       "itemCode": "JY020053",
@@ -421,7 +515,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "免疫系列/MYXL",
+      "sortNo": 601
     },
     {
       "itemCode": "JY020054",
@@ -429,7 +525,9 @@
       "applyFormCode": "14243",
       "sample": "全血,尿液",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "电解质/DJZ",
+      "sortNo": 401
     },
     {
       "itemCode": "JY020055",
@@ -437,7 +535,9 @@
       "applyFormCode": "14243",
       "sample": "全血,尿液",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "电解质/DJZ",
+      "sortNo": 402
     },
     {
       "itemCode": "JY020056",
@@ -445,7 +545,9 @@
       "applyFormCode": "14243",
       "sample": "全血,尿液,脑脊液",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "电解质/DJZ",
+      "sortNo": 403
     },
     {
       "itemCode": "JY020057",
@@ -453,7 +555,9 @@
       "applyFormCode": "14243",
       "sample": "全血,尿液",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "电解质/DJZ",
+      "sortNo": 404
     },
     {
       "itemCode": "JY020058",
@@ -461,7 +565,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "电解质,贫血系列/DJZ,PXXL",
+      "sortNo": 405
     },
     {
       "itemCode": "JY020059",
@@ -469,7 +575,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "电解质/DJZ",
+      "sortNo": 406
     },
     {
       "itemCode": "JY020060",
@@ -477,7 +585,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "电解质/DJZ",
+      "sortNo": 407
     },
     {
       "itemCode": "JY020061",
@@ -485,7 +595,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "电解质/DJZ",
+      "sortNo": 408
     },
     {
       "itemCode": "JY020062",
@@ -493,7 +605,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝功类/GGL",
+      "sortNo": 103
     },
     {
       "itemCode": "JY020063",
@@ -501,7 +615,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝功类/GGL",
+      "sortNo": 104
     },
     {
       "itemCode": "JY020064",
@@ -509,7 +625,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝功类/GGL",
+      "sortNo": 105
     },
     {
       "itemCode": "JY020065",
@@ -517,7 +635,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝功类/GGL",
+      "sortNo": 106
     },
     {
       "itemCode": "JY020066",
@@ -525,7 +645,9 @@
       "applyFormCode": "14243",
       "sample": "全血,脑脊液",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝功类/GGL",
+      "sortNo": 107
     },
     {
       "itemCode": "JY020067",
@@ -533,7 +655,9 @@
       "applyFormCode": "14243",
       "sample": "全血,脑脊液",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝功类/GGL",
+      "sortNo": 108
     },
     {
       "itemCode": "JY020068",
@@ -541,7 +665,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肝功类/GGL",
+      "sortNo": 109
     },
     {
       "itemCode": "JY020069",
@@ -549,7 +675,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝功类/GGL",
+      "sortNo": 110
     },
     {
       "itemCode": "JY020070",
@@ -557,7 +685,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肝功类/GGL",
+      "sortNo": 112
     },
     {
       "itemCode": "JY020071",
@@ -565,7 +695,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肝功类/GGL",
+      "sortNo": 117
     },
     {
       "itemCode": "JY020072",
@@ -573,7 +705,9 @@
       "applyFormCode": "14243",
       "sample": "尿液,脑脊液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "尿液项目/NYXM",
+      "sortNo": 1002
     },
     {
       "itemCode": "JY020073",
@@ -581,7 +715,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肝功类/GGL",
+      "sortNo": 116
     },
     {
       "itemCode": "JY020074",
@@ -589,7 +725,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肝功类/GGL",
+      "sortNo": 115
     },
     {
       "itemCode": "JY020075",
@@ -597,7 +735,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝功类/GGL",
+      "sortNo": 118
     },
     {
       "itemCode": "JY020076",
@@ -605,7 +745,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肝功类/GGL",
+      "sortNo": 113
     },
     {
       "itemCode": "JY020077",
@@ -613,7 +755,9 @@
       "applyFormCode": "14243",
       "sample": "全血,脑脊液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝功类,心肌系列/GGL,XJXL",
+      "sortNo": 114
     },
     {
       "itemCode": "JY020078",
@@ -621,7 +765,9 @@
       "applyFormCode": "14243",
       "sample": "全血,脑脊液",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "糖代谢/TDX",
+      "sortNo": 1207
     },
     {
       "itemCode": "JY020079",
@@ -629,7 +775,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肾功类/SGL",
+      "sortNo": 206
     },
     {
       "itemCode": "JY020080",
@@ -637,7 +785,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肾功类/SGL",
+      "sortNo": 205
     },
     {
       "itemCode": "JY020081",
@@ -645,7 +795,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肾功类/SGL",
+      "sortNo": 202
     },
     {
       "itemCode": "JY020082",
@@ -653,7 +805,9 @@
       "applyFormCode": "14243",
       "sample": "全血,尿液",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肾功类/SGL",
+      "sortNo": 203
     },
     {
       "itemCode": "JY020083",
@@ -661,7 +815,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肾功类,风湿系列/SGL,FSXL",
+      "sortNo": 204
     },
     {
       "itemCode": "JY020084",
@@ -669,7 +825,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肾功类/SGL",
+      "sortNo": 207
     },
     {
       "itemCode": "JY020085",
@@ -677,7 +835,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "血脂类/XZL",
+      "sortNo": 302
     },
     {
       "itemCode": "JY020086",
@@ -685,7 +845,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "血脂类/XZL",
+      "sortNo": 303
     },
     {
       "itemCode": "JY020087",
@@ -693,7 +855,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "血脂类/XZL",
+      "sortNo": 304
     },
     {
       "itemCode": "JY020088",
@@ -701,7 +865,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "血脂类/XZL",
+      "sortNo": 305
     },
     {
       "itemCode": "JY020089",
@@ -709,7 +875,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "血脂类/XZL",
+      "sortNo": 306
     },
     {
       "itemCode": "JY020090",
@@ -717,7 +885,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "血脂类/XZL",
+      "sortNo": 307
     },
     {
       "itemCode": "JY020091",
@@ -725,7 +895,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "血脂类/XZL",
+      "sortNo": 308
     },
     {
       "itemCode": "JY020092",
@@ -733,7 +905,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "血脂类/XZL",
+      "sortNo": 309
     },
     {
       "itemCode": "JY020094",
@@ -741,7 +915,9 @@
       "applyFormCode": "14243",
       "sample": "全血,脑脊液",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "心肌系列/XJXL",
+      "sortNo": 501
     },
     {
       "itemCode": "JY020095",
@@ -749,7 +925,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "心肌系列/XJXL",
+      "sortNo": 502
     },
     {
       "itemCode": "JY020096",
@@ -757,7 +935,9 @@
       "applyFormCode": "14243",
       "sample": "尿液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "尿液项目/NYXM",
+      "sortNo": 1004
     },
     {
       "itemCode": "JY020097",
@@ -765,7 +945,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "心肌系列/XJXL",
+      "sortNo": 503
     },
     {
       "itemCode": "JY020098",
@@ -773,7 +955,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "心肌系列/XJXL",
+      "sortNo": 505
     },
     {
       "itemCode": "JY020099",
@@ -781,7 +965,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "贫血系列/PXXL",
+      "sortNo": 801
     },
     {
       "itemCode": "JY020100",
@@ -789,7 +975,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "贫血系列/PXXL",
+      "sortNo": 802
     },
     {
       "itemCode": "JY020101",
@@ -797,7 +985,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "贫血系列/PXXL",
+      "sortNo": 803
     },
     {
       "itemCode": "JY020102",
@@ -805,7 +995,9 @@
       "applyFormCode": "14243",
       "sample": "尿液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "尿液项目/NYXM",
+      "sortNo": 1005
     },
     {
       "itemCode": "JY020103",
@@ -813,7 +1005,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9902
     },
     {
       "itemCode": "JY020104",
@@ -821,7 +1015,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "免疫系列/MYXL",
+      "sortNo": 602
     },
     {
       "itemCode": "JY020105",
@@ -829,7 +1025,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "免疫系列/MYXL",
+      "sortNo": 603
     },
     {
       "itemCode": "JY020106",
@@ -837,7 +1035,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "免疫系列/MYXL",
+      "sortNo": 604
     },
     {
       "itemCode": "JY020107",
@@ -845,7 +1045,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "免疫系列/MYXL",
+      "sortNo": 605
     },
     {
       "itemCode": "JY020108",
@@ -853,7 +1055,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "免疫系列/MYXL",
+      "sortNo": 606
     },
     {
       "itemCode": "JY020109",
@@ -861,7 +1065,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "高血压系列/GXYXL",
+      "sortNo": 1102
     },
     {
       "itemCode": "JY020110",
@@ -869,7 +1075,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "高血压系列/GXYXL",
+      "sortNo": 1101
     },
     {
       "itemCode": "JY020113",
@@ -877,7 +1085,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝纤系列/GXXL",
+      "sortNo": 1310
     },
     {
       "itemCode": "JY020114",
@@ -885,7 +1095,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝纤系列/GXXL",
+      "sortNo": 1307
     },
     {
       "itemCode": "JY020115",
@@ -893,7 +1105,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝纤系列/GXXL",
+      "sortNo": 1308
     },
     {
       "itemCode": "JY020116",
@@ -901,7 +1115,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝纤系列/GXXL",
+      "sortNo": 1309
     },
     {
       "itemCode": "JY020117",
@@ -909,7 +1125,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 9903
     },
     {
       "itemCode": "JY020121",
@@ -917,7 +1135,9 @@
       "applyFormCode": "14243",
       "sample": "尿液",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "尿液项目/NYXM",
+      "sortNo": 1006
     },
     {
       "itemCode": "JY020122",
@@ -925,7 +1145,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝纤系列/GXXL",
+      "sortNo": 1301
     },
     {
       "itemCode": "JY020123",
@@ -933,7 +1155,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝纤系列/GXXL",
+      "sortNo": 1302
     },
     {
       "itemCode": "JY020124",
@@ -941,7 +1165,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝纤系列/GXXL",
+      "sortNo": 1304
     },
     {
       "itemCode": "JY020125",
@@ -949,7 +1175,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝纤系列/GXXL",
+      "sortNo": 1305
     },
     {
       "itemCode": "JY020126",
@@ -957,7 +1185,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝纤系列/GXXL",
+      "sortNo": 1303
     },
     {
       "itemCode": "JY020127",
@@ -965,7 +1195,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "胰岛素抗体/YDSKT",
+      "sortNo": 1501
     },
     {
       "itemCode": "JY020128",
@@ -973,7 +1205,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "胰岛素抗体/YDSKT",
+      "sortNo": 1502
     },
     {
       "itemCode": "JY020129",
@@ -981,7 +1215,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "胰岛素抗体/YDSKT",
+      "sortNo": 1503
     },
     {
       "itemCode": "JY020130",
@@ -989,7 +1225,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "胰岛素抗体/YDSKT",
+      "sortNo": 1504
     },
     {
       "itemCode": "JY020131",
@@ -997,7 +1235,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝纤系列/GXXL",
+      "sortNo": 1306
     },
     {
       "itemCode": "JY020132",
@@ -1005,7 +1245,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "高血压系列/GXYXL",
+      "sortNo": 1105
     },
     {
       "itemCode": "JY020133",
@@ -1013,7 +1255,9 @@
       "applyFormCode": "14243",
       "sample": "尿液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "尿液项目/NYXM",
+      "sortNo": 1007
     },
     {
       "itemCode": "JY020134",
@@ -1021,7 +1265,9 @@
       "applyFormCode": "14243",
       "sample": "尿液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "尿液项目/NYXM",
+      "sortNo": 1008
     },
     {
       "itemCode": "JY020135",
@@ -1029,7 +1275,9 @@
       "applyFormCode": "14243",
       "sample": "尿液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "尿液项目/NYXM",
+      "sortNo": 1009
     },
     {
       "itemCode": "JY020136",
@@ -1037,7 +1285,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肝功类/GGL",
+      "sortNo": 101
     },
     {
       "itemCode": "JY020137",
@@ -1045,7 +1295,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肾功类/SGL",
+      "sortNo": 201
     },
     {
       "itemCode": "JY020139",
@@ -1053,7 +1305,9 @@
       "applyFormCode": "14243",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 9904
     },
     {
       "itemCode": "JY030001",
@@ -1061,7 +1315,9 @@
       "applyFormCode": "14247",
       "sample": "",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 12
     },
     {
       "itemCode": "JY030002",
@@ -1069,7 +1325,9 @@
       "applyFormCode": "14247",
       "sample": "脑脊液,灌洗液,痰,肺及支气管灌洗液,支气管肺泡灌洗液",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 15
     },
     {
       "itemCode": "JY030005",
@@ -1077,7 +1335,9 @@
       "applyFormCode": "14247",
       "sample": "全血,脑脊液,腹水,穿刺液,胸水,关节腔积液,胃液,心包积液,胆汁,胆囊腔积液,引流液,硬膜下积液,骨髓腔积液,骨髓",
       "isEmergency": 0,
-      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知",
+      "inputCode": "",
+      "sortNo": 1
     },
     {
       "itemCode": "JY030006",
@@ -1085,7 +1345,9 @@
       "applyFormCode": "14247",
       "sample": "全血,脑脊液,腹水,穿刺液,胸水,关节腔积液,胃液,心包积液,胆汁,胆囊腔积液,断端软组织,引流液,硬膜下积液,骨髓腔积液,骨髓",
       "isEmergency": 0,
-      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知",
+      "inputCode": "",
+      "sortNo": 2
     },
     {
       "itemCode": "JY030007",
@@ -1093,7 +1355,9 @@
       "applyFormCode": "14247",
       "sample": "全血,脑脊液,腹水,穿刺液,胸水,关节腔积液,胃液,心包积液,胆汁,胆囊腔积液,引流液,硬膜下积液,骨髓腔积液,骨髓",
       "isEmergency": 0,
-      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知",
+      "inputCode": "",
+      "sortNo": 3
     },
     {
       "itemCode": "JY030012",
@@ -1101,7 +1365,9 @@
       "applyFormCode": "14247",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 13
     },
     {
       "itemCode": "JY030014",
@@ -1109,7 +1375,9 @@
       "applyFormCode": "14247",
       "sample": "咽拭子,鼻拭子",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 10
     },
     {
       "itemCode": "JY030015",
@@ -1117,7 +1385,9 @@
       "applyFormCode": "14247",
       "sample": "腹水,胸水,灌洗液,痰,肺及支气管灌洗液,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 11
     },
     {
       "itemCode": "JY030016",
@@ -1125,7 +1395,9 @@
       "applyFormCode": "14247",
       "sample": "全血,尿液,精液,灌洗液,白带,分泌物,粪便,前列腺液,痰,脓液,静脉导管,咽拭子,刀口渗液,断端软组织,肺及支气管灌洗液,肛拭子,鼻拭子,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知",
+      "inputCode": "",
+      "sortNo": 4
     },
     {
       "itemCode": "JY030021",
@@ -1133,7 +1405,9 @@
       "applyFormCode": "14247",
       "sample": "尿液,穿刺液,精液,白带,分泌物,前列腺液,脓液,引流液",
       "isEmergency": 0,
-      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知",
+      "inputCode": "",
+      "sortNo": 16
     },
     {
       "itemCode": "JY030022",
@@ -1141,7 +1415,9 @@
       "applyFormCode": "14247",
       "sample": "尿液,精液,灌洗液,白带,分泌物,粪便,前列腺液,痰,脓液,静脉导管,咽拭子,刀口渗液,断端软组织,肺及支气管灌洗液,肛拭子,透析用水,透析液,鼻拭子,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知",
+      "inputCode": "",
+      "sortNo": 5
     },
     {
       "itemCode": "JY030024",
@@ -1149,7 +1425,9 @@
       "applyFormCode": "14247",
       "sample": "精液,白带,分泌物,皮屑,粪便,前列腺液,痰,脓液,咽拭子,刀口渗液,断端软组织,骨髓,肛拭子,鼻拭子\r\n",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 6
     },
     {
       "itemCode": "JY030025",
@@ -1157,7 +1435,9 @@
       "applyFormCode": "14247",
       "sample": "尿液,脑脊液,腹水,穿刺液,胸水,灌洗液,关节腔积液,胃液,心包积液,胆汁,胆囊腔积液,引流液,硬膜下积液,骨髓腔积液,肺及支气管灌洗液,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 7
     },
     {
       "itemCode": "JY030026",
@@ -1165,7 +1445,9 @@
       "applyFormCode": "14247",
       "sample": "精液,白带,分泌物,粪便,痰,脓液,咽拭子,断端软组织,骨髓,肛拭子,鼻拭子,前列腺液\r\n",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 8
     },
     {
       "itemCode": "JY030027",
@@ -1173,7 +1455,9 @@
       "applyFormCode": "14247",
       "sample": "尿液,脑脊液,腹水,穿刺液,胸水,灌洗液,关节腔积液,胃液,心包积液,胆汁,刀口渗液,胆囊腔积液,引流液,硬膜下积液,骨髓腔积液,肺及支气管灌洗液,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 9
     },
     {
       "itemCode": "JY030029",
@@ -1181,7 +1465,9 @@
       "applyFormCode": "14247",
       "sample": "尿液,精液,灌洗液,白带,分泌物,粪便,前列腺液,痰,脓液,静脉导管,咽拭子,刀口渗液,断端软组织,肺及支气管灌洗液,肛拭子,透析用水,透析液,鼻拭子,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知",
+      "inputCode": "",
+      "sortNo": 17
     },
     {
       "itemCode": "JY030030",
@@ -1189,7 +1475,9 @@
       "applyFormCode": "14247",
       "sample": "尿液,精液,灌洗液,白带,分泌物,粪便,前列腺液,痰,脓液,静脉导管,咽拭子,刀口渗液,断端软组织,肺及支气管灌洗液,肛拭子,透析用水,透析液,鼻拭子,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知",
+      "inputCode": "",
+      "sortNo": 18
     },
     {
       "itemCode": "JY030031",
@@ -1197,7 +1485,9 @@
       "applyFormCode": "14247",
       "sample": "尿液,精液,灌洗液,白带,分泌物,粪便,前列腺液,痰,脓液,静脉导管,咽拭子,刀口渗液,断端软组织,肺及支气管灌洗液,肛拭子,透析用水,透析液,鼻拭子,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知"
+      "remark": "若培养结果阳性需加做药敏试验并另行缴费！请留意后续通知",
+      "inputCode": "",
+      "sortNo": 19
     },
     {
       "itemCode": "JY030041",
@@ -1205,7 +1495,9 @@
       "applyFormCode": "14247",
       "sample": "透析用水,透析液,置换液,透析复用用水",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 14
     },
     {
       "itemCode": "JY040005",
@@ -1213,31 +1505,39 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定性  免疫印迹法"
+      "remark": "定性  免疫印迹法",
+      "inputCode": "",
+      "sortNo": 9901
     },
     {
       "itemCode": "JY040006",
-      "itemName": "抗梅毒螺旋体非特异性抗体（半定量）",
+      "itemName": "抗梅毒螺旋体非特异性抗体（RPR）（初筛实验）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "半定量    仅用于初筛梅毒特异性抗体阳性时使用，请慎选。临床意义为区分既往梅毒或现症梅毒。还可用于抗梅治疗的疗效监测。"
+      "remark": "半定量    仅用于初筛梅毒特异性抗体阳性时使用，请慎选。临床意义为区分既往梅毒或现症梅毒。还可用于抗梅治疗的疗效监测。",
+      "inputCode": "感染类,梅毒感染类/GRL,MDGRL",
+      "sortNo": 1302
     },
     {
       "itemCode": "JY040007",
-      "itemName": "梅毒血清学检测",
+      "itemName": "梅毒血清学检测（确诊实验）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "梅毒的确诊实验。仅限于梅毒特异性抗体筛查阳性时，方可申请此项目确诊梅毒。请慎选。"
+      "remark": "梅毒的确诊实验。仅限于梅毒特异性抗体筛查阳性时，方可申请此项目确诊梅毒。请慎选。",
+      "inputCode": "感染类,梅毒感染类/GRL,MDGRL",
+      "sortNo": 1301
     },
     {
       "itemCode": "JY040008",
-      "itemName": "抗核抗体谱",
+      "itemName": "抗核抗体谱定性（12项）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定性  免疫印迹法"
+      "remark": "定性  免疫印迹法",
+      "inputCode": "自身抗体类/ZSKTL",
+      "sortNo": 3103
     },
     {
       "itemCode": "JY040009",
@@ -1245,15 +1545,19 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定性  酶联免疫法"
+      "remark": "定性  酶联免疫法",
+      "inputCode": "感染类,肝炎类/GRL,GYL",
+      "sortNo": 1101
     },
     {
       "itemCode": "JY040011",
-      "itemName": "乙肝五项定量",
+      "itemName": "乙肝五项（快速）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,肝炎类/GRL,GYL",
+      "sortNo": 1102
     },
     {
       "itemCode": "JY040012",
@@ -1261,7 +1565,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,优生优育/GRL,YSYY",
+      "sortNo": 1501
     },
     {
       "itemCode": "JY040018",
@@ -1269,7 +1575,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": "定量  化学发光法  筛查试验"
+      "remark": "定量  化学发光法  筛查试验",
+      "inputCode": "感染类,血播类/GRL,XBL",
+      "sortNo": 1201
     },
     {
       "itemCode": "JY040021",
@@ -1277,7 +1585,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定性  玻片凝集法"
+      "remark": "定性  玻片凝集法",
+      "inputCode": "",
+      "sortNo": 9902
     },
     {
       "itemCode": "JY040022",
@@ -1285,7 +1595,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "半定量  试管凝集法"
+      "remark": "半定量  试管凝集法",
+      "inputCode": "",
+      "sortNo": 9903
     },
     {
       "itemCode": "JY040031",
@@ -1293,15 +1605,19 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定性  间接荧光免疫法"
+      "remark": "定性  间接荧光免疫法",
+      "inputCode": "自身抗体类/ZSKTL",
+      "sortNo": 3101
     },
     {
       "itemCode": "JY040032",
-      "itemName": "抗甲型肝炎病毒抗体IgM",
+      "itemName": "抗甲型肝炎病毒抗体IgM（定性）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定性   酶联免疫法"
+      "remark": "定性   酶联免疫法",
+      "inputCode": "感染类,肝炎类/GRL,GYL",
+      "sortNo": 1108
     },
     {
       "itemCode": "JY040033",
@@ -1309,39 +1625,49 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定性   酶联免疫法  筛查试验"
+      "remark": "定性   酶联免疫法  筛查试验",
+      "inputCode": "感染类,肝炎类,血播类/GRL,GYL,XBL",
+      "sortNo": 1109
     },
     {
       "itemCode": "JY040034",
-      "itemName": "抗戊型肝炎病毒抗体IgM",
+      "itemName": "抗戊型肝炎病毒抗体IgM（定量）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,肝炎类/GRL,GYL",
+      "sortNo": 1111
     },
     {
       "itemCode": "JY040035",
-      "itemName": "抗人免疫缺陷病毒抗体",
+      "itemName": "抗人免疫缺陷病毒抗体（定性）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "感染类,血播类/GRL,XBL",
+      "sortNo": 1204
     },
     {
       "itemCode": "JY040036",
-      "itemName": "人免疫缺陷病毒抗原/抗体联合检测",
+      "itemName": "人免疫缺陷病毒抗原/抗体联合检测（快速）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": "定量  化学发光法  筛查试验（四代HIV)"
+      "remark": "定量  化学发光法  筛查试验（四代HIV)",
+      "inputCode": "感染类,血播类/GRL,XBL",
+      "sortNo": 1205
     },
     {
       "itemCode": "JY040037",
-      "itemName": "抗梅毒螺旋体特异性抗体（TPPA）",
+      "itemName": "抗梅毒螺旋体特异性抗体（TPPA）（确诊实验）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "梅毒的确诊实验。仅限于梅毒特异性抗体筛查阳性时，方可申请此项目确诊梅毒。请慎选。"
+      "remark": "梅毒的确诊实验。仅限于梅毒特异性抗体筛查阳性时，方可申请此项目确诊梅毒。请慎选。",
+      "inputCode": "感染类,梅毒感染类/GRL,MDGRL",
+      "sortNo": 1303
     },
     {
       "itemCode": "JY040039",
@@ -1349,7 +1675,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  干式荧光免疫法"
+      "remark": "定量  干式荧光免疫法",
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 2103
     },
     {
       "itemCode": "JY040040",
@@ -1357,15 +1685,19 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "感染类,血播类,梅毒感染类/GRL,XBL,MDGRL",
+      "sortNo": 1202
     },
     {
       "itemCode": "JY040042",
-      "itemName": "抗丙型肝炎病毒抗体（定量）",
+      "itemName": "抗丙型肝炎病毒抗体（快速）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": "定量  化学发光法  筛查试验"
+      "remark": "定量  化学发光法  筛查试验",
+      "inputCode": "感染类,肝炎类,血播类/GRL,GYL,XBL",
+      "sortNo": 1110
     },
     {
       "itemCode": "JY040043",
@@ -1373,7 +1705,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": "定量  化学发光法  筛查试验"
+      "remark": "定量  化学发光法  筛查试验",
+      "inputCode": "感染类,血播类,梅毒感染类/GRL,XBL,MDGRL",
+      "sortNo": 1203
     },
     {
       "itemCode": "JY040045",
@@ -1381,7 +1715,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,优生优育/GRL,YSYY",
+      "sortNo": 1502
     },
     {
       "itemCode": "JY040046",
@@ -1389,7 +1725,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,优生优育/GRL,YSYY",
+      "sortNo": 1504
     },
     {
       "itemCode": "JY040047",
@@ -1397,7 +1735,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,优生优育/GRL,YSYY",
+      "sortNo": 1506
     },
     {
       "itemCode": "JY040048",
@@ -1405,7 +1745,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,优生优育,疱疹病毒类/GRL,YSYY,PZBDL",
+      "sortNo": 1508
     },
     {
       "itemCode": "JY040049",
@@ -1413,7 +1755,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,优生优育,疱疹病毒类/GRL,YSYY,PZBDL",
+      "sortNo": 1510
     },
     {
       "itemCode": "JY040050",
@@ -1421,7 +1765,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,优生优育/GRL,YSYY",
+      "sortNo": 1503
     },
     {
       "itemCode": "JY040051",
@@ -1429,7 +1775,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,优生优育/GRL,YSYY",
+      "sortNo": 1505
     },
     {
       "itemCode": "JY040052",
@@ -1437,7 +1785,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,优生优育/GRL,YSYY",
+      "sortNo": 1507
     },
     {
       "itemCode": "JY040053",
@@ -1445,7 +1795,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,优生优育,疱疹病毒类/GRL,YSYY,PZBDL",
+      "sortNo": 1509
     },
     {
       "itemCode": "JY040054",
@@ -1453,7 +1805,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,优生优育,疱疹病毒类/GRL,YSYY,PZBDL",
+      "sortNo": 1511
     },
     {
       "itemCode": "JY040055",
@@ -1461,7 +1815,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定性   酶联免疫法"
+      "remark": "定性   酶联免疫法",
+      "inputCode": "感染类,肠道病毒感染类/GRL,CDBDGRL",
+      "sortNo": 1701
     },
     {
       "itemCode": "JY040056",
@@ -1469,7 +1825,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定性   酶联免疫法"
+      "remark": "定性   酶联免疫法",
+      "inputCode": "感染类,肠道病毒感染类/GRL,CDBDGRL",
+      "sortNo": 1702
     },
     {
       "itemCode": "JY040057",
@@ -1477,7 +1835,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定性   酶联免疫法"
+      "remark": "定性   酶联免疫法",
+      "inputCode": "感染类,肠道病毒感染类/GRL,CDBDGRL",
+      "sortNo": 1703
     },
     {
       "itemCode": "JY040058",
@@ -1485,7 +1845,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  干式荧光免疫法"
+      "remark": "定量  干式荧光免疫法",
+      "inputCode": "胃功能检测/WGNJC",
+      "sortNo": 4102
     },
     {
       "itemCode": "JY040059",
@@ -1493,7 +1855,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  干式荧光免疫法"
+      "remark": "定量  干式荧光免疫法",
+      "inputCode": "胃功能检测/WGNJC",
+      "sortNo": 4101
     },
     {
       "itemCode": "JY040060",
@@ -1501,7 +1865,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,血管炎谱/ZSKTL,XGYP",
+      "sortNo": 3301
     },
     {
       "itemCode": "JY040061",
@@ -1509,7 +1875,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,血管炎谱/ZSKTL,XGYP",
+      "sortNo": 3302
     },
     {
       "itemCode": "JY040062",
@@ -1517,23 +1885,29 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,血管炎谱/ZSKTL,XGYP",
+      "sortNo": 3303
     },
     {
       "itemCode": "JY040063",
-      "itemName": "抗心磷脂抗体",
+      "itemName": "抗心磷脂抗体（总抗）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,磷脂类/ZSKTL,LZL",
+      "sortNo": 3201
     },
     {
       "itemCode": "JY040064",
-      "itemName": "β2糖蛋白1抗体",
+      "itemName": "β2糖蛋白1抗体（总抗）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,磷脂类/ZSKTL,LZL",
+      "sortNo": 3202
     },
     {
       "itemCode": "JY040065",
@@ -1541,7 +1915,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,磷脂类/ZSKTL,LZL",
+      "sortNo": 3203
     },
     {
       "itemCode": "JY040066",
@@ -1549,7 +1925,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,磷脂类/ZSKTL,LZL",
+      "sortNo": 3204
     },
     {
       "itemCode": "JY040067",
@@ -1557,7 +1935,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,磷脂类/ZSKTL,LZL",
+      "sortNo": 3205
     },
     {
       "itemCode": "JY040068",
@@ -1565,7 +1945,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,磷脂类/ZSKTL,LZL",
+      "sortNo": 3206
     },
     {
       "itemCode": "JY040069",
@@ -1573,7 +1955,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,磷脂类/ZSKTL,LZL",
+      "sortNo": 3207
     },
     {
       "itemCode": "JY040070",
@@ -1581,15 +1965,19 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,磷脂类/ZSKTL,LZL",
+      "sortNo": 3208
     },
     {
       "itemCode": "JY040071",
-      "itemName": "抗SS-A抗体",
+      "itemName": "抗SS-A抗体（定量）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱/ZSKTL,KHKTP",
+      "sortNo": 3113
     },
     {
       "itemCode": "JY040072",
@@ -1597,7 +1985,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱/ZSKTL,KHKTP",
+      "sortNo": 3114
     },
     {
       "itemCode": "JY040073",
@@ -1605,7 +1995,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱/ZSKTL,KHKTP",
+      "sortNo": 3111
     },
     {
       "itemCode": "JY040074",
@@ -1613,7 +2005,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱/ZSKTL,KHKTP",
+      "sortNo": 3112
     },
     {
       "itemCode": "JY040075",
@@ -1621,7 +2015,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱/ZSKTL,KHKTP",
+      "sortNo": 3116
     },
     {
       "itemCode": "JY040076",
@@ -1629,7 +2025,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱/ZSKTL,KHKTP",
+      "sortNo": 3115
     },
     {
       "itemCode": "JY040077",
@@ -1637,7 +2035,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱/ZSKTL,KHKTP",
+      "sortNo": 3117
     },
     {
       "itemCode": "JY040078",
@@ -1645,15 +2045,19 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱/ZSKTL,KHKTP",
+      "sortNo": 3121
     },
     {
       "itemCode": "JY040079",
-      "itemName": "抗线粒体M2型抗体",
+      "itemName": "抗线粒体M2型抗体（定量）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱,自免肝/ZSKTL,KHKTP,ZMG",
+      "sortNo": 3123
     },
     {
       "itemCode": "JY040080",
@@ -1661,7 +2065,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱/ZSKTL,KHKTP",
+      "sortNo": 3119
     },
     {
       "itemCode": "JY040081",
@@ -1669,7 +2075,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱/ZSKTL,KHKTP",
+      "sortNo": 3120
     },
     {
       "itemCode": "JY040082",
@@ -1677,7 +2085,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱/ZSKTL,KHKTP",
+      "sortNo": 3122
     },
     {
       "itemCode": "JY040083",
@@ -1685,7 +2095,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱/ZSKTL,KHKTP",
+      "sortNo": 3124
     },
     {
       "itemCode": "JY040084",
@@ -1693,7 +2105,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类,抗核抗体谱/ZSKTL,KHKTP",
+      "sortNo": 3118
     },
     {
       "itemCode": "JY040085",
@@ -1701,7 +2115,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  蛋白芯片化学发光法"
+      "remark": "定量  蛋白芯片化学发光法",
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 2101
     },
     {
       "itemCode": "JY040086",
@@ -1709,7 +2125,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  蛋白芯片化学发光法"
+      "remark": "定量  蛋白芯片化学发光法",
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 2102
     },
     {
       "itemCode": "JY040090",
@@ -1717,55 +2135,69 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  干式荧光免疫法"
+      "remark": "定量  干式荧光免疫法",
+      "inputCode": "胃功能检测/WGNJC",
+      "sortNo": 4103
     },
     {
       "itemCode": "JY040099",
-      "itemName": "乙型肝炎病毒表面抗原（定量）",
+      "itemName": "乙型肝炎病毒表面抗原（快速）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": "定量   快速  化学发光法"
+      "remark": "定量   快速  化学发光法",
+      "inputCode": "感染类,肝炎类,血播类/GRL,GYL,XBL",
+      "sortNo": 1103
     },
     {
       "itemCode": "JY040100",
-      "itemName": "抗乙型肝炎病毒表面抗体（定量）",
+      "itemName": "抗乙型肝炎病毒表面抗体（快速）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": "定量   快速  化学发光法"
+      "remark": "定量   快速  化学发光法",
+      "inputCode": "感染类,肝炎类/GRL,GYL",
+      "sortNo": 1104
     },
     {
       "itemCode": "JY040101",
-      "itemName": "乙型肝炎病毒e抗原（定量）",
+      "itemName": "乙型肝炎病毒e抗原（快速）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": "定量   快速  化学发光法"
+      "remark": "定量   快速  化学发光法",
+      "inputCode": "感染类,肝炎类/GRL,GYL",
+      "sortNo": 1105
     },
     {
       "itemCode": "JY040102",
-      "itemName": "抗乙型肝炎病毒e抗体（定量）",
+      "itemName": "抗乙型肝炎病毒e抗体（快速）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": "定量   快速  化学发光法"
+      "remark": "定量   快速  化学发光法",
+      "inputCode": "感染类,肝炎类/GRL,GYL",
+      "sortNo": 1106
     },
     {
       "itemCode": "JY040103",
-      "itemName": "抗乙型肝炎病毒核心抗体（定量）",
+      "itemName": "抗乙型肝炎病毒核心抗体（快速）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": "定量   快速  化学发光法"
+      "remark": "定量   快速  化学发光法",
+      "inputCode": "感染类,肝炎类/GRL,GYL",
+      "sortNo": 1107
     },
     {
       "itemCode": "JY040105",
-      "itemName": "抗丁型肝炎病毒抗体IgM",
+      "itemName": "抗丁型肝炎病毒抗体IgM（定性）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定性   酶联免疫法"
+      "remark": "定性   酶联免疫法",
+      "inputCode": "感染类,肝炎类/GRL,GYL",
+      "sortNo": 1112
     },
     {
       "itemCode": "JY040114",
@@ -1773,7 +2205,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量   干式荧光免疫法"
+      "remark": "定量   干式荧光免疫法",
+      "inputCode": "",
+      "sortNo": 9904
     },
     {
       "itemCode": "JY040115",
@@ -1781,7 +2215,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,上呼感染类/GRL,SHGRL",
+      "sortNo": 1403
     },
     {
       "itemCode": "JY040116",
@@ -1789,7 +2225,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,上呼感染类/GRL,SHGRL",
+      "sortNo": 1404
     },
     {
       "itemCode": "JY040117",
@@ -1797,7 +2235,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,上呼感染类/GRL,SHGRL",
+      "sortNo": 1405
     },
     {
       "itemCode": "JY040120",
@@ -1805,7 +2245,9 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,上呼感染类/GRL,SHGRL",
+      "sortNo": 1401
     },
     {
       "itemCode": "JY040121",
@@ -1813,15 +2255,19 @@
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "感染类,上呼感染类/GRL,SHGRL",
+      "sortNo": 1402
     },
     {
       "itemCode": "JY040126",
-      "itemName": "抗核抗体常规检查",
+      "itemName": "抗核抗体谱定量（8项）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "定量  化学发光法"
+      "remark": "定量  化学发光法",
+      "inputCode": "自身抗体类/ZSKTL",
+      "sortNo": 3102
     },
     {
       "itemCode": "JY050001",
@@ -1829,7 +2275,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "甲功类/JGL",
+      "sortNo": 101
     },
     {
       "itemCode": "JY050002",
@@ -1837,7 +2285,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "甲功类/JGL",
+      "sortNo": 102
     },
     {
       "itemCode": "JY050003",
@@ -1845,7 +2295,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "甲功类/JGL",
+      "sortNo": 103
     },
     {
       "itemCode": "JY050004",
@@ -1853,7 +2305,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "甲功类/JGL",
+      "sortNo": 104
     },
     {
       "itemCode": "JY050005",
@@ -1861,7 +2315,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "甲功类/JGL",
+      "sortNo": 105
     },
     {
       "itemCode": "JY050006",
@@ -1869,7 +2325,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "甲功类/JGL",
+      "sortNo": 106
     },
     {
       "itemCode": "JY050007",
@@ -1877,7 +2335,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "甲功类/JGL",
+      "sortNo": 107
     },
     {
       "itemCode": "JY050008",
@@ -1885,7 +2345,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "甲功类/JGL",
+      "sortNo": 108
     },
     {
       "itemCode": "JY050009",
@@ -1893,7 +2355,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "甲功类/JGL",
+      "sortNo": 109
     },
     {
       "itemCode": "JY050010",
@@ -1901,7 +2365,9 @@
       "applyFormCode": "14330",
       "sample": "全血,腹水,穿刺液,胸水,心包积液,肺及支气管灌洗液,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 201
     },
     {
       "itemCode": "JY050011",
@@ -1909,7 +2375,9 @@
       "applyFormCode": "14330",
       "sample": "全血,腹水,穿刺液,胸水,灌洗液,心包积液,肺及支气管灌洗液,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 202
     },
     {
       "itemCode": "JY050012",
@@ -1917,7 +2385,9 @@
       "applyFormCode": "14330",
       "sample": "全血,腹水,胸水,心包积液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 203
     },
     {
       "itemCode": "JY050013",
@@ -1925,7 +2395,9 @@
       "applyFormCode": "14330",
       "sample": "全血,腹水,胸水,心包积液,肺及支气管灌洗液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 209
     },
     {
       "itemCode": "JY050014",
@@ -1933,7 +2405,9 @@
       "applyFormCode": "14330",
       "sample": "全血,腹水,穿刺液,胸水,硬膜下积液,肺及支气管灌洗液,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 210
     },
     {
       "itemCode": "JY050015",
@@ -1941,7 +2415,9 @@
       "applyFormCode": "14330",
       "sample": "全血,腹水,胸水,心包积液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 204
     },
     {
       "itemCode": "JY050016",
@@ -1949,7 +2425,9 @@
       "applyFormCode": "14330",
       "sample": "全血,腹水,胸水,心包积液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 205
     },
     {
       "itemCode": "JY050017",
@@ -1957,7 +2435,9 @@
       "applyFormCode": "14330",
       "sample": "全血,腹水,胸水,心包积液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 206
     },
     {
       "itemCode": "JY050018",
@@ -1965,7 +2445,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 207
     },
     {
       "itemCode": "JY050019",
@@ -1973,7 +2455,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 208
     },
     {
       "itemCode": "JY050020",
@@ -1981,7 +2465,9 @@
       "applyFormCode": "14330",
       "sample": "全血,腹水,胸水,心包积液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 214
     },
     {
       "itemCode": "JY050021",
@@ -1989,7 +2475,9 @@
       "applyFormCode": "14330",
       "sample": "全血,腹水,穿刺液,胸水,心包积液,肺及支气管灌洗液,支气管肺泡灌洗液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 211
     },
     {
       "itemCode": "JY050022",
@@ -1997,7 +2485,9 @@
       "applyFormCode": "14330",
       "sample": "全血,腹水,胸水,心包积液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 212
     },
     {
       "itemCode": "JY050023",
@@ -2005,7 +2495,9 @@
       "applyFormCode": "14330",
       "sample": "全血,腹水,胸水,心包积液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "肿瘤类/ZLL",
+      "sortNo": 213
     },
     {
       "itemCode": "JY050025",
@@ -2013,7 +2505,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "贫血类/PXL",
+      "sortNo": 501
     },
     {
       "itemCode": "JY050026",
@@ -2021,7 +2515,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "贫血类/PXL",
+      "sortNo": 502
     },
     {
       "itemCode": "JY050027",
@@ -2029,7 +2525,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "激素类/JSL",
+      "sortNo": 302
     },
     {
       "itemCode": "JY050028",
@@ -2037,7 +2535,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "激素类/JSL",
+      "sortNo": 303
     },
     {
       "itemCode": "JY050029",
@@ -2045,7 +2545,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "激素类/JSL",
+      "sortNo": 304
     },
     {
       "itemCode": "JY050030",
@@ -2053,7 +2555,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "激素类/JSL",
+      "sortNo": 305
     },
     {
       "itemCode": "JY050031",
@@ -2061,7 +2565,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "激素类/JSL",
+      "sortNo": 306
     },
     {
       "itemCode": "JY050032",
@@ -2069,7 +2575,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "激素类/JSL",
+      "sortNo": 307
     },
     {
       "itemCode": "JY050033",
@@ -2077,7 +2585,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "肿瘤类,激素类/ZLL,JSL",
+      "sortNo": 215
     },
     {
       "itemCode": "JY050034",
@@ -2085,7 +2595,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "激素类/JSL",
+      "sortNo": 308
     },
     {
       "itemCode": "JY050035",
@@ -2093,7 +2605,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "骨代谢类/GDXL",
+      "sortNo": 402
     },
     {
       "itemCode": "JY050036",
@@ -2101,7 +2615,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "骨代谢类/GDXL",
+      "sortNo": 403
     },
     {
       "itemCode": "JY050037",
@@ -2109,7 +2625,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "骨代谢类/GDXL",
+      "sortNo": 405
     },
     {
       "itemCode": "JY050038",
@@ -2117,7 +2635,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "骨代谢类/GDXL",
+      "sortNo": 401
     },
     {
       "itemCode": "JY050039",
@@ -2125,7 +2645,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "骨代谢类/GDXL",
+      "sortNo": 404
     },
     {
       "itemCode": "JY050040",
@@ -2133,7 +2655,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9901
     },
     {
       "itemCode": "JY050041",
@@ -2141,7 +2665,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9902
     },
     {
       "itemCode": "JY050042",
@@ -2149,7 +2675,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9903
     },
     {
       "itemCode": "JY050043",
@@ -2157,7 +2685,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "糖尿病代谢类/TNBDXL",
+      "sortNo": 601
     },
     {
       "itemCode": "JY050044",
@@ -2165,7 +2695,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "糖尿病代谢类/TNBDXL",
+      "sortNo": 602
     },
     {
       "itemCode": "JY050045",
@@ -2173,7 +2705,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "激素类/JSL",
+      "sortNo": 309
     },
     {
       "itemCode": "JY050047",
@@ -2181,7 +2715,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "甲功类/JGL",
+      "sortNo": 100
     },
     {
       "itemCode": "JY050051",
@@ -2189,7 +2725,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "激素类/JSL",
+      "sortNo": 301
     },
     {
       "itemCode": "JY050054",
@@ -2197,7 +2735,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9904
     },
     {
       "itemCode": "JY050056",
@@ -2205,7 +2745,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9905
     },
     {
       "itemCode": "JY050057",
@@ -2213,7 +2755,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9906
     },
     {
       "itemCode": "JY050058",
@@ -2221,7 +2765,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9907
     },
     {
       "itemCode": "JY050059",
@@ -2229,7 +2775,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9908
     },
     {
       "itemCode": "JY050060",
@@ -2237,7 +2785,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9909
     },
     {
       "itemCode": "JY050061",
@@ -2245,7 +2795,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9910
     },
     {
       "itemCode": "JY050062",
@@ -2253,7 +2805,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9911
     },
     {
       "itemCode": "JY050063",
@@ -2261,7 +2815,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9912
     },
     {
       "itemCode": "JY050064",
@@ -2269,7 +2825,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 9913
     },
     {
       "itemCode": "JY050065",
@@ -2277,7 +2835,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "糖尿病代谢类/TNBDXL",
+      "sortNo": 603
     },
     {
       "itemCode": "JY050066",
@@ -2285,7 +2845,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "糖尿病代谢类/TNBDXL",
+      "sortNo": 604
     },
     {
       "itemCode": "JY050067",
@@ -2293,7 +2855,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "糖尿病代谢类/TNBDXL",
+      "sortNo": 605
     },
     {
       "itemCode": "JY050068",
@@ -2301,7 +2865,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "糖尿病代谢类/TNBDXL",
+      "sortNo": 606
     },
     {
       "itemCode": "JY050069",
@@ -2309,7 +2875,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "糖尿病代谢类/TNBDXL",
+      "sortNo": 607
     },
     {
       "itemCode": "JY050070",
@@ -2317,7 +2885,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "糖尿病代谢类/TNBDXL",
+      "sortNo": 608
     },
     {
       "itemCode": "JY050071",
@@ -2325,7 +2895,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "糖尿病代谢类/TNBDXL",
+      "sortNo": 609
     },
     {
       "itemCode": "JY050072",
@@ -2333,7 +2905,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "糖尿病代谢类/TNBDXL",
+      "sortNo": 610
     },
     {
       "itemCode": "JY050073",
@@ -2341,7 +2915,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "糖尿病代谢类/TNBDXL",
+      "sortNo": 611
     },
     {
       "itemCode": "JY050074",
@@ -2349,7 +2925,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "糖尿病代谢类/TNBDXL",
+      "sortNo": 612
     },
     {
       "itemCode": "JY050085",
@@ -2357,7 +2935,9 @@
       "applyFormCode": "14330",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "激素类/JSL",
+      "sortNo": 300
     },
     {
       "itemCode": "JY060001",
@@ -2365,7 +2945,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60001
     },
     {
       "itemCode": "JY060002",
@@ -2373,7 +2955,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60002
     },
     {
       "itemCode": "JY060003",
@@ -2381,7 +2965,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60003
     },
     {
       "itemCode": "JY060004",
@@ -2389,7 +2975,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60004
     },
     {
       "itemCode": "JY060005",
@@ -2397,7 +2985,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60005
     },
     {
       "itemCode": "JY060006",
@@ -2405,7 +2995,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60006
     },
     {
       "itemCode": "JY060007",
@@ -2413,7 +3005,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60007
     },
     {
       "itemCode": "JY060008",
@@ -2421,7 +3015,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "1",
+      "sortNo": 60008
     },
     {
       "itemCode": "JY060009",
@@ -2429,7 +3025,9 @@
       "applyFormCode": "14241",
       "sample": "胃液,粪便,痰",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60009
     },
     {
       "itemCode": "JY060011",
@@ -2437,7 +3035,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60011
     },
     {
       "itemCode": "JY060012",
@@ -2445,7 +3045,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 60012
     },
     {
       "itemCode": "JY060013",
@@ -2453,7 +3055,9 @@
       "applyFormCode": "14241",
       "sample": "骨髓",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 60013
     },
     {
       "itemCode": "JY060014",
@@ -2461,7 +3065,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "线上开单",
+      "sortNo": 60014
     },
     {
       "itemCode": "JY060021",
@@ -2469,7 +3075,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "线上开单",
+      "sortNo": 60021
     },
     {
       "itemCode": "JY060022",
@@ -2477,7 +3085,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60022
     },
     {
       "itemCode": "JY060023",
@@ -2485,7 +3095,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60023
     },
     {
       "itemCode": "JY060026",
@@ -2493,7 +3105,9 @@
       "applyFormCode": "14241",
       "sample": "全血,末梢血",
       "isEmergency": 1,
-      "remark": ""
+      "remark": "",
+      "inputCode": "线上开单",
+      "sortNo": 60026
     },
     {
       "itemCode": "JY060032",
@@ -2501,7 +3115,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 60032
     },
     {
       "itemCode": "JY060035",
@@ -2509,7 +3125,9 @@
       "applyFormCode": "14241",
       "sample": "粪便",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60035
     },
     {
       "itemCode": "JY060036",
@@ -2517,7 +3135,9 @@
       "applyFormCode": "14241",
       "sample": "粪便",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60036
     },
     {
       "itemCode": "JY060037",
@@ -2525,7 +3145,9 @@
       "applyFormCode": "14241",
       "sample": "胃液",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60037
     },
     {
       "itemCode": "JY060038",
@@ -2533,7 +3155,9 @@
       "applyFormCode": "14241",
       "sample": "腹水,胸水",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60038
     },
     {
       "itemCode": "JY060039",
@@ -2541,7 +3165,9 @@
       "applyFormCode": "14241",
       "sample": "脑脊液",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60039
     },
     {
       "itemCode": "JY060041",
@@ -2549,7 +3175,9 @@
       "applyFormCode": "14241",
       "sample": "前列腺液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60041
     },
     {
       "itemCode": "JY060042",
@@ -2557,7 +3185,9 @@
       "applyFormCode": "14241",
       "sample": "白带",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60042
     },
     {
       "itemCode": "JY060043",
@@ -2565,7 +3195,9 @@
       "applyFormCode": "14241",
       "sample": "穿刺液,引流液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60043
     },
     {
       "itemCode": "JY060044",
@@ -2573,7 +3205,9 @@
       "applyFormCode": "14241",
       "sample": "白带",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 60044
     },
     {
       "itemCode": "JY060045",
@@ -2581,7 +3215,9 @@
       "applyFormCode": "14241",
       "sample": "尿液",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "线上开单",
+      "sortNo": 60045
     },
     {
       "itemCode": "JY060046",
@@ -2589,7 +3225,9 @@
       "applyFormCode": "14241",
       "sample": "尿液",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60046
     },
     {
       "itemCode": "JY060048",
@@ -2597,7 +3235,9 @@
       "applyFormCode": "14241",
       "sample": "粪便",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60048
     },
     {
       "itemCode": "JY060049",
@@ -2605,7 +3245,9 @@
       "applyFormCode": "14241",
       "sample": "分泌物",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60049
     },
     {
       "itemCode": "JY060050",
@@ -2613,7 +3255,9 @@
       "applyFormCode": "14241",
       "sample": "尿液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60050
     },
     {
       "itemCode": "JY060051",
@@ -2621,7 +3265,9 @@
       "applyFormCode": "14241",
       "sample": "尿液",
       "isEmergency": 1,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60051
     },
     {
       "itemCode": "JY060052",
@@ -2629,7 +3275,9 @@
       "applyFormCode": "14241",
       "sample": "尿液",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60052
     },
     {
       "itemCode": "JY060053",
@@ -2637,7 +3285,9 @@
       "applyFormCode": "14241",
       "sample": "粪便",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60053
     },
     {
       "itemCode": "JY060054",
@@ -2645,7 +3295,9 @@
       "applyFormCode": "14241",
       "sample": "粪便",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 60054
     },
     {
       "itemCode": "JY060060",
@@ -2653,7 +3305,9 @@
       "applyFormCode": "14241",
       "sample": "精液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 60060
     },
     {
       "itemCode": "JY060062",
@@ -2661,7 +3315,9 @@
       "applyFormCode": "14241",
       "sample": "全血,骨髓",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 60062
     },
     {
       "itemCode": "JY060063",
@@ -2669,7 +3325,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 60062
     },
     {
       "itemCode": "JY060064",
@@ -2677,7 +3335,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY060065",
@@ -2685,7 +3345,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY060066",
@@ -2693,7 +3355,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY060067",
@@ -2701,7 +3365,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY060068",
@@ -2709,7 +3375,9 @@
       "applyFormCode": "14241",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 20023
     },
     {
       "itemCode": "JY060069",
@@ -2717,7 +3385,9 @@
       "applyFormCode": "14241",
       "sample": "痰",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY070002",
@@ -2725,7 +3395,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70002
     },
     {
       "itemCode": "JY070032",
@@ -2733,7 +3405,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70032
     },
     {
       "itemCode": "JY070033",
@@ -2741,7 +3415,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70033
     },
     {
       "itemCode": "JY070036",
@@ -2749,7 +3425,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70036
     },
     {
       "itemCode": "JY070037",
@@ -2757,7 +3435,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70037
     },
     {
       "itemCode": "JY070038",
@@ -2765,7 +3445,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70038
     },
     {
       "itemCode": "JY070040",
@@ -2773,7 +3455,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70040
     },
     {
       "itemCode": "JY070041",
@@ -2781,7 +3465,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70041
     },
     {
       "itemCode": "JY070042",
@@ -2789,7 +3475,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70042
     },
     {
       "itemCode": "JY070043",
@@ -2797,7 +3485,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70043
     },
     {
       "itemCode": "JY070045",
@@ -2805,7 +3495,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70045
     },
     {
       "itemCode": "JY070046",
@@ -2813,7 +3505,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70046
     },
     {
       "itemCode": "JY070047",
@@ -2821,7 +3515,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70047
     },
     {
       "itemCode": "JY070049",
@@ -2829,7 +3525,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70049
     },
     {
       "itemCode": "JY070050",
@@ -2837,7 +3535,9 @@
       "applyFormCode": "14253",
       "sample": "全血,尿液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70050
     },
     {
       "itemCode": "JY070051",
@@ -2845,7 +3545,9 @@
       "applyFormCode": "14253",
       "sample": "尿液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70051
     },
     {
       "itemCode": "JY070052",
@@ -2853,7 +3555,9 @@
       "applyFormCode": "14253",
       "sample": "尿液",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70052
     },
     {
       "itemCode": "JY070053",
@@ -2861,7 +3565,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70053
     },
     {
       "itemCode": "JY070054",
@@ -2869,7 +3575,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70054
     },
     {
       "itemCode": "JY070055",
@@ -2877,7 +3585,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70055
     },
     {
       "itemCode": "JY070056",
@@ -2885,7 +3595,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70056
     },
     {
       "itemCode": "JY070057",
@@ -2893,7 +3605,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70057
     },
     {
       "itemCode": "JY070059",
@@ -2901,7 +3615,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70059
     },
     {
       "itemCode": "JY070064",
@@ -2909,7 +3625,9 @@
       "applyFormCode": "14253",
       "sample": "粪便",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70064
     },
     {
       "itemCode": "JY070078",
@@ -2917,7 +3635,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070079",
@@ -2925,7 +3645,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070080",
@@ -2933,7 +3655,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070081",
@@ -2941,7 +3665,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070082",
@@ -2949,7 +3675,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070083",
@@ -2957,7 +3685,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070084",
@@ -2965,7 +3695,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070085",
@@ -2973,7 +3705,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070086",
@@ -2981,7 +3715,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070087",
@@ -2989,7 +3725,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070088",
@@ -2997,7 +3735,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070089",
@@ -3005,7 +3745,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070090",
@@ -3013,7 +3755,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070091",
@@ -3021,7 +3765,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070092",
@@ -3029,7 +3775,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070093",
@@ -3037,7 +3785,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070094",
@@ -3045,7 +3795,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070095",
@@ -3053,7 +3805,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070096",
@@ -3061,7 +3815,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070097",
@@ -3069,7 +3825,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070098",
@@ -3077,7 +3835,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070099",
@@ -3085,7 +3845,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070100",
@@ -3093,7 +3855,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070102",
@@ -3101,7 +3865,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070103",
@@ -3109,7 +3875,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070105",
@@ -3117,7 +3885,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070107",
@@ -3125,7 +3895,9 @@
       "applyFormCode": "14253",
       "sample": "灌洗液,痰",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070108",
@@ -3133,7 +3905,9 @@
       "applyFormCode": "14253",
       "sample": "分泌物",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070109",
@@ -3141,7 +3915,9 @@
       "applyFormCode": "14253",
       "sample": "分泌物",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070111",
@@ -3149,7 +3925,9 @@
       "applyFormCode": "14253",
       "sample": "分泌物",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070112",
@@ -3157,7 +3935,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070116",
@@ -3165,7 +3945,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070117",
@@ -3173,7 +3955,9 @@
       "applyFormCode": "14253",
       "sample": "干血片",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070121",
@@ -3181,7 +3965,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070123",
@@ -3189,7 +3975,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070125",
@@ -3197,7 +3985,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070126",
@@ -3205,7 +3995,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070130",
@@ -3213,7 +4005,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070131",
@@ -3221,7 +4015,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070132",
@@ -3229,7 +4025,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070133",
@@ -3237,7 +4035,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070134",
@@ -3245,7 +4045,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070135",
@@ -3253,7 +4055,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070136",
@@ -3261,7 +4065,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070137",
@@ -3269,7 +4075,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070138",
@@ -3277,7 +4085,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070140",
@@ -3285,7 +4095,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070142",
@@ -3293,7 +4105,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070143",
@@ -3301,7 +4115,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070144",
@@ -3309,7 +4125,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070146",
@@ -3317,7 +4135,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070147",
@@ -3325,7 +4145,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070148",
@@ -3333,7 +4155,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070150",
@@ -3341,7 +4165,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070151",
@@ -3349,7 +4175,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070152",
@@ -3357,7 +4185,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070153",
@@ -3365,7 +4195,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070155",
@@ -3373,7 +4205,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": null
+      "remark": null,
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070156",
@@ -3381,7 +4215,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70004
     },
     {
       "itemCode": "JY070215",
@@ -3389,7 +4225,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY070216",
@@ -3397,7 +4235,9 @@
       "applyFormCode": "14253",
       "sample": "宫颈阴道分泌物",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY070217",
@@ -3405,7 +4245,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY070218",
@@ -3413,7 +4255,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY070230",
@@ -3421,7 +4265,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY070231",
@@ -3429,7 +4275,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": "可检测GJB2基因、SLC26A4基因、GJB3基因、线粒体DNA12SrRNA基因等。实际检测20个点位"
+      "remark": "可检测GJB2基因、SLC26A4基因、GJB3基因、线粒体DNA12SrRNA基因等。实际检测20个点位",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY070232",
@@ -3437,7 +4285,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY070233",
@@ -3445,7 +4295,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY070234",
@@ -3453,7 +4305,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY070235",
@@ -3461,7 +4315,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY070236",
@@ -3469,7 +4325,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY070237",
@@ -3477,7 +4335,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 0
     },
     {
       "itemCode": "JY070238",
@@ -3485,7 +4345,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070239",
@@ -3493,7 +4355,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070240",
@@ -3501,7 +4365,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070243",
@@ -3509,7 +4375,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070244",
@@ -3517,7 +4385,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070245",
@@ -3525,7 +4395,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070246",
@@ -3533,7 +4405,9 @@
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     },
     {
       "itemCode": "JY070248",
@@ -3541,7 +4415,9 @@
       "applyFormCode": "14253",
       "sample": "血清",
       "isEmergency": 0,
-      "remark": ""
+      "remark": "",
+      "inputCode": "",
+      "sortNo": 70001
     }
   ],
   "priceMap": {

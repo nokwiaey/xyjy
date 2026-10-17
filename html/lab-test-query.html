@@ -1297,10 +1297,16 @@ body {
         <div class="section-title">搜索维度：</div>
         <div class="radio-group">
           <label class="radio-label">
-            <input type="radio" name="searchType" value="itemName" checked> 项目名称
+            <input type="radio" name="searchType" value="all" checked> 联合搜索（编码/名称/输入码）
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="searchType" value="itemName"> 项目名称
           </label>
           <label class="radio-label">
             <input type="radio" name="searchType" value="itemCode"> 项目编码
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="searchType" value="inputCode"> 输入码
           </label>
           <label class="radio-label">
             <input type="radio" name="searchType" value="detailName"> 收费名称
@@ -1448,7 +1454,7 @@ const DATA_URLS = [
 let DATA = {};
 let currentForm = '';
 let searchKeyword = '';
-let searchType = 'itemName'; // 默认按项目名称搜索
+let searchType = 'all'; // 默认联合模糊搜索：诊疗项目编码 / 诊疗项目名称 / 输入码
 let emergencyFilter = 'all'; // 急诊筛选：'all', 'emergency', 'normal'
 let advancedSearchOpen = false;
 let dataLoaded = false; // 标记数据是否已加载
@@ -1629,9 +1635,9 @@ function bindAdvancedSearch() {
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
       // 重置搜索维度
-      const itemNameRadio = document.querySelector('input[name="searchType"][value="itemName"]');
-      if (itemNameRadio) itemNameRadio.checked = true;
-      searchType = 'itemName';
+      const defaultTypeRadio = document.querySelector('input[name="searchType"][value="all"]');
+      if (defaultTypeRadio) defaultTypeRadio.checked = true;
+      searchType = 'all';
 
       // 重置急诊筛选
       const allRadio = document.querySelector('input[name="emergencyType"][value="all"]');
@@ -1706,6 +1712,9 @@ function bindAdvancedSearch() {
 
   // 绑定LIS互认标识筛选下拉
   bindLisRecognitionFilter();
+
+  // 按当前（默认）搜索维度初始化输入框提示
+  updateSearchPlaceholder();
 }
 
 // 标本类型筛选下拉功能
@@ -2140,8 +2149,10 @@ function closeLisRecognitionFilter() {
 function updateSearchPlaceholder() {
   const input = document.getElementById('searchInput');
   const placeholders = {
+    all: '输入编码 / 名称 / 输入码关键词',
     itemName: '请输入项目名称',
     itemCode: '请输入项目编码',
+    inputCode: '请输入输入码关键词（如 GGL、MDGRL）',
     detailName: '请输入收费名称',
     detailCode: '请输入收费编码',
     sample: '请输入标本类型',
@@ -2252,6 +2263,15 @@ function matchKeyword(item) {
   }
 
   switch (searchType) {
+    case 'all':
+      // 联合模糊搜索：诊疗项目编码 / 诊疗项目名称 / 输入码（任一命中即匹配）
+      return [item.itemCode, item.itemName, item.inputCode]
+        .some(field => String(field || '').toLowerCase().includes(kw));
+
+    case 'inputCode':
+      // 单独按输入码搜索（关键词以 / 或 , 分隔，子串命中即可）
+      return String(item.inputCode || '').toLowerCase().includes(kw);
+
     case 'itemName':
       return String(item.itemName || '').toLowerCase().includes(kw);
 
@@ -2320,6 +2340,25 @@ function matchKeyword(item) {
   }
 }
 
+// 排序号取值：纯数字按数值比较（1 < 2 < 10），缺失或非数字的排在最后
+function getSortNoValue(item) {
+  const raw = item ? item.sortNo : undefined;
+  if (raw === null || raw === undefined || raw === '') {
+    return Number.MAX_SAFE_INTEGER;
+  }
+  const num = Number(raw);
+  return Number.isFinite(num) ? num : Number.MAX_SAFE_INTEGER;
+}
+
+// 申请单内部诊疗项目排序：排序号升序，相同排序号按项目编码兜底保证顺序稳定
+function compareBySortNo(a, b) {
+  const diff = getSortNoValue(a) - getSortNoValue(b);
+  if (diff !== 0) {
+    return diff;
+  }
+  return String(a.itemCode || '').localeCompare(String(b.itemCode || ''));
+}
+
 function renderItems() {
   const box = document.getElementById('items');
   if (!box) {
@@ -2330,6 +2369,7 @@ function renderItems() {
     .filter(i => i.applyFormCode === currentForm)
     .filter(matchKeyword)
     .filter(matchEmergencyFilter)
+    .sort(compareBySortNo)
     .forEach(i => {
       const div = document.createElement('div');
       div.className = 'card';
