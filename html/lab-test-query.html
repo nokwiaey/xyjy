@@ -331,6 +331,17 @@ body {
   min-width: 60px;
 }
 
+/* 输入码：弱化展示，作为检索关键词的补充信息，不抢编码/样本的注意力 */
+.card-meta-input {
+  color: #aaa;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
 .emergency-badge {
   position: absolute;
   top: 8px;
@@ -495,6 +506,13 @@ body {
   text-decoration-style: dotted;
   color: #1677ff;
   position: relative;
+}
+
+/* 输入码：弱化展示，仅在项目配置了输入码时出现 */
+.drawer-inputcode {
+  color: #999;
+  font-size: 13px;
+  word-break: break-all;
 }
 
 .sample-type-hint:hover {
@@ -2588,6 +2606,7 @@ function renderItems() {
         <div class="card-meta">
           <span class="card-meta-code">编码：${i.itemCode}</span>
           <span class="card-meta-sample">样本：${i.sample}</span>
+          ${i.inputCode ? `<span class="card-meta-input" title="输入码（检索关键词）：${escapeHtml(i.inputCode)}">输入码：${escapeHtml(i.inputCode)}</span>` : ''}
         </div>
         ${i.remark ? `<div class="card-meta-remark">备注：${i.remark}</div>` : ''}
         ${i.isEmergency ? '<span class="emergency-badge">急诊</span>' : ''}
@@ -2773,6 +2792,7 @@ function showPrice(code) {
     <div class="drawer-basic">
       <span>项目编码：${item.itemCode}</span>
       <span><span class="sample-type-hint" data-hint="指采集时的样本类型，例如：[全血]指的是血液离体前的状态，并非检测时的抗凝全血">样本类型</span>：${item.sample}</span>
+      ${item.inputCode ? `<span class="drawer-inputcode" title="HIS 输入码：拼音首字母 / 中文分类关键词">输入码：${escapeHtml(item.inputCode)}</span>` : ''}
       ${item.remark ? `<span>备注：${item.remark}</span>` : ''}
     </div>
   `;
