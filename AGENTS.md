@@ -57,7 +57,7 @@ The page includes: dark/light theme toggle, search with keyboard navigation (Ctr
 - **Adding a schedule**: drop the PDF into `html/jyk_schedule/data/` → run `generate_schedule_manifest.py`
 - **Regenerate the item change log**: `python generate_item_changes.py` — diffs `html/data/item.json` against `html/data/item-snapshot.json`, appends a record to `html/data/item-changes.json`. Useful flags: `--init` (rebuild the baseline only), `--dry-run` (print the diff, write nothing), `--max-records N`
 - **Backfill history from git**: `python generate_item_changes.py --backfill-git 2026-09-24` — rebuilds records from every commit of `item.json` on/after that date (commit time becomes `recordedAt`, records are marked `source: git` and the page labels them 提交于). Records already present for the same `exportTime` are replaced; `--dry-run` previews the result
-- **After a manual `item.json` export**: run `python generate_item_changes.py` (CI also runs it on every push, so committing a new export is enough)
+- **After a manual `item.json` export**: 只需提交新的 `item.json`，CI 会在 push 后自动运行脚本并提交生成结果（详见「生成文件由 CI 生成，本地只拉取」）；本地预览可用 `--dry-run`，不要提交生成文件
 - Times are recorded in `--tz-offset` (default `+8`, Beijing) so a UTC CI runner does not shift them
 
 ## CI/CD
@@ -66,6 +66,24 @@ GitHub Actions (`.github/workflows/static.yml`) triggers on push to `main`:
 1. Runs `python generate_nav.py`, `python generate_schedule_manifest.py` and `python generate_item_changes.py`
 2. Commits the regenerated `index.html`, `html/jyk_schedule/data/schedule.json`, `html/data/item-changes.json` and `html/data/item-snapshot.json` back to the repo
 3. Deploys the entire repo to GitHub Pages
+
+### 生成文件由 CI 生成，本地只拉取
+
+`index.html`、`html/data/item-changes.json`、`html/data/item-snapshot.json`、`html/jyk_schedule/data/schedule.json` 是**生成文件**，由上面的 CI 流程在每次 push 后重新生成并提交回来。本地规则：
+
+- **不要修改、不要提交这些文件**；本地提交只包含输入与源码（`item.json`、`item.formatted.json`、`tools.json`、`style.css`、`script.js`、`html/*.html`、`*.py` 等）
+- 需要看到生成结果时用 `git pull` 拉取，不要在本地跑 `generate_*.py` 后提交产物（会和 CI 的提交打架）
+- 与远端冲突时以 GitHub 生成的版本为准：这些文件在 `.gitattributes` 里标了 `merge=take-incoming`，配合下面的本地配置会在合并时自动采用传入（远端）版本
+- 每台机器执行一次，启用本地保护：
+  ```sh
+  git config --local core.hooksPath .githooks     # 阻止本地提交生成文件
+  git config --local merge.take-incoming.name "keep incoming (CI-generated) version"
+  git config --local merge.take-incoming.driver "cp -f %B %A"   # 冲突时取远端版本
+  git config --local pull.rebase false            # 始终用 merge，让「传入版本」= GitHub
+  ```
+  （Linux/macOS 还需 `chmod +x .githooks/pre-commit`；Linux/macOS/Windows 均可用）
+- 拉取前若这些文件被本地改脏导致无法 pull：`git checkout -- index.html html/data/item-changes.json html/data/item-snapshot.json html/jyk_schedule/data/schedule.json` 再 pull
+- 确需手工提交生成文件（例如生成脚本升级后首次修正历史数据）时：`git commit --no-verify`
 
 Cloudflare Pages is also configured via `wrangler.jsonc` (deploys the entire repo as static assets).
 

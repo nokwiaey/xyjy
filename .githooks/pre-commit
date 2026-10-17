@@ -1,0 +1,42 @@
+#!/bin/sh
+# 本地保护：由 GitHub Actions 生成的文件不允许在本地提交。
+#
+# 这些文件由 CI 在 push 后重新生成并提交回来，本地只拉取，不要手工提交；
+# 确需手工提交时用 git commit --no-verify。
+#
+# 合并 / rebase / cherry-pick 过程中产生的提交一律放行：
+# 那是在接收远端已经生成好的内容，属于正常拉取。
+# 启用方式（每台机器执行一次）：git config --local core.hooksPath .githooks
+
+gitdir=$(git rev-parse --git-dir)
+[ -f "$gitdir/MERGE_HEAD" ] && exit 0
+[ -d "$gitdir/rebase-merge" ] && exit 0
+[ -d "$gitdir/rebase-apply" ] && exit 0
+[ -f "$gitdir/CHERRY_PICK_HEAD" ] && exit 0
+
+staged=$(git diff --cached --name-only --diff-filter=ACMR)
+blocked=""
+for f in index.html html/data/item-changes.json html/data/item-snapshot.json html/jyk_schedule/data/schedule.json; do
+    if printf '%s\n' "$staged" | grep -qx -- "$f"; then
+        blocked="$blocked $f"
+    fi
+done
+
+if [ -n "$blocked" ]; then
+    echo ""
+    echo "✋ 已阻止提交以下由 GitHub Actions 生成的文件："
+    for f in $blocked; do
+        echo "     - $f"
+    done
+    echo ""
+    echo "这些文件由 CI 在 push 后重新生成并提交回来，本地只拉取："
+    echo "     git checkout -- <文件>    # 丢弃本地改动"
+    echo "     git pull                  # 拉取 GitHub 生成的版本"
+    echo ""
+    echo "确实需要手工提交（例如生成脚本本身升级后的首次修正）："
+    echo "     git commit --no-verify"
+    echo ""
+    exit 1
+fi
+
+exit 0

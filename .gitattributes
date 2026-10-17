@@ -1,0 +1,14 @@
+# 由 GitHub Actions 生成并提交回来的文件。
+# 本地与远端发生冲突时，一律采用「传入/远端（GitHub 生成）」的版本。
+# 需要每台机器执行一次（见 AGENTS.md「生成文件由 CI 生成，本地只拉取」）：
+#   git config --local merge.take-incoming.driver "cp -f %B %A"
+index.html                            merge=take-incoming
+html/data/item-changes.json           merge=take-incoming
+html/data/item-snapshot.json          merge=take-incoming
+html/jyk_schedule/data/schedule.json  merge=take-incoming
+
+# 本文件自身也固定 LF，否则 core.autocrlf=true 下模式行末尾会带 \r 导致规则失效
+.gitattributes text eol=lf
+
+# 钩子脚本必须保持 LF，否则 Windows 下的 sh 会解析失败（core.autocrlf=true 时尤其要注意）
+.githooks/** text eol=lf
