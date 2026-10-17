@@ -680,6 +680,12 @@ body {
   cursor: pointer;
 }
 
+/* 输入码选项里的拼音缩写 */
+.filter-option-alias {
+  color: #999;
+  font-size: 12px;
+}
+
 /* 侧边栏横向滚动布局 - 所有设备 */
 .sidebar-wrapper {
   position: relative;
@@ -1297,7 +1303,7 @@ body {
         <div class="section-title">搜索维度：</div>
         <div class="radio-group">
           <label class="radio-label">
-            <input type="radio" name="searchType" value="all" checked> 联合搜索（编码/名称/输入码）
+            <input type="radio" name="searchType" value="all" checked> 联合搜索（名称/输入码）
           </label>
           <label class="radio-label">
             <input type="radio" name="searchType" value="itemName"> 项目名称
@@ -1325,6 +1331,14 @@ body {
             <span class="filter-arrow">▼</span>
           </div>
           <div class="filter-dropdown-list" id="sampleFilterList"></div>
+        </div>
+        <!-- 输入码筛选下拉 -->
+        <div class="filter-dropdown-container" id="inputCodeFilterContainer" style="display: none;">
+          <div class="filter-dropdown-header" id="inputCodeFilterHeader">
+            <span>选择输入码</span>
+            <span class="filter-arrow">▼</span>
+          </div>
+          <div class="filter-dropdown-list" id="inputCodeFilterList"></div>
         </div>
       </div>
 
@@ -1654,6 +1668,15 @@ function bindAdvancedSearch() {
       const sampleList = document.getElementById('sampleFilterList');
       if (sampleList) sampleList.innerHTML = '';
 
+      // 重置输入码筛选
+      selectedInputCodes = [];
+      const inputCodeContainer = document.getElementById('inputCodeFilterContainer');
+      if (inputCodeContainer) inputCodeContainer.style.display = 'none';
+      closeInputCodeFilter();
+      updateInputCodeFilterHeader();
+      const inputCodeList = document.getElementById('inputCodeFilterList');
+      if (inputCodeList) inputCodeList.innerHTML = '';
+
       // 重置检验分组筛选
       selectedLisGroups = [];
       const lisGroupContainer = document.getElementById('lisGroupFilterContainer');
@@ -1706,6 +1729,9 @@ function bindAdvancedSearch() {
 
   // 绑定标本类型筛选下拉
   bindSampleFilter();
+
+  // 绑定输入码筛选下拉
+  bindInputCodeFilter();
 
   // 绑定LIS检验分组筛选下拉
   bindLisGroupFilter();
@@ -1863,6 +1889,182 @@ function closeSampleFilter() {
   sampleFilterOpen = false;
   const header = document.getElementById('sampleFilterHeader');
   const list = document.getElementById('sampleFilterList');
+  if (header) header.classList.remove('active');
+  if (list) list.classList.remove('show');
+}
+
+// ==================== 输入码筛选下拉 ====================
+// 输入码格式：「中文分类,中文分类/拼音缩写,拼音缩写」，斜线左右一一对应，
+// 例如「感染类,血播类,梅毒感染类/GRL,XBL,MDGRL」；少数数据没有斜线（如「线上开单」）。
+let selectedInputCodes = []; // 选中的输入码分类（中文名）
+let inputCodeFilterOpen = false;
+
+// 把输入码拆成独立关键词，逗号与斜线都是分隔符。
+// 用 token 精确匹配而不是子串匹配，避免「贫血类」命中「贫血系列」、「GRL」命中「MDGRL」。
+function parseInputCodeTokens(inputCode) {
+  return String(inputCode || '')
+    .split(/[,，/]/)
+    .map(token => token.trim())
+    .filter(Boolean);
+}
+
+// 输入码分类 -> 拼音缩写（同一分类在不同项目里缩写固定，取首个即可）
+function buildInputCodeOptions() {
+  const options = new Map();
+  DATA.items.forEach(item => {
+    const raw = String(item.inputCode || '').trim();
+    if (!raw) return;
+    const parts = raw.split('/');
+    const zhTokens = parts[0].split(/[,，]/).map(s => s.trim()).filter(Boolean);
+    const pyTokens = (parts[1] || '').split(/[,，]/).map(s => s.trim()).filter(Boolean);
+    zhTokens.forEach((zh, index) => {
+      if (options.has(zh)) return;
+      options.set(zh, pyTokens[index] || '');
+    });
+    // 防御：只有拼音、没有中文分类的数据
+    if (zhTokens.length === 0) {
+      pyTokens.forEach(py => {
+        if (!options.has(py)) options.set(py, '');
+      });
+    }
+  });
+  // 跳过纯数字等没有意义的关键词（例如个别项目的输入码是「1」），但仍可用输入框搜索
+  Array.from(options.keys()).forEach(key => {
+    if (!/[A-Za-z\u4e00-\u9fff]/.test(key)) options.delete(key);
+  });
+  return options;
+}
+
+function bindInputCodeFilter() {
+  const radio = document.querySelector('input[name="searchType"][value="inputCode"]');
+  const container = document.getElementById('inputCodeFilterContainer');
+  const header = document.getElementById('inputCodeFilterHeader');
+  const list = document.getElementById('inputCodeFilterList');
+
+  if (!radio || !container || !header || !list) return;
+
+  // 搜索维度切换时显示/隐藏输入码筛选
+  document.querySelectorAll('input[name="searchType"]').forEach(item => {
+    item.addEventListener('change', e => {
+      if (e.target.value === 'inputCode') {
+        container.style.display = 'block';
+        initInputCodeFilterList();
+      } else {
+        container.style.display = 'none';
+        closeInputCodeFilter();
+      }
+    });
+  });
+
+  // 点击头部展开/收起下拉
+  header.addEventListener('click', () => {
+    inputCodeFilterOpen = !inputCodeFilterOpen;
+    header.classList.toggle('active', inputCodeFilterOpen);
+    list.classList.toggle('show', inputCodeFilterOpen);
+    if (inputCodeFilterOpen) {
+      initInputCodeFilterList();
+    }
+  });
+
+  // 点击外部关闭下拉
+  document.addEventListener('click', e => {
+    if (!container.contains(e.target)) {
+      closeInputCodeFilter();
+    }
+  });
+}
+
+function initInputCodeFilterList() {
+  const list = document.getElementById('inputCodeFilterList');
+  if (!list || list.children.length > 0) return; // 已初始化
+
+  const options = buildInputCodeOptions();
+  const sortedKeys = Array.from(options.keys()).sort((a, b) => a.localeCompare(b, 'zh-Hans-CN'));
+
+  // 添加"全选"选项
+  const selectAllDiv = document.createElement('div');
+  selectAllDiv.className = 'filter-option';
+  selectAllDiv.innerHTML = `
+    <input type="checkbox" id="inputCode-select-all">
+    <label for="inputCode-select-all" style="cursor: pointer; flex: 1;">全选</label>
+  `;
+  selectAllDiv.addEventListener('click', e => {
+    if (e.target.type !== 'checkbox') {
+      const checkbox = selectAllDiv.querySelector('input');
+      checkbox.checked = !checkbox.checked;
+    }
+    toggleAllInputCodes(sortedKeys);
+  });
+  list.appendChild(selectAllDiv);
+
+  // 添加各个输入码分类选项（中文分类 + 拼音缩写）
+  sortedKeys.forEach(key => {
+    const pinyin = options.get(key);
+    const div = document.createElement('div');
+    div.className = 'filter-option';
+    div.dataset.value = key;
+    div.innerHTML = `
+      <input type="checkbox" value="${escapeHtml(key)}" ${selectedInputCodes.includes(key) ? 'checked' : ''}>
+      <span>${escapeHtml(key)}${pinyin ? `<span class="filter-option-alias"> / ${escapeHtml(pinyin)}</span>` : ''}</span>
+    `;
+    div.addEventListener('click', e => {
+      if (e.target.type !== 'checkbox') {
+        const checkbox = div.querySelector('input');
+        checkbox.checked = !checkbox.checked;
+      }
+      toggleInputCode(key);
+    });
+    list.appendChild(div);
+  });
+}
+
+function toggleInputCode(inputCode) {
+  const index = selectedInputCodes.indexOf(inputCode);
+  if (index > -1) {
+    selectedInputCodes.splice(index, 1);
+  } else {
+    selectedInputCodes.push(inputCode);
+  }
+  updateInputCodeFilterHeader();
+  renderForms();
+  renderItems();
+}
+
+function toggleAllInputCodes(allInputCodes) {
+  const selectAllCheckbox = document.querySelector('#inputCode-select-all');
+  if (selectAllCheckbox.checked) {
+    selectedInputCodes = [...allInputCodes];
+  } else {
+    selectedInputCodes = [];
+  }
+  document.querySelectorAll('#inputCodeFilterList .filter-option input[type="checkbox"]').forEach(cb => {
+    if (cb.id !== 'inputCode-select-all') {
+      cb.checked = selectAllCheckbox.checked;
+    }
+  });
+  updateInputCodeFilterHeader();
+  renderForms();
+  renderItems();
+}
+
+function updateInputCodeFilterHeader() {
+  const header = document.getElementById('inputCodeFilterHeader');
+  if (!header) return;
+
+  const span = header.querySelector('span');
+  if (selectedInputCodes.length === 0) {
+    span.textContent = '选择输入码';
+  } else if (selectedInputCodes.length === 1) {
+    span.textContent = selectedInputCodes[0];
+  } else {
+    span.textContent = `已选择 ${selectedInputCodes.length} 项`;
+  }
+}
+
+function closeInputCodeFilter() {
+  inputCodeFilterOpen = false;
+  const header = document.getElementById('inputCodeFilterHeader');
+  const list = document.getElementById('inputCodeFilterList');
   if (header) header.classList.remove('active');
   if (list) list.classList.remove('show');
 }
@@ -2149,10 +2351,10 @@ function closeLisRecognitionFilter() {
 function updateSearchPlaceholder() {
   const input = document.getElementById('searchInput');
   const placeholders = {
-    all: '输入编码 / 名称 / 输入码关键词',
+    all: '输入名称 / 输入码关键词',
     itemName: '请输入项目名称',
     itemCode: '请输入项目编码',
-    inputCode: '请输入输入码关键词（如 GGL、MDGRL）',
+    inputCode: '请输入输入码关键词，或在上方下拉选择',
     detailName: '请输入收费名称',
     detailCode: '请输入收费编码',
     sample: '请输入标本类型',
@@ -2227,6 +2429,12 @@ function matchKeyword(item) {
     return selectedSamples.some(selected => itemSamples.includes(selected));
   }
 
+  // 输入码筛选（使用下拉选择的值，按关键词 token 精确匹配）
+  if (searchType === 'inputCode' && selectedInputCodes.length > 0) {
+    const tokens = parseInputCodeTokens(item.inputCode);
+    return selectedInputCodes.some(code => tokens.includes(code));
+  }
+
   // 检验分组筛选（使用下拉选择的值）
   if (searchType === 'lisGroup' && selectedLisGroups.length > 0) {
     if (!DATA.lis) return false;
@@ -2264,8 +2472,8 @@ function matchKeyword(item) {
 
   switch (searchType) {
     case 'all':
-      // 联合模糊搜索：诊疗项目编码 / 诊疗项目名称 / 输入码（任一命中即匹配）
-      return [item.itemCode, item.itemName, item.inputCode]
+      // 联合模糊搜索：诊疗项目名称 / 输入码（任一命中即匹配）
+      return [item.itemName, item.inputCode]
         .some(field => String(field || '').toLowerCase().includes(kw));
 
     case 'inputCode':

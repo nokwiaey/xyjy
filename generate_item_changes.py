@@ -144,13 +144,20 @@ def build_state(data):
         code = text(item.get("itemCode"))
         if not code:
             continue
-        items[code] = {
+        record = {
             "name": text(item.get("itemName")),
             "form": text(item.get("applyFormCode")),
             "sample": text(item.get("sample")),
             "emergency": to_bool(item.get("isEmergency")),
             "remark": text(item.get("remark")),
         }
+        # 输入码 / 排序号是后加的字段：只有在导出里确实带了该字段时才记录，
+        # 这样老快照缺少字段时不会被误判成「每个项目的该字段都变了」。
+        if "inputCode" in item:
+            record["inputCode"] = text(item.get("inputCode"))
+        if "sortNo" in item:
+            record["sortNo"] = to_number(item.get("sortNo"))
+        items[code] = record
     state["items"] = items
 
     prices = {}
@@ -349,13 +356,56 @@ def price_fields(state, code):
     return fields
 
 
+def item_extra_fields(item, state):
+    """新增/删除项目时附带展示输入码、排序号（有值才显示）。"""
+    fields = []
+    if "inputCode" in item and item["inputCode"]:
+        fields.append(field_value("输入码", item["inputCode"]))
+    if "sortNo" in item and item["sortNo"] is not None:
+        fields.append(field_value("排序号", fmt_num(item["sortNo"])))
+    return fields
+
+
+def diff_item_extra_fields(before, after):
+    """输入码 / 排序号的逐字段变化（老快照没有该字段时跳过，避免刷屏）。"""
+    fields = []
+    if ("inputCode" in before and "inputCode" in after
+            and before["inputCode"] != after["inputCode"]):
+        fields.append(field_change("输入码", before["inputCode"], after["inputCode"]))
+    if ("sortNo" in before and "sortNo" in after
+            and before["sortNo"] != after["sortNo"]):
+        fields.append(field_change("排序号",
+                                   fmt_num(before["sortNo"]),
+                                   fmt_num(after["sortNo"])))
+    return fields
+
+
+def field_introduction_changes(prev, cur):
+    """导出里第一次出现新字段时，只记一条「字段新增」，不逐条刷项目。"""
+    old_items, new_items = prev["items"], cur["items"]
+    added = []
+    for key, label in (("inputCode", "输入码"), ("sortNo", "排序号")):
+        old_has = any(key in item for item in old_items.values())
+        new_has = any(key in item for item in new_items.values())
+        if new_has and not old_has:
+            added.append(label)
+    if not added:
+        return []
+    return [make_change(
+        "item_field_added", "item", "add",
+        "诊疗项目新增字段：%s" % "、".join(added),
+        [field_value("说明",
+                     "本次导出首次提供该字段，此前的导出没有对应数据，因此不逐条比较历史值")],
+    )]
+
+
 def diff_items(prev, cur):
     """返回 (变更列表, 已整体新增/删除的项目编码集合)。
 
     整体新增/删除的项目，其价格条目不再单独记一条价格变更（信息已包含在
     项目条目里），避免同一件事在页面上出现两次。
     """
-    changes = []
+    changes = field_introduction_changes(prev, cur)
     old, new = prev["items"], cur["items"]
     wholesale = set()
 
@@ -371,6 +421,7 @@ def diff_items(prev, cur):
         ]
         if item["remark"]:
             fields.append(field_value("备注", item["remark"]))
+        fields.extend(item_extra_fields(item, cur))
         fields.extend(price_fields(cur, code))
         changes.append(make_change(
             "item_added", "item", "add", item_label(cur, code), fields))
@@ -387,6 +438,7 @@ def diff_items(prev, cur):
         ]
         if item["remark"]:
             fields.append(field_value("备注", item["remark"]))
+        fields.extend(item_extra_fields(item, prev))
         fields.extend(price_fields(prev, code))
         changes.append(make_change(
             "item_removed", "item", "remove", item_label(prev, code), fields))
@@ -408,9 +460,12 @@ def diff_items(prev, cur):
                                        yes_no(after["emergency"])))
         if before["remark"] != after["remark"]:
             fields.append(field_change("备注", before["remark"], after["remark"]))
+        fields.extend(diff_item_extra_fields(before, after))
         if fields:
+            # 项目改名时标题只写旧名称：新名称已在明细「旧 → 新」里体现，
+            # 若标题再写「新名称（旧名称）」会与下一行重复。
             title = item_label(cur, code) if after["name"] == before["name"] else \
-                "%s（%s）" % (item_label(cur, code), before["name"])
+                item_label(prev, code)
             changes.append(make_change(
                 "item_modified", "item", "update", title, fields))
 
