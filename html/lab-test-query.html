@@ -2576,12 +2576,17 @@ function getSortNoValue(item) {
   return Number.isFinite(num) ? num : Number.MAX_SAFE_INTEGER;
 }
 
-// 申请单内部诊疗项目排序：排序号升序，相同排序号按项目编码兜底保证顺序稳定
+// 申请单内部诊疗项目排序：排序号升序；排序号相同时按项目名称兜底（与 HIS 的顺序一致）
 function compareBySortNo(a, b) {
   const diff = getSortNoValue(a) - getSortNoValue(b);
   if (diff !== 0) {
     return diff;
   }
+  const nameDiff = String(a.itemName || '').localeCompare(String(b.itemName || ''), 'zh-Hans-CN');
+  if (nameDiff !== 0) {
+    return nameDiff;
+  }
+  // 名称也完全相同时按编码兜底，保证渲染顺序稳定
   return String(a.itemCode || '').localeCompare(String(b.itemCode || ''));
 }
 
