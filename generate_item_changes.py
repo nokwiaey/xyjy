@@ -122,6 +122,21 @@ def fmt_num(value):
     return text(value)
 
 
+def normalize_sort_no(value):
+    """排序号在导出里是字符串（多为补零格式 '010001'），也可能是空串或纯数字。
+
+    统一成字符串：数字型去掉前导零（'010001' → '10001'），非数字（如 'JY070215'）原样保留。
+    这样旧快照里的数字和新导出里的补零字符串不会被当成不同的值。
+    """
+    raw = text(value)
+    if not raw:
+        return ""
+    num = to_number(raw)
+    if num is not None and float(num).is_integer():
+        return str(int(num))
+    return raw
+
+
 # --------------------------------------------------------------------------
 # 归一化：把 item.json 变成便于逐字段比较的稳定结构
 # --------------------------------------------------------------------------
@@ -156,7 +171,7 @@ def build_state(data):
         if "inputCode" in item:
             record["inputCode"] = text(item.get("inputCode"))
         if "sortNo" in item:
-            record["sortNo"] = to_number(item.get("sortNo"))
+            record["sortNo"] = normalize_sort_no(item.get("sortNo"))
         items[code] = record
     state["items"] = items
 
@@ -361,8 +376,8 @@ def item_extra_fields(item, state):
     fields = []
     if "inputCode" in item and item["inputCode"]:
         fields.append(field_value("输入码", item["inputCode"]))
-    if "sortNo" in item and item["sortNo"] is not None:
-        fields.append(field_value("排序号", fmt_num(item["sortNo"])))
+    if "sortNo" in item and item["sortNo"]:
+        fields.append(field_value("排序号", item["sortNo"]))
     return fields
 
 
@@ -372,11 +387,12 @@ def diff_item_extra_fields(before, after):
     if ("inputCode" in before and "inputCode" in after
             and before["inputCode"] != after["inputCode"]):
         fields.append(field_change("输入码", before["inputCode"], after["inputCode"]))
-    if ("sortNo" in before and "sortNo" in after
-            and before["sortNo"] != after["sortNo"]):
-        fields.append(field_change("排序号",
-                                   fmt_num(before["sortNo"]),
-                                   fmt_num(after["sortNo"])))
+    if "sortNo" in before and "sortNo" in after:
+        # 旧快照里排序号可能是数字，统一规范化后再比较，避免类型变化被当成全量变更
+        old_sort_no = normalize_sort_no(before["sortNo"])
+        new_sort_no = normalize_sort_no(after["sortNo"])
+        if old_sort_no != new_sort_no:
+            fields.append(field_change("排序号", old_sort_no, new_sort_no))
     return fields
 
 

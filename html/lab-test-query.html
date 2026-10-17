@@ -2566,36 +2566,71 @@ function matchKeyword(item) {
   }
 }
 
-// 排序号取值：Excel 里排序号为空的单元格，导出中可能是空串、null 或 0。
-// Excel 排序时空白单元格总是排在最后，这里保持一致（空 → 最大整数，排末尾）。
-function getSortNoValue(item) {
+// 排序号在导出里是字符串：多数按固定宽度补零（'010001'、'070063'），
+// 少数没补零（'70001'）或直接是项目编码（'JY070215'）。
+// HIS/Excel 对这类文本按字符串比较，所以 '070063' < '70001'（与数值大小无关）。
+// 排序号为空（空串 / null）的排最后。
+function getSortNoText(item) {
   const raw = item ? item.sortNo : undefined;
-  if (raw === null || raw === undefined || raw === '') {
-    return Number.MAX_SAFE_INTEGER;
+  if (raw === null || raw === undefined) {
+    return null;
   }
-  const num = Number(raw);
-  if (!Number.isFinite(num) || num === 0) {
-    return Number.MAX_SAFE_INTEGER;
-  }
-  return num;
+  const sortNo = String(raw).trim();
+  return sortNo === '' ? null : sortNo;
 }
 
-// 项目名称比较：按 Excel/中文系统默认的拼音排序，忽略大小写与首尾空格
+function compareSortNoText(a, b) {
+  if (a === null && b === null) {
+    return 0;
+  }
+  if (a === null) {
+    return 1; // 空排序号排最后
+  }
+  if (b === null) {
+    return -1;
+  }
+  if (a === b) {
+    return 0;
+  }
+  return a < b ? -1 : 1;
+}
+
+// 项目名称比较：按 Excel 的中文排序规则
+// Excel 的顺序是「数字 → 字母 → 汉字」，汉字按拼音、忽略大小写与首尾空格；
+// 而 Intl 的 zh-Hans-CN 会把汉字排在字母前面，所以先按首字符类别分组再比较。
 const sortNameCollator = new Intl.Collator('zh-Hans-CN', { sensitivity: 'base' });
 
+function getSortNameClass(name) {
+  const ch = String(name || '').trim().charAt(0);
+  if (/[0-9]/.test(ch)) {
+    return 0; // 数字
+  }
+  if (/[A-Za-z]/.test(ch)) {
+    return 1; // 字母
+  }
+  return 2; // 汉字及其他
+}
+
+function compareSortName(a, b) {
+  const nameA = String(a || '').trim();
+  const nameB = String(b || '').trim();
+  const classDiff = getSortNameClass(nameA) - getSortNameClass(nameB);
+  if (classDiff !== 0) {
+    return classDiff;
+  }
+  return sortNameCollator.compare(nameA, nameB);
+}
+
 // 申请单内部诊疗项目排序：
-// 1) 排序号升序（排序号为空的排最后）
-// 2) 排序号相同时按项目名称（Excel 风格的中文排序，与 HIS 一致）
+// 1) 排序号按字符串升序（与 HIS/Excel 的文本排序一致），空排序号排最后
+// 2) 排序号相同时按项目名称（Excel 风格：数字 → 字母 → 汉字拼音）
 // 3) 名称也完全相同时按编码兜底，保证渲染顺序稳定
 function compareBySortNo(a, b) {
-  const diff = getSortNoValue(a) - getSortNoValue(b);
+  const diff = compareSortNoText(getSortNoText(a), getSortNoText(b));
   if (diff !== 0) {
     return diff;
   }
-  const nameDiff = sortNameCollator.compare(
-    String(a.itemName || '').trim(),
-    String(b.itemName || '').trim()
-  );
+  const nameDiff = compareSortName(a.itemName, b.itemName);
   if (nameDiff !== 0) {
     return nameDiff;
   }
