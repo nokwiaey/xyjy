@@ -914,6 +914,27 @@ body {
   font-weight: 600;
   color: #333;
   border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lis-group-name {
+  flex-shrink: 0;
+}
+
+/* 分组右侧的 LIS 诊疗项目（编码 + 名称），弱化展示 */
+.lis-group-meta {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: right;
+  font-weight: 400;
+  font-size: 12px;
+  color: #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .lis-group-items {
@@ -2683,13 +2704,19 @@ function formatPrice(value) {
   return num.toFixed(2);
 }
 
+// 通过 HIS itemCode（hisId）找到对应的 LIS 诊疗项目（chargeItem）
+function getLisChargeItem(itemCode) {
+  if (!DATA.lis || !DATA.lis.chargeItems) return null;
+  return DATA.lis.chargeItems.find(c => c.hisId === itemCode) || null;
+}
+
 // 获取 LIS 分析项目按分组组织（通过 HIS itemCode 关联）
 function getLisTestItemsByGroup(itemCode) {
   // 如果没有 LIS 数据，返回空数组
   if (!DATA.lis) return [];
 
   // 1. 通过 hisId 找到 LIS 诊疗项目
-  const lisChargeItem = DATA.lis.chargeItems.find(c => c.hisId === itemCode);
+  const lisChargeItem = getLisChargeItem(itemCode);
   if (!lisChargeItem) return [];
 
   // 2. 找到关联的分析项目列表（包含 groupId）
@@ -2864,19 +2891,26 @@ function showPrice(code) {
 
   // LIS 分析项目展示（按检验分组）
   const lisGroups = getLisTestItemsByGroup(item.itemCode);
+  const lisChargeItem = getLisChargeItem(item.itemCode);
   if (lisGroups.length > 0) {
     html += `
       <div class="lis-section">
         <div class="lis-header" id="lis-toggle">
           <span class="lis-arrow">▼</span>
-          <span class="lis-title">包含的分析项目</span>
+          <span class="lis-title">包含的项目</span>
         </div>
         <div class="lis-content" id="lis-content">
     `;
     lisGroups.forEach(group => {
+      const lisMeta = lisChargeItem
+        ? `<span class="lis-group-meta" title="LIS 诊疗项目：${escapeHtml(lisChargeItem.chargeItemId)} ${escapeHtml(lisChargeItem.chineseName)}">${escapeHtml(lisChargeItem.chargeItemId)} ${escapeHtml(lisChargeItem.chineseName)}</span>`
+        : '';
       html += `
         <div class="lis-group">
-          <div class="lis-group-header">${group.groupName}</div>
+          <div class="lis-group-header">
+            <span class="lis-group-name">${group.groupName}</span>
+            ${lisMeta}
+          </div>
           <div class="lis-group-items">
       `;
       group.testItems.forEach(t => {
@@ -2962,8 +2996,9 @@ function buildDetailHtml(item, price, applyFormName) {
   // LIS 分析项目（按检验分组）
   let lisHtml = '';
   const lisGroups = getLisTestItemsByGroup(item.itemCode);
+  const lisChargeItem = getLisChargeItem(item.itemCode);
   if (lisGroups.length > 0) {
-    lisHtml = `<h3 style="margin-top:20px;font-size:14px;">包含的分析项目</h3>`;
+    lisHtml = `<h3 style="margin-top:20px;font-size:14px;">包含的项目</h3>`;
     lisGroups.forEach(group => {
       let lisRows = '';
       group.testItems.forEach(t => {
@@ -2978,8 +3013,13 @@ function buildDetailHtml(item, price, applyFormName) {
           </tr>
         `;
       });
+      const lisMeta = lisChargeItem
+        ? `<span style="font-weight:400;color:#999;font-size:12px;">${escapeHtml(lisChargeItem.chargeItemId)} ${escapeHtml(lisChargeItem.chineseName)}</span>`
+        : '';
       lisHtml += `
-        <h4 style="margin-top:12px;font-size:13px;color:#666;background:#f5f5f5;padding:6px 8px;border-radius:4px;">${group.groupName}</h4>
+        <h4 style="margin-top:12px;font-size:13px;color:#666;background:#f5f5f5;padding:6px 8px;border-radius:4px;display:flex;justify-content:space-between;gap:8px;align-items:baseline;">
+          <span>${group.groupName}</span>${lisMeta}
+        </h4>
         <table style="width:100%;border-collapse:collapse;margin-top:4px;font-size:12px;">
           <thead>
             <tr>

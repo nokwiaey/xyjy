@@ -1,5 +1,5 @@
 // Service Worker - 离线缓存
-const CACHE_NAME = 'xyjy-tools-v17';
+const CACHE_NAME = 'xyjy-tools-v18';
 
 // 需要预缓存的静态资源
 const PRECACHE_URLS = [
