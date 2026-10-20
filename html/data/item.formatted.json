@@ -1,6 +1,6 @@
 {
   "version": "2.2.0",
-  "exportTime": "2026-10-20T10:01:54.987095",
+  "exportTime": "2026-10-20T11:08:40.169687",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -12209,31 +12209,31 @@
       },
       {
         "chargeItemId": "LIS0108",
-        "chineseName": "葡萄糖测定(空腹)",
+        "chineseName": "葡萄糖测定（空腹）",
         "charge": 4.5,
         "hisId": "JY020013"
       },
       {
         "chargeItemId": "LIS01440",
-        "chineseName": "葡萄糖测定(餐后30分钟)",
+        "chineseName": "葡萄糖测定（餐后30分钟）",
         "charge": 4.5,
         "hisId": "JY020014"
       },
       {
         "chargeItemId": "LIS01437",
-        "chineseName": "葡萄糖测定(餐后60分钟)",
+        "chineseName": "葡萄糖测定（餐后60分钟）",
         "charge": 4.5,
         "hisId": "JY020015"
       },
       {
         "chargeItemId": "LIS01442",
-        "chineseName": "葡萄糖测定(餐后120分钟)",
+        "chineseName": "葡萄糖测定（餐后120分钟）",
         "charge": 4.5,
         "hisId": "JY020016"
       },
       {
         "chargeItemId": "LIS01929",
-        "chineseName": "葡萄糖测定(餐后180分钟)",
+        "chineseName": "葡萄糖测定（餐后180分钟）",
         "charge": 4.5,
         "hisId": "JY020017"
       },
@@ -12389,7 +12389,7 @@
       },
       {
         "chargeItemId": "LIS0483",
-        "chineseName": "肌钙蛋白Ⅰ",
+        "chineseName": "肌钙蛋白I",
         "charge": 115.0,
         "hisId": "JY020045"
       },
@@ -12437,7 +12437,7 @@
       },
       {
         "chargeItemId": "LIS0638",
-        "chineseName": "免疫功能（5项）",
+        "chineseName": "免疫功能",
         "charge": 99.0,
         "hisId": "JY020053"
       },
@@ -12689,7 +12689,7 @@
       },
       {
         "chargeItemId": "LIS02479",
-        "chineseName": "肌酸激酶同工酶",
+        "chineseName": "肌酸激酶同工酶（CK-MB）",
         "charge": 30.0,
         "hisId": "JY020095"
       },
@@ -13145,7 +13145,7 @@
       },
       {
         "chargeItemId": "LIS0883",
-        "chineseName": "内毒素鲎定量试验(透析用液/用水)",
+        "chineseName": "内毒素鲎定量试验（透析用液/用水）",
         "charge": 38.0,
         "hisId": "JY030041"
       },
@@ -13199,7 +13199,7 @@
       },
       {
         "chargeItemId": "LIS01272",
-        "chineseName": "乙肝五项",
+        "chineseName": "乙肝五项（定性）",
         "charge": 20.0,
         "hisId": "JY040009"
       },
@@ -13385,7 +13385,7 @@
       },
       {
         "chargeItemId": "LIS0332",
-        "chineseName": "抗梅毒螺旋体抗体（定性）",
+        "chineseName": "抗梅毒螺旋体特异性抗体（定性）",
         "charge": 20.0,
         "hisId": "JY040040"
       },
@@ -13397,7 +13397,7 @@
       },
       {
         "chargeItemId": "LIS0389",
-        "chineseName": "抗梅毒螺旋体抗体（定量）",
+        "chineseName": "抗梅毒螺旋体特异性抗体（快速）",
         "charge": 50.0,
         "hisId": "JY040043"
       },
@@ -13481,7 +13481,7 @@
       },
       {
         "chargeItemId": "LIS02463",
-        "chineseName": "胃泌素-17（免疫）",
+        "chineseName": "胃泌素-17",
         "charge": 85.0,
         "hisId": "JY040058"
       },
@@ -13793,19 +13793,19 @@
       },
       {
         "chargeItemId": "LIS0391",
-        "chineseName": "抗肺炎衣原体抗体IgM",
+        "chineseName": "抗肺炎衣原体抗体IgM（定量）",
         "charge": 30.0,
         "hisId": "JY040115"
       },
       {
         "chargeItemId": "LIS0622",
-        "chineseName": "呼吸道合胞病毒抗体IgM",
+        "chineseName": "呼吸道合胞病毒抗体IgM（定量）",
         "charge": 26.0,
         "hisId": "JY040116"
       },
       {
         "chargeItemId": "LIS0624",
-        "chineseName": "抗腺病毒抗体IgM",
+        "chineseName": "抗腺病毒抗体IgM（定量）",
         "charge": 30.0,
         "hisId": "JY040117"
       },
@@ -13823,13 +13823,13 @@
       },
       {
         "chargeItemId": "LIS0629",
-        "chineseName": "抗肺炎支原体抗体IgM",
+        "chineseName": "抗肺炎支原体抗体IgM（定量）",
         "charge": 25.0,
         "hisId": "JY040120"
       },
       {
         "chargeItemId": "LIS0630",
-        "chineseName": "抗肺炎支原体抗体lgG",
+        "chineseName": "抗肺炎支原体抗体IgG（定量）",
         "charge": 25.0,
         "hisId": "JY040121"
       },
@@ -14393,7 +14393,7 @@
       },
       {
         "chargeItemId": "LIS02954",
-        "chineseName": "血涂片",
+        "chineseName": "外周血细胞形态学分析",
         "charge": 10.5,
         "hisId": "JY060007"
       },
@@ -14771,19 +14771,19 @@
       },
       {
         "chargeItemId": "LIS0582",
-        "chineseName": "人类白细胞分化抗原B27筛查",
+        "chineseName": "人类白细胞抗原B27（HLA-B27）测定",
         "charge": 125.0,
         "hisId": "JY070036"
       },
       {
         "chargeItemId": "LIS0583",
-        "chineseName": "丙型肝炎病毒基因HCV分型",
+        "chineseName": "丙型肝炎病毒（HCV）基因分型检测",
         "charge": 255.0,
         "hisId": "JY070037"
       },
       {
         "chargeItemId": "LIS0585",
-        "chineseName": "半乳甘露聚糖检测(GM试验)",
+        "chineseName": "真菌半乳甘露聚糖试验（GM试验）",
         "charge": 180.0,
         "hisId": "JY070038"
       },
@@ -14795,25 +14795,25 @@
       },
       {
         "chargeItemId": "LIS0594",
-        "chineseName": "抗子宫内膜抗体测定(EMAb)",
+        "chineseName": "抗子宫内膜抗体（EmAb）测定",
         "charge": 34.0,
         "hisId": "JY070040"
       },
       {
         "chargeItemId": "LIS0595",
-        "chineseName": "抗精子抗体测定",
+        "chineseName": "抗精子抗体（AsAb）测定",
         "charge": 26.0,
         "hisId": "JY070041"
       },
       {
         "chargeItemId": "LIS0597",
-        "chineseName": "抗卵巢抗体测定",
+        "chineseName": "抗卵巢抗体（AoAb）测定",
         "charge": 34.0,
         "hisId": "JY070042"
       },
       {
         "chargeItemId": "LIS0598",
-        "chineseName": "抗透明带抗体(AZP)检测",
+        "chineseName": "抗透明带抗体（AZP）测定",
         "charge": 43.0,
         "hisId": "JY070043"
       },
@@ -14825,19 +14825,19 @@
       },
       {
         "chargeItemId": "LIS0604",
-        "chineseName": "抗可溶性肝抗原/肝-胰抗原抗体(SLA/LP)测定",
+        "chineseName": "抗可溶性肝抗原/肝胰抗体",
         "charge": 64.0,
         "hisId": "JY070045"
       },
       {
         "chargeItemId": "LIS0605",
-        "chineseName": "抗肝肾微粒体抗体(LKM)测定",
+        "chineseName": "抗肝肾微粒体抗体",
         "charge": 64.0,
         "hisId": "JY070046"
       },
       {
         "chargeItemId": "LIS0606",
-        "chineseName": "抗肝细胞溶质抗原I型抗体测定(LC-1)",
+        "chineseName": "抗肝细胞溶质抗原1型抗体",
         "charge": 34.0,
         "hisId": "JY070047"
       },
@@ -14849,7 +14849,7 @@
       },
       {
         "chargeItemId": "LIS0608",
-        "chineseName": "铜蓝蛋白测定",
+        "chineseName": "铜蓝蛋白（CER）测定",
         "charge": 24.0,
         "hisId": "JY070049"
       },
@@ -14861,19 +14861,19 @@
       },
       {
         "chargeItemId": "LIS0611",
-        "chineseName": "尿17-羟皮质类固醇测定",
+        "chineseName": "17-羟类固醇（17-OH）测定",
         "charge": 64.0,
         "hisId": "JY070051"
       },
       {
         "chargeItemId": "LIS0612",
-        "chineseName": "尿17-酮类固醇测定",
+        "chineseName": "17-酮类固醇（17-KS）测定",
         "charge": 64.0,
         "hisId": "JY070052"
       },
       {
         "chargeItemId": "LIS0613",
-        "chineseName": "抗内因子抗体测定",
+        "chineseName": "抗内因子抗体（IFAb）测定",
         "charge": 21.0,
         "hisId": "JY070053"
       },
@@ -14909,7 +14909,7 @@
       },
       {
         "chargeItemId": "LIS02003",
-        "chineseName": "高敏丙型肝炎病毒(HCV)核酸定量检测-特检",
+        "chineseName": "高敏丙型肝炎病毒（HCV）核酸定量检测",
         "charge": 400.0,
         "hisId": "JY070059"
       },
@@ -15047,7 +15047,7 @@
       },
       {
         "chargeItemId": "LIS0560",
-        "chineseName": "血清药物浓度测定(丙戊酸)",
+        "chineseName": "丙戊酸（VPA）血药浓度监测",
         "charge": 120.0,
         "hisId": "JY070097"
       },
@@ -15155,7 +15155,7 @@
       },
       {
         "chargeItemId": "LIS0722",
-        "chineseName": "遗传性心脑血管相关疾病全套外显子组基因检测-特检",
+        "chineseName": "遗传性心脑血管相关疾病全套外显子组基因检测",
         "charge": 5250.0,
         "hisId": "JY070123"
       },
@@ -15347,7 +15347,7 @@
       },
       {
         "chargeItemId": "LIS0752",
-        "chineseName": "碳酸锂血药浓度测定（红盖管）",
+        "chineseName": "碳酸锂血药浓度测定（促凝管）",
         "charge": 120.0,
         "hisId": "JY070156"
       },
@@ -15881,7 +15881,7 @@
       },
       {
         "chargeItemId": "LIS0490",
-        "chineseName": "微量元素（铜,锌,钙,镁,铁,铅）",
+        "chineseName": "微量元素（铜、锌、钙、镁、铁、铅）",
         "charge": 45.5,
         "hisId": "JY070246"
       },
@@ -15893,7 +15893,7 @@
       },
       {
         "chargeItemId": "LIS02116",
-        "chineseName": "真菌细胞壁（1，3）-β-D-葡聚糖试验",
+        "chineseName": "真菌细胞壁（1,3）-β-D葡聚糖检测",
         "charge": 110.0,
         "hisId": "JY070248"
       }

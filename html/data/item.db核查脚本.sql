@@ -1,0 +1,1 @@
+select h.item_code, h.item_name, l.charge_item_id, l.chinese_name from lab_item h join lis_charge_item l on h.item_code = l.his_id where h.item_name <> l.chinese_name;
