@@ -1947,6 +1947,14 @@ function parseInputCodeTokens(inputCode) {
     .filter(Boolean);
 }
 
+// 列表卡片上只显示输入码斜线前面的中文分类（如「肝功类/GGL」→「肝功类」），
+// 完整输入码留给详情抽屉展示，避免卡片信息太多。
+function getInputCodeCardText(inputCode) {
+  const raw = String(inputCode || '');
+  const slashIndex = raw.indexOf('/');
+  return slashIndex > -1 ? raw.slice(0, slashIndex) : raw;
+}
+
 // 输入码分类 -> 拼音缩写（同一分类在不同项目里缩写固定，取首个即可）
 function buildInputCodeOptions() {
   const options = new Map();
@@ -2679,7 +2687,7 @@ function renderItems() {
         <div class="card-meta">
           <span class="card-meta-code">编码：${i.itemCode}</span>
           <span class="card-meta-sample">样本：${i.sample}</span>
-          ${i.inputCode ? `<span class="card-meta-input" title="输入码（检索关键词）：${escapeHtml(i.inputCode)}">输入码：${escapeHtml(i.inputCode)}</span>` : ''}
+          ${i.inputCode ? `<span class="card-meta-input" title="输入码（检索关键词）：${escapeHtml(i.inputCode)}">输入码：${escapeHtml(getInputCodeCardText(i.inputCode))}</span>` : ''}
         </div>
         ${i.remark ? `<div class="card-meta-remark">备注：${i.remark}</div>` : ''}
         ${i.isEmergency ? '<span class="emergency-badge">急诊</span>' : ''}
