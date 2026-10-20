@@ -1,6 +1,6 @@
 {
   "version": "2.2.0",
-  "exportTime": "2026-10-17T11:05:10.062554",
+  "exportTime": "2026-10-20T10:01:54.987095",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -13181,19 +13181,19 @@
       },
       {
         "chargeItemId": "LIS02081",
-        "chineseName": "抗梅毒螺旋体非特异性抗体（半定量）",
+        "chineseName": "抗梅毒螺旋体非特异性抗体（RPR）（初筛实验）",
         "charge": 13.0,
         "hisId": "JY040006"
       },
       {
         "chargeItemId": "LIS02087",
-        "chineseName": "梅毒血清学检测",
+        "chineseName": "梅毒血清学检测（确诊实验）",
         "charge": 51.0,
         "hisId": "JY040007"
       },
       {
         "chargeItemId": "LIS0783",
-        "chineseName": "抗核抗体谱",
+        "chineseName": "抗核抗体谱定性（12项）",
         "charge": 237.0,
         "hisId": "JY040008"
       },
@@ -13211,7 +13211,7 @@
       },
       {
         "chargeItemId": "LIS0723",
-        "chineseName": "乙肝五项定量（快速）",
+        "chineseName": "乙肝五项（快速）",
         "charge": 140.0,
         "hisId": "JY040011"
       },
@@ -13337,7 +13337,7 @@
       },
       {
         "chargeItemId": "LIS0353",
-        "chineseName": "抗甲型肝炎病毒抗体IgM",
+        "chineseName": "抗甲型肝炎病毒抗体IgM（定性）",
         "charge": 8.5,
         "hisId": "JY040032"
       },
@@ -13349,25 +13349,25 @@
       },
       {
         "chargeItemId": "LIS0404",
-        "chineseName": "抗戊型肝炎病毒抗体IgM",
+        "chineseName": "抗戊型肝炎病毒抗体IgM（定量）",
         "charge": 51.0,
         "hisId": "JY040034"
       },
       {
         "chargeItemId": "LIS0410",
-        "chineseName": "抗人免疫缺陷病毒抗体",
+        "chineseName": "抗人免疫缺陷病毒抗体（定性）",
         "charge": 20.0,
         "hisId": "JY040035"
       },
       {
         "chargeItemId": "LIS01453",
-        "chineseName": "人免疫缺陷病毒抗原/抗体联合检测",
+        "chineseName": "人免疫缺陷病毒抗原/抗体联合检测（快速）",
         "charge": 90.0,
         "hisId": "JY040036"
       },
       {
         "chargeItemId": "LIS0280",
-        "chineseName": "抗梅毒螺旋体抗体（TPPA）",
+        "chineseName": "抗梅毒螺旋体特异性抗体（TPPA）（确诊实验）",
         "charge": 38.0,
         "hisId": "JY040037"
       },
@@ -13391,7 +13391,7 @@
       },
       {
         "chargeItemId": "LIS0260",
-        "chineseName": "抗丙型肝炎病毒抗体（定量）",
+        "chineseName": "抗丙型肝炎病毒抗体（快速）",
         "charge": 60.0,
         "hisId": "JY040042"
       },
@@ -13511,13 +13511,13 @@
       },
       {
         "chargeItemId": "LIS0425",
-        "chineseName": "抗心磷脂抗体",
+        "chineseName": "抗心磷脂抗体（总抗）",
         "charge": 26.0,
         "hisId": "JY040063"
       },
       {
         "chargeItemId": "LIS0427",
-        "chineseName": "β2糖蛋白1抗体",
+        "chineseName": "β2糖蛋白1抗体（总抗）",
         "charge": 60.0,
         "hisId": "JY040064"
       },
@@ -13607,7 +13607,7 @@
       },
       {
         "chargeItemId": "LIS0447",
-        "chineseName": "抗线粒体M2型抗体",
+        "chineseName": "抗线粒体M2型抗体（定量）",
         "charge": 77.0,
         "hisId": "JY040079"
       },
@@ -13721,31 +13721,31 @@
       },
       {
         "chargeItemId": "LIS0502",
-        "chineseName": "乙型肝炎病毒表面抗原（定量）",
+        "chineseName": "乙型肝炎病毒表面抗原（快速）",
         "charge": 20.0,
         "hisId": "JY040099"
       },
       {
         "chargeItemId": "LIS0503",
-        "chineseName": "抗乙型肝炎病毒表面抗体（定量）",
+        "chineseName": "抗乙型肝炎病毒表面抗体（快速）",
         "charge": 30.0,
         "hisId": "JY040100"
       },
       {
         "chargeItemId": "LIS0504",
-        "chineseName": "乙型肝炎病毒e抗原（定量）",
+        "chineseName": "乙型肝炎病毒e抗原（快速）",
         "charge": 30.0,
         "hisId": "JY040101"
       },
       {
         "chargeItemId": "LIS0505",
-        "chineseName": "抗乙型肝炎病毒e抗体（定量）",
+        "chineseName": "抗乙型肝炎病毒e抗体（快速）",
         "charge": 30.0,
         "hisId": "JY040102"
       },
       {
         "chargeItemId": "LIS0506",
-        "chineseName": "抗乙型肝炎病毒核心抗体（定量）",
+        "chineseName": "抗乙型肝炎病毒核心抗体（快速）",
         "charge": 30.0,
         "hisId": "JY040103"
       },
@@ -13757,7 +13757,7 @@
       },
       {
         "chargeItemId": "LIS0510",
-        "chineseName": "抗丁型肝炎病毒抗体IgM",
+        "chineseName": "抗丁型肝炎病毒抗体IgM（定性）",
         "charge": 21.0,
         "hisId": "JY040105"
       },
@@ -13835,7 +13835,7 @@
       },
       {
         "chargeItemId": "LIS0855",
-        "chineseName": "抗核抗体常规检查",
+        "chineseName": "抗核抗体谱定量（8项）",
         "charge": 119.0,
         "hisId": "JY040126"
       },
