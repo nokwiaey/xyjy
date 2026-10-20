@@ -1,11 +1,11 @@
 {
  "schema": 1,
  "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
- "generatedAt": "2026-10-17 09:50:37",
- "lastCheckedAt": "2026-10-17 09:50:37",
- "lastExportTime": "2026-10-16T16:43:43.058153",
- "lastChangeAt": "2026-10-17 09:50:37",
- "recordCount": 9,
+ "generatedAt": "2026-10-17 11:16:44",
+ "lastCheckedAt": "2026-10-17 11:16:44",
+ "lastExportTime": "2026-10-17T11:05:10.062554",
+ "lastChangeAt": "2026-10-17 11:16:44",
+ "recordCount": 10,
  "categories": [
   {
    "key": "item",
@@ -25,6 +25,247 @@
   }
  ],
  "records": [
+  {
+   "id": "20261017-111644",
+   "recordedAt": "2026-10-17 11:16:44",
+   "exportTime": "2026-10-17T11:05:10.062554",
+   "prevExportTime": "2026-10-16T16:43:43.058153",
+   "version": "2.2.0",
+   "prevVersion": "2.2.0",
+   "stats": {
+    "total": 17,
+    "add": 0,
+    "remove": 0,
+    "update": 17,
+    "item": 17,
+    "price": 0,
+    "lis": 0,
+    "form": 0
+   },
+   "changes": [
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY060064 微丝蚴检查",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": ""
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY060065 弓形虫检查",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": ""
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY060066 活化部分凝血活酶时间纠正试验",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": ""
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY060067 寄生虫虫卵检查",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": ""
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY060069 痰液常规",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": ""
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY070215 抗人绒毛膜促性腺激素抗体(AHCGAb)测定",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": "JY070215"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY070216 解脲脲原体核酸检测",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": "JY070216"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY070217 糖化血清蛋白（GSP）测定",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": "JY070217"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY070218 胸苷激酶1(TK1)测定",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": "JY070218"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY070230 血清蛋白电泳（SPE）",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": "JY070230"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY070231 遗传性耳聋基因检测",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": "JY070231"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY070232 抗栓药物用药指导及静脉血栓塞症（VTE）遗传分析（2个点位）",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": "JY070232"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY070233 糖类抗原242",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": "JY070233"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY070234 百日咳杆菌抗体IgG（Bp-IgG）测定",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": "JY070234"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY070235 降钙素测定",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": "JY070235"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY070236 妇科微生物检测：9种致病微生物",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": "JY070236"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY070237 妇科微生物检测：34种共生、致病微生物",
+     "fields": [
+      {
+       "label": "排序号",
+       "from": "0",
+       "to": "JY070237"
+      }
+     ]
+    }
+   ]
+  },
   {
    "id": "20261017-095037",
    "recordedAt": "2026-10-17 09:50:37",
