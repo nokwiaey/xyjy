@@ -1,6 +1,6 @@
 {
   "version": "2.2.0",
-  "exportTime": "2026-10-20T11:08:40.169687",
+  "exportTime": "2026-10-20T15:33:58.902315",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -2261,7 +2261,7 @@
     },
     {
       "itemCode": "JY040126",
-      "itemName": "抗核抗体谱定量（8项）",
+      "itemName": "抗核抗体谱定量（7项）",
       "applyFormCode": "14242",
       "sample": "全血",
       "isEmergency": 0,
@@ -2491,11 +2491,11 @@
     },
     {
       "itemCode": "JY050023",
-      "itemName": "人附睾分泌蛋白4    ",
+      "itemName": "人附睾分泌蛋白4",
       "applyFormCode": "14330",
       "sample": "全血,腹水,胸水,心包积液",
       "isEmergency": 0,
-      "remark": null,
+      "remark": "",
       "inputCode": "肿瘤类/ZLL",
       "sortNo": "0213"
     },
@@ -4291,7 +4291,7 @@
     },
     {
       "itemCode": "JY070233",
-      "itemName": "糖类抗原242",
+      "itemName": "糖链抗原242",
       "applyFormCode": "14253",
       "sample": "全血",
       "isEmergency": 0,
