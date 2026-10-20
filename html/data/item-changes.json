@@ -1,11 +1,11 @@
 {
  "schema": 1,
  "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
- "generatedAt": "2026-10-17 11:16:44",
- "lastCheckedAt": "2026-10-17 11:16:44",
- "lastExportTime": "2026-10-17T11:05:10.062554",
- "lastChangeAt": "2026-10-17 11:16:44",
- "recordCount": 10,
+ "generatedAt": "2026-10-20 10:03:32",
+ "lastCheckedAt": "2026-10-20 10:03:32",
+ "lastExportTime": "2026-10-20T10:01:54.987095",
+ "lastChangeAt": "2026-10-20 10:03:32",
+ "recordCount": 11,
  "categories": [
   {
    "key": "item",
@@ -25,6 +25,286 @@
   }
  ],
  "records": [
+  {
+   "id": "20261020-100332",
+   "recordedAt": "2026-10-20 10:03:32",
+   "exportTime": "2026-10-20T10:01:54.987095",
+   "prevExportTime": "2026-10-17T11:05:10.062554",
+   "version": "2.2.0",
+   "prevVersion": "2.2.0",
+   "stats": {
+    "total": 20,
+    "add": 0,
+    "remove": 0,
+    "update": 20,
+    "item": 0,
+    "price": 0,
+    "lis": 20,
+    "form": 0
+   },
+   "changes": [
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS01453 人免疫缺陷病毒抗原/抗体联合检测（快速）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "人免疫缺陷病毒抗原/抗体联合检测",
+       "to": "人免疫缺陷病毒抗原/抗体联合检测（快速）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS02081 抗梅毒螺旋体非特异性抗体（RPR）（初筛实验）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗梅毒螺旋体非特异性抗体（半定量）",
+       "to": "抗梅毒螺旋体非特异性抗体（RPR）（初筛实验）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS02087 梅毒血清学检测（确诊实验）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "梅毒血清学检测",
+       "to": "梅毒血清学检测（确诊实验）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0260 抗丙型肝炎病毒抗体（快速）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗丙型肝炎病毒抗体（定量）",
+       "to": "抗丙型肝炎病毒抗体（快速）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0280 抗梅毒螺旋体特异性抗体（TPPA）（确诊实验）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗梅毒螺旋体抗体（TPPA）",
+       "to": "抗梅毒螺旋体特异性抗体（TPPA）（确诊实验）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0353 抗甲型肝炎病毒抗体IgM（定性）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗甲型肝炎病毒抗体IgM",
+       "to": "抗甲型肝炎病毒抗体IgM（定性）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0404 抗戊型肝炎病毒抗体IgM（定量）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗戊型肝炎病毒抗体IgM",
+       "to": "抗戊型肝炎病毒抗体IgM（定量）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0410 抗人免疫缺陷病毒抗体（定性）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗人免疫缺陷病毒抗体",
+       "to": "抗人免疫缺陷病毒抗体（定性）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0425 抗心磷脂抗体（总抗）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗心磷脂抗体",
+       "to": "抗心磷脂抗体（总抗）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0427 β2糖蛋白1抗体（总抗）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "β2糖蛋白1抗体",
+       "to": "β2糖蛋白1抗体（总抗）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0447 抗线粒体M2型抗体（定量）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗线粒体M2型抗体",
+       "to": "抗线粒体M2型抗体（定量）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0502 乙型肝炎病毒表面抗原（快速）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "乙型肝炎病毒表面抗原（定量）",
+       "to": "乙型肝炎病毒表面抗原（快速）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0503 抗乙型肝炎病毒表面抗体（快速）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗乙型肝炎病毒表面抗体（定量）",
+       "to": "抗乙型肝炎病毒表面抗体（快速）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0504 乙型肝炎病毒e抗原（快速）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "乙型肝炎病毒e抗原（定量）",
+       "to": "乙型肝炎病毒e抗原（快速）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0505 抗乙型肝炎病毒e抗体（快速）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗乙型肝炎病毒e抗体（定量）",
+       "to": "抗乙型肝炎病毒e抗体（快速）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0506 抗乙型肝炎病毒核心抗体（快速）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗乙型肝炎病毒核心抗体（定量）",
+       "to": "抗乙型肝炎病毒核心抗体（快速）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0510 抗丁型肝炎病毒抗体IgM（定性）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗丁型肝炎病毒抗体IgM",
+       "to": "抗丁型肝炎病毒抗体IgM（定性）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0723 乙肝五项（快速）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "乙肝五项定量（快速）",
+       "to": "乙肝五项（快速）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0783 抗核抗体谱定性（12项）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗核抗体谱",
+       "to": "抗核抗体谱定性（12项）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0855 抗核抗体谱定量（8项）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗核抗体常规检查",
+       "to": "抗核抗体谱定量（8项）"
+      }
+     ]
+    }
+   ]
+  },
   {
    "id": "20261017-111644",
    "recordedAt": "2026-10-17 11:16:44",
