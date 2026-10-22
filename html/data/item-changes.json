@@ -1,11 +1,11 @@
 {
  "schema": 1,
  "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
- "generatedAt": "2026-10-20 11:13:08",
- "lastCheckedAt": "2026-10-20 11:13:08",
- "lastExportTime": "2026-10-20T11:08:40.169687",
- "lastChangeAt": "2026-10-20 11:13:08",
- "recordCount": 12,
+ "generatedAt": "2026-10-20 15:35:17",
+ "lastCheckedAt": "2026-10-20 15:35:17",
+ "lastExportTime": "2026-10-20T15:33:58.902315",
+ "lastChangeAt": "2026-10-20 15:35:17",
+ "recordCount": 13,
  "categories": [
   {
    "key": "item",
@@ -25,6 +25,52 @@
   }
  ],
  "records": [
+  {
+   "id": "20261020-153517",
+   "recordedAt": "2026-10-20 15:35:17",
+   "exportTime": "2026-10-20T15:33:58.902315",
+   "prevExportTime": "2026-10-20T11:08:40.169687",
+   "version": "2.2.0",
+   "prevVersion": "2.2.0",
+   "stats": {
+    "total": 2,
+    "add": 0,
+    "remove": 0,
+    "update": 2,
+    "item": 2,
+    "price": 0,
+    "lis": 0,
+    "form": 0
+   },
+   "changes": [
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY040126 抗核抗体谱定量（8项）",
+     "fields": [
+      {
+       "label": "项目名称",
+       "from": "抗核抗体谱定量（8项）",
+       "to": "抗核抗体谱定量（7项）"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY070233 糖类抗原242",
+     "fields": [
+      {
+       "label": "项目名称",
+       "from": "糖类抗原242",
+       "to": "糖链抗原242"
+      }
+     ]
+    }
+   ]
+  },
   {
    "id": "20261020-111308",
    "recordedAt": "2026-10-20 11:13:08",
