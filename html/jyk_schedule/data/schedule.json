@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-23T17:47:09",
+  "generatedAt": "2026-10-22T01:08:51",
   "holidays": {
     "YD": {
       "label": "元旦节",
@@ -183,7 +183,7 @@
           "month": 11,
           "label": "11月",
           "file": "data/2026-11-schedule.pdf",
-          "available": false
+          "available": true
         },
         {
           "id": "2026-12",
