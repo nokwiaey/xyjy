@@ -1,6 +1,6 @@
 {
   "version": "2.2.0",
-  "exportTime": "2026-10-20T15:33:58.902315",
+  "exportTime": "2026-11-02T08:42:58.143159",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -508,6 +508,16 @@
       "remark": null,
       "inputCode": "风湿系列/FSXL",
       "sortNo": "0701"
+    },
+    {
+      "itemCode": "JY020049",
+      "itemName": "风湿二项",
+      "applyFormCode": "14243",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "线上开单",
+      "sortNo": "12"
     },
     {
       "itemCode": "JY020053",
@@ -1300,6 +1310,16 @@
       "sortNo": "0201"
     },
     {
+      "itemCode": "JY020138",
+      "itemName": "肾功能常规",
+      "applyFormCode": "14243",
+      "sample": "全血",
+      "isEmergency": 1,
+      "remark": "",
+      "inputCode": "SGSX",
+      "sortNo": "06"
+    },
+    {
       "itemCode": "JY020139",
       "itemName": "血清人绒毛膜促性腺激素(β-HCG)（生化室）",
       "applyFormCode": "14243",
@@ -1308,6 +1328,36 @@
       "remark": "",
       "inputCode": "",
       "sortNo": "9904"
+    },
+    {
+      "itemCode": "JY020140",
+      "itemName": "心肌酶三项",
+      "applyFormCode": "14243",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": ""
+    },
+    {
+      "itemCode": "JY020141",
+      "itemName": "急诊生化常规",
+      "applyFormCode": "14243",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": ""
+    },
+    {
+      "itemCode": "JY020144",
+      "itemName": "胰腺损伤",
+      "applyFormCode": "14243",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": ""
     },
     {
       "itemCode": "JY030001",
@@ -2210,16 +2260,6 @@
       "sortNo": "9904"
     },
     {
-      "itemCode": "JY040115",
-      "itemName": "抗肺炎衣原体抗体IgM（定量）",
-      "applyFormCode": "14242",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "定量  化学发光法",
-      "inputCode": "感染类,上呼感染类/GRL,SHGRL",
-      "sortNo": "1403"
-    },
-    {
       "itemCode": "JY040116",
       "itemName": "呼吸道合胞病毒抗体IgM（定量）",
       "applyFormCode": "14242",
@@ -2268,6 +2308,16 @@
       "remark": "定量  化学发光法",
       "inputCode": "自身抗体类/ZSKTL",
       "sortNo": "3102"
+    },
+    {
+      "itemCode": "JY040127",
+      "itemName": "抗核抗体常规检测",
+      "applyFormCode": "14242",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": ""
     },
     {
       "itemCode": "JY050001",
@@ -2363,7 +2413,7 @@
       "itemCode": "JY050010",
       "itemName": "甲胎蛋白",
       "applyFormCode": "14330",
-      "sample": "全血,腹水,穿刺液,胸水,心包积液,肺及支气管灌洗液,支气管肺泡灌洗液",
+      "sample": "全血",
       "isEmergency": 0,
       "remark": "",
       "inputCode": "肿瘤类/ZLL",
@@ -2373,7 +2423,7 @@
       "itemCode": "JY050011",
       "itemName": "癌胚抗原",
       "applyFormCode": "14330",
-      "sample": "全血,腹水,穿刺液,胸水,灌洗液,心包积液,肺及支气管灌洗液,支气管肺泡灌洗液",
+      "sample": "全血",
       "isEmergency": 0,
       "remark": null,
       "inputCode": "肿瘤类/ZLL",
@@ -2383,7 +2433,7 @@
       "itemCode": "JY050012",
       "itemName": "糖链抗原125",
       "applyFormCode": "14330",
-      "sample": "全血,腹水,胸水,心包积液",
+      "sample": "全血",
       "isEmergency": 0,
       "remark": null,
       "inputCode": "肿瘤类/ZLL",
@@ -2393,7 +2443,7 @@
       "itemCode": "JY050013",
       "itemName": "细胞角蛋白19片段",
       "applyFormCode": "14330",
-      "sample": "全血,腹水,胸水,心包积液,肺及支气管灌洗液",
+      "sample": "全血",
       "isEmergency": 0,
       "remark": "",
       "inputCode": "肿瘤类/ZLL",
@@ -2403,7 +2453,7 @@
       "itemCode": "JY050014",
       "itemName": "神经元特异烯醇化酶",
       "applyFormCode": "14330",
-      "sample": "全血,腹水,穿刺液,胸水,硬膜下积液,肺及支气管灌洗液,支气管肺泡灌洗液",
+      "sample": "全血",
       "isEmergency": 0,
       "remark": null,
       "inputCode": "肿瘤类/ZLL",
@@ -2413,7 +2463,7 @@
       "itemCode": "JY050015",
       "itemName": "糖链抗原19-9",
       "applyFormCode": "14330",
-      "sample": "全血,腹水,胸水,心包积液",
+      "sample": "全血",
       "isEmergency": 0,
       "remark": null,
       "inputCode": "肿瘤类/ZLL",
@@ -2423,7 +2473,7 @@
       "itemCode": "JY050016",
       "itemName": "糖链抗原72-4",
       "applyFormCode": "14330",
-      "sample": "全血,腹水,胸水,心包积液",
+      "sample": "全血",
       "isEmergency": 0,
       "remark": null,
       "inputCode": "肿瘤类/ZLL",
@@ -2433,7 +2483,7 @@
       "itemCode": "JY050017",
       "itemName": "糖链抗原15-3",
       "applyFormCode": "14330",
-      "sample": "全血,腹水,胸水,心包积液",
+      "sample": "全血",
       "isEmergency": 0,
       "remark": null,
       "inputCode": "肿瘤类/ZLL",
@@ -2463,7 +2513,7 @@
       "itemCode": "JY050020",
       "itemName": "淀粉样蛋白",
       "applyFormCode": "14330",
-      "sample": "全血,腹水,胸水,心包积液",
+      "sample": "全血",
       "isEmergency": 0,
       "remark": null,
       "inputCode": "肿瘤类/ZLL",
@@ -2473,7 +2523,7 @@
       "itemCode": "JY050021",
       "itemName": "鳞状细胞癌相关抗原",
       "applyFormCode": "14330",
-      "sample": "全血,腹水,穿刺液,胸水,心包积液,肺及支气管灌洗液,支气管肺泡灌洗液",
+      "sample": "全血",
       "isEmergency": 0,
       "remark": null,
       "inputCode": "肿瘤类/ZLL",
@@ -2483,7 +2533,7 @@
       "itemCode": "JY050022",
       "itemName": "胃泌素释放肽前体",
       "applyFormCode": "14330",
-      "sample": "全血,腹水,胸水,心包积液",
+      "sample": "全血",
       "isEmergency": 0,
       "remark": "",
       "inputCode": "肿瘤类/ZLL",
@@ -2493,7 +2543,7 @@
       "itemCode": "JY050023",
       "itemName": "人附睾分泌蛋白4",
       "applyFormCode": "14330",
-      "sample": "全血,腹水,胸水,心包积液",
+      "sample": "全血",
       "isEmergency": 0,
       "remark": "",
       "inputCode": "肿瘤类/ZLL",
@@ -2940,6 +2990,16 @@
       "sortNo": "0300"
     },
     {
+      "itemCode": "JY050087",
+      "itemName": "骨代谢标志物",
+      "applyFormCode": "14330",
+      "sample": "全血,腹水,胸水",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "050080"
+    },
+    {
       "itemCode": "JY060001",
       "itemName": "凝血酶原时间",
       "applyFormCode": "14241",
@@ -3068,6 +3128,16 @@
       "remark": null,
       "inputCode": "线上开单",
       "sortNo": "060014"
+    },
+    {
+      "itemCode": "JY060015",
+      "itemName": "纤溶功能2项",
+      "applyFormCode": "14241",
+      "sample": "全血",
+      "isEmergency": 1,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "060015"
     },
     {
       "itemCode": "JY060021",
@@ -3390,16 +3460,6 @@
       "sortNo": ""
     },
     {
-      "itemCode": "JY070002",
-      "itemName": "卡马西平（CBZ）药物浓度检测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "070002"
-    },
-    {
       "itemCode": "JY070032",
       "itemName": "萎缩性胃炎/恶性贫血自身抗体两项",
       "applyFormCode": "14253",
@@ -3630,236 +3690,6 @@
       "sortNo": "070064"
     },
     {
-      "itemCode": "JY070078",
-      "itemName": "他克莫司（TAC）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070079",
-      "itemName": "环孢霉素A（CsA）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070080",
-      "itemName": "奥氮平（OLZ）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070081",
-      "itemName": "氯氮平（CLZ）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070082",
-      "itemName": "利培酮（RIP）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070083",
-      "itemName": "帕利哌酮（PAL）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070084",
-      "itemName": "阿立哌唑（ARPZ）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070085",
-      "itemName": "氨磺必利（ASP）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070086",
-      "itemName": "喹硫平（QIP）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070087",
-      "itemName": "氯丙嗪（CP）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070088",
-      "itemName": "齐拉西酮（ZIP）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070089",
-      "itemName": "氟哌啶醇（HPD）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070090",
-      "itemName": "奋乃静（PNZ）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070091",
-      "itemName": "舒必利（SUL）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070092",
-      "itemName": "拉莫三嗪（LTG）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070093",
-      "itemName": "奥卡西平（OXC）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070094",
-      "itemName": "甲氨蝶呤（MTX）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070095",
-      "itemName": "万古霉素（VAN）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070096",
-      "itemName": "伏立康唑（VCZ）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070097",
-      "itemName": "丙戊酸（VPA）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070098",
-      "itemName": "左乙拉西坦（LEV）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070099",
-      "itemName": "美金刚（MMT）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070100",
-      "itemName": "多奈哌齐（DNP）血药浓度监测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
       "itemCode": "JY070102",
       "itemName": "抗心律失常个体化用药基因检测",
       "applyFormCode": "14253",
@@ -3970,16 +3800,6 @@
       "sortNo": "70001"
     },
     {
-      "itemCode": "JY070123",
-      "itemName": "遗传性心脑血管相关疾病全套外显子组基因检测",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70001"
-    },
-    {
       "itemCode": "JY070125",
       "itemName": "人SLCOIB1、APOE基因分型检测(PCR-荧光探针法)",
       "applyFormCode": "14253",
@@ -3998,226 +3818,6 @@
       "remark": "",
       "inputCode": "",
       "sortNo": "70001"
-    },
-    {
-      "itemCode": "JY070130",
-      "itemName": "阿米替林血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070131",
-      "itemName": "艾司西酞普兰血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070132",
-      "itemName": "丁螺环酮血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070133",
-      "itemName": "氟西汀血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070134",
-      "itemName": "文拉法辛血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070135",
-      "itemName": "西酞普兰血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070136",
-      "itemName": "舍曲林血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070137",
-      "itemName": "阿普唑仑血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070138",
-      "itemName": "艾司唑仑血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070140",
-      "itemName": "苯巴比妥血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070142",
-      "itemName": "布南色林血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070143",
-      "itemName": "地西泮血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070144",
-      "itemName": "度洛西汀血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070146",
-      "itemName": "氟伏沙明血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070147",
-      "itemName": "劳拉西泮血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070148",
-      "itemName": "鲁拉西酮血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070150",
-      "itemName": "托吡酯血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070151",
-      "itemName": "氯硝西泮血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070152",
-      "itemName": "米氮平血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070153",
-      "itemName": "帕罗西汀血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070155",
-      "itemName": "曲唑酮血药浓度测定",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": null,
-      "inputCode": "",
-      "sortNo": "70004"
-    },
-    {
-      "itemCode": "JY070156",
-      "itemName": "碳酸锂血药浓度测定（促凝管）",
-      "applyFormCode": "14253",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "70004"
     },
     {
       "itemCode": "JY070215",
@@ -5198,6 +4798,25 @@
       "sum": 26.0
     },
     "JY020048": {
+      "details": [
+        {
+          "detailCode": "250402035a",
+          "detailName": "类风湿因子(RF)测定",
+          "price": 26.0,
+          "count": 1.0,
+          "total": 26.0
+        },
+        {
+          "detailCode": "250403043a",
+          "detailName": "抗链球菌溶血素O定量测定(ASO)",
+          "price": 26.0,
+          "count": 1.0,
+          "total": 26.0
+        }
+      ],
+      "sum": 52.0
+    },
+    "JY020049": {
       "details": [
         {
           "detailCode": "250402035a",
@@ -6335,6 +5954,32 @@
       ],
       "sum": 41.0
     },
+    "JY020138": {
+      "details": [
+        {
+          "detailCode": "250307001a",
+          "detailName": "尿素测定",
+          "price": 8.0,
+          "count": 1.0,
+          "total": 8.0
+        },
+        {
+          "detailCode": "250307002a",
+          "detailName": "肌酐测定",
+          "price": 8.0,
+          "count": 1.0,
+          "total": 8.0
+        },
+        {
+          "detailCode": "250307005",
+          "detailName": "血清尿酸测定",
+          "price": 5.0,
+          "count": 1.0,
+          "total": 5.0
+        }
+      ],
+      "sum": 21.0
+    },
     "JY020139": {
       "details": [
         {
@@ -6346,6 +5991,105 @@
         }
       ],
       "sum": 34.0
+    },
+    "JY020140": {
+      "details": [
+        {
+          "detailCode": "250306001",
+          "detailName": "血清肌酸激酶测定",
+          "price": 7.0,
+          "count": 1.0,
+          "total": 7.0
+        },
+        {
+          "detailCode": "250306003",
+          "detailName": "血清肌酸激酶－MB同工酶质量测定",
+          "price": 30.0,
+          "count": 1.0,
+          "total": 30.0
+        },
+        {
+          "detailCode": "250306005",
+          "detailName": "乳酸脱氢酶测定",
+          "price": 5.0,
+          "count": 1.0,
+          "total": 5.0
+        }
+      ],
+      "sum": 42.0
+    },
+    "JY020141": {
+      "details": [
+        {
+          "detailCode": "250302001a",
+          "detailName": "葡萄糖测定",
+          "price": 4.5,
+          "count": 1.0,
+          "total": 4.5
+        },
+        {
+          "detailCode": "250307001a",
+          "detailName": "尿素测定",
+          "price": 8.0,
+          "count": 1.0,
+          "total": 8.0
+        },
+        {
+          "detailCode": "250307002a",
+          "detailName": "肌酐测定",
+          "price": 8.0,
+          "count": 1.0,
+          "total": 8.0
+        },
+        {
+          "detailCode": "250304001",
+          "detailName": "钾测定",
+          "price": 4.5,
+          "count": 1.0,
+          "total": 4.5
+        },
+        {
+          "detailCode": "250304002",
+          "detailName": "钠测定",
+          "price": 4.5,
+          "count": 1.0,
+          "total": 4.5
+        },
+        {
+          "detailCode": "250304003",
+          "detailName": "氯测定",
+          "price": 4.5,
+          "count": 1.0,
+          "total": 4.5
+        },
+        {
+          "detailCode": "250304004",
+          "detailName": "钙测定",
+          "price": 4.5,
+          "count": 1.0,
+          "total": 4.5
+        }
+      ],
+      "sum": 38.5
+    },
+    "JY020144": {
+      "details": [
+        {
+          "detailCode": "250308004",
+          "detailName": "淀粉酶测定",
+          "price": 13.0,
+          "count": 1.0,
+          "total": 13.0
+        },
+        {
+          "detailCode": "250308006",
+          "detailName": "血清脂肪酶测定",
+          "price": 13.0,
+          "count": 1.0,
+          "total": 13.0
+        }
+      ],
+      "sum": 26.0
     },
     "JY030001": {
       "details": [
@@ -6684,6 +6428,18 @@
         }
       ],
       "sum": 38.0
+    },
+    "JY030042": {
+      "details": [
+        {
+          "detailCode": "250501011a",
+          "detailName": "血培养及鉴定",
+          "price": 125.0,
+          "count": 4.0,
+          "total": 500.0
+        }
+      ],
+      "sum": 500.0
     },
     "JY040005": {
       "details": [
@@ -8208,18 +7964,6 @@
       ],
       "sum": 280.0
     },
-    "JY040115": {
-      "details": [
-        {
-          "detailCode": "250403076",
-          "detailName": "肺炎衣原体抗体检测",
-          "price": 30.0,
-          "count": 1.0,
-          "total": 30.0
-        }
-      ],
-      "sum": 30.0
-    },
     "JY040116": {
       "details": [
         {
@@ -8279,6 +8023,32 @@
         }
       ],
       "sum": 119.0
+    },
+    "JY040127": {
+      "details": [
+        {
+          "detailCode": "250402003",
+          "detailName": "抗核提取物抗体测定(抗ENA抗体)",
+          "price": 17.0,
+          "count": 6.0,
+          "total": 102.0
+        },
+        {
+          "detailCode": "250402002",
+          "detailName": "抗核抗体测定(ANA)",
+          "price": 21.0,
+          "count": 1.0,
+          "total": 21.0
+        },
+        {
+          "detailCode": "250402006",
+          "detailName": "抗双链DNA测定(抗dsDNA)",
+          "price": 21.0,
+          "count": 1.0,
+          "total": 21.0
+        }
+      ],
+      "sum": 144.0
     },
     "JY050001": {
       "details": [
@@ -9353,6 +9123,39 @@
       ],
       "sum": 34.0
     },
+    "JY050087": {
+      "details": [
+        {
+          "detailCode": "250309004a",
+          "detailName": "血清维生素定量测定",
+          "price": 77.0,
+          "count": 1.0,
+          "total": 77.0
+        },
+        {
+          "detailCode": "250305033",
+          "detailName": "总Ⅰ型胶原氨基端延长肽(Total-P1NP)测定",
+          "price": 160.0,
+          "count": 1.0,
+          "total": 160.0
+        },
+        {
+          "detailCode": "250311005",
+          "detailName": "血清N-端骨钙素测定",
+          "price": 77.0,
+          "count": 1.0,
+          "total": 77.0
+        },
+        {
+          "detailCode": "250311006",
+          "detailName": "血清β-胶原降解产物测定",
+          "price": 75.0,
+          "count": 1.0,
+          "total": 75.0
+        }
+      ],
+      "sum": 389.0
+    },
     "JY060001": {
       "details": [
         {
@@ -9557,6 +9360,25 @@
         }
       ],
       "sum": 42.0
+    },
+    "JY060015": {
+      "details": [
+        {
+          "detailCode": "250203065",
+          "detailName": "纤维蛋白(原)降解产物测定(FDP)",
+          "price": 26.0,
+          "count": 1.0,
+          "total": 26.0
+        },
+        {
+          "detailCode": "250203066a",
+          "detailName": "血浆D-二聚体定量检测",
+          "price": 60.0,
+          "count": 1.0,
+          "total": 60.0
+        }
+      ],
+      "sum": 86.0
     },
     "JY060016": {
       "details": [
@@ -10388,18 +10210,6 @@
       ],
       "sum": 4.5
     },
-    "JY070002": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
     "JY070032": {
       "details": [
         {
@@ -10697,282 +10507,6 @@
       ],
       "sum": 600.0
     },
-    "JY070078": {
-      "details": [
-        {
-          "detailCode": "250309005a",
-          "detailName": "全血中环孢素药物浓度测定",
-          "price": 240.0,
-          "count": 1.0,
-          "total": 240.0
-        }
-      ],
-      "sum": 240.0
-    },
-    "JY070079": {
-      "details": [
-        {
-          "detailCode": "250309005a",
-          "detailName": "全血中环孢素药物浓度测定",
-          "price": 240.0,
-          "count": 1.0,
-          "total": 240.0
-        }
-      ],
-      "sum": 240.0
-    },
-    "JY070080": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070081": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070082": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070083": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070084": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070085": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070086": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070087": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070088": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070089": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070090": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070091": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070092": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070093": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070094": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070095": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070096": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070097": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070098": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070099": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070100": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
     "JY070102": {
       "details": [
         {
@@ -11124,18 +10658,6 @@
       ],
       "sum": 510.0
     },
-    "JY070123": {
-      "details": [
-        {
-          "detailCode": "270700003",
-          "detailName": "脱氧核糖核酸（DNA）测序",
-          "price": 150.0,
-          "count": 35.0,
-          "total": 5250.0
-        }
-      ],
-      "sum": 5250.0
-    },
     "JY070125": {
       "details": [
         {
@@ -11159,270 +10681,6 @@
         }
       ],
       "sum": 300.0
-    },
-    "JY070130": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070131": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070132": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070133": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070134": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070135": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070136": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070137": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070138": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070140": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070142": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070143": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070144": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070146": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070147": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070148": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070150": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070151": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070152": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070153": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070155": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
-    },
-    "JY070156": {
-      "details": [
-        {
-          "detailCode": "250309005b",
-          "detailName": "血清药物浓度测定",
-          "price": 120.0,
-          "count": 1.0,
-          "total": 120.0
-        }
-      ],
-      "sum": 120.0
     },
     "JY070211": {
       "details": [
@@ -11696,18 +10954,6 @@
         }
       ],
       "sum": 40.0
-    },
-    "JY070242": {
-      "details": [
-        {
-          "detailCode": "250309005a",
-          "detailName": "全血中环孢素药物浓度测定",
-          "price": 240.0,
-          "count": 1.0,
-          "total": 240.0
-        }
-      ],
-      "sum": 240.0
     },
     "JY070243": {
       "details": [
@@ -12413,7 +11659,7 @@
       },
       {
         "chargeItemId": "LIS0549",
-        "chineseName": "风湿常规",
+        "chineseName": "风湿二项",
         "charge": 52.0,
         "hisId": "JY020049"
       },
@@ -12935,7 +12181,7 @@
       },
       {
         "chargeItemId": "LIS0876",
-        "chineseName": "肾功常规",
+        "chineseName": "肾功能常规",
         "charge": 21.0,
         "hisId": "JY020138"
       },
@@ -12944,6 +12190,24 @@
         "chineseName": "血清人绒毛膜促性腺激素(β-HCG)（生化室）",
         "charge": 34.0,
         "hisId": "JY020139"
+      },
+      {
+        "chargeItemId": "LIS0901",
+        "chineseName": "心肌酶三项",
+        "charge": 42.0,
+        "hisId": "JY020140"
+      },
+      {
+        "chargeItemId": "LIS0902",
+        "chineseName": "急诊生化常规",
+        "charge": 38.5,
+        "hisId": "JY020141"
+      },
+      {
+        "chargeItemId": "LIS0904",
+        "chineseName": "胰腺损伤",
+        "charge": 26.0,
+        "hisId": "JY020144"
       },
       {
         "chargeItemId": "LIS02798",
@@ -13148,6 +12412,12 @@
         "chineseName": "内毒素鲎定量试验（透析用液/用水）",
         "charge": 38.0,
         "hisId": "JY030041"
+      },
+      {
+        "chargeItemId": "LIS1906",
+        "chineseName": "成人血培养（双侧双套）",
+        "charge": 2125.0,
+        "hisId": "JY030042"
       },
       {
         "chargeItemId": "LIS0754",
@@ -13835,9 +13105,15 @@
       },
       {
         "chargeItemId": "LIS0855",
-        "chineseName": "抗核抗体谱定量（8项）",
+        "chineseName": "抗核抗体谱定量（7项）",
         "charge": 119.0,
         "hisId": "JY040126"
+      },
+      {
+        "chargeItemId": "LIS0905",
+        "chineseName": "抗核抗体常规检测",
+        "charge": 144.0,
+        "hisId": "JY040127"
       },
       {
         "chargeItemId": "LIS0453",
@@ -14351,8 +13627,8 @@
       },
       {
         "chargeItemId": "LIS0550",
-        "chineseName": "骨代谢标志物5项",
-        "charge": 459.0,
+        "chineseName": "骨代谢标志物",
+        "charge": 389.0,
         "hisId": "JY050087"
       },
       {
@@ -15803,7 +15079,7 @@
       },
       {
         "chargeItemId": "LIS0865",
-        "chineseName": "糖类抗原242",
+        "chineseName": "糖链抗原242",
         "charge": 50.0,
         "hisId": "JY070233"
       },
@@ -16879,6 +16155,12 @@
       },
       {
         "groupId": "G001",
+        "chargeItemId": "LIS0901",
+        "testItemId": "5030",
+        "itemSort": "13"
+      },
+      {
+        "groupId": "G001",
         "chargeItemId": "LIS0130",
         "testItemId": "5026",
         "itemSort": "14"
@@ -17263,6 +16545,12 @@
       },
       {
         "groupId": "G001",
+        "chargeItemId": "LIS0901",
+        "testItemId": "5028",
+        "itemSort": "22"
+      },
+      {
+        "groupId": "G001",
         "chargeItemId": "LIS03073",
         "testItemId": "5029",
         "itemSort": "23"
@@ -17270,6 +16558,12 @@
       {
         "groupId": "G001",
         "chargeItemId": "LIS03079",
+        "testItemId": "5029",
+        "itemSort": "23"
+      },
+      {
+        "groupId": "G001",
+        "chargeItemId": "LIS0901",
         "testItemId": "5029",
         "itemSort": "23"
       },
@@ -17359,6 +16653,12 @@
       },
       {
         "groupId": "G001",
+        "chargeItemId": "LIS0904",
+        "testItemId": "5038",
+        "itemSort": "28"
+      },
+      {
+        "groupId": "G001",
         "chargeItemId": "LIS0217",
         "testItemId": "5605",
         "itemSort": "29"
@@ -17407,6 +16707,18 @@
       },
       {
         "groupId": "G001",
+        "chargeItemId": "LIS0902",
+        "testItemId": "5001",
+        "itemSort": "31"
+      },
+      {
+        "groupId": "G001",
+        "chargeItemId": "LIS0904",
+        "testItemId": "5037",
+        "itemSort": "31"
+      },
+      {
+        "groupId": "G001",
         "chargeItemId": "LIS0255",
         "testItemId": "5002",
         "itemSort": "32"
@@ -17439,6 +16751,12 @@
         "groupId": "G001",
         "chargeItemId": "LIS0635",
         "testItemId": "5831",
+        "itemSort": "32"
+      },
+      {
+        "groupId": "G001",
+        "chargeItemId": "LIS0902",
+        "testItemId": "5002",
         "itemSort": "32"
       },
       {
@@ -17479,6 +16797,12 @@
       },
       {
         "groupId": "G001",
+        "chargeItemId": "LIS0902",
+        "testItemId": "5003",
+        "itemSort": "33"
+      },
+      {
+        "groupId": "G001",
         "chargeItemId": "LIS0319",
         "testItemId": "5004",
         "itemSort": "34"
@@ -17498,6 +16822,12 @@
       {
         "groupId": "G001",
         "chargeItemId": "LIS0642",
+        "testItemId": "5004",
+        "itemSort": "34"
+      },
+      {
+        "groupId": "G001",
+        "chargeItemId": "LIS0902",
         "testItemId": "5004",
         "itemSort": "34"
       },
@@ -17647,6 +16977,12 @@
       },
       {
         "groupId": "G001",
+        "chargeItemId": "LIS0902",
+        "testItemId": "5008",
+        "itemSort": "51"
+      },
+      {
+        "groupId": "G001",
         "chargeItemId": "LIS0134",
         "testItemId": "5009",
         "itemSort": "52"
@@ -17713,6 +17049,12 @@
       },
       {
         "groupId": "G001",
+        "chargeItemId": "LIS0902",
+        "testItemId": "5009",
+        "itemSort": "52"
+      },
+      {
+        "groupId": "G001",
         "chargeItemId": "LIS0134",
         "testItemId": "5010",
         "itemSort": "53"
@@ -17756,6 +17098,12 @@
       {
         "groupId": "G001",
         "chargeItemId": "LIS0876",
+        "testItemId": "5010",
+        "itemSort": "53"
+      },
+      {
+        "groupId": "G001",
+        "chargeItemId": "LIS0902",
         "testItemId": "5010",
         "itemSort": "53"
       },
@@ -25069,6 +24417,12 @@
       },
       {
         "groupId": "G004",
+        "chargeItemId": "LIS0905",
+        "testItemId": "8037",
+        "itemSort": "X00"
+      },
+      {
+        "groupId": "G004",
         "chargeItemId": "LIS0232",
         "testItemId": "8074",
         "itemSort": "X01"
@@ -25088,6 +24442,12 @@
       {
         "groupId": "G004",
         "chargeItemId": "LIS0855",
+        "testItemId": "8074",
+        "itemSort": "X01"
+      },
+      {
+        "groupId": "G004",
+        "chargeItemId": "LIS0905",
         "testItemId": "8074",
         "itemSort": "X01"
       },
@@ -25117,6 +24477,12 @@
       },
       {
         "groupId": "G004",
+        "chargeItemId": "LIS0905",
+        "testItemId": "8075",
+        "itemSort": "X02"
+      },
+      {
+        "groupId": "G004",
         "chargeItemId": "LIS0232",
         "testItemId": "8076",
         "itemSort": "X03"
@@ -25136,6 +24502,12 @@
       {
         "groupId": "G004",
         "chargeItemId": "LIS0855",
+        "testItemId": "8076",
+        "itemSort": "X03"
+      },
+      {
+        "groupId": "G004",
+        "chargeItemId": "LIS0905",
         "testItemId": "8076",
         "itemSort": "X03"
       },
@@ -25171,6 +24543,12 @@
       },
       {
         "groupId": "G004",
+        "chargeItemId": "LIS0905",
+        "testItemId": "8078",
+        "itemSort": "X05"
+      },
+      {
+        "groupId": "G004",
         "chargeItemId": "LIS0444",
         "testItemId": "8079",
         "itemSort": "X06"
@@ -25184,6 +24562,12 @@
       {
         "groupId": "G004",
         "chargeItemId": "LIS0855",
+        "testItemId": "8079",
+        "itemSort": "X06"
+      },
+      {
+        "groupId": "G004",
+        "chargeItemId": "LIS0905",
         "testItemId": "8079",
         "itemSort": "X06"
       },
@@ -25208,6 +24592,12 @@
       {
         "groupId": "G004",
         "chargeItemId": "LIS0855",
+        "testItemId": "8080",
+        "itemSort": "X07"
+      },
+      {
+        "groupId": "G004",
+        "chargeItemId": "LIS0905",
         "testItemId": "8080",
         "itemSort": "X07"
       },
@@ -25244,6 +24634,12 @@
       {
         "groupId": "G004",
         "chargeItemId": "LIS0855",
+        "testItemId": "8082",
+        "itemSort": "X09"
+      },
+      {
+        "groupId": "G004",
+        "chargeItemId": "LIS0905",
         "testItemId": "8082",
         "itemSort": "X09"
       },
@@ -27182,12 +26578,6 @@
       {
         "groupId": "G005",
         "chargeItemId": "LIS01870",
-        "testItemId": "5865",
-        "itemSort": "D036"
-      },
-      {
-        "groupId": "G005",
-        "chargeItemId": "LIS0550",
         "testItemId": "5865",
         "itemSort": "D036"
       },
@@ -40559,6 +39949,18 @@
         "testItemId": "8678",
         "testItemCode": "TRF",
         "chineseName": "粪便转铁蛋白",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8679",
+        "testItemCode": null,
+        "chineseName": "血小板特异性和组织相容性抗体",
+        "itemDes": null
+      },
+      {
+        "testItemId": "8680",
+        "testItemCode": null,
+        "chineseName": "白细胞特异性和组织相容性抗体",
         "itemDes": null
       }
     ]
