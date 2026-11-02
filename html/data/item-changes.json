@@ -1,11 +1,11 @@
 {
  "schema": 1,
  "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
- "generatedAt": "2026-10-20 15:35:17",
- "lastCheckedAt": "2026-10-20 15:35:17",
- "lastExportTime": "2026-10-20T15:33:58.902315",
- "lastChangeAt": "2026-10-20 15:35:17",
- "recordCount": 13,
+ "generatedAt": "2026-11-02 08:45:44",
+ "lastCheckedAt": "2026-11-02 08:45:44",
+ "lastExportTime": "2026-11-02T08:42:58.143159",
+ "lastChangeAt": "2026-11-02 08:45:44",
+ "recordCount": 14,
  "categories": [
   {
    "key": "item",
@@ -25,6 +25,2835 @@
   }
  ],
  "records": [
+  {
+   "id": "20261102-084544",
+   "recordedAt": "2026-11-02 08:45:44",
+   "exportTime": "2026-11-02T08:42:58.143159",
+   "prevExportTime": "2026-10-20T15:33:58.902315",
+   "version": "2.2.0",
+   "prevVersion": "2.2.0",
+   "stats": {
+    "total": 82,
+    "add": 16,
+    "remove": 49,
+    "update": 17,
+    "item": 68,
+    "price": 2,
+    "lis": 12,
+    "form": 0
+   },
+   "changes": [
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY020049 风湿二项",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY020049"
+      },
+      {
+       "label": "项目名称",
+       "value": "风湿二项"
+      },
+      {
+       "label": "申请单",
+       "value": "14243 生化室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "输入码",
+       "value": "线上开单"
+      },
+      {
+       "label": "排序号",
+       "value": "12"
+      },
+      {
+       "label": "收费合计",
+       "value": "52"
+      },
+      {
+       "label": "收费明细",
+       "value": "250402035a 类风湿因子(RF)测定｜单价 26｜数量 1｜金额 26"
+      },
+      {
+       "label": "收费明细",
+       "value": "250403043a 抗链球菌溶血素O定量测定(ASO)｜单价 26｜数量 1｜金额 26"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY020138 肾功能常规",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY020138"
+      },
+      {
+       "label": "项目名称",
+       "value": "肾功能常规"
+      },
+      {
+       "label": "申请单",
+       "value": "14243 生化室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "是"
+      },
+      {
+       "label": "输入码",
+       "value": "SGSX"
+      },
+      {
+       "label": "排序号",
+       "value": "6"
+      },
+      {
+       "label": "收费合计",
+       "value": "21"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307001a 尿素测定｜单价 8｜数量 1｜金额 8"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307002a 肌酐测定｜单价 8｜数量 1｜金额 8"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307005 血清尿酸测定｜单价 5｜数量 1｜金额 5"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY020140 心肌酶三项",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY020140"
+      },
+      {
+       "label": "项目名称",
+       "value": "心肌酶三项"
+      },
+      {
+       "label": "申请单",
+       "value": "14243 生化室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "42"
+      },
+      {
+       "label": "收费明细",
+       "value": "250306001 血清肌酸激酶测定｜单价 7｜数量 1｜金额 7"
+      },
+      {
+       "label": "收费明细",
+       "value": "250306003 血清肌酸激酶－MB同工酶质量测定｜单价 30｜数量 1｜金额 30"
+      },
+      {
+       "label": "收费明细",
+       "value": "250306005 乳酸脱氢酶测定｜单价 5｜数量 1｜金额 5"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY020141 急诊生化常规",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY020141"
+      },
+      {
+       "label": "项目名称",
+       "value": "急诊生化常规"
+      },
+      {
+       "label": "申请单",
+       "value": "14243 生化室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "38.5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250302001a 葡萄糖测定｜单价 4.5｜数量 1｜金额 4.5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307001a 尿素测定｜单价 8｜数量 1｜金额 8"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307002a 肌酐测定｜单价 8｜数量 1｜金额 8"
+      },
+      {
+       "label": "收费明细",
+       "value": "250304001 钾测定｜单价 4.5｜数量 1｜金额 4.5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250304002 钠测定｜单价 4.5｜数量 1｜金额 4.5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250304003 氯测定｜单价 4.5｜数量 1｜金额 4.5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250304004 钙测定｜单价 4.5｜数量 1｜金额 4.5"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY020144 胰腺损伤",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY020144"
+      },
+      {
+       "label": "项目名称",
+       "value": "胰腺损伤"
+      },
+      {
+       "label": "申请单",
+       "value": "14243 生化室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "26"
+      },
+      {
+       "label": "收费明细",
+       "value": "250308004 淀粉酶测定｜单价 13｜数量 1｜金额 13"
+      },
+      {
+       "label": "收费明细",
+       "value": "250308006 血清脂肪酶测定｜单价 13｜数量 1｜金额 13"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY040127 抗核抗体常规检测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY040127"
+      },
+      {
+       "label": "项目名称",
+       "value": "抗核抗体常规检测"
+      },
+      {
+       "label": "申请单",
+       "value": "14242 免疫室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "收费合计",
+       "value": "144"
+      },
+      {
+       "label": "收费明细",
+       "value": "250402003 抗核提取物抗体测定(抗ENA抗体)｜单价 17｜数量 6｜金额 102"
+      },
+      {
+       "label": "收费明细",
+       "value": "250402002 抗核抗体测定(ANA)｜单价 21｜数量 1｜金额 21"
+      },
+      {
+       "label": "收费明细",
+       "value": "250402006 抗双链DNA测定(抗dsDNA)｜单价 21｜数量 1｜金额 21"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY050087 骨代谢标志物",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY050087"
+      },
+      {
+       "label": "项目名称",
+       "value": "骨代谢标志物"
+      },
+      {
+       "label": "申请单",
+       "value": "14330 电化学室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血,腹水,胸水"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "50080"
+      },
+      {
+       "label": "收费合计",
+       "value": "389"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309004a 血清维生素定量测定｜单价 77｜数量 1｜金额 77"
+      },
+      {
+       "label": "收费明细",
+       "value": "250305033 总Ⅰ型胶原氨基端延长肽(Total-P1NP)测定｜单价 160｜数量 1｜金额 160"
+      },
+      {
+       "label": "收费明细",
+       "value": "250311005 血清N-端骨钙素测定｜单价 77｜数量 1｜金额 77"
+      },
+      {
+       "label": "收费明细",
+       "value": "250311006 血清β-胶原降解产物测定｜单价 75｜数量 1｜金额 75"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY060015 纤溶功能2项",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY060015"
+      },
+      {
+       "label": "项目名称",
+       "value": "纤溶功能2项"
+      },
+      {
+       "label": "申请单",
+       "value": "14241 临检室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "是"
+      },
+      {
+       "label": "排序号",
+       "value": "60015"
+      },
+      {
+       "label": "收费合计",
+       "value": "86"
+      },
+      {
+       "label": "收费明细",
+       "value": "250203065 纤维蛋白(原)降解产物测定(FDP)｜单价 26｜数量 1｜金额 26"
+      },
+      {
+       "label": "收费明细",
+       "value": "250203066a 血浆D-二聚体定量检测｜单价 60｜数量 1｜金额 60"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY040115 抗肺炎衣原体抗体IgM（定量）",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY040115"
+      },
+      {
+       "label": "项目名称",
+       "value": "抗肺炎衣原体抗体IgM（定量）"
+      },
+      {
+       "label": "申请单",
+       "value": "14242 免疫室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "备注",
+       "value": "定量  化学发光法"
+      },
+      {
+       "label": "输入码",
+       "value": "感染类,上呼感染类/GRL,SHGRL"
+      },
+      {
+       "label": "排序号",
+       "value": "1403"
+      },
+      {
+       "label": "收费合计",
+       "value": "30"
+      },
+      {
+       "label": "收费明细",
+       "value": "250403076 肺炎衣原体抗体检测｜单价 30｜数量 1｜金额 30"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070002 卡马西平（CBZ）药物浓度检测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070002"
+      },
+      {
+       "label": "项目名称",
+       "value": "卡马西平（CBZ）药物浓度检测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70002"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070078 他克莫司（TAC）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070078"
+      },
+      {
+       "label": "项目名称",
+       "value": "他克莫司（TAC）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "240"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005a 全血中环孢素药物浓度测定｜单价 240｜数量 1｜金额 240"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070079 环孢霉素A（CsA）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070079"
+      },
+      {
+       "label": "项目名称",
+       "value": "环孢霉素A（CsA）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "240"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005a 全血中环孢素药物浓度测定｜单价 240｜数量 1｜金额 240"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070080 奥氮平（OLZ）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070080"
+      },
+      {
+       "label": "项目名称",
+       "value": "奥氮平（OLZ）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070081 氯氮平（CLZ）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070081"
+      },
+      {
+       "label": "项目名称",
+       "value": "氯氮平（CLZ）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070082 利培酮（RIP）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070082"
+      },
+      {
+       "label": "项目名称",
+       "value": "利培酮（RIP）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070083 帕利哌酮（PAL）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070083"
+      },
+      {
+       "label": "项目名称",
+       "value": "帕利哌酮（PAL）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070084 阿立哌唑（ARPZ）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070084"
+      },
+      {
+       "label": "项目名称",
+       "value": "阿立哌唑（ARPZ）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070085 氨磺必利（ASP）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070085"
+      },
+      {
+       "label": "项目名称",
+       "value": "氨磺必利（ASP）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070086 喹硫平（QIP）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070086"
+      },
+      {
+       "label": "项目名称",
+       "value": "喹硫平（QIP）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070087 氯丙嗪（CP）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070087"
+      },
+      {
+       "label": "项目名称",
+       "value": "氯丙嗪（CP）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070088 齐拉西酮（ZIP）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070088"
+      },
+      {
+       "label": "项目名称",
+       "value": "齐拉西酮（ZIP）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070089 氟哌啶醇（HPD）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070089"
+      },
+      {
+       "label": "项目名称",
+       "value": "氟哌啶醇（HPD）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070090 奋乃静（PNZ）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070090"
+      },
+      {
+       "label": "项目名称",
+       "value": "奋乃静（PNZ）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070091 舒必利（SUL）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070091"
+      },
+      {
+       "label": "项目名称",
+       "value": "舒必利（SUL）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070092 拉莫三嗪（LTG）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070092"
+      },
+      {
+       "label": "项目名称",
+       "value": "拉莫三嗪（LTG）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070093 奥卡西平（OXC）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070093"
+      },
+      {
+       "label": "项目名称",
+       "value": "奥卡西平（OXC）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070094 甲氨蝶呤（MTX）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070094"
+      },
+      {
+       "label": "项目名称",
+       "value": "甲氨蝶呤（MTX）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070095 万古霉素（VAN）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070095"
+      },
+      {
+       "label": "项目名称",
+       "value": "万古霉素（VAN）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070096 伏立康唑（VCZ）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070096"
+      },
+      {
+       "label": "项目名称",
+       "value": "伏立康唑（VCZ）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070097 丙戊酸（VPA）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070097"
+      },
+      {
+       "label": "项目名称",
+       "value": "丙戊酸（VPA）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070098 左乙拉西坦（LEV）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070098"
+      },
+      {
+       "label": "项目名称",
+       "value": "左乙拉西坦（LEV）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070099 美金刚（MMT）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070099"
+      },
+      {
+       "label": "项目名称",
+       "value": "美金刚（MMT）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070100 多奈哌齐（DNP）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070100"
+      },
+      {
+       "label": "项目名称",
+       "value": "多奈哌齐（DNP）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070123 遗传性心脑血管相关疾病全套外显子组基因检测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070123"
+      },
+      {
+       "label": "项目名称",
+       "value": "遗传性心脑血管相关疾病全套外显子组基因检测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "5250"
+      },
+      {
+       "label": "收费明细",
+       "value": "270700003 脱氧核糖核酸（DNA）测序｜单价 150｜数量 35｜金额 5250"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070130 阿米替林血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070130"
+      },
+      {
+       "label": "项目名称",
+       "value": "阿米替林血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070131 艾司西酞普兰血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070131"
+      },
+      {
+       "label": "项目名称",
+       "value": "艾司西酞普兰血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070132 丁螺环酮血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070132"
+      },
+      {
+       "label": "项目名称",
+       "value": "丁螺环酮血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070133 氟西汀血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070133"
+      },
+      {
+       "label": "项目名称",
+       "value": "氟西汀血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070134 文拉法辛血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070134"
+      },
+      {
+       "label": "项目名称",
+       "value": "文拉法辛血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070135 西酞普兰血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070135"
+      },
+      {
+       "label": "项目名称",
+       "value": "西酞普兰血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070136 舍曲林血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070136"
+      },
+      {
+       "label": "项目名称",
+       "value": "舍曲林血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070137 阿普唑仑血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070137"
+      },
+      {
+       "label": "项目名称",
+       "value": "阿普唑仑血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070138 艾司唑仑血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070138"
+      },
+      {
+       "label": "项目名称",
+       "value": "艾司唑仑血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070140 苯巴比妥血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070140"
+      },
+      {
+       "label": "项目名称",
+       "value": "苯巴比妥血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070142 布南色林血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070142"
+      },
+      {
+       "label": "项目名称",
+       "value": "布南色林血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070143 地西泮血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070143"
+      },
+      {
+       "label": "项目名称",
+       "value": "地西泮血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070144 度洛西汀血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070144"
+      },
+      {
+       "label": "项目名称",
+       "value": "度洛西汀血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070146 氟伏沙明血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070146"
+      },
+      {
+       "label": "项目名称",
+       "value": "氟伏沙明血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070147 劳拉西泮血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070147"
+      },
+      {
+       "label": "项目名称",
+       "value": "劳拉西泮血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070148 鲁拉西酮血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070148"
+      },
+      {
+       "label": "项目名称",
+       "value": "鲁拉西酮血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070150 托吡酯血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070150"
+      },
+      {
+       "label": "项目名称",
+       "value": "托吡酯血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070151 氯硝西泮血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070151"
+      },
+      {
+       "label": "项目名称",
+       "value": "氯硝西泮血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070152 米氮平血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070152"
+      },
+      {
+       "label": "项目名称",
+       "value": "米氮平血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070153 帕罗西汀血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070153"
+      },
+      {
+       "label": "项目名称",
+       "value": "帕罗西汀血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070155 曲唑酮血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070155"
+      },
+      {
+       "label": "项目名称",
+       "value": "曲唑酮血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY070156 碳酸锂血药浓度测定（促凝管）",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070156"
+      },
+      {
+       "label": "项目名称",
+       "value": "碳酸锂血药浓度测定（促凝管）"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "120"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005b 血清药物浓度测定｜单价 120｜数量 1｜金额 120"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050010 甲胎蛋白",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,穿刺液,胸水,心包积液,肺及支气管灌洗液,支气管肺泡灌洗液",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050011 癌胚抗原",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,穿刺液,胸水,灌洗液,心包积液,肺及支气管灌洗液,支气管肺泡灌洗液",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050012 糖链抗原125",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,胸水,心包积液",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050013 细胞角蛋白19片段",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,胸水,心包积液,肺及支气管灌洗液",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050014 神经元特异烯醇化酶",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,穿刺液,胸水,硬膜下积液,肺及支气管灌洗液,支气管肺泡灌洗液",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050015 糖链抗原19-9",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,胸水,心包积液",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050016 糖链抗原72-4",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,胸水,心包积液",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050017 糖链抗原15-3",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,胸水,心包积液",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050020 淀粉样蛋白",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,胸水,心包积液",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050021 鳞状细胞癌相关抗原",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,穿刺液,胸水,心包积液,肺及支气管灌洗液,支气管肺泡灌洗液",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050022 胃泌素释放肽前体",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,胸水,心包积液",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY050023 人附睾分泌蛋白4",
+     "fields": [
+      {
+       "label": "标本类型",
+       "from": "全血,腹水,胸水,心包积液",
+       "to": "全血"
+      }
+     ]
+    },
+    {
+     "kind": "price_added",
+     "category": "price",
+     "level": "add",
+     "title": "JY030042 血培养及鉴定",
+     "fields": [
+      {
+       "label": "收费合计",
+       "value": "500"
+      },
+      {
+       "label": "收费明细",
+       "value": "250501011a 血培养及鉴定｜单价 125｜数量 4｜金额 500"
+      }
+     ]
+    },
+    {
+     "kind": "price_removed",
+     "category": "price",
+     "level": "remove",
+     "title": "JY070242 全血中环孢素药物浓度测定",
+     "fields": [
+      {
+       "label": "收费合计",
+       "value": "240"
+      },
+      {
+       "label": "收费明细",
+       "value": "250309005a 全血中环孢素药物浓度测定｜单价 240｜数量 1｜金额 240"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0549 风湿二项",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "风湿常规",
+       "to": "风湿二项"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0550 骨代谢标志物",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "骨代谢标志物5项",
+       "to": "骨代谢标志物"
+      },
+      {
+       "label": "取消关联分析项目",
+       "value": "PTH 甲状旁腺素（5865）（分组：G005 电化学室）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0855 抗核抗体谱定量（7项）",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "抗核抗体谱定量（8项）",
+       "to": "抗核抗体谱定量（7项）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0865 糖链抗原242",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "糖类抗原242",
+       "to": "糖链抗原242"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0876 肾功能常规",
+     "fields": [
+      {
+       "label": "诊疗项目名称",
+       "from": "肾功常规",
+       "to": "肾功能常规"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_added",
+     "category": "lis",
+     "level": "add",
+     "title": "LIS0901 心肌酶三项",
+     "fields": [
+      {
+       "label": "诊疗项目ID",
+       "value": "LIS0901"
+      },
+      {
+       "label": "诊疗项目名称",
+       "value": "心肌酶三项"
+      },
+      {
+       "label": "对应 HIS 项目",
+       "value": "JY020140 心肌酶三项"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "CK 肌酸激酶（5028）（分组：G001 生化室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "CK-MB 肌酸激酶同工酶（5029）（分组：G001 生化室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "LDH 乳酸脱氢酶（5030）（分组：G001 生化室）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_added",
+     "category": "lis",
+     "level": "add",
+     "title": "LIS0902 急诊生化常规",
+     "fields": [
+      {
+       "label": "诊疗项目ID",
+       "value": "LIS0902"
+      },
+      {
+       "label": "诊疗项目名称",
+       "value": "急诊生化常规"
+      },
+      {
+       "label": "对应 HIS 项目",
+       "value": "JY020141 急诊生化常规"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "K 钾（5001）（分组：G001 生化室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "NA 钠（5002）（分组：G001 生化室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "CL 氯（5003）（分组：G001 生化室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "Ca 总钙（5004）（分组：G001 生化室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "GLU 葡萄糖（5008）（分组：G001 生化室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "UREA 尿素（5009）（分组：G001 生化室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "Crea 肌酐（5010）（分组：G001 生化室）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_added",
+     "category": "lis",
+     "level": "add",
+     "title": "LIS0904 胰腺损伤",
+     "fields": [
+      {
+       "label": "诊疗项目ID",
+       "value": "LIS0904"
+      },
+      {
+       "label": "诊疗项目名称",
+       "value": "胰腺损伤"
+      },
+      {
+       "label": "对应 HIS 项目",
+       "value": "JY020144 胰腺损伤"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "LPS 脂肪酶（5037）（分组：G001 生化室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "AMS 淀粉酶（5038）（分组：G001 生化室）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_added",
+     "category": "lis",
+     "level": "add",
+     "title": "LIS0905 抗核抗体常规检测",
+     "fields": [
+      {
+       "label": "诊疗项目ID",
+       "value": "LIS0905"
+      },
+      {
+       "label": "诊疗项目名称",
+       "value": "抗核抗体常规检测"
+      },
+      {
+       "label": "对应 HIS 项目",
+       "value": "JY040127 抗核抗体常规检测"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "抗核抗体定量（8037）（分组：G004 免疫室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "U1-nRNP 抗RNP抗体（8074）（分组：G004 免疫室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "Sm 抗Sm抗体（8075）（分组：G004 免疫室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "SSA 抗SS-A抗体（8076）（分组：G004 免疫室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "SSB 抗SS-B抗体（8078）（分组：G004 免疫室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "Scl-70 抗Scl-70抗体（8079）（分组：G004 免疫室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "Jo-1 抗Jo-1抗体（8080）（分组：G004 免疫室）"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "dsDNA 抗双链DNA抗体（8082）（分组：G004 免疫室）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_added",
+     "category": "lis",
+     "level": "add",
+     "title": "LIS1906 成人血培养（双侧双套）",
+     "fields": [
+      {
+       "label": "诊疗项目ID",
+       "value": "LIS1906"
+      },
+      {
+       "label": "诊疗项目名称",
+       "value": "成人血培养（双侧双套）"
+      },
+      {
+       "label": "对应 HIS 项目",
+       "value": "JY030042 血培养及鉴定"
+      },
+      {
+       "label": "关联分析项目",
+       "value": "（无）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_test_added",
+     "category": "lis",
+     "level": "add",
+     "title": "血小板特异性和组织相容性抗体（8679）",
+     "fields": [
+      {
+       "label": "分析项目ID",
+       "value": "8679"
+      },
+      {
+       "label": "代号",
+       "value": ""
+      },
+      {
+       "label": "名称",
+       "value": "血小板特异性和组织相容性抗体"
+      },
+      {
+       "label": "互认标识",
+       "value": ""
+      },
+      {
+       "label": "关联诊疗项目",
+       "value": "（无）"
+      }
+     ]
+    },
+    {
+     "kind": "lis_test_added",
+     "category": "lis",
+     "level": "add",
+     "title": "白细胞特异性和组织相容性抗体（8680）",
+     "fields": [
+      {
+       "label": "分析项目ID",
+       "value": "8680"
+      },
+      {
+       "label": "代号",
+       "value": ""
+      },
+      {
+       "label": "名称",
+       "value": "白细胞特异性和组织相容性抗体"
+      },
+      {
+       "label": "互认标识",
+       "value": ""
+      },
+      {
+       "label": "关联诊疗项目",
+       "value": "（无）"
+      }
+     ]
+    }
+   ]
+  },
   {
    "id": "20261020-153517",
    "recordedAt": "2026-10-20 15:35:17",
