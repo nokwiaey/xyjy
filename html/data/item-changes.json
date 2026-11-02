@@ -1,11 +1,11 @@
 {
  "schema": 1,
  "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
- "generatedAt": "2026-11-02 08:45:44",
- "lastCheckedAt": "2026-11-02 08:45:44",
- "lastExportTime": "2026-11-02T08:42:58.143159",
- "lastChangeAt": "2026-11-02 08:45:44",
- "recordCount": 14,
+ "generatedAt": "2026-11-02 17:43:29",
+ "lastCheckedAt": "2026-11-02 17:43:29",
+ "lastExportTime": "2026-11-02T11:38:26.052957",
+ "lastChangeAt": "2026-11-02 17:43:29",
+ "recordCount": 15,
  "categories": [
   {
    "key": "item",
@@ -25,6 +25,1898 @@
   }
  ],
  "records": [
+  {
+   "id": "20261102-174329",
+   "recordedAt": "2026-11-02 17:43:29",
+   "exportTime": "2026-11-02T11:38:26.052957",
+   "prevExportTime": "2026-11-02T08:42:58.143159",
+   "version": "2.2.0",
+   "prevVersion": "2.2.0",
+   "stats": {
+    "total": 48,
+    "add": 47,
+    "remove": 0,
+    "update": 1,
+    "item": 46,
+    "price": 1,
+    "lis": 1,
+    "form": 0
+   },
+   "changes": [
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070002 卡马西平（CBZ）药物浓度检测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070002"
+      },
+      {
+       "label": "项目名称",
+       "value": "卡马西平（CBZ）药物浓度检测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70002"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070078 他克莫司（TAC）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070078"
+      },
+      {
+       "label": "项目名称",
+       "value": "他克莫司（TAC）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "165"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1.5｜金额 165"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070079 环孢霉素A（CsA）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070079"
+      },
+      {
+       "label": "项目名称",
+       "value": "环孢霉素A（CsA）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "165"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1.5｜金额 165"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070080 奥氮平（OLZ）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070080"
+      },
+      {
+       "label": "项目名称",
+       "value": "奥氮平（OLZ）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070081 氯氮平（CLZ）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070081"
+      },
+      {
+       "label": "项目名称",
+       "value": "氯氮平（CLZ）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070082 利培酮（RIP）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070082"
+      },
+      {
+       "label": "项目名称",
+       "value": "利培酮（RIP）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070083 帕利哌酮（PAL）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070083"
+      },
+      {
+       "label": "项目名称",
+       "value": "帕利哌酮（PAL）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070084 阿立哌唑（ARPZ）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070084"
+      },
+      {
+       "label": "项目名称",
+       "value": "阿立哌唑（ARPZ）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070085 氨磺必利（ASP）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070085"
+      },
+      {
+       "label": "项目名称",
+       "value": "氨磺必利（ASP）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070086 喹硫平（QIP）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070086"
+      },
+      {
+       "label": "项目名称",
+       "value": "喹硫平（QIP）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070087 氯丙嗪（CP）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070087"
+      },
+      {
+       "label": "项目名称",
+       "value": "氯丙嗪（CP）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070088 齐拉西酮（ZIP）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070088"
+      },
+      {
+       "label": "项目名称",
+       "value": "齐拉西酮（ZIP）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070089 氟哌啶醇（HPD）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070089"
+      },
+      {
+       "label": "项目名称",
+       "value": "氟哌啶醇（HPD）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070090 奋乃静（PNZ）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070090"
+      },
+      {
+       "label": "项目名称",
+       "value": "奋乃静（PNZ）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070091 舒必利（SUL）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070091"
+      },
+      {
+       "label": "项目名称",
+       "value": "舒必利（SUL）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070092 拉莫三嗪（LTG）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070092"
+      },
+      {
+       "label": "项目名称",
+       "value": "拉莫三嗪（LTG）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070093 奥卡西平（OXC）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070093"
+      },
+      {
+       "label": "项目名称",
+       "value": "奥卡西平（OXC）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070094 甲氨蝶呤（MTX）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070094"
+      },
+      {
+       "label": "项目名称",
+       "value": "甲氨蝶呤（MTX）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070095 万古霉素（VAN）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070095"
+      },
+      {
+       "label": "项目名称",
+       "value": "万古霉素（VAN）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070096 伏立康唑（VCZ）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070096"
+      },
+      {
+       "label": "项目名称",
+       "value": "伏立康唑（VCZ）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070097 丙戊酸（VPA）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070097"
+      },
+      {
+       "label": "项目名称",
+       "value": "丙戊酸（VPA）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070098 左乙拉西坦（LEV）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070098"
+      },
+      {
+       "label": "项目名称",
+       "value": "左乙拉西坦（LEV）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070099 美金刚（MMT）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070099"
+      },
+      {
+       "label": "项目名称",
+       "value": "美金刚（MMT）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070100 多奈哌齐（DNP）血药浓度监测",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070100"
+      },
+      {
+       "label": "项目名称",
+       "value": "多奈哌齐（DNP）血药浓度监测"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70001"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070130 阿米替林血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070130"
+      },
+      {
+       "label": "项目名称",
+       "value": "阿米替林血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070131 艾司西酞普兰血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070131"
+      },
+      {
+       "label": "项目名称",
+       "value": "艾司西酞普兰血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070132 丁螺环酮血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070132"
+      },
+      {
+       "label": "项目名称",
+       "value": "丁螺环酮血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070133 氟西汀血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070133"
+      },
+      {
+       "label": "项目名称",
+       "value": "氟西汀血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070134 文拉法辛血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070134"
+      },
+      {
+       "label": "项目名称",
+       "value": "文拉法辛血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070135 西酞普兰血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070135"
+      },
+      {
+       "label": "项目名称",
+       "value": "西酞普兰血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070136 舍曲林血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070136"
+      },
+      {
+       "label": "项目名称",
+       "value": "舍曲林血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070137 阿普唑仑血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070137"
+      },
+      {
+       "label": "项目名称",
+       "value": "阿普唑仑血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070138 艾司唑仑血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070138"
+      },
+      {
+       "label": "项目名称",
+       "value": "艾司唑仑血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070140 苯巴比妥血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070140"
+      },
+      {
+       "label": "项目名称",
+       "value": "苯巴比妥血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070142 布南色林血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070142"
+      },
+      {
+       "label": "项目名称",
+       "value": "布南色林血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070143 地西泮血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070143"
+      },
+      {
+       "label": "项目名称",
+       "value": "地西泮血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070144 度洛西汀血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070144"
+      },
+      {
+       "label": "项目名称",
+       "value": "度洛西汀血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070146 氟伏沙明血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070146"
+      },
+      {
+       "label": "项目名称",
+       "value": "氟伏沙明血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070147 劳拉西泮血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070147"
+      },
+      {
+       "label": "项目名称",
+       "value": "劳拉西泮血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070148 鲁拉西酮血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070148"
+      },
+      {
+       "label": "项目名称",
+       "value": "鲁拉西酮血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070150 托吡酯血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070150"
+      },
+      {
+       "label": "项目名称",
+       "value": "托吡酯血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070151 氯硝西泮血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070151"
+      },
+      {
+       "label": "项目名称",
+       "value": "氯硝西泮血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070152 米氮平血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070152"
+      },
+      {
+       "label": "项目名称",
+       "value": "米氮平血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070153 帕罗西汀血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070153"
+      },
+      {
+       "label": "项目名称",
+       "value": "帕罗西汀血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070155 曲唑酮血药浓度测定",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070155"
+      },
+      {
+       "label": "项目名称",
+       "value": "曲唑酮血药浓度测定"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "item_added",
+     "category": "item",
+     "level": "add",
+     "title": "JY070156 碳酸锂血药浓度测定（促凝管）",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY070156"
+      },
+      {
+       "label": "项目名称",
+       "value": "碳酸锂血药浓度测定（促凝管）"
+      },
+      {
+       "label": "申请单",
+       "value": "14253 中心实验室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "70004"
+      },
+      {
+       "label": "收费合计",
+       "value": "110"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1｜金额 110"
+      }
+     ]
+    },
+    {
+     "kind": "price_added",
+     "category": "price",
+     "level": "add",
+     "title": "JY070242 药物浓度测定费",
+     "fields": [
+      {
+       "label": "收费合计",
+       "value": "165"
+      },
+      {
+       "label": "收费明细",
+       "value": "011400000040000 药物浓度测定费｜单价 110｜数量 1.5｜金额 165"
+      }
+     ]
+    },
+    {
+     "kind": "lis_charge_modified",
+     "category": "lis",
+     "level": "update",
+     "title": "LIS0901 心肌酶三项",
+     "fields": [
+      {
+       "label": "新增关联分析项目",
+       "value": "CK-MB 肌酸激酶同工酶（6066）（分组：G001 生化室）"
+      },
+      {
+       "label": "取消关联分析项目",
+       "value": "CK-MB 肌酸激酶同工酶（5029）（分组：G001 生化室）"
+      }
+     ]
+    }
+   ]
+  },
   {
    "id": "20261102-084544",
    "recordedAt": "2026-11-02 08:45:44",
