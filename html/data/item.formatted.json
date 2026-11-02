@@ -1,6 +1,6 @@
 {
   "version": "2.2.0",
-  "exportTime": "2026-11-02T08:42:58.143159",
+  "exportTime": "2026-11-02T11:38:26.052957",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -3460,6 +3460,16 @@
       "sortNo": ""
     },
     {
+      "itemCode": "JY070002",
+      "itemName": "卡马西平（CBZ）药物浓度检测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "070002"
+    },
+    {
       "itemCode": "JY070032",
       "itemName": "萎缩性胃炎/恶性贫血自身抗体两项",
       "applyFormCode": "14253",
@@ -3690,6 +3700,236 @@
       "sortNo": "070064"
     },
     {
+      "itemCode": "JY070078",
+      "itemName": "他克莫司（TAC）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070079",
+      "itemName": "环孢霉素A（CsA）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070080",
+      "itemName": "奥氮平（OLZ）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070081",
+      "itemName": "氯氮平（CLZ）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070082",
+      "itemName": "利培酮（RIP）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070083",
+      "itemName": "帕利哌酮（PAL）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070084",
+      "itemName": "阿立哌唑（ARPZ）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070085",
+      "itemName": "氨磺必利（ASP）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070086",
+      "itemName": "喹硫平（QIP）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070087",
+      "itemName": "氯丙嗪（CP）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070088",
+      "itemName": "齐拉西酮（ZIP）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070089",
+      "itemName": "氟哌啶醇（HPD）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070090",
+      "itemName": "奋乃静（PNZ）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070091",
+      "itemName": "舒必利（SUL）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070092",
+      "itemName": "拉莫三嗪（LTG）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070093",
+      "itemName": "奥卡西平（OXC）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070094",
+      "itemName": "甲氨蝶呤（MTX）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070095",
+      "itemName": "万古霉素（VAN）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070096",
+      "itemName": "伏立康唑（VCZ）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070097",
+      "itemName": "丙戊酸（VPA）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070098",
+      "itemName": "左乙拉西坦（LEV）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070099",
+      "itemName": "美金刚（MMT）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070100",
+      "itemName": "多奈哌齐（DNP）血药浓度监测",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70001"
+    },
+    {
       "itemCode": "JY070102",
       "itemName": "抗心律失常个体化用药基因检测",
       "applyFormCode": "14253",
@@ -3818,6 +4058,226 @@
       "remark": "",
       "inputCode": "",
       "sortNo": "70001"
+    },
+    {
+      "itemCode": "JY070130",
+      "itemName": "阿米替林血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070131",
+      "itemName": "艾司西酞普兰血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070132",
+      "itemName": "丁螺环酮血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070133",
+      "itemName": "氟西汀血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070134",
+      "itemName": "文拉法辛血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070135",
+      "itemName": "西酞普兰血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070136",
+      "itemName": "舍曲林血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070137",
+      "itemName": "阿普唑仑血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070138",
+      "itemName": "艾司唑仑血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070140",
+      "itemName": "苯巴比妥血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070142",
+      "itemName": "布南色林血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070143",
+      "itemName": "地西泮血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070144",
+      "itemName": "度洛西汀血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070146",
+      "itemName": "氟伏沙明血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070147",
+      "itemName": "劳拉西泮血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070148",
+      "itemName": "鲁拉西酮血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070150",
+      "itemName": "托吡酯血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070151",
+      "itemName": "氯硝西泮血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070152",
+      "itemName": "米氮平血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070153",
+      "itemName": "帕罗西汀血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070155",
+      "itemName": "曲唑酮血药浓度测定",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": null,
+      "inputCode": "",
+      "sortNo": "70004"
+    },
+    {
+      "itemCode": "JY070156",
+      "itemName": "碳酸锂血药浓度测定（促凝管）",
+      "applyFormCode": "14253",
+      "sample": "全血",
+      "isEmergency": 0,
+      "remark": "",
+      "inputCode": "",
+      "sortNo": "70004"
     },
     {
       "itemCode": "JY070215",
@@ -10210,6 +10670,18 @@
       ],
       "sum": 4.5
     },
+    "JY070002": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
     "JY070032": {
       "details": [
         {
@@ -10507,6 +10979,282 @@
       ],
       "sum": 600.0
     },
+    "JY070078": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.5,
+          "total": 165.0
+        }
+      ],
+      "sum": 165.0
+    },
+    "JY070079": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.5,
+          "total": 165.0
+        }
+      ],
+      "sum": 165.0
+    },
+    "JY070080": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070081": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070082": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070083": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070084": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070085": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070086": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070087": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070088": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070089": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070090": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070091": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070092": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070093": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070094": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070095": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070096": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070097": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070098": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070099": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070100": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
     "JY070102": {
       "details": [
         {
@@ -10681,6 +11429,270 @@
         }
       ],
       "sum": 300.0
+    },
+    "JY070130": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070131": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070132": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070133": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070134": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070135": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070136": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070137": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070138": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070140": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070142": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070143": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070144": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070146": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070147": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070148": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070150": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070151": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070152": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070153": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070155": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
+    },
+    "JY070156": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.0,
+          "total": 110.0
+        }
+      ],
+      "sum": 110.0
     },
     "JY070211": {
       "details": [
@@ -10954,6 +11966,18 @@
         }
       ],
       "sum": 40.0
+    },
+    "JY070242": {
+      "details": [
+        {
+          "detailCode": "011400000040000",
+          "detailName": "药物浓度测定费",
+          "price": 110.0,
+          "count": 1.5,
+          "total": 165.0
+        }
+      ],
+      "sum": 165.0
     },
     "JY070243": {
       "details": [
@@ -16563,12 +17587,6 @@
       },
       {
         "groupId": "G001",
-        "chargeItemId": "LIS0901",
-        "testItemId": "5029",
-        "itemSort": "23"
-      },
-      {
-        "groupId": "G001",
         "chargeItemId": "LIS03073",
         "testItemId": "5031",
         "itemSort": "24"
@@ -18328,6 +19346,12 @@
       {
         "groupId": "G001",
         "chargeItemId": "LIS0614",
+        "testItemId": "6066",
+        "itemSort": "XS03"
+      },
+      {
+        "groupId": "G001",
+        "chargeItemId": "LIS0901",
         "testItemId": "6066",
         "itemSort": "XS03"
       },
