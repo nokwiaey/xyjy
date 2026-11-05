@@ -1,6 +1,6 @@
 {
   "version": "2.2.0",
-  "exportTime": "2026-11-02T11:38:26.052957",
+  "exportTime": "2026-11-05T16:34:39.755278",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -368,16 +368,6 @@
       "remark": null,
       "inputCode": "心肌系列/XJXL",
       "sortNo": "0506"
-    },
-    {
-      "itemCode": "JY020032",
-      "itemName": "脑脊液生化",
-      "applyFormCode": "14243",
-      "sample": "脑脊液",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "",
-      "sortNo": "9901"
     },
     {
       "itemCode": "JY020034",
@@ -1258,16 +1248,6 @@
       "remark": "",
       "inputCode": "高血压系列/GXYXL",
       "sortNo": "1105"
-    },
-    {
-      "itemCode": "JY020133",
-      "itemName": "24小时尿液肾功",
-      "applyFormCode": "14243",
-      "sample": "尿液",
-      "isEmergency": 0,
-      "remark": "",
-      "inputCode": "尿液项目/NYXM",
-      "sortNo": "1007"
     },
     {
       "itemCode": "JY020134",
@@ -2298,16 +2278,6 @@
       "remark": "定量  化学发光法",
       "inputCode": "感染类,上呼感染类/GRL,SHGRL",
       "sortNo": "1402"
-    },
-    {
-      "itemCode": "JY040126",
-      "itemName": "抗核抗体谱定量（7项）",
-      "applyFormCode": "14242",
-      "sample": "全血",
-      "isEmergency": 0,
-      "remark": "定量  化学发光法",
-      "inputCode": "自身抗体类/ZSKTL",
-      "sortNo": "3102"
     },
     {
       "itemCode": "JY040127",
@@ -5042,53 +5012,6 @@
       ],
       "sum": 150.0
     },
-    "JY020032": {
-      "details": [
-        {
-          "detailCode": "250301012",
-          "detailName": "脑脊液白蛋白测定",
-          "price": 5.0,
-          "count": 1.0,
-          "total": 5.0
-        },
-        {
-          "detailCode": "250302001a",
-          "detailName": "葡萄糖测定",
-          "price": 4.5,
-          "count": 1.0,
-          "total": 4.5
-        },
-        {
-          "detailCode": "250304003",
-          "detailName": "氯测定",
-          "price": 4.5,
-          "count": 1.0,
-          "total": 4.5
-        },
-        {
-          "detailCode": "250306005",
-          "detailName": "乳酸脱氢酶测定",
-          "price": 5.0,
-          "count": 1.0,
-          "total": 5.0
-        },
-        {
-          "detailCode": "250301017b",
-          "detailName": "超敏C反应蛋白测定",
-          "price": 17.0,
-          "count": 1.0,
-          "total": 17.0
-        },
-        {
-          "detailCode": "250301014",
-          "detailName": "β2微球蛋白测定",
-          "price": 20.0,
-          "count": 1.0,
-          "total": 20.0
-        }
-      ],
-      "sum": 56.0
-    },
     "JY020034": {
       "details": [
         {
@@ -6262,32 +6185,6 @@
         }
       ],
       "sum": 21.0
-    },
-    "JY020133": {
-      "details": [
-        {
-          "detailCode": "250307001",
-          "detailName": "尿素测定",
-          "price": 5.0,
-          "count": 1.0,
-          "total": 5.0
-        },
-        {
-          "detailCode": "250307024",
-          "detailName": "尿尿酸测定",
-          "price": 5.0,
-          "count": 1.0,
-          "total": 5.0
-        },
-        {
-          "detailCode": "250307002",
-          "detailName": "肌酐测定",
-          "price": 5.0,
-          "count": 1.0,
-          "total": 5.0
-        }
-      ],
-      "sum": 15.0
     },
     "JY020134": {
       "details": [
@@ -8471,18 +8368,6 @@
         }
       ],
       "sum": 25.0
-    },
-    "JY040126": {
-      "details": [
-        {
-          "detailCode": "250402003",
-          "detailName": "抗核提取物抗体测定(抗ENA抗体)",
-          "price": 17.0,
-          "count": 7.0,
-          "total": 119.0
-        }
-      ],
-      "sum": 119.0
     },
     "JY040127": {
       "details": [
@@ -13440,7 +13325,7 @@
       {
         "chargeItemId": "LIS1906",
         "chineseName": "成人血培养（双侧双套）",
-        "charge": 2125.0,
+        "charge": 1250.0,
         "hisId": "JY030042"
       },
       {
@@ -13656,7 +13541,7 @@
       {
         "chargeItemId": "LIS01453",
         "chineseName": "人免疫缺陷病毒抗原/抗体联合检测（快速）",
-        "charge": 90.0,
+        "charge": 50.0,
         "hisId": "JY040036"
       },
       {
@@ -15234,13 +15119,13 @@
       {
         "chargeItemId": "LIS0662",
         "chineseName": "他克莫司（TAC）血药浓度监测",
-        "charge": 240.0,
+        "charge": 165.0,
         "hisId": "JY070078"
       },
       {
         "chargeItemId": "LIS0664",
         "chineseName": "环孢霉素A（CsA）血药浓度监测",
-        "charge": 240.0,
+        "charge": 165.0,
         "hisId": "JY070079"
       },
       {
@@ -16158,7 +16043,7 @@
       {
         "chargeItemId": "LIS0881",
         "chineseName": "西罗莫司(SRL)血药浓度监测",
-        "charge": 240.0,
+        "charge": 165.0,
         "hisId": "JY070242"
       },
       {
