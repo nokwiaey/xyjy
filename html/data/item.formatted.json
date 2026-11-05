@@ -1,6 +1,6 @@
 {
   "version": "2.2.0",
-  "exportTime": "2026-11-05T16:34:39.755278",
+  "exportTime": "2026-11-05T17:05:15.596357",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -15131,127 +15131,127 @@
       {
         "chargeItemId": "LIS0665",
         "chineseName": "奥氮平（OLZ）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070080"
       },
       {
         "chargeItemId": "LIS0666",
         "chineseName": "氯氮平（CLZ）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070081"
       },
       {
         "chargeItemId": "LIS0667",
         "chineseName": "利培酮（RIP）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070082"
       },
       {
         "chargeItemId": "LIS0668",
         "chineseName": "帕利哌酮（PAL）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070083"
       },
       {
         "chargeItemId": "LIS0669",
         "chineseName": "阿立哌唑（ARPZ）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070084"
       },
       {
         "chargeItemId": "LIS0670",
         "chineseName": "氨磺必利（ASP）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070085"
       },
       {
         "chargeItemId": "LIS0671",
         "chineseName": "喹硫平（QIP）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070086"
       },
       {
         "chargeItemId": "LIS0672",
         "chineseName": "氯丙嗪（CP）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070087"
       },
       {
         "chargeItemId": "LIS0674",
         "chineseName": "齐拉西酮（ZIP）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070088"
       },
       {
         "chargeItemId": "LIS0675",
         "chineseName": "氟哌啶醇（HPD）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070089"
       },
       {
         "chargeItemId": "LIS0676",
         "chineseName": "奋乃静（PNZ）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070090"
       },
       {
         "chargeItemId": "LIS0677",
         "chineseName": "舒必利（SUL）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070091"
       },
       {
         "chargeItemId": "LIS0678",
         "chineseName": "拉莫三嗪（LTG）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070092"
       },
       {
         "chargeItemId": "LIS0679",
         "chineseName": "奥卡西平（OXC）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070093"
       },
       {
         "chargeItemId": "LIS0680",
         "chineseName": "甲氨蝶呤（MTX）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070094"
       },
       {
         "chargeItemId": "LIS0681",
         "chineseName": "万古霉素（VAN）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070095"
       },
       {
         "chargeItemId": "LIS0682",
         "chineseName": "伏立康唑（VCZ）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070096"
       },
       {
         "chargeItemId": "LIS0560",
         "chineseName": "丙戊酸（VPA）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070097"
       },
       {
         "chargeItemId": "LIS0685",
         "chineseName": "左乙拉西坦（LEV）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070098"
       },
       {
         "chargeItemId": "LIS0686",
         "chineseName": "美金刚（MMT）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070099"
       },
       {
         "chargeItemId": "LIS0687",
         "chineseName": "多奈哌齐（DNP）血药浓度监测",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070100"
       },
       {
@@ -15377,55 +15377,55 @@
       {
         "chargeItemId": "LIS0724",
         "chineseName": "阿米替林血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070130"
       },
       {
         "chargeItemId": "LIS0725",
         "chineseName": "艾司西酞普兰血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070131"
       },
       {
         "chargeItemId": "LIS0726",
         "chineseName": "丁螺环酮血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070132"
       },
       {
         "chargeItemId": "LIS0727",
         "chineseName": "氟西汀血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070133"
       },
       {
         "chargeItemId": "LIS0728",
         "chineseName": "文拉法辛血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070134"
       },
       {
         "chargeItemId": "LIS0729",
         "chineseName": "西酞普兰血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070135"
       },
       {
         "chargeItemId": "LIS0730",
         "chineseName": "舍曲林血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070136"
       },
       {
         "chargeItemId": "LIS0731",
         "chineseName": "阿普唑仑血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070137"
       },
       {
         "chargeItemId": "LIS0733",
         "chineseName": "艾司唑仑血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070138"
       },
       {
@@ -15437,7 +15437,7 @@
       {
         "chargeItemId": "LIS0735",
         "chineseName": "苯巴比妥血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070140"
       },
       {
@@ -15449,19 +15449,19 @@
       {
         "chargeItemId": "LIS0738",
         "chineseName": "布南色林血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070142"
       },
       {
         "chargeItemId": "LIS0739",
         "chineseName": "地西泮血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070143"
       },
       {
         "chargeItemId": "LIS0740",
         "chineseName": "度洛西汀血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070144"
       },
       {
@@ -15473,19 +15473,19 @@
       {
         "chargeItemId": "LIS0742",
         "chineseName": "氟伏沙明血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070146"
       },
       {
         "chargeItemId": "LIS0743",
         "chineseName": "劳拉西泮血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070147"
       },
       {
         "chargeItemId": "LIS0744",
         "chineseName": "鲁拉西酮血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070148"
       },
       {
@@ -15497,25 +15497,25 @@
       {
         "chargeItemId": "LIS0746",
         "chineseName": "托吡酯血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070150"
       },
       {
         "chargeItemId": "LIS0663",
         "chineseName": "氯硝西泮血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070151"
       },
       {
         "chargeItemId": "LIS0748",
         "chineseName": "米氮平血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070152"
       },
       {
         "chargeItemId": "LIS0749",
         "chineseName": "帕罗西汀血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070153"
       },
       {
@@ -15527,13 +15527,13 @@
       {
         "chargeItemId": "LIS0751",
         "chineseName": "曲唑酮血药浓度测定",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070155"
       },
       {
         "chargeItemId": "LIS0752",
         "chineseName": "碳酸锂血药浓度测定（促凝管）",
-        "charge": 120.0,
+        "charge": 110.0,
         "hisId": "JY070156"
       },
       {
