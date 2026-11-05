@@ -1,11 +1,11 @@
 {
  "schema": 1,
  "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
- "generatedAt": "2026-11-02 17:43:29",
- "lastCheckedAt": "2026-11-02 17:43:29",
- "lastExportTime": "2026-11-02T11:38:26.052957",
- "lastChangeAt": "2026-11-02 17:43:29",
- "recordCount": 15,
+ "generatedAt": "2026-11-05 16:35:58",
+ "lastCheckedAt": "2026-11-05 16:35:58",
+ "lastExportTime": "2026-11-05T16:34:39.755278",
+ "lastChangeAt": "2026-11-05 16:35:58",
+ "recordCount": 16,
  "categories": [
   {
    "key": "item",
@@ -25,6 +25,186 @@
   }
  ],
  "records": [
+  {
+   "id": "20261105-163558",
+   "recordedAt": "2026-11-05 16:35:58",
+   "exportTime": "2026-11-05T16:34:39.755278",
+   "prevExportTime": "2026-11-02T11:38:26.052957",
+   "version": "2.2.0",
+   "prevVersion": "2.2.0",
+   "stats": {
+    "total": 3,
+    "add": 0,
+    "remove": 3,
+    "update": 0,
+    "item": 3,
+    "price": 0,
+    "lis": 0,
+    "form": 0
+   },
+   "changes": [
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY020032 脑脊液生化",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY020032"
+      },
+      {
+       "label": "项目名称",
+       "value": "脑脊液生化"
+      },
+      {
+       "label": "申请单",
+       "value": "14243 生化室"
+      },
+      {
+       "label": "标本类型",
+       "value": "脑脊液"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "排序号",
+       "value": "9901"
+      },
+      {
+       "label": "收费合计",
+       "value": "56"
+      },
+      {
+       "label": "收费明细",
+       "value": "250301012 脑脊液白蛋白测定｜单价 5｜数量 1｜金额 5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250302001a 葡萄糖测定｜单价 4.5｜数量 1｜金额 4.5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250304003 氯测定｜单价 4.5｜数量 1｜金额 4.5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250306005 乳酸脱氢酶测定｜单价 5｜数量 1｜金额 5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250301017b 超敏C反应蛋白测定｜单价 17｜数量 1｜金额 17"
+      },
+      {
+       "label": "收费明细",
+       "value": "250301014 β2微球蛋白测定｜单价 20｜数量 1｜金额 20"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY020133 24小时尿液肾功",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY020133"
+      },
+      {
+       "label": "项目名称",
+       "value": "24小时尿液肾功"
+      },
+      {
+       "label": "申请单",
+       "value": "14243 生化室"
+      },
+      {
+       "label": "标本类型",
+       "value": "尿液"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "输入码",
+       "value": "尿液项目/NYXM"
+      },
+      {
+       "label": "排序号",
+       "value": "1007"
+      },
+      {
+       "label": "收费合计",
+       "value": "15"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307001 尿素测定｜单价 5｜数量 1｜金额 5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307024 尿尿酸测定｜单价 5｜数量 1｜金额 5"
+      },
+      {
+       "label": "收费明细",
+       "value": "250307002 肌酐测定｜单价 5｜数量 1｜金额 5"
+      }
+     ]
+    },
+    {
+     "kind": "item_removed",
+     "category": "item",
+     "level": "remove",
+     "title": "JY040126 抗核抗体谱定量（7项）",
+     "fields": [
+      {
+       "label": "项目编码",
+       "value": "JY040126"
+      },
+      {
+       "label": "项目名称",
+       "value": "抗核抗体谱定量（7项）"
+      },
+      {
+       "label": "申请单",
+       "value": "14242 免疫室"
+      },
+      {
+       "label": "标本类型",
+       "value": "全血"
+      },
+      {
+       "label": "急诊项目",
+       "value": "否"
+      },
+      {
+       "label": "备注",
+       "value": "定量  化学发光法"
+      },
+      {
+       "label": "输入码",
+       "value": "自身抗体类/ZSKTL"
+      },
+      {
+       "label": "排序号",
+       "value": "3102"
+      },
+      {
+       "label": "收费合计",
+       "value": "119"
+      },
+      {
+       "label": "收费明细",
+       "value": "250402003 抗核提取物抗体测定(抗ENA抗体)｜单价 17｜数量 7｜金额 119"
+      }
+     ]
+    }
+   ]
+  },
   {
    "id": "20261102-174329",
    "recordedAt": "2026-11-02 17:43:29",
