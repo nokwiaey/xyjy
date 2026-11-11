@@ -1,6 +1,6 @@
 {
   "version": "2.2.0",
-  "exportTime": "2026-11-05T17:05:15.596357",
+  "exportTime": "2026-11-11T16:25:46.321932",
   "applyForms": [
     {
       "applyFormCode": "14239",
@@ -1134,7 +1134,7 @@
       "itemName": "24小时尿蛋白",
       "applyFormCode": "14243",
       "sample": "尿液",
-      "isEmergency": 1,
+      "isEmergency": 0,
       "remark": "",
       "inputCode": "尿液项目/NYXM",
       "sortNo": "1006"
