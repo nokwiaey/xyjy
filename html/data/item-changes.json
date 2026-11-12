@@ -1,11 +1,11 @@
 {
  "schema": 1,
  "note": "本文件由 generate_item_changes.py 自动生成，请勿手工编辑。recordedAt 为脚本检测时间（用 --backfill-git 补齐的记录为 git 提交时间），exportTime 为 item.json 的导出时间；两者都不等于项目实际发生变更的时间，变更只可能发生在 prevExportTime 与 exportTime 之间。",
- "generatedAt": "2026-11-05 17:06:16",
- "lastCheckedAt": "2026-11-05 17:06:16",
- "lastExportTime": "2026-11-05T17:05:15.596357",
- "lastChangeAt": "2026-11-05 16:35:58",
- "recordCount": 16,
+ "generatedAt": "2026-11-12 09:23:21",
+ "lastCheckedAt": "2026-11-12 09:23:21",
+ "lastExportTime": "2026-11-11T16:25:46.321932",
+ "lastChangeAt": "2026-11-12 09:23:21",
+ "recordCount": 17,
  "categories": [
   {
    "key": "item",
@@ -25,6 +25,39 @@
   }
  ],
  "records": [
+  {
+   "id": "20261112-092321",
+   "recordedAt": "2026-11-12 09:23:21",
+   "exportTime": "2026-11-11T16:25:46.321932",
+   "prevExportTime": "2026-11-05T17:05:15.596357",
+   "version": "2.2.0",
+   "prevVersion": "2.2.0",
+   "stats": {
+    "total": 1,
+    "add": 0,
+    "remove": 0,
+    "update": 1,
+    "item": 1,
+    "price": 0,
+    "lis": 0,
+    "form": 0
+   },
+   "changes": [
+    {
+     "kind": "item_modified",
+     "category": "item",
+     "level": "update",
+     "title": "JY020121 24小时尿蛋白",
+     "fields": [
+      {
+       "label": "急诊项目",
+       "from": "是",
+       "to": "否"
+      }
+     ]
+    }
+   ]
+  },
   {
    "id": "20261105-163558",
    "recordedAt": "2026-11-05 16:35:58",
